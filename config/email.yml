@@ -1,0 +1,28 @@
+# Include settings for your email server/mailbox below (you probably only need to edit the "production" settings).
+# Settings here are used to generate your crontab configuration when running the "whenever" command.
+---
+development:
+
+test:
+
+production:
+  pop: 
+    host: localhost
+    username: onebody
+    password: onebody
+  smtp:
+    #address: localhost
+    #domain: lwj0612800232.gicp.net
+    address: smtp.gmail.com
+    port: 25
+    domain: gmail.com
+    authentication: login
+    user_name: liwenjingabc@gmail.com
+    password: lwj1988@A
+    # probably not needed...
+    #port: 25
+    #authentication: login
+    #user_name: user_for_smtp_auth@example.com
+    #password: password_for_smtp_auth
+
+    
