@@ -1,10 +1,10 @@
 s_zh:
 
   About: 关于
-  Answer_yes: "是"
-  Answer_no: "否"
+  Answer_yes: “是”
+  Answer_no: “否”
   Changes: 改变
-  Changes_saved: 保存变更.
+  Changes_saved: 保存变更。
   Delete: 删除
   Done: 完成
   Errors: 错误
@@ -13,45 +13,45 @@ s_zh:
   Modify: 修改
   Now: 现在
   No_action_to_show: 找不到该页面
-  No_more_records: 没有记录.
-  Page_no_longer_valid: 页面无法访问.
+  No_more_records: 没有记录。
+  Page_no_longer_valid: 页面无法访问。
   Save: 保存
-  There_was_an_error: 哦哦，有一个错误.
-  There_were_errors: 哦哦哦，有几个错误拉.
+  There_was_an_error: 哦哦，有一个错误。
+  There_were_errors: 哦哦哦，有几个错误拉。
   To: 给
   Update: 更新
   Was: 是
   What: 什么
   When: 何时
   Who: 谁
-  answer_yes: "是的"
-  answer_no: "否"
-  are_you_sure: 确定?
+  answer_yes: “是的”
+  answer_no: “否”
+  are_you_sure: 确定？
   by: 通过
   changes: 改变
-  changes_saved: 变更保存.
+  changes_saved: 变更保存。
   click_here: 点击
   comment: 回复
   Comments: 回复
   delete: 删除
   edit: 编辑
-  feature_unavailable: 此功能不可用.
+  feature_unavailable: 此功能不可用。
   for: 关于
   from: 来自
   help: 帮助
-  in: in
+  in: 
   insert: 插入
   loading: 加载。。
   more: 更多
-  multiple_files: 你的浏览器支持同时上传多个文件，按住CTRL选择多个文件
+  multiple_files: 你的浏览器支持同时上传多个文件，按住CTRL键选择多个文件
   name: 姓名
   new: 新建
-  new_category:  分类
+  new_category: 分类
   none: 无
-  not_authorized: 你没有权限.
-  of: of
-  on: on
-  only_admins: 只有管理员才被允许.
+  not_authorized: 你没有权限。
+  of: 作者
+  on: 对
+  only_admins: 只有管理员才被允许。
   or: 或者
   people: 人群
   person: 人
@@ -62,13 +62,79 @@ s_zh:
   save_changes: 保存更改
   search_results: 搜索结果
   submit: 提交
-  to: to
+  to: 致
   type: 类型
-  you_made_a_change_page: 看起来你做了更改的东西在此页。单击确定以放弃您编辑并离开此页面。 
+  you_made_a_change_page: 。看起来你做了更改的东西在此页单击确定以放弃您编辑并离开此页面。
+  your: 你的
+  About: 关于
+  Answer_yes: “是”
+  Answer_no: “否”
+  Changes: 改变
+  Changes_saved: 保存变更。
+  Delete: 删除
+  Done: 完成
+  Errors: 错误
+  From: 表单
+  Help: 帮助
+  Modify: 修改
+  Now: 现在
+  No_action_to_show: 找不到该页面
+  No_more_records: 没有记录。
+  Page_no_longer_valid: 页面无法访问。
+  Save: 保存
+  There_was_an_error: 哦哦，有一个错误。
+  There_were_errors: 哦哦哦，有几个错误拉。
+  To: 给
+  Update: 更新
+  Was: 是
+  What: 什么
+  When: 何时
+  Who: 谁
+  answer_yes: “是的”
+  answer_no: “否”
+  are_you_sure: 确定？
+  by: 通过
+  changes: 改变
+  changes_saved: 变更保存。
+  click_here: 点击
+  comment: 回复
+  Comments: 回复
+  delete: 删除
+  edit: 编辑
+  feature_unavailable: 此功能不可用。
+  for: 关于
+  from: 来自
+  help: 帮助
+  in: 
+  insert: 插入
+  loading: 加载。。
+  more: 更多
+  multiple_files: 你的浏览器支持同时上传多个文件，按住CTRL键选择多个文件
+  name: 姓名
+  new: 新建
+  new_category: 分类
+  none: 无
+  not_authorized: 你没有权限。
+  of: 作者
+  on: 对
+  only_admins: 只有管理员才被允许。
+  or: 或者
+  people: 人群
+  person: 人
+  phone: 电话
+  please_note: 请写笔记
+  save: 保存
+  saving: 正在保存
+  save_changes: 保存更改
+  search_results: 搜索结果
+  submit: 提交
+  to: 致
+  type: 类型
+  you_made_a_change_page: 。看起来你做了更改的东西在此页单击确定以放弃您编辑并离开此页面。
   your: 你的
 
-  errors:
-    format: "%{message}"
+  errors: 
+    format: “％{消息}”
 
   activerecord: 
     errors: 
@@ -76,46 +142,46 @@ s_zh:
         admin: 
           attributes: 
             template_name: 
-              taken: 还有一个与此名称的模板。请选择另一个名称。 
+              taken: 还有一个与此名称的模板请选择另一个名称。。
         album: 
           attributes: 
             name: 
-              blank: 这张专辑必须有一个名称.
-              taken: 有一个与此名称专辑。请选择另一个名称。 
+              blank: 这张专辑必须有一个名称。
+              taken: 。有一个与此名称专辑请选择另一个名称。
         attendance_record: 
           attributes: 
             attended_at: 
               blank: 出席记录必须指定日期和时间。
             group_id: 
-              blank: 出席记录必须与一组。 
+              blank: 出席记录必须与一组。
         family: 
           attributes: 
             alternate_barcode_id: 
-              invalid: 这家卡（候补条码识别码）包含字母或符号（只允许数字）。 
-              taken: 这家卡（候补条码ID）是由另一家已经采取的。
-              too_long: 这个家庭卡（候补条码ID）是太长（不能超过50位）。 
-              too_short: 这个家庭卡（候补条码ID）是太短（必须是10位）。 
+              invalid: 这家卡（候补条码识别码）包含字母或符号（只允许数字）。
+              taken: 这家卡（候补条码识别码）是由另一家已经采取的。
+              too_long: 这个家庭卡（候补条码识别码）是太长（不能超过50位）。
+              too_short: 这个家庭卡（候补条码识别码）是太短（必须是10位）。
             barcode_id: 
               invalid: 这家卡（条码识别码）包含字母或符号（只允许数字）。
-              taken: 这家卡（条码标识）已经采取的另一个家庭。 
-              too_long: 这个家庭卡（条码ID）是太长（不能超过50位）。 
-              too_short: 这个家庭卡（条码ID）是太短（必须是10位）。
+              taken: 这家卡（条码标识）已经采取的另一个家庭。
+              too_long: 这个家庭卡（条码识别码）是太长（不能超过50位）。
+              too_short: 这个家庭卡（条码识别码）是太短（必须是10位）。
         feed: 
           attributes: 
             name: 
-              blank: 供稿必须有一个名称。 
-              taken: 存在同名。请选择另一个名称。 
+              blank: 供稿必须有一个名称。
+              taken: 存在同名请选择另一个名称。。
             person_id: 
-              blank: 请选择一个人.
+              blank: 请选择一个人。
             url: 
-              blank:必须指定URL.
-              invalid: 址不似乎正确格式化。你输入的地址是否正确？尝试粘贴代替它。 
-              taken: 已经存在。您不能再次添加。 
+              blank: 必须指定网址。
+              invalid: 址不似乎正确格式化你输入的地址是否正确尝试粘贴代替它。？。
+              taken: 已经存在您不能再次添加。。
         friendship: 
           attributes: 
             friend_id: 
-              blank: 友谊关系必须选择对象。 
-              taken: 已经存在该友谊关系.
+              blank: 友谊关系必须选择对象。
+              taken: 已经存在该友谊关系。
             person_id: 
               blank: 友谊关系必须选择对象。
         friendship_request: 
@@ -123,38 +189,38 @@ s_zh:
             from_id: 
               blank: 友谊关系必须选择对象。
             person: 
-              invalid_address: 必须有一个有效的电子邮件地址。 
-              refused: 该用户不接受交友请求。 
+              invalid_address: 必须有一个有效的电子邮件地址。
+              refused: 该用户不接受交友请求。
             person_id: 
               blank: 友谊关系必须选择对象
               taken: 已经存在该友谊关系
         group: 
           attributes: 
             address: 
-              invalid: 该组地址是不是有效的电子邮件地址。 
-              taken: 已存在一个电子邮件。请选择另一个地址。 
+              invalid: 该组地址是不是有效的电子邮件地址。
+              taken: 。已存在一个电子邮件请选择另一个地址。
               too_long: 该组的电子邮件地址是太长
-              too_short: 该组的电子邮件地址是太短了。 
+              too_short: 该组的电子邮件地址是太短了。
             category: 
-              blank: 小组必须指定一个类别。 
+              blank: 小组必须指定一个类别。
             name: 
-              blank: 小组必须有一个名称。 
-              taken: 组名重复。请选择另一个名称。 
+              blank: 小组必须有一个名称。
+              taken: 。组名重复请选择另一个名称。
             parents_of: 
               points_to_self: 本组不能链接到其自身
         membership: 
           attributes: 
             group_id: 
-              taken:该用户已加入到该组中.
+              taken: 该用户已加入到该组中。
         membership_request: 
           attributes: 
             group_id: 
-              taken: 该用户已提出加入组请求.
+              taken: 该用户已提出加入组请求。
         message: 
           attributes: 
             body: 
               blank: 消息必须要有正文
-              too_short: 消息正文过短.
+              too_short: 消息正文过短。
             person_id: 
               blank: 消息必须有一个发信人
             subject: 
@@ -169,1684 +235,1684 @@ s_zh:
         page: 
           attributes: 
             body: 
-              blank: 页面必须有body.
+              blank: 页面必须有身体。
             path: 
               taken: 该路径已指向其他页面
             slug: 
-              blank: 页面必须要有一个关键字.
-              exclusion: 页面关键字不能为 "admin", "edit", or "new"
+              blank: 页面必须要有一个关键字。
+              exclusion: 页面关键字不能为“管理员”，“编辑”，或“新”
               invalid: 页面关键字只能包含小写字母和下划线
             title: 
               blank: 页面必须要有一个标题
         person: 
           attributes: 
             alternate_email: 
-              invalid: The alternate email address is not formatted correctly (something@example.com).
-              taken: There is another person with the same alternate email.
+              invalid: 备用电子邮件地址的格式不正确（something@example.com）。
+              taken: 还有一个相同的备用电子邮件的人。
             business_email: 
-              invalid: The business email address is not formatted correctly (something@example.com).
+              invalid: 企业电子邮件地址的格式不正确（something@example.com）。
             business_website: 
-              invalid: The business website URL is not formatted correctly (are you missing 'http://' at the beginning?)
+              invalid: 企业网站的网址格式不正确（是否缺少开头'http://'？）
             child: 
-              blank: The 'child' property must be either 'Yes' or 'No' because the birthday is unspecified.
-              cannot_be_no: The 'child' property cannot be 'No' because the birthday indicates the person is not an adult.
-              cannot_be_yes: The 'child' property cannot be 'Yes' because the birthday indicates the person is not an adult.
+              blank: 在'孩子'属性必须是'是'或'否'，因为生日是不确定的。
+              cannot_be_no: 在'孩子'属性不能是'不'，因为生日代表着这人是不是成年人。
+              cannot_be_yes: 在'孩子'属性不能是'是的'，因为生日代表着这人是不是成年人。
             email: 
-              invalid: The email address is not formatted correctly (something@example.com).
-              taken: There is another person with the same email address.
+              invalid: 电子邮件地址的格式不正确（something@example.com）。
+              taken: 还有一个相同的电子邮件地址的人。
             feed_code: 
-              taken: The same feed code exists on another person record.
+              taken: 在相同的饲料代码另一人记录存在。
             first_name: 
-              blank: The person must have a first name.
+              blank: 人必须有一个名字。
             gender: 
-              inclusion: Gender must be either 'Male' or 'Female'.
+              inclusion: 性别必须是'男'或'女'。
             last_name: 
-              blank: The person must have a last name.
+              blank: 人必须有个姓。
             password: 
-              confirmation: The passwords do not match.
-              too_short: The password is too short.
+              confirmation: 密码不匹配。
+              too_short: 密码太短。
             website: 
-              invalid: The website URL is not formatted correctly (are you missing 'http://' at the beginning?)
+              invalid: 网站的网址格式不正确（是否缺少开头'http://'？）
         picture: 
           attributes: 
             album_id: 
-              blank: This picture must be associated with an album.
+              blank: 这张照片必须与专辑。
         prayer_request: 
           attributes: 
             group_id: 
-              blank: The prayer request must be associated with a group.
+              blank: 祷告请求必须与一组。
             person_id: 
-              blank: The prayer request must be associated with a person.
+              blank: 祷告请求必须与一个人。
             request: 
-              blank: The prayer request cannot be blank.
+              blank: 祷告请求不能为空。
         publication: 
           attributes: 
             name: 
-              blank: The publication must have a name.
-              taken: There is another publication with this name. Please choose another name.
+              blank: 该出版物必须有一个名称。
+              taken: 还有一个与此名称的出版物。请选择另一个名称。
         recipe: 
           attributes: 
             directions: 
-              blank: The recipe must have directions.
+              blank: 配方必须有方向。
             ingredients: 
-              blank: The recipe must have ingredients.
+              blank: 配方必须成分。
             title: 
-              blank: The recipe must have a title.
+              blank: 配方必须有一个标题。
         relationship: 
           attributes: 
             name: 
-              blank: You must specify the relationship type.
-              inclusion: This relationship is not valid.
-              taken: This relationship already exists.
+              blank: 您必须指定类型的关系。
+              inclusion: 这种关系是无效的。
+              taken: 这种关系已经存在。
             other_name: 
-              blank: You must specify the relationship type.
-              taken: This relationship already exists.
+              blank: 您必须指定类型的关系。
+              taken: 这种关系已经存在。
             person_id: 
-              blank: The relationship must be associated with a person.
+              blank: 这种关系必须与一个人。
             related_id: 
-              blank: The relationship must be associated with a person.
+              blank: 这种关系必须与一个人。
         report: 
           attributes: 
             definition: 
-              invalid: The report definition is invalid.
+              invalid: 该报告定义无效。
             name: 
-              blank: The report must have a name.
-              taken: There is another report with this name. Please choose another name.
+              blank: 该报告必须有一个名字。
+              taken: 还有一个与此名称的报告。请选择另一个名称。
         site: 
           attributes: 
             host: 
-              blank: The host must be specified.
-              exclusion: The host is invalid.
-              taken: There is another site with the same host.
+              blank: 主机必须指定。
+              exclusion: 主机是无效的。
+              taken: 还有一个与主机一样的网站。
             name: 
-              blank: The site must have a name.
-              taken: There is another site with the same name.
+              blank: 网站必须有一个名称。
+              taken: 还有一个同名的网站。
         tag: 
           attributes: 
             name: 
-              blank: The tag must have a name.
-              exclusion: The tag name is invalid.
-              taken: There is another tag with the same name.
+              blank: 标签必须有一个名称。
+              exclusion: 标记名称是无效的。
+              taken: 还有一个具有相同名称的标记。
         verse: 
           attributes: 
             reference: 
-              blank: The verse must have a reference.
+              blank: 该诗必须有一个参考。
             text: 
-              blank: The passage is blank. Did you type the reference correctly?
-              too_long: The passage is too long. Try to specify a shorter passage.
+              blank: 这一段是空白的。您是否正确键入引用？
+              too_long: 这一段太长。尝试指定一个较短的通道。
 
-  admin:
-    active: active
-    admin: admin
-    admin_added: "%{name} added."
-    admin_count:
-      one: "%{count} Administrator"
-      other: "%{count} Administrators"
-    admin_removed: Admin removed.
-    admin_template_description: Templates allow you to have predefined permission sets for use with more than one administrator.
-    administrators: Administrators
-    add_individual: Add an individual.
-    add_person: Add Person
-    add_selected: Add Selected
-    add_template: Add Template
-    already_admin: "%{name} is already an admin."
-    api: API
-    api_login_details: Your API login details
-    back_to_admin_list: Back to Administrator List
-    customization: Customization
-    dashboard: Admin Dashboard
-    dashboard_about: This is the starting point for managing your community site. Click any of the items on the right to view/manage a single aspect of the database.
-    deleted_people:
-      deleted_people: Deleted People
-      empty_families: Empty Families
-      empty_families_description: The following active families have no people in them and probably should be deleted
-      not_found: no people found
-      purge: Purge
-      purge_when_empty: And purge family when empty.
-      search_results: The results of your search are displayed below.
-      undelete: Undelete
-    deleted_people_count:
-      one: "%{count} deleted person"
-      other: "%{count} deleted people"
-    display: display
-    enable: Enable
-    enable_api_confirmation: Are you sure you want to enable your API key?
-    emails:
-      alert: This administration section is useful if you sync your data from an external source using UpdateAgent. If you do not, you may safely ignore this list.
-      changed_addresses: Changed Email Addresses
-      clear_flags: Clear Flags
-      description: When a user changes their email address online, a flag is set, and subsequent syncs cannot change the email address back until the flag is cleared. To clear the flag, simply set the user's email address in your external database to be the same as below, and then run your sync process (or wait for it to run at its next scheduled time). Alternatively, you can clear the flag manually here to allow your sync process to update the value as usual.
-      no_records: There are currently no records with the changed email address flag set.
-    file:
-      assets: Assets
-      back_to_theme_editor: back to theme editor
-      enter_filename: Enter a filename (can only contain a-z, underscore, and period)
-      filename: Filename
-      no_files: No files yet.
-      size: Size
-      upload: Upload File
-      upload_new: Upload a new file
-    generate: Generate
-    group_administrators: Group Administrators
-    group_administrators_description: Each group can designate people who can administer that particular group, regardless of their status on this page.
-    group_administrators_help: To add/remove a person as a group administrator, click "edit" next to the group and promote an existing group member.
-    group_membership_requests: Group Membership Requests
-    home: Admin Home
-    import_data_description: Import people data from a Comma Separated Values (CSV) file.
-    import_export: Import/Export
-    invalidate_confirmation: Are you sure you want to invalidate this key and create a new one?
-    key: Key
-    last_updated: Last Updated
-    log: Log
-    log_review: Review the log.
-    logo:
-      delete: delete logo
-      format_information: A transparent gif or png will look the best.
-      logo: Logo
-      size_information: Upload an image file below. It will be resized to be no larger than 300x80.
-      upload: Upload Logo
-    logs:
-      date_format: date format
-      date_range: Date Range
-      deleted: deleted
-      filtering_options: Filtering Options
-      flagged: Flagged
-      flagged_and_not_flagged: Flagged and Not Flagged
-      flagged_only: Flagged Only
-      mark_as_reviewed: Mark Selected as Reviewed
-      new_and_reviewed: New and Reviewed
-      new_only: New Only
-      nothing_to_show: There is nothing to show. Check the Filtering Options to expand your query.
-      private_message: This message may be private. Are you sure you want to view it?
-      reviewed: reviewed
-      update_display: Update Display
-    manage_admins: Manage Administrators
-    manage_group_administrators: Manage Group Administrators
-    max_admins_html: You are currently at the limit for administrators for your selected plan. Please <a href="http://beonebody.com">upgrade</a> in order to add more administrators.
-    must_be_superadmin: You must be a super administrator to modify settings.
-    new_admin_template: Create a new admin template.
-    new_api_or: a new API key or
-    no_api_key: You do not yet have an API key.
-    no_more_admins: No more admins are allowed.
-    pages: Pages
-    people_not_synced_to_donortools_count:
-      one: "1 out of sync with Donor Tools."
-      other: "%{count} out of sync with Donor Tools."
-    privileges:
-      view_hidden_profiles:
-        title: View Hidden Profiles
-        about: "View hidden people in the database, e.g. children and others marked as invisible."
+  admin: 
+    active: 主动
+    admin: 管理员
+    admin_added: “％{name}的补充。”
+    admin_count: 
+      one: “％{count}个管理员”
+      other: “％{count}个管理员”
+    admin_removed: 管理员删除。
+    admin_template_description: 模板允许你有预定义与多个管理员使用权限集。
+    administrators: 管理员
+    add_individual: 新增个人。
+    add_person: 添加人
+    add_selected: 新增选取
+    add_template: 添加模板
+    already_admin: “％{name}的已经是管理员。”
+    api: 空气污染指数
+    api_login_details: 您的登录信息的API
+    back_to_admin_list: 回到管理员列表
+    customization: 定制
+    dashboard: 管理控制台
+    dashboard_about: 这是您的社区网站管理的出发点。点击右边的任何项目，查看/管理数据库的一个方面。
+    deleted_people: 
+      deleted_people: 删除人
+      empty_families: 空家庭
+      empty_families_description: 下面活跃的家庭对他们有没有人，也许应该被删除
+      not_found: 没有人发现
+      purge: 清除
+      purge_when_empty: 和清除的家人时，空的。
+      search_results: 您搜索的结果显示如下。
+      undelete: 取消删除
+    deleted_people_count: 
+      one: “％{}删除计数的人”
+      other: “％{count}个已删除的人”
+    display: 显示
+    enable: 启用
+    enable_api_confirmation: 您确定要启用您的API密钥？
+    emails: 
+      alert: 本行政组是有用的，如果你从外部同步使用UpdateAgent源的数据。如果不这样做，你可以放心地忽略这个名单。
+      changed_addresses: 更改电邮地址
+      clear_flags: 清除标志
+      description: 当用户更改他们的电子邮件地址在网上，一个标志设置，和随后的同步不能更改的电子邮件地址，直到该标志被清除。要清除该标志，简单地将用户的外部数据库中的电子邮件地址是相同的下面，然后运行你的同步进程（或等待它运行在下次排定的时间）。或者，您可以手动清除该标志在这里，让您的同步过程，像往常一样更新的价值。
+      no_records: 目前已更改的电子邮件地址国旗上的记录集。
+    file: 
+      assets: 资产
+      back_to_theme_editor: 回到主题编辑器
+      enter_filename: 输入一个文件名（只能包含AZ，下划线和句）
+      filename: 文件名
+      no_files: 没有文件呢。
+      size: 尺寸
+      upload: 上传文件
+      upload_new: 上传新文件
+    generate: 生成
+    group_administrators: 组管理员
+    group_administrators_description: 每个人组可以指定谁可以管理该特定的群体，不管他们在这个页面状态。
+    group_administrators_help: 添加/删除管理员为一组人，点击“编辑”旁边的集团，促进现有组的成员。
+    group_membership_requests: 集团成员资格申请
+    home: 管理首页
+    import_data_description: 导入人从逗号分隔值（CSV）的文件数据。
+    import_export: 导入/导出
+    invalidate_confirmation: 你确定要废止这个关键，并创建一个新的呢？
+    key: 项
+    last_updated: 最后更新
+    log: 日志
+    log_review: 查看日志。
+    logo: 
+      delete: 删除标志
+      format_information: 透明的GIF或PNG看起来是最好的。
+      logo: 标志
+      size_information: 上传图像文件如下。它将被重新调整为不得大于300x80。
+      upload: 上传徽标
+    logs: 
+      date_format: 日期格式
+      date_range: 日期范围
+      deleted: 删除
+      filtering_options: 过滤选项
+      flagged: 标记的
+      flagged_and_not_flagged: 标记并没有标记
+      flagged_only: 标记的只有
+      mark_as_reviewed: 马克被选定为评论
+      new_and_reviewed: 新和审查
+      new_only: 仅新增
+      nothing_to_show: 没有什么表现。检查过滤选项扩展您的查询。
+      private_message: 此消息可能是私有的。你确定要查看它？
+      reviewed: 综述
+      update_display: 更新显示
+    manage_admins: 管理管理员
+    manage_group_administrators: 管理组管理员
+    max_admins_html: 你是在为您选择的限制，目前计划管理。请<a href="http://beonebody.com">升级</一>，以增加更多的管理员。
+    must_be_superadmin: 您必须是超级管理员修改设置。
+    new_admin_template: 创建一个新的管理模板。
+    new_api_or: 一个新的API键或
+    no_api_key: 你还没有一个API密钥。
+    no_more_admins: 没有更多的管理员是允许的。
+    pages: 页
+    people_not_synced_to_donortools_count: 
+      one: “1。与供体工具同步”
+      other: “％{count}个供者工具同步。”
+    privileges: 
+      view_hidden_profiles: 
+        title: 查看隐藏的资料
+        about: “查看在数据库中隐藏的人，例如儿童和其他标记为不可见的。”
         order: 1
-      view_hidden_properties:
-        title: View Hidden Properties
-        about: "View hidden phone numbers, email addresses, and other private information."
+      view_hidden_properties: 
+        title: 查看隐藏属性
+        about: “。查看隐藏的电话号码，电子邮件地址，以及其他私人信息”
         order: 2
-      edit_profiles:
-        title: Edit Profiles
-        about: "Edit name, phone numbers, email, password, and anything else associated with a user's profile."
+      edit_profiles: 
+        title: 编辑配置文件
+        about: “编辑姓名，电话号码，电子邮件，密码和其他与用户的个人资料相关的任何东西。”
         order: 3
-      manage_access:
-        title: Manage Access
-        about: "Manage site administrators. ('Manage Admins' must be selected to manage group administrators.)"
+      manage_access: 
+        title: 管理访问
+        about: “管理网站管理员（'管理管理员'必须选择管理组管理员。）”。
         order: 4
-      manage_attendance:
-        title: Manage Attendance
-        about: "View, edit, and export attendance."
+      manage_attendance: 
+        title: 考勤管理
+        about: “查看，编辑和出口出席。”
         order: 5
-      manage_comments:
-        title: Manage Comments
-        about: "Ability to delete any site comments."
+      manage_comments: 
+        title: 管理评论
+        about: “能够删除任何网页的意见。”
         order: 6
-      manage_contributions:
-        title: Manage Contributions
-        about: "View, edit, delete contributions (if Donor Tools is setup)."
+      manage_contributions: 
+        title: 管理的贡献
+        about: “查看，编辑，删除供款（如有的捐助工具是安装程序）。”
         order: 7
-      manage_groups:
-        title: Manage Groups
-        about: "View, edit, delete any group (even if hidden or private)."
+      manage_groups: 
+        title: 管理组
+        about: “查看，编辑，删除任何团体（即使隐藏或私营）。”
         order: 8
-      manage_news:
-        title: Manage News
-        about: "View, edit, delete all news."
+      manage_news: 
+        title: 管理新闻
+        about: “查看，编辑，删除所有消息。”
         order: 9
-      manage_notes:
-        title: Manage Notes
-        about: "Edit and delete any notes (status updates)."
+      manage_notes: 
+        title: 管理笔记
+        about: “编辑和删除任何票据（状态更新）。”
         order: 10
-      manage_pictures:
-        title: Manage Pictures
-        about: "View, edit, delete any pictures and albums."
+      manage_pictures: 
+        title: 管理图片
+        about: “查看，编辑，删除任何图片和相册。”
         order: 11
-      manage_prayer_signups:
-        title: Manage Prayer Signups
-        about: "Edit and delete signups for a Prayer Event."
+      manage_prayer_signups: 
+        title: 管理祈祷注册等
+        about: “编辑和删除祈祷事件注册等。”
         order: 12
-      manage_publications:
-        title: Manage Publications
-        about: "Create and delete site publications."
+      manage_publications: 
+        title: 管理刊物
+        about: “创建和删除网站的出版物。”
         order: 13
-      manage_updates:
-        title: Manage Updates
-        about: "View, edit, delete pending profile updates made by users."
+      manage_updates: 
+        title: 管理更新
+        about: “查看，编辑，删除之前由用户个人资料的更新。”
         order: 14
-      manage_sync:
-        title: Manage Sync
-        about: "View and track synchronizations made with UpdateAgent."
+      manage_sync: 
+        title: 管理同步
+        about: “查看和跟踪同步作出UpdateAgent。”
         order: 15
-      import_data:
-        title: Import Data
-        about: "Import data from CSV or by using UpdateAgent."
+      import_data: 
+        title: 导入数据
+        about: “。从CSV或使用UpdateAgent导入数据”
         order: 16
-      export_data:
-        title: Export Data
-        about: "Export all site data to XML and CSV."
+      export_data: 
+        title: 出口数据
+        about: “。导出所有站点数据到XML和CSV”
         order: 17
-    request:
-      one: request
-      other: requests
-    rest_api_information: To use the REST API with Ruby, you might do this
-    settings:
+    request: 
+      one: 要求
+      other: 要求
+    rest_api_information: 要使用Ruby的REST的API，你可以这样做
+    settings: 
       Contact: 
         Tech Support Email: 
-          name: Tech Support Email
-          description: Email to contact for technical help with the site.
+          name: 技术支持Email
+          description: 电子邮件联络，与现场技术帮助。
         Community Address: 
-          name: Community Address
-          description: Visible on Terms of Use
+          name: 社区地址
+          description: 使用条款上可见
         Community Office Phone: 
-          name: Community Office Phone
-          description: Phone number for the office
+          name: 社区办公电话
+          description: 电话号码为办公
         Birthday Verification Email: 
-          name: Birthday Verification Email
-          description: Email sent when someone requests verification via birthday (shouldn't be blank)
+          name: 生日验证电子邮件
+          description: 电子邮件发送生日时，有人请求通过验证（不应空白）
         Community Email: 
-          name: Community Email
-          description: Visible in some places on site
+          name: 社区推荐
+          description: 在一些地方网站上看到
         Bug Notification Email: 
-          name: Bug Notification Email
-          description: Email address to send bug reports to
+          name: 错误通知电子邮件
+          description: 电子邮件地址发送错误报告
         Send Email Changes To: 
-          name: Send Email Changes To
-          description: Email sent when someone changes their email address (can be blank for no email)
+          name: 发送电子邮件更改要
+          description: 发送电子邮件时，有人改变他们的电子邮件地址（可以没有电子邮件空白）
         Send Updates To: 
-          name: Send Updates To
-          description: Email sent when someone updates their profile (can be blank for no email)
+          name: 更新传送给
+          description: 发送电子邮件时，有人更新他们的个人资料（可用于没有电子邮件空白）
       Services: 
         Sermondrop URL: 
-          name: Sermondrop URL
-          description: Full URL for your Sermondrop site, e.g. http://mysite.sermondrop.com/
+          name: Sermondrop网址
+          description: 全为您Sermondrop网站的网址，例如http://mysite.sermondrop.com/
         Donor Tools API Password: 
-          name: Donor Tools API Password
-          description: Password of API user.
+          name: 供体工具API密码
+          description: API的用户密码。
         Yahoo: 
-          name: Yahoo
-          description: Your Yahoo API key - https://developer.yahoo.com/wsregapp/index.php
+          name: 雅虎
+          description: 您的Yahoo API的关键 - 通过https
         Donor Tools URL: 
-          name: Donor Tools URL
-          description: Full URL for your Donor Tools site, e.g. https://mysite.donortools.com/
+          name: 供体工具中的网址
+          description: 您的捐助工具网站完整的URL，例如
         Donor Tools API Email: 
-          name: Donor Tools API Email
-          description: Email address of admin user for accessing the Donor Tools API. It is recommended you create a special "api" user for this purpose.
+          name: 供体工具API电子邮件
+          description: 用于访问电子邮件捐助工具API admin用户的地址。建议你创建一个特殊的“API”为此用户。
         Campaign Monitor API Key: 
-          name: Campaign Monitor API Key
-          description: To sync one or more groups with Campaign Monitor subscriber lists, paste your Campaign Monitor API Key here.
+          name: Campaign Monitor的API密钥
+          description: 通过一个或多个同步运动监控用户组列表，粘贴广告系列显示器的API密钥。
         Analytics: 
-          name: Analytics
-          description: If you use Google Analytics or some other JavaScript-based stats service, put the code here. It will be inserted at the bottom of every page.
+          name: 分析
+          description: 如果您使用谷歌分析或其他基于JavaScript的数据统计服务，把代码在这里。这将是插入在每一页的底部。
       Name: 
         Community: 
-          name: Community
-          description: The name of your church or community, e.g. "One Church" or "First Baptist of Fresno."
+          name: 社区
+          description: 你的教会或社区的名称，如“一堂”或“弗雷斯诺第一浸礼会。”
         Slogan: 
-          name: Slogan
-          description: Slogan/tagline displayed just under the site name. Leave blank for none.
+          name: 标语
+          description: 标语/口号显示不到网站的名称。没有留下空白。
         Site: 
-          name: Site
-          description: The name of this site, displayed at the top, e.g. "My Church Family" or "One Church Central."
+          name: 网站
+          description: 这个网站的名称，在上方显示，例如“我的教会家庭”，“一堂中环。”
       URL: 
         News Feed: 
-          name: News Feed
-          description: URL for external community news feed (news will be imported periodically)
+          name: 新闻饲料
+          description: 网址外部社会新闻供稿（新闻会定期进口）
         Visitor: 
-          name: Visitor
-          description: URL for main website (visitors will be pointed here if they happen across the member site.)
+          name: 访客
+          description: 主网站的网址（游客将在这里指出，如果他们之间发生的会员网站。）
       System: 
         Suffixes: 
-          name: Suffixes
-          description: ""
+          name: 后缀
+          description: “”
         Adult Age: 
-          name: Adult Age
-          description: Age at which a person is considered old enough to use the site and be seen by others in the directory.
+          name: 成人年龄
+          description: 在一个人的年龄被认为是老得足以使用该网站，并在该目录别人看见。
         Language: 
-          name: Language
-          description: Language for interface elements.
+          name: 语言
+          description: 语言的界面元素。
         Time Zone: 
-          name: Time Zone
-          description: Set to properly display dates and times on the site.
+          name: 时区
+          description: 设置在网站上正确显示日期和时间。
       Appearance: 
         Public Theme: 
-          name: Public Theme
-          description: Name of selected theme for the public CMS site.
+          name: 公共主题
+          description: CMS的网站，供市民选择的主题的名称。
         Theme: 
-          name: Theme
-          description: Name of selected theme for site.
+          name: 主题
+          description: 为网站选择的主题名称。
         Show Subheading: 
-          name: Show Subheading
-          description: Under the site title/logo, display the site address and slogan.
+          name: 显示目
+          description: 在网站的标题/标志，显示网站地址和口号。
         Info Tab First: 
-          name: Info Tab First
-          description: If enabled, move the Info tab on profiles to the far left and have it open by default.
+          name: 信息选项卡第一
+          description: 如果启用，将在信息选项卡的配置文件的最左边，并在默认情况下打开它。
       Formats: 
         Full Date and Time: 
-          name: Full Date and Time
-          description: Format for displaying date and time.
+          name: 完整日期和时间
+          description: 用于显示日期和时间格式。
         Time: 
-          name: Time
-          description: Format for displaying time.
+          name: 时间
+          description: 用于显示时间格式。
         Date: 
-          name: Date
-          description: Format for displaying date.
+          name: 日期
+          description: 用于显示的日期格式。
         Phone: 
-          name: Phone (Landline)
-          description: Format for displaying standard (landline) phone numbers.
+          name: 电话（座机）
+          description: 显示格式标准（座机）电话号码。
         Date Without Year: 
-          name: Date Without Year
-          description: Format for displaying date without a year, e.g. birthdays.
+          name: 日期没有年份
+          description: 格式不显示一年的日期，如生日。
         Mobile Phone: 
-          name: Mobile Phone
-          description: Format for displaying mobile phone numbers.
+          name: 手机
+          description: 用于显示移动电话号码的格式。
       Features: 
         Custom Person Type: 
-          name: Custom Person Type
-          description: If enabled, admins can specify a custom type along the lines of Elder, Deacon, etc.
+          name: 定制人员类型
+          description: 如果启用，管理员可以指定一个沿长老，执事，行等自定义类型
         Prayer Event: 
-          name: Prayer Event
-          description: Once enabled, members will be able to see the prayer schedule and sign up for one or more hour-long time slots.
+          name: 祈祷活动
+          description: 一旦启用，会员将能够看到的祈祷时间表，并签署一个或多个小时的时段了。
         Community Google Calendar: 
-          name: Community Google Calendar
-          description: The URL for the community Google Calendar.  Can be either the public or private address, but the calendar itself will need to be shared publicly in order to be included in the indivdual ("my calendar") feature.
+          name: 社区谷歌日历
+          description: 为社会谷歌日历的网址。可以是公共或私有地址，但日历本身将需要共享公开，以便在蹦床网上单人包括
         Updates Must Be Approved: 
-          name: Updates Must Be Approved
-          description: If enabled, all changes to a user's "basic" information (phone, address, etc.) will await approval from an admin before being applied.
+          name: 更新，必须经
+          description: 如果启用，所有到用户的“基本”的信息（电话，地址等）的变化将等待来自然后才应用于管理员的批准。
         Sign Up: 
-          name: Sign Up
-          description: If enabled, potential members can create their own login account on the site. It is highly recommended that you also enter an approval email address in the next field so that you can review signups before allowing login.
+          name: 注册
+          description: 如果启用，潜在的成员可以创建自己的网站上登录帐户。我们强烈建议您同时输入外地批准，在未来的电子邮件地址，以便您可以先检讨允许登录注册等。
         SSL: 
-          name: SSL
-          description: If you have SSL setup, you may turn on this feature, which will make the login page encrypted. If not, some advanced JavaScript hashing is enabled to make sure the users' passwords aren't being sent in plaintext.
+          name: SSL的
+          description: 如果您有SSL设置，你可以打开此功能，这将会使登录页面进行加密。如果没有，一些先进的JavaScript散列启用，以确保用户的密码不会被明文发送。
         Notes: 
-          name: Notes
-          description: Enable Note sharing.
+          name: 备注
+          description: 启用注意共享。
         Pictures: 
-          name: Pictures
-          description: Enable Picture sharing.
+          name: 图片
+          description: 启用图片共享。
         Banner Message: 
-          name: Banner Message
-          description: Message to display across top of all pages on site (HTML), like an alert
+          name: 横幅消息
+          description: 消息显示整个网站的所有网页上的顶部（​​HTML）的像一个警示，
         Multisite: 
-          name: Multisite
-          description: When enabled, this instance can handle multiple sites, based on domain name.
+          name: 多站点
+          description: 当启用时，这个实例可以处理多个站点，根据域名。
         Groups: 
-          name: Groups
-          description: Enable Groups.
+          name: 群组
+          description: 启用组。
         News by Users: 
-          name: News by Users
-          description: Allow user submitted news content.
+          name: 新闻的用户
+          description: 允许用户提交的新闻内容。
         Custom Person Fields: 
-          name: Custom Person Fields
-          description: Add custom field names, one per line. Including the word "date" (or "Date") makes a date field. Append an asterisk (*) to make the field visible and editable by users.
+          name: 自定义字段人
+          description: 添加自定义字段名称，每行一个。包括单词“日期”（或“日”）作出的日期字段。追加一个星号（*），使现场看到，深受用户编辑。
         Edit Legacy Ids: 
-          name: Edit Legacy Ids
-          description: If enabled, will allow admin access to manually modify Family and Person legacy ids.
+          name: 编辑ID的遗产
+          description: 如果启用，将允许管理员访问手动修改ID的家庭和人士的遗产。
         Sign Up Approval Email: 
-          name: Sign Up Approval Email
-          description: Where to send pending sign up requests (must be admin; leave blank to auto-approve).
+          name: 注册审批电邮
+          description: 待发送到哪里注册请求签名（必须是管理员;留空将自动批准）。
         Friends: 
-          name: Friends
-          description: Enable mutual friendships (confirmed via email)
+          name: 朋友
+          description: 启用相互友谊（通过电子邮件确认）
         Sidebar Group Heading: 
-          name: Sidebar Group Heading
-          description: Heading to show above people in mutual groups (see above setting)
+          name: 侧栏标题集团
+          description: 上面显示的标题在相互组人（见上面的设置）
         Prayer Event First Date and Time: 
-          name: First Time Slot
-          description: Enter the date and time of the first hour-long time slot in the format 'MM/DD/YYYY HH:00'
+          name: 第一个时隙
+          description: 输入日期和第一长达一小时的时间段的格式时间'为MM / DD / YYYY的格式为HH
         Reporting: 
-          name: Reporting
-          description: Requires MongoDB to be setup and running.
+          name: 报告
+          description: 要求MongoDB将设置和运行。
         Sidebar Group Category: 
-          name: Sidebar Group Category
-          description: People in mutual groups of this category will be displayed on the user's profile sidebar.
+          name: 侧栏群组类别
+          description: 这一类人相互团体将显示在用户的个人资料栏。
         Content Management System: 
-          name: Content Management System
-          description: Enable "Pages" - Use OneBody to host your website.
+          name: 内容管理系统
+          description: 启用“页面” - 使用OneBody主办您的网站。
         Publications: 
-          name: Publications
-          description: Enable Publications.
+          name: 出版物
+          description: 启用刊物。
         News Page: 
-          name: News Page
-          description: Enable community news page. News items can be submitted by admins and/or pulled from an RSS feed (see URL, News RSS setting).
+          name: 新闻页
+          description: 启用社会新闻页面。新闻项目可以由管理员和/或从RSS feed拉（见网址，新闻RSS设置）。
         Verses: 
-          name: Verses
-          description: Enable Verse sharing.
+          name: 诗篇
+          description: 启用诗歌分享。
         Prayer Event Last Date and Time: 
-          name: Last Time Slot
-          description: Enter the date and time of the very last hour-long time slot in the format 'MM/DD/YYYY HH:00'
+          name: 最后的时间槽
+          description: 输入日期和最后一小时的时间段的格式时间'为MM / DD / YYYY的格式为HH
         Recipes: 
-          name: Recipes
-          description: Enable Recipe sharing.
+          name: 食谱
+          description: 启用方共享。
         Service: 
-          name: Service
-          description: If enabled, admin users can track indviduals' service in areas of the community.
+          name: 服务
+          description: 如果启用，管理员可以跟踪用户在社会领域善于学习的服务。
       Privacy: 
         Hide Contact Details in Messages: 
-          name: Hide Contact Details in Messages
-          description: If enabled, attempts are made to hide phone numbers and email addresses inside messages when viewed online.
+          name: 隐藏邮件中的联系方式
+          description: 如果启用，企图向隐藏在内部的电话号码和电子邮件地址，浏览网上信息。
         Share Anniversary by Default: 
-          name: Share Anniversary
-          description: If enabled, new users will have their anniversary shared with other site members.
+          name: 分享周年
+          description: 如果启用后，新用户将他们与其他网站的会员周年共享。
         Share Email by Default: 
-          name: Share Email
-          description: If enabled, new users will have their email address shared with other site members.
+          name: 分享电邮
+          description: 如果启用后，新用户将他们的电子邮件地址与其他网站成员共享。
         Allow Unencrypted Logins: 
-          name: Allow Unencrypted Logins
-          description: Logins are secured with public/private RSA encryption using JavaScript. Check this box to allow fallback for mobile phones and other browsers that are having trouble signing in.
+          name: 允许未加密的登录
+          description: 登录都使用公共/私人的RSA加密使用JavaScript。选中此框，允许移动电话和所无法登入其他浏览器回退
         Share Home Phone by Default: 
-          name: Share Home Phone
-          description: If enabled, new users will have their home phone shared with other site members.
+          name: 分享家庭电话
+          description: 如果启用后，新用户将有自己的家庭电话与其他网站成员共享。
         Allow Picture Comments: 
-          name: Allow Picture Comments
-          description: If enabled, users will be allowed to post comments on pictures.
+          name: 允许照片评论
+          description: 如果启用，用户将被允许张贴图片的评论。
         Share Work Phone by Default: 
-          name: Share Work Phone
-          description: If enabled, new users will have their work phones shared with other site members.;
+          name: 分享工作电话
+          description: 如果启用后，新用户将他们的工作电话与其他网站成员共享。
         Share Fax by Default: 
-          name: Share Fax
-          description: If enabled, new users will have their fax shared with other site members.
+          name: 分享传真
+          description: 如果启用后，新用户将其传真与其他网站成员共享。
         Max Sign in Attempts: 
-          name: Maximum Failed Sign in Attempts
-          description: Number of signin failures in a 15-minute period before account is locked out. (Account is automatically unlocked after 15 minutes.)
+          name: 最高失败的尝试赶快
+          description: 在15分钟内签到前失败的次数帐户被锁定。 （帐户15分钟后自动解锁。）
         Share Mobile Phone by Default: 
-          name: Share Mobile Phone
-          description: If enabled, new users will have their mobile phones shared with other site members.
+          name: 共享移动电话
+          description: 如果启用后，新用户将他们的移动电话与其他网站成员共享。
         Share Address by Default: 
-          name: Share Address
-          description: If enabled, new users will have their home address shared with other site members.
+          name: 共享地址
+          description: 如果启用后，新用户将他们的家庭住址与其他网站成员共享。
         Relay All Email: 
-          name: Relay All Email
-          description: If enabled, all email addresses are masked by relaying replies back through the site. If disabled, people who have their email address shared will have their address revealed in outgoing messages.
+          name: 继电器所有电子邮件
+          description: 如果启用，所有的电子邮件地址由中继通过网站回复回掩盖。如果禁用，人们谁也分享他们的电子邮件地址将他们的地址显示在传出的消息。
         Share Birthday by Default: 
-          name: Share Birthday
-          description: If enabled, new users will have their birthday shared with other site members.
-      contact_automated_email_about: "These email addresses are sent email when certain things happen on the site. You can set them all to the same address or to different ones, depending on separation of duties in your community."
-      contact_community_info_about: "Enter contact information for your church or community office, where people can contact administrative staff."
-      contact_heading: Contact Information
-      disabled: Disabled
-      enabled: Enabled
-      features_heading: Software Features
-      features_prayer_event_about: "The following settings allow this site to manage signups and availability for a Prayer Event."
-      formats_heading: Formats
-      formats_date_about_html: "Enter your own date and time formats to match your part of the world. See <a href=\"/date_formatting_options.txt\" target=\"_new\">here</a> for formatting options."
-      formats_phone_about: "Specify phone formatting with 'd', e.g. ddd-ddd-dddd or (dd) dddd-dddd, depending on your locale."
-      locale_heading: Locale
-      membership_management_heading: Membership Management
-      name_heading: Community Name
-      one_per_line: "(one per line)"
-      privacy_defaults: Default Privacy Settings
-      privacy_defaults_about: "When a member's account is first created, the following privacy settings are applied to their information. (Members can still choose to show or hide any of their information at any time, regardless of the settings below.)"
-      privacy_heading: Privacy Controls
-      reload: Reload Settings
-      reload_message: If you have made modifications to the system from the command line, you may need to reload all settings to see the changes take effect.
-      save: Save Settings
-      services_heading: External Services
-      settings: Settings
-      sharing_about: OneBody is best when members participate by adding their own content. Enable content sharing with these settings.
-      sharing_communications_about: Share information with your members easily.
-      sharing_heading: Sharing
-    styles:
-      editor: Style Editor
-    super_admin: Super Admin
-    super_admin_about: Super Admins have full control over the site, with all available privileges. Be careful who you give this to — it could be dangerous!
-    syncs:
-      complete: Complete
-      duration: Duration
-      error: Error
-      id: ID
-      legacy_id: Legacy ID
-      name: Name
-      none: None yet.
-      operation: Operation
-      rate: Rate
-      results: Sync Results
-      start: Start
-      status: Status
-      success: Success
-      sync: Sync
-      sync_errors:
-        one: "%{count} sync error"
-        other: "%{count} sync errors"
-      syncs: Syncs
-      type: Type
-    template: Template
-    templates: Templates
-    themes:
-      custom_themes: Custom Theme
-      description_html: You can tweak your site's look by editing your custom theme below. Upload assets, e.g. images, CSS, etc., by clicking "Manage Assets." <strong>Changes are not seen by your visitors until you enable the custom theme in <a href="%{url}">settings</a>.</strong>
-      edit: Edit
-      manage_assets: Manage Assets
-      preview: Preview
-      preview_instructions_html: Preview any page with your custom theme by appending <code>?theme=custom</code> to the end of its URL, like <a href="%{url}">this</a>. <strong>If you lock yourself out of your site by building a bad custom theme, use <code>?theme=aqueouslight</code> to get back in and disable it.</strong>
-      reset: To reset your custom theme back to its default look, blank out the text box above and save changes.
-      save_preview: Save Changes and Preview
-      syntax_description_html: Template syntax is <a href="http://wiki.github.com/tobi/liquid/liquid-for-designers">Liquid</a>. Special template parts to insert are
-      theme: Theme
-    updates:
-      changed_email:
-        one: "%{count} changed email address"
-        other: "%{count} changed email addresses"
-      complete: Complete
-      completed: Completed
-      groups_pending: Groups Pending Approval
-      mark_complete: Mark Complete
-      mark_incomplete: Mark Incomplete
-      no_updates: No updates
-      none: None at this time.
-      pending:
-        one: "%{count} pending update"
-        other: "%{count} pending updates"
-      pending_title: Pending
-      person_deleted: person deleted
-      per_day: Updates Per Day
-      profile_updates: Profile Updates
-      review_changes: review changes following update
-      show_status: Show %{status}
-      updated: updated
-      updates: Updates
-    username: Username
-    your_key: your key
+          name: 分享生日
+          description: 如果启用后，新用户将自己的生日与其他网站成员共享。
+      contact_automated_email_about: “这些邮件地址发送电子邮件时，某些事情发生在他们的网站，你可以设置所有相同的地址或不同的，这取决于你所在社区的职责分离。”。
+      contact_community_info_about: “请输入您的联系教会或社区办公室，在这里人们可以联系管理人员的信息。”
+      contact_heading: 联系方式
+      disabled: 禁用
+      enabled: 启用
+      features_heading: 软件特点
+      features_prayer_event_about: “下面的设置允许该站点管理祈祷事件注册和可用性。”
+      formats_heading: 格式
+      formats_date_about_html: “请输入您自己的日期和时间格式，以配合你的世界的一部分，请参阅<a href=\"/date_formatting_options.txt\" target=\"_new\">这里格式选项</一>。。”
+      formats_phone_about: “指定的手机格式化和'D'类，如国内长途，国内长途，dddd将或（年）dddd将- dddd将根据您的语言环境而定。”
+      locale_heading: 语言环境
+      membership_management_heading: 会员管理
+      name_heading: 社区名称
+      one_per_line: “（每行一个）”
+      privacy_defaults: 默认隐私设置
+      privacy_defaults_about: “当一个成员的帐户第一次被创建，下面的隐私设置应用到他们的信息（大家还可以选择显示或隐藏任何的信息，无论在任何时候设置的下面。）。”
+      privacy_heading: 隐私控制
+      reload: 重新设置
+      reload_message: 如果你已作出的命令行系统修改，您可能需要重新加载所有设置来查看更改生效。
+      save: 保存设置
+      services_heading: 外部服务
+      settings: 设置
+      sharing_about: OneBody成员参与时最好加入自己的内容。启用内容与这些设置共享。
+      sharing_communications_about: 分享您的会员轻松的信息。
+      sharing_heading: 共享
+    styles: 
+      editor: 样式编辑器
+    super_admin: 超级管理员
+    super_admin_about: 超级管理员拥有完全控制了现场，与所有可用的权限。小心你把这个给谁 - 它可能是危险的！
+    syncs: 
+      complete: 完成
+      duration: 持续时间
+      error: 错误
+      id: 身份证
+      legacy_id: 传统的ID
+      name: 姓名
+      none: 无还。
+      operation: 操作
+      rate: 速率
+      results: 同步结果
+      start: 开始
+      status: 状态
+      success: 成功
+      sync: 同步
+      sync_errors: 
+        one: “％{count}个同步错误”
+        other: “％{count}个同步错误”
+      syncs: 同步
+      type: 类型
+    template: 模板
+    templates: 模板
+    themes: 
+      custom_themes: 自定义主题
+      description_html: 您可以调整您的网站由您自定义主题下面的编辑看看。上传的资产，例如图片，CSS等通过点击“资产管理”。 <strong>更改不会看到您的访客，直到你在<a启用自定义主题href="%{url}">设置</一>。</强“
+      edit: 编辑
+      manage_assets: 资产管理
+      preview: 预览
+      preview_instructions_html: 预览您的任何附加的<code>自定义主题页面的主题=自定义</代码>到其网址的结尾像href="%{url}">这</一>的<a，？。如果您<strong>自己锁在外面你的网站通过建立一个坏习惯的主题，使用<code>？主题= aqueouslight </代码>取回并禁用它。</强“
+      reset: 重置自定义主题回其默认外观，指出了文本框并保存更改上述空白。
+      save_preview: 保存更改并预览
+      syntax_description_html: 模板语法是<a href="http://wiki.github.com/tobi/liquid/liquid-for-designers">液</一>。特别是插入模板部件
+      theme: 主题
+    updates: 
+      changed_email: 
+        one: “％{count}个变更电子邮件地址”
+        other: “％{count}个变更电子邮件地址”
+      complete: 完成
+      completed: 已完成
+      groups_pending: 群组待批准
+      mark_complete: 标记完成
+      mark_incomplete: 马克不完整
+      no_updates: 没有更新
+      none: 此时无。
+      pending: 
+        one: “％{count}个有待更新”
+        other: “％{count}个有待更新”
+      pending_title: 待定
+      person_deleted: 人删除
+      per_day: 每日更新
+      profile_updates: 个人资料更新
+      review_changes: 审阅更改以下更新
+      show_status: 显示％{状态}
+      updated: 更新
+      updates: 更新
+    username: 用​​户名
+    your_key: 你的钥匙
 
-  accounts:
-    birthday: Birthday
-    call_office: Call %{office_phone} during business hours.
-    cannot_edit: You cannot edit this account.
-    change_email_warning: After this change, all email from this site will be sent to this address. It will also be the address %{person} to sign into this site.
-    check_code: Check Code
-    code_be_careful: Please be careful to enter the correct code. If you make a mistake, you will have to start over.
-    create: Create Account
-    date_format: MM/DD/YYYY
-    description: Description
-    email_not_found: That email address could not be found in our system. If you have another address, try again.
-    enter_code: Enter the code
-    enter_your_email: Enter your email address, then click the button below. If we have the address on file, an email will be sent to it allowing you to verify yourself and gain access to this site.
-    fill_required_fields: Please fill in all required fields.
-    gender: Gender
-    I_am_this_person: I am this person.
-    first_name: First Name
-    last_name: Last Name
-    leave_blank: Leave these fields blank if you don't want to change your password.
-    mobile_number_not_found: That mobile number could not be found in our system. You may try again.
-    must_be_of_age: Must be at least %{years} years of age.
-    must_set_email_pass: You must set your personal email address and password to continue.
-    pending_approval: Your account is pending approval. You will receive an email once it's approved.
-    please_select_your_name: Please select your name from the list below
-    select_your_carrier: Select your mobile carrier
-    set_password_error: There was an error setting the password. Please try again.
-    set_your_email: You must set your personal email address and password to continue.
-    set_your_email_may_be_different: Please enter your personal email address and NEW password to complete your registration.
-    submission_will_be_reviewed: Your submission will be reviewed as soon as possible. You will receive an email once you have been approved.
-    text_messaging_fees: Text messaging fees may apply.
-    there_was_an_error: Sorry. There was an error. If you requested the office make a change, it's possible it just hasn't been done yet. Please try again later.
-    this_site_doesnt_allow_signup: This site does not allow people to sign up. Instead, you must either verify your already-existing account information or contact %{office_phone}.
-    type_your_email: Type your email address here
-    type_your_mobile: Type your mobile phone number here
-    uses: uses
-    verification_email_sent: The verification email has been sent. Please check your email and follow the instructions in the message you receive. (You may have to wait a minute or two for the email to arrive.)
-    verification_message_sent: The verification message has been sent. Please check your phone and enter the code you receive.
-    verify: Verify Account
-    verify_email: Verify Email
-    verify_by_email: Verify by email.
-    verify_by_email_message: We send you an email, you click the link inside, and you're done.
-    verify_by_phone: Verify by mobile phone.
-    verify_by_phone_description_html: Enter your mobile phone number, select your carrier, then click the button below. If we have the number on file, a text message will be sent to it allowing you to verify yourself and gain access to this site. <strong>Text messaging rates may be charged by your carrier. <span class="very-strong">Do not start this verification process until you know what you will be charged to receive a text message!</span></strong>
-    verify_by_phone_message: We send you a text message, you type the code it contains, and you're done.
-    verify_by_birthday: Verify by birthday.
-    verify_by_birthday_message: These submissions are reviewed by a real person and may take a few days to be approved.
-    verify_mobile: Verify Mobile
-    verify_who_you_are: First, we need to verify you are who you say you are. Please choose one of the following options to verify your identity. You only have to do this once, and it only takes a few minutes.
-    wrong_code: You entered the wrong code.
-    you_use: you use
-    your_birthday: Birthday with Year (required)
-    your_carrier_will_charge: Your mobile carrier may and probably will charge you to receive this text message. Click OK to continue.
-    your_email: Email Address (required)
-    your_full_name: Your Full Name (required)
-    your_phone: Phone Number (required)
-    your_phone_description: in case we need to give you a call about your account
-    your_situation: Your Situation (required)
-    your_situation_description: Please give us a bit of information about you and your family, including how long you've been attending, and any other information that may help us verify your identity.
+  accounts: 
+    birthday: 生日
+    call_office: 调用％} {office_phone在营业时间。
+    cannot_edit: 您不能编辑此帐户。
+    change_email_warning: 此更改后，所有来自这个网站的电子邮件将被发送到这个地址。这也将是地址％{}人登录到这个网站。
+    check_code: 验证码
+    code_be_careful: 请小心输入正确的代码。如果你犯了一个错误，你将不得不重新开始。
+    create: 创建帐户
+    date_format: 为MM / DD / YYYY的格式
+    description: 说明
+    email_not_found: 该电子邮件地址无法找到我们的制度。如果你有另一个地址，然后再试一次。
+    enter_code: 输入代码
+    enter_your_email: 输入您的电子邮件地址，然后点击下面的按钮。如果我们对文件的地址，电子邮件将被发送给它允许您验证自己，进入这个网站。
+    fill_required_fields: 请填写所有必填字段。
+    gender: 性别
+    I_am_this_person: 我这个人。
+    first_name: 名
+    last_name: 姓
+    leave_blank: 给这些领域的空白，如果你不想改变你的密码。
+    mobile_number_not_found: 这个手机号码无法找到我们的制度。你可以再试一次。
+    must_be_of_age: 必须至少为％{年}岁。
+    must_set_email_pass: 你必须设置你的个人电子邮件地址和密码才能继续。
+    pending_approval: 您的帐户正在等待批准。您将收到一封电子邮件，一旦它的批准。
+    please_select_your_name: 请选择你的名字从名单如下
+    select_your_carrier: 选择你的移动运营商
+    set_password_error: 有错误设置密码。请再试一次。
+    set_your_email: 你必须设置你的个人电子邮件地址和密码才能继续。
+    set_your_email_may_be_different: 请输入您的个人电子邮件地址和密码，完成注册。
+    submission_will_be_reviewed: 你的提交会尽快检讨。您将收到一封电子邮件，一旦你被批准。
+    text_messaging_fees: 短信费用，均可申请。
+    there_was_an_error: 对不起。有一个错误。如果你要求劳工局做出改变，它可能只是还没有结束呢。请稍后再试。
+    this_site_doesnt_allow_signup: 本网站不允许人们进行注册。相反，您必须验证您已存在的帐户信息或联系％} {office_phone。
+    type_your_email: 在这里输入您的电子邮件地址
+    type_your_mobile: 输入您的手机号码在这里
+    uses: 用途
+    verification_email_sent: 验证邮件已发送。请检查您的电子邮件并在邮件中收到的指示。 （您可能需要等待电子邮件到达一两分钟。）
+    verification_message_sent: 验证邮件已发送。请检查您的手机，并输入你的代码接收。
+    verify: 验证帐户
+    verify_email: 验证电子邮件
+    verify_by_email: 通过电子邮件验证。
+    verify_by_email_message: 我们向您发送一封电子邮件，你点击里面的链接，你就大功告成了。
+    verify_by_phone: 通过手机验证。
+    verify_by_phone_description_html: 输入您的手机号码，请选择您的运营商，然后点击下面的按钮。如果我们对文件的数量，将文字信息发送给它允许您验证自己，进入这个网站。 <strong>文字信息速率可能会收取您的运营商。 <span class="very-strong">不要启动此验证过程，直到你知道你将收取接收文字信息！</跨度> </强“
+    verify_by_phone_message: 我们给你发短信，你输入所包含的代码，你就大功告成了。
+    verify_by_birthday: 由生日验证。
+    verify_by_birthday_message: 这些意见进行审查一个真实的人，可能需要数天才能获得批准。
+    verify_mobile: 验证手机
+    verify_who_you_are: 首先，我们需要验证你是谁你说你是。请选择下列选项之一，以验证您的身份。你只需要做这一次，而且只需要几分钟。
+    wrong_code: 你输入了错误的代码。
+    you_use: 您使用
+    your_birthday: 生日与新年（必需）
+    your_carrier_will_charge: 您的移动运营商可能会，可能会向您收取接收文本信息。点击OK继续。
+    your_email: 电子邮件地址（必填）
+    your_full_name: 您的姓名（必填）
+    your_phone: 电话号码（必填）
+    your_phone_description: 如果我们需要给你一个关于您的帐户通话
+    your_situation: 您的状况（必填）
+    your_situation_description: 请给我们一个关于你和你的家人，包括多久你已经参加位信息，以及任何其他的信息可以帮助我们确认您的身份。
 
-  albums:
-    cannot_add_pictures_to_group: Cannot add pictures in this group.
-    click_to_view: click to view
-    description: Description
-    dont_show_my_name: This is a general community album — don't show my name on the pictures (admin-only option).
-    edit_picture: Edit Picture Album
-    name: Name
-    new: New Album
-    new_picture: New Picture Album
-    picture_albums: Picture Albums
-    profile: "Profile - show this album on my profile and to my friends only."
-    public: Public  - show this album on the "All Pictures" page and on my profile.
-    save: Save Album
-    saved: Album saved.
+  albums: 
+    cannot_add_pictures_to_group: 不能添加在这一组照片。
+    click_to_view: 点击查看
+    description: 说明
+    dont_show_my_name: 这是一个普遍的社会专辑 - 不显示我的图片（管理，唯一的选择）的名称。
+    edit_picture: 编辑画册
+    name: 姓名
+    new: 新专辑
+    new_picture: 新画册
+    picture_albums: 图片专辑
+    profile: “专页 - 显示这个在我的个人专辑，我的朋友而已。”
+    public: 公开 - 出现在“所有图片”页面，这在我的个人专辑。
+    save: 保存相册
+    saved: 相册保存。
 
-  application:
-    api_access: You must be a super administrator to use the API.
-    custom_theme_message: The custom theme must contain %{content} somewhere in its body.
-    no_default_site: No Default site found.
-    no_site_configured: "There is no site configured at this address: %{host}"
-    settings_reloaded: Settings reloaded.
-    settings_saved: Settings saved.
-    template_created: Template created.
+  application: 
+    api_access: 您必须是超级管理员使用的API。
+    custom_theme_message: 自定义主题必须包含在它的身体某处％{内容}。
+    no_default_site: 没有默认网站上找到。
+    no_site_configured: “有没有在这个网站的地址配置
+    settings_reloaded: 设置重新加载。
+    settings_saved: 设置保存。
+    template_created: 模板创建的。
 
-  attachments:
-    deleted: Attachment deleted.
-    file: File
-    files: Files
-    file_deleted: This file has been deleted.
-    file_not_found: This file cannot be found.
-    invalid_name: Filename contains invalid characters.
-    not_found: Attachment not found.
-    save_group_first: You must save this group before you can add files to it.
-    saved: Attachment saved.
-    unknown_type: Unknown attachment type.
-    upload_attachment: Upload Attachment
-    upload_file: Upload File
+  attachments: 
+    deleted: 删除附件。
+    file: 文件
+    files: 文件
+    file_deleted: 此文件已被删除。
+    file_not_found: 此文件无法找到。
+    invalid_name: 文件名含有无效字符。
+    not_found: 附件没有找到。
+    save_group_first: 您必须保存此组之前，你可以将文件添加到它。
+    saved: 附件保存。
+    unknown_type: 未知的附件类型。
+    upload_attachment: 上传附件
+    upload_file: 上传文件
 
-  attendance:
-    add_somebody_not_in_group: Add somebody not in the group
-    add_visitor: Add a visitor.
-    adult: Adult
-    attendance: Attendance
-    class_time: Class Time
-    clear_search: clear
-    date: Date
-    export: Export to File
-    group: Group
-    group_missing: group missing
-    id: ID
-    name: Name
-    name_unknown: name unknown
-    next_date: next date
-    no_records: no records to display
-    not_enabled: Attendance tracking is not enabled for this goup.
-    prev_date: prev date
-    recorded_time: Recorded Time
-    records_per_day: Attendance Records Per Day
-    save: Save Attendance
-    saved: Attendance saved.
-    Search: Search
-    search_person: Search by Person Name
-    wrong_date_format: Please enter the date as YYYY/MM/DD.
+  attendance: 
+    add_somebody_not_in_group: 添加组中有人不
+    add_visitor: 添加一个游客。
+    adult: 成人
+    attendance: 考勤
+    class_time: 上课时间
+    clear_search: 清除
+    date: 日期
+    export: 导出到文件
+    group: A组
+    group_missing: 集团失踪
+    id: 身份证
+    name: 姓名
+    name_unknown: 姓名不详
+    next_date: 下一次的约会
+    no_records: 无记录显示
+    not_enabled: 考勤跟踪无法在这个党团启用。
+    prev_date: 上一页日期
+    recorded_time: 记录的时间
+    records_per_day: 考勤记录每一天
+    save: 保存出席
+    saved: 考勤保存。
+    Search: 搜索
+    search_person: 搜索人名
+    wrong_date_format: 请输入为YYYY / MM / DD的日期。
 
-  calendars:
-    family_members_enabled: "Family Members: Shown"
-    family_members_disabled: "Family Members: Not Shown"
+  calendars: 
+    family_members_enabled: “家庭成员
+    family_members_disabled: “家庭成员
 
-  comments:
-    add_a_comment: Add a comment
-    add_read_comments: "Add/Read Comments"
-    ago: ago
-    and_others: and others
-    comment: comment
-    commented_on: commented on
-    deleted: Comment deleted.
-    leave_another_note_for: Leave another note for %{name}
-    leave_note_for: Leave a note for %{name}
-    leave_a_note_for: Leave a note for
-    none_yet: none yet
-    not_authorized: You are not authorized to delete this comment.
-    object_not_found: That %{name} was not found.
-    save: Save Comment
-    saved: Comment saved.
-    view: View
-    which_picture: Which picture are you commenting on?
-  
-  contributions:
-    add_to_donor_tools_now: "Add to Donor Tools now."
-    api_not_configured_html: The Donor Tools API is not configured. Please enter the API connection details in Admin <a href="%{url}">settings</a>.
-    Contributions: Contributions
-    donation_types:
-      d1: Cash
-      d2: Check
-      d3: Credit Card
-      d4: In Kind
-      d5: PayPal
-      d6: Other
-      d7:  eCheck
-      d8: Cashier's Check
-      d9: Money Order
-      d11: ACH
-      d13: Direct Deposit
-      d14: Online Donation
-      d16: Amazon Simple Pay
-      d17: Wire Transfer
-      d18: Check (Personal)
-      d19: Check (Business)
-    go_to_donor_tools: Go to Donor Tools.
-    not_in_donor_tools: Not in Donor Tools.
-    people_not_synced:
-      one: "The following individual is not synced to Donor Tools:"
-      other: "The following individuals are not synced to Donor Tools (%{count} people):"
-    people_not_synced_count:
-      one: "1 person is not synced"
-      other: "%{count} people are not synced"
-    record_synced: This record has been synced in Donor Tools.
-    remaining:
-      one: "1 record remaining..."
-      other: "%{count} records remaining..."
-    Sync_Selected: Sync Selected
-    Sync_All: Sync All
-    Sync_to_Donor_Tools: Sync to Donor Tools
-    synced: "synced:"
-    update_donor_tools_now: update now
-    view_in_donor_tools: View this individual in Donor Tools.
-    
-  families:
-    add_members: Add Family Members
-    add_existing_person_html: "Add an <em>existing</em> person to this family"
-    adding_will_remove_from_their_family_html: "Adding a person to this family will <em>remove</em> them from their current family."
-    are_you_sure: Are you sure? Clicking OK will delete this family and all the people in it.
-    cannot_delete_your_own: You cannot delete your own family.
-    city_st_zip: City, ST, Zip
-    delete: Delete Family
-    deleted_confirmation: Family Deleted?
-    drag_to_reorder_members: Drag the arrows to reorder family members.
-    edit: Edit Family
-    existing_person: Existing Person
-    family_id: Family ID
-    find_on_map: Find address on map
-    last_name: Family Last Name
-    last_name_example: Doe
-    legacy_id: Legacy ID
-    legacy_family_id: Legacy Family ID
-    name: Family Name
-    name_example_html: "<em>John Doe</em> or <em>John &amp; Jane Doe</em>"
-    new: New Family
-    no_one_yet: No one in this family yet.
-    not_found: Family not found.
-    only_in_mysql: This method is only available in a MySQL environment.
-    save: Save Family
-    saved: Family saved.
-    select_before_proceeding: Please select a family before proceeding.
-    too_many: Too many at once
+  comments: 
+    add_a_comment: 添加评论
+    add_read_comments: “添加/读取评论”
+    ago: 前
+    and_others: 和其他人
+    comment: 评论
+    commented_on: 评论
+    deleted: 评论已删除。
+    leave_another_note_for: 给为％{name}的另一注
+    leave_note_for: 离开％的注意{名称}
+    leave_a_note_for: 留下便条
+    none_yet: 无还
+    not_authorized: 您没有权限删除此评论。
+    object_not_found: 那％{name}的没有被发现。
+    save: 保存评论
+    saved: 评论保存。
+    view: 查看
+    which_picture: 你是哪个图片评论？
 
-  feeds:
-    add_a_feed: Add a Feed
-    add_the_feed: Yes, this looks right. Add the feed.
-    all: All Feeds
-    are_you_sure: Are you sure you want to remove this feed? Deleting this feed will NOT delete content (notes, pictures, etc.) that has already been imported into your account.
-    blog_name: Name of your blog
-    copy_the_url_from_bar: Copy the URL from the address bar and paste here
-    copy_your_notifications_link_html: <strong>Right-</strong>click on the link labeled "Via RSS" on the right side of the page (pictured below) and choose <strong>Copy Shortcut</strong> or <strong>Copy Link Location</strong> or similar.
-    deleted: Feed deleted.
-    description: You can import content and updates from external services, social networks, and blogs by adding "feeds" below.
-    done_html: Done! Click the <a href="%{url}">Home</a> tab to view your imported content.
-    enter_twitter_username: Enter your Twitter username here
-    error_retrieving: There was an error retrieving the feed. Please check the URL and try again.
-    facebook_notifications: Facebook Notifications
-    feeds: Feeds
-    feeds_for: Feeds for %{name}
-    flickr_url: Flickr URL
-    link_with_facebook: Link with your Facebook status updates...
-    link_with_flickr: Link with your Flickr photos...
-    link_with_twitter: Link with your Twitter updates...
-    link_with_rss: Link with your RSS feed...
-    log_into_blog: Find your blog's feed URL and paste it into the field here
-    log_into_facebook_html: <a href="http://www.facebook.com/notifications.php" target="_new">Click here</a> and log into Facebook.
-    log_into_flickr_html: Log into <a href="http://flickr.com">Flickr.com</a> and go to your photo page (click the "You" link near the top).
-    no_entries_found: No entries were found at the URL provided. Please go back and try again.
-    no_entries_found_flickr_alert: If adding a Flickr account, check that your Photos are public.
-    no_entries_found_twitter_alert: If adding a Twitter account, check that your Twitter updates aren't protected.
-    none_added: none added yet
-    note_html: "Note: content from your external feed is <strong>copied</strong> to this site with a link pointing back to the original. Comments made on imported entries are not posted back to the original. You may delete content on this site at any time and disable feed posting if you change your mind later."
-    looks_right: Does this look right?
-    paste_link_here: Paste the link here
-    please_wait: Please wait while we import your feed...
-    posted: Posted
-    preview: Preview Feed
-    sort_by_error: Sort by error count (descending)
-    sort_by_person: Sort by person
-    url: URL
+  contributions: 
+    add_to_donor_tools_now: “添加捐助工具了。”
+    api_not_configured_html: 捐赠者工具API没有配置。请输入在管理员的<a href="%{url}">设置</一> API的连接细节。
+    Contributions: 捐款
+    donation_types: 
+      d1: 现金
+      d2: 检查
+      d3: 信用卡
+      d4: 实物
+      d5: 贝宝
+      d6: 其他
+      d7: 电子支票
+      d8: 银行本票
+      d9: 汇票
+      d11: 乙酰胆碱
+      d13: 直接存款
+      d14: 网上捐款
+      d16: 亚马逊简单薪
+      d17: 电汇
+      d18: 检查（个人）
+      d19: 检查（业务）
+    go_to_donor_tools: 转到捐助工具。
+    not_in_donor_tools: not_in_donor_tools。
+    people_not_synced: 
+      one: “下列个人捐助者不同步工具
+      other: “下列个人不同步捐助工具（％{count}个人）
+    people_not_synced_count: 
+      one: “一人不同步”
+      other: “％{count}个人不同步”
+    record_synced: 此记录已捐助工具同步。
+    remaining: 
+      one: “1记录的剩余...”
+      other: “％{count}个记录，其余的...”
+    Sync_Selected: 同步选定
+    Sync_All: 同步所有
+    Sync_to_Donor_Tools: 同步捐助工具
+    synced: “同步
+    update_donor_tools_now: 立即更新
+    view_in_donor_tools: 查看此工具在个人捐赠。
+
+  families: 
+    add_members: 新增家庭成员
+    add_existing_person_html: “添加一<em>现有</电磁>人这个家庭”
+    adding_will_remove_from_their_family_html: “一个人加入这个家庭将<em>删除</电磁>”从他们目前的家庭他们。“
+    are_you_sure: 你确定吗？单击确定将删除这个家庭和所有的IT人。
+    cannot_delete_your_own: 您不能删除您自己的家庭。
+    city_st_zip: 省份，城市，邮编
+    delete: 删除家庭
+    deleted_confirmation: 家庭删除？
+    drag_to_reorder_members: 拖动箭头重新排序的家庭成员。
+    edit: 编辑家庭
+    existing_person: 现有人
+    family_id: 家庭的ID
+    find_on_map: 寻找地图上的地址
+    last_name: 家庭姓氏
+    last_name_example: 美国能源部
+    legacy_id: 传统的ID
+    legacy_family_id: 传统家庭的ID
+    name: 姓
+    name_example_html: “<em>李四</电磁>或<em>约翰＆李四</电磁>”
+    new: 新家庭
+    no_one_yet: 没有在这个家庭的一年。
+    not_found: 家庭没有找到。
+    only_in_mysql: 此方法只在MySQL环境中使用。
+    save: 保存家庭
+    saved: 家庭保存。
+    select_before_proceeding: 请选择继续之前，一个家庭。
+    too_many: 太多一次
+
+  feeds: 
+    add_a_feed: 添加供稿
+    add_the_feed: 是的，这个权利。添加饲料。
+    all: 所有求职
+    are_you_sure: 你确定要删除此供稿？删除此供稿不会删除内容（说明，图片等）已经到您的帐户汇入。
+    blog_name: 你的博客名称
+    copy_the_url_from_bar: 复制从地址栏中的URL并将其粘贴在这里
+    copy_your_notifications_link_html: <strong>从右- </强“上标有该页面（如下图）右侧”通过RSS“点击链接并选择<strong>复制捷径</强”或<strong>复制链接位置“< /强“或类似的。
+    deleted: 饲料删除。
+    description: 你可以导入，在“求职”下面的内容和对外服务，社交网络和博客更新。
+    done_html: 完成！单击<a href="%{url}">首页</一>标签查看导入的内容。
+    enter_twitter_username: 在这里输入你的Twitter的用户名
+    error_retrieving: 有一个错误检索饲料。请检查网址后再试一次。
+    facebook_notifications: Facebook的通知
+    feeds: 供稿
+    feeds_for: 饲料％{名称}
+    flickr_url: Flickr的网址
+    link_with_facebook: 链接与你的Facebook状态更新...
+    link_with_flickr: 链接与你的Flickr照片...
+    link_with_twitter: 链接与你的Twitter更新...
+    link_with_rss: 链接与你的RSS供稿...
+    log_into_blog: 找到您的博客的feed的URL并将其粘贴到外地这里
+    log_into_facebook_html: 的<a href="http://www.facebook.com/notifications.php" target="_new">点击此处</一>并登录到Facebook。
+    log_into_flickr_html: 到<a href="http://flickr.com"> Flickr.com </一>登录，进入你的照片页（点击“你”接近顶部的链接）。
+    no_entries_found: 没有条目提供的网址找到。请返回重试。
+    no_entries_found_flickr_alert: 如果添加一个Flickr帐户，请检查您的照片是公开的。
+    no_entries_found_twitter_alert: 如果添加一个Twitter帐户，请检查你的Twitter更新得不到保障。
+    none_added: 无尚未加入
+    note_html: “。注意
+    looks_right: 这个看看吧？
+    paste_link_here: 粘贴链接在这里
+    please_wait: 请稍候，我们导入您的饲料...
+    posted: 发布
+    preview: 预览饲料
+    sort_by_error: 分类错误数（降序）
+    sort_by_person: 由人排序
+    url: 网址
 
   friends: 
-    accept: Accept Friend
-    add_friend_are_you_sure: Are you sure? An email will be sent to this person requesting friendship.
-    add_to_friends: Add to Friends
-    add_your_friends_to_profile_html: <a href="%{url}">Add your friends</a> to your profile page!
-    added_as_friend: "%{name} has been added as a friend."
-    already_pending: A friend request is already pending with %{name}.
-    cannot_request: You cannot request friendship with %{name}.
-    decline: Decline Friend
-    friend_request_pending: friend request pending
-    friends: Friends
-    pending_requests: Pending Friend Requests
-    people_requested: The following people have requested to be your friend.
-    personal_friends: "%{name} Friends"
-    remove_from_friends: Remove from Friends
-    request_sent: A friend request has been sent to %{name}.
-    search_in_the_directory: Search for friends in the directory
-    unknown_state: unknown state
-    you_have_pending_requests_html: You have <a href="%{url}">pending friend requests</a>.
+    accept: 接受好友
+    add_friend_are_you_sure: 你确定吗？一个电子邮件将被发送到这个请求人的友谊。
+    add_to_friends: 加入朋友
+    add_your_friends_to_profile_html: 添加您的<a href="%{url}">朋友</一>您的个人资料页！
+    added_as_friend: “％{name}的追加了一个朋友。”
+    already_pending: 一个朋友的要求已经与％{name}的悬而未决。
+    cannot_request: 你不能要求与％{name}的友谊。
+    decline: 下降的朋友
+    friend_request_pending: 好友请求等待
+    friends: 朋友
+    pending_requests: 待定好友请求
+    people_requested: 下面的人要求成为您的朋友。
+    personal_friends: “％{name}的朋友”
+    remove_from_friends: 从好友中删除
+    request_sent: 一个朋友请求已发送到％{name}的。
+    search_in_the_directory: 搜索目录中的朋友
+    unknown_state: 未知状态
+    you_have_pending_requests_html: 您<a href="%{url}">等待朋友的要求</一>。
 
-  generated_files:
-    building: "Building your file..."
-    complete_heading: "Done!"
-    complete_message: "Your file is complete and ready to download."
-    failure_heading: "We're sorry..."
-    failure_message: "There seems to have been an error while generating your file."
+  generated_files: 
+    building: “建筑你的文件...”
+    complete_heading: “完成了！”
+    complete_message: “您的文件已经完成，准备下载。”
+    failure_heading: “我们很抱歉...”
+    failure_message: “似乎已经产生了错误，而您的文件。”
 
-  groups:
-    accept: Accept
-    add_somebody: Add somebody
-    address_hint: Give your group a unique email address so messages can be sent easily.
-    advanced: Advanced
-    approval_required_to_join: Approval required for people to join group
-    approve_group: Approve Group
-    are_you_sure_option: Are you sure you want to %{option} email from the group %{group}?
-    attendance: Attendance
-    back_to_group: "Back to %{name}"
-    back_to_homepage: "Back to Your Groups"
-    batch_edit_groups: Batch Edit Groups
-    birthdays: Birthdays
-    browse_by_category: Browse by Category
-    by_allow_anyone_to_join: By allow anyone to join this group without requiring admin approval, potentially any site user could see messages in this "private" group.
-    calendar_help: In your Google Calendar, in Calendar Settings, copy your "Private" XML Link and paste in this box to display your calendar on the group page.
-    calendar_private_link: Google Calendar Private Link
-    campaign_monitor_sync: "Campaign Monitor API List ID:"
-    campaign_monitor_sync_help: To sync with a Campaign Monitor subscriber list, paste the API List ID here.
-    campaign_monitor_policy_html: 'You must follow all policies of Campaign Monitor, including <a href="http://www.campaignmonitor.com/resources/entry/558/about-permission/">permission requirements</a>.'
-    cannot_remove_last_admin: You cannot remove the last group admin. You may delete the group, however.
-    category: Category
-    category_hint: Make your group easy to find by placing it an appropriate category.
-    category_required: Category (required)
-    change_email_settings: Change Email Settings
-    change_this_picture: Change This Picture
-    class_link_code: "Class Link Code(s):"
-    class_link_code_hint_html: 'Useful for syncing with external systems. See <a href="https://github.com/seven1m/onebody/wiki/HowGroupMembershipWorks">here</a>. Separate multiple codes with a space.'
-    click_save_changes_to_upload: Click "Save Changes" at the bottom of this form to upload a new picture.
-    configure_email_from_group: configure email from this group
-    create_a_group: Create a Group
-    created: The group has been created.
-    created_pending_approval: Your group has been created and is pending approval.
-    creator: Creator
-    demote: Demote
-    details: Details
-    delete_group: Delete Group
-    deleted: Group deleted.
-    description: Description
-    description_hint: "Enter a sentence or two to give people an idea of why you meet and of your group's goals."
-    directions: Directions
-    directions_hint: You may want to include travel directions.
-    done_removing_people: Done.
-    edit_group: Edit Group
-    edit_members: Edit Group Members
-    email_from_group_is_on: email from this group is ON
-    email_from_group_is_off: email from this group is OFF
-    email_off: "off"
-    email_on: "on"
-    email_settings_changed: Your email settings for the group have been changed.
-    enable_attendance_tracking: Enable Attendance Tracking
-    enable_calendar: Enable Calendar
-    enable_email: Enable Email
-    enable_pictures: Enable Pictures
-    enable_prayer_requests: Enable Prayer Requests
-    features: Features
-    following_are_pending_approval:
-      one: "The following group is pending approval:"
-      other: "The following groups are pending approval:"
-    group_emails: Group Emails
-    group_members_can_post: Group Members Can Post Messages
-    groupies: Groupies
-    hidden_group: Hidden Group
-    hidden_groups: Hidden Groups
-    i_agree: I Agree
-    if_cant_find_create_it: If you can't find the group you're looking for, create it!
-    if_checked_message_only_to_members: If checked, messages are only visible to members of the group.
-    if_ok_you_will_stop_receiving: If you click OK, you will no longer receive email from this group.
-    if_ok_you_will_start_receiving: If you click OK, you will start receiving email from this group.
-    ignore: Ignore
-    join_this_group: Join This Group
-    last_admin_remove: "%{name} is the last admin and cannot be removed."
-    leader: Leader
-    leader_id: Leader Id
-    leave_this_group: Leave This Group
-    linked: Linked Groups
-    linked_membership: (linked)
-    location_address: Location and Address
-    location_address_hint: If you enter a physical address, an interactive map will be displayed on your group page.
-    meets: Meets
-    meets_when: Meets When
-    meets_when_hint: 'Something like "Wednesdays at 7pm" or "As Announced"'
-    members: Group Members
-    members_send: Members Send
-    must_specify_ids_list: You must specify a list of ids.
-    name_required: Name (required)
-    new_group: New Group
-    no_more: No groups can be added at this time.
-    nobody_yet: nobody yet
-    not_authorized_view: You are not authorized to view this group
-    not_authorized_post: You are not authorized to post to this group.
-    not_found: Group not found.
-    no_activity_yet: "This group hasn't had any activity yet."
-    no_groups_found: no groups found
-    only_admins_see_this_list: Only administrators (such as yourself) see this list
-    or_send_from_your_email_html: "Or, send to <a href='mailto:%{email}'>%{email}</a> from your email client."
-    other_notes: Other Notes
-    parents_of: "Parents of:"
-    parents_of_hint: "Membership will be auto-generated from parents of selected group's members."
-    pending_approval_count:
-      one: "%{count} group to approve"
-      other: "%{count} groups to approve"
-    membership_request_count:
-      one: "%{count} membership request"
-      other: "%{count} membership requests"
-    people_in_group: "People In %{name}"
-    picture: Group Picture
-    picture_hint: Use a group shot or a clip-art graphic to help people recognize your group on this site.
-    privacy_security: Privacy and Security
-    private_group: Private Group
-    promote: Promote
-    remove_group_photo: Remove Group Photo
-    remove_people: Remove People
-    requests: Requests
-    request_sent: A request to join this group has been sent to the group administrator(s).
-    request_will_be_sent_to_admins: Are you sure? A request will be sent to the group administrator(s).
-    settings_saved: Group settings have been saved.
-    scroll_left_and_right: Scroll left and right to see all columns.
-    search: Group Search
-    search_for_a_group: Search for a Group
-    select_one_or_more: Select one or more above and choose an action
-    show_all: Show all...
-    the_settings_are_for_advanced_users: The settings below are for advanced users.
-    there_was_errors_saving: There was one or more errors in saving the changes. Errored records are highlighted in red. Scroll to see error messages.
-    this_group_has_pending_html: This group has pending <a href="%{url}">group membership requests</a>.
-    this_group_is_hidden: "This group is hidden. It's existence is hidden from most people."
-    this_group_is_pending_approval: This group is pending approval.
-    this_group_is_pending_you_may_not_add_people: This group is pending approval. You may not add people to it yet.
-    this_group_is_private: This group is private. Only people in this group can see its messages.
-    this_group_maintained_by_staff: This group is maintained by office staff.
-    types: Types of Groups
-    unmapable_address: "This does not resemble a physical address; no map will be shown."
-    user_settings_saved: User settings saved.
-    view_group: View Group
-    view_members: View Group Member Details
-    yes_do_it: Yes, do it.
-    you_are_to_remove_yourself: You're about to remove yourself from this group! You won't be able to edit it anymore if you do that
-    you_requested_join_this_group: You have requested to join this group.
-    your_groups: Your Groups
+  groups: 
+    accept: 接受
+    add_somebody: 添加人
+    address_hint: 给你一组唯一的电子邮件地址，以便可以发送的邮件很容易。
+    advanced: 先进
+    approval_required_to_join: 批准所需的人加入小组
+    approve_group: 核准集团
+    are_you_sure_option: 你确定要选择}％{％{从组群}电子邮件？
+    attendance: 考勤
+    back_to_group: “回到％{name}”的
+    back_to_homepage: “回到你的团体”
+    batch_edit_groups: 批量编辑组
+    birthdays: 过生日
+    browse_by_category: 按类别浏览
+    by_allow_anyone_to_join: 通过允许任何人加入，而不需要管理员批准这一组中，任何可能的网站用户可以看到在这个“私人”组信息。
+    calendar_help: 在您的谷歌日历，日历中的设置，在此方块复制您的“私人”XML链接并粘贴到网页上显示该组的日历。
+    calendar_private_link: 谷歌日历的私人链接
+    campaign_monitor_sync: “Campaign Monitor的API列表的ID
+    campaign_monitor_sync_help: 和A Campaign Monitor的订户名单，贴在这里的API列表ID同步。
+    campaign_monitor_policy_html: '你必须遵守所有的运动监测政策包括<a href="http://www.campaignmonitor.com/resources/entry/558/about-permission/">权限要求</一>。'
+    cannot_remove_last_admin: 您不能删除最后一组管理。你可以删除该组，但是。
+    category: 分类
+    category_hint: 让你的小组通过将很容易找到一个适当的类别。
+    category_required: 分类（必需）
+    change_email_settings: 更改电子邮件设定
+    change_this_picture: 更改此图片
+    class_link_code: “类链接代码（补）
+    class_link_code_hint_html: 与外部系统同步'有用。请参阅<a href="https://github.com/seven1m/onebody/wiki/HowGroupMembershipWorks">这里</一>。分隔多个用空格代码。'
+    click_save_changes_to_upload: 点击“保存更改”，在此表底部上传新的图片。
+    configure_email_from_group: 配置从该小组的电子邮件
+    create_a_group: 创建一个组
+    created: 小组已经成立。
+    created_pending_approval: 您的群组已经建立并正在等待批准。
+    creator: 造物主
+    demote: 降级
+    details: 详细信息
+    delete_group: 删除组
+    deleted: 组中删除。
+    description: 说明
+    description_hint: “输入一两句话给人们一见面，为什么你和你的小组的目标的想法。”
+    directions: 方向
+    directions_hint: 您可能要包括旅行的方向。
+    done_removing_people: 完成。
+    edit_group: 编辑组
+    edit_members: 编辑组成员
+    email_from_group_is_on: 从该小组的电子邮件是ON
+    email_from_group_is_off: 从该小组的电子邮件是关
+    email_off: “关闭”
+    email_on: “开”
+    email_settings_changed: 该组的电子邮件设置已被更改。
+    enable_attendance_tracking: 启用考勤跟踪
+    enable_calendar: 启用日历
+    enable_email: 启用电子邮件
+    enable_pictures: 启用图片
+    enable_prayer_requests: 启用代祷
+    features: 特点
+    following_are_pending_approval: 
+      one: “下面的组正在等待批准
+      other: “下列团体正在等待批准
+    group_emails: 组电子邮件
+    group_members_can_post: 小组成员可以发帖
+    groupies: 追星族
+    hidden_group: 隐藏的组
+    hidden_groups: 隐藏的组
+    i_agree: 我同意
+    if_cant_find_create_it: 如果你找不到你要找的集团，创造它！
+    if_checked_message_only_to_members: 如果选中，邮件只看到该组的成员。
+    if_ok_you_will_stop_receiving: 如果您单击确定，您将不再接收来自该小组的电子邮件。
+    if_ok_you_will_start_receiving: 如果您单击确定，你将开始接收来自该小组的电子邮件。
+    ignore: 忽略
+    join_this_group: 加入此群组
+    last_admin_remove: “％{name}的是最后的管理员，不能删除。”
+    leader: 负责人
+    leader_id: 领导标识
+    leave_this_group: 给此群组
+    linked: 链接组
+    linked_membership: （链接）
+    location_address: 位置及地址
+    location_address_hint: 如果你输入一个物理地址，交互式地图将显示在您的网页。
+    meets: 会见
+    meets_when: 会见时
+    meets_when_hint: 就像“星期三晚上7点”的东西或“公布”'
+    members: 小组成员
+    members_send: 会员发送
+    must_specify_ids_list: 您必须指定一个ID的列表。
+    name_required: 名称（必填）
+    new_group: 新集团
+    no_more: 没有群组可以添加在这个时候。
+    nobody_yet: 目前，还没有人
+    not_authorized_view: 您无权查看该组
+    not_authorized_post: 你没有被授权发布到该小组。
+    not_found: 集团没有找到。
+    no_activity_yet: “这个集团还没有任何活动。”
+    no_groups_found: 没有发现群体
+    only_admins_see_this_list: （如你自己），只有管理员看到这个名单
+    or_send_from_your_email_html: “。或者，发送到<a href='mailto:%{email}'>％{电子邮件} </一>”从你的电子邮件客户端“
+    other_notes: 其他说明
+    parents_of: “对父母说
+    parents_of_hint: “成员将被自动从选定的组成员的父母产生的。”
+    pending_approval_count: 
+      one: “％{count}个小组，批准”
+      other: “％{count}个小组，批准”
+    membership_request_count: 
+      one: “％{count}个成员的请求”
+      other: “％{count}个会员国的请求”
+    people_in_group: “在％{name}的人”
+    picture: 合影
+    picture_hint: 使用一组镜头或剪贴画的图形，以帮助人们认识到在这个网站上的小组。
+    privacy_security: 隐私和安全
+    private_group: 私人集团
+    promote: 促进
+    remove_group_photo: 删除合影
+    remove_people: 删除人
+    requests: 要求
+    request_sent: 请求加入该集团已发送到组审（）。
+    request_will_be_sent_to_admins: 你确定吗？请求将被发送到组审（）。
+    settings_saved: 组设置已保存。
+    scroll_left_and_right: 左，右滚动看到所有列。
+    search: 集团搜索
+    search_for_a_group: 寻找群组
+    select_one_or_more: 选择一个或以上，并选择动作
+    show_all: 显示所有...
+    the_settings_are_for_advanced_users: 下面的设置是为高级用户。
+    there_was_errors_saving: 有一个或多个保存更改错误。误码记录突出显示为红色。滚动到看到错误消息。
+    this_group_has_pending_html: 该集团已挂起的<a href="%{url}">组成员的请求</一>。
+    this_group_is_hidden: “这个小组是隐藏它的存在是大多数人隐藏起来。。”
+    this_group_is_pending_approval: 本组正在等待批准。
+    this_group_is_pending_you_may_not_add_people: 本组正在等待批准。你可能不加人呢。
+    this_group_is_private: 本组是私人的。此组中只有人可以看到它的消息。
+    this_group_maintained_by_staff: 本组是由办公室工作人员。
+    types: 群的类型
+    unmapable_address: “这并不像一个物理地址，没有地图会显示出来。”
+    user_settings_saved: 用户设置保存。
+    view_group: 查看组
+    view_members: 查看集团成员详情
+    yes_do_it: 是的，做到这一点。
+    you_are_to_remove_yourself: 您即将删除该组吧！您将不能够编辑它了，如果你这样做
+    you_requested_join_this_group: 您已要求加入这个小组。
+    your_groups: 您的圈子
 
-  import:
-    apply_settings_to_imports: "Apply the following settings to all imports:"
-    attempt_match_existing_people: Attempt to match existing people by name if no IDs are included.
-    completed_records: Completed Records
-    error: Error
-    error_updating: Error updating record.
-    error_updating_message_html: There was at least one error while attempting to update records in the database. Please correct the errors, then return to the <a href="%{url}">Pending Updates</a> interface to complete the process.
-    errored_records: Errored Records
-    first: First
-    for_list_of_available_attributes: for a list of available attributes (not all attributes are required).
-    hint_excel_docs: "Hint: Excel documents can be exported as CSV from the File —> Save As menu."
-    import_data: "Import Data..."
-    import_people: Import People
-    import_results: Import Results
-    import_selected_people: Import Selected People
-    last: Last
-    no_records_were_found: No records were found to import.
-    only_first_records_will_be_imported_html: Only the first %{count} records will be imported. For larger files, you must divide records into multiple files, or use the <a href="http://wiki.github.com/seven1m/onebody/updateagent">UpdateAgent</a> to import a large batch at once.
-    people: Import People
-    record: record
-    record_updated: Record updated.
-    records: Records
-    select_csv_file: Select a Comma Separated Values (CSV) file to import with attribute names as the header row.
-    status: Status
-    the_changes_will_be_made: The following changes will be made. Only selected records will be created/updated.
-    the_import_is_complete: The import is complete
-    visibility_access: Visibility/Access
-    with_errors: with errors
+  import: 
+    apply_settings_to_imports: “应用到所有进口下列设置
+    attempt_match_existing_people: 尝试匹配名称的现有人，如果没有标识也包括在内。
+    completed_records: 完成记录
+    error: 错误
+    error_updating: 错误更新纪录。
+    error_updating_message_html: 至少有一个错误，而试图更新数据库中的记录。请更正错误，然后返回<a href="%{url}">挂起更新</一>接口“来完成这一进程。
+    errored_records: 错误记录
+    first: 首先
+    for_list_of_available_attributes: 有关可用属性的列表（不是所有的属性是必须的）。
+    hint_excel_docs: “提示
+    import_data: “导入数据...”
+    import_people: 进口人
+    import_results: 导入结果
+    import_selected_people: 导入选定的人
+    last: 最后
+    no_records_were_found: 没有记录被发现进口。
+    only_first_records_will_be_imported_html: 只有第一个％{count}个记录将被导入。对于较大的文件时，必须分成多个文件记录，或者使用<a href="http://wiki.github.com/seven1m/onebody/updateagent"> UpdateAgent </一>大批量导入一次。
+    people: 进口人
+    record: 记录
+    record_updated: 记录更新。
+    records: 记录
+    select_csv_file: 选择一个逗号分隔值（CSV）文件导入作为标题行的属性名称。
+    status: 状态
+    the_changes_will_be_made: 下面的更改将会作出修改。只有选中的记录将创建/更新。
+    the_import_is_complete: 导入完成
+    visibility_access: 可见/访问
+    with_errors: 与错误
 
-  layouts:
-    this_is_the_fallback_template: This is the fallback template used in case your selected theme cannot be found. Please check that your Theme setting points to a real directory inside the themes/ directory.
-    powered_by_html: Powered by <a href="http://beonebody.com" rel="external">OneBody</a>
-    privacy_policy: Privacy Policy
+  layouts: 
+    this_is_the_fallback_template: 这是回退的情况下用你的模板选择的主题不能被发现。请检查你的主题设置指向一个在/目录主题的真实目录。
+    powered_by_html: 本站由<a href="http://beonebody.com" rel="external"> OneBody </一>
+    privacy_policy: 隐私政策
 
-  menus:
-    home:
-      feed: feed
-      mobile_tap_again: Tap button again to go to Home.
-      news: news
-      pictures: pictures
-      podcasts: podcasts
-      publications: publications
-      verses: verses
-    profile:
-      contributions: contributions
-      edit: edit profile
-      edit_family: edit family
-      email: email settings
-      feeds: feeds
-      mobile_tap_again: Tap button again to go to your Profile.
-      new_family: new family
-      privacy: privacy
-      password: password
-      relationships: relationships
-    group:
-      delete: delete group
-      edit: edit group
+  menus: 
+    home: 
+      feed: 饲料
+      mobile_tap_again: 点击按钮进入首页。
+      news: 新闻
+      pictures: 图片
+      podcasts: 播客
+      publications: 出版物
+      verses: 经文
+    profile: 
+      contributions: 捐款
+      edit: 编辑个人资料
+      edit_family: 编辑家庭
+      email: 电子邮件设置
+      feeds: 供稿
+      mobile_tap_again: 点击按钮进入您的个人资料。
+      new_family: 新家庭
+      privacy: 隐私
+      password: 密码
+      relationships: 关系
+    group: 
+      delete: 删除组
+      edit: 编辑组
 
   messages: 
-    ago: ago
-    attachment_optional: Attachment (optional)
-    attachments: Attachments
-    delete_message: Delete Message
-    email_message_to: Email Message to %{name}
-    file_missing: file missing
-    flag_cleared: Flag(s) cleared.
-    from: From
-    group: Group
-    group_message_to: Group Message to %{group}
-    in: in
-    message: Message
-    message_by: Message by
-    messages_in_html: Messages in <a href="%{url}">%{name}</a>
-    missing_param: Missing the message param.
-    no_email_for_person: Sorry. We don't have an email address on file for %{name}.
-    not_authorized_delete: You are not authorized to delete this message.
-    not_found: Message not found.
-    posted_by: posted by
-    preview: Preview
-    private: Private
-    reply: Reply
-    reply_by: Reply by
-    reply_to_this_message: Reply to this message
-    send_message: Send Email
-    sent: Your message has been sent.
-    sent_per_day: Messages Sent Per Day
-    show_quoted_content: show quoted content
-    some_quoted_text_is_hidden: Some quoted text in this message is hidden;
+    ago: 前
+    attachment_optional: 附件（可选）
+    attachments: 附件
+    delete_message: 删除消息
+    email_message_to: 电子邮件发送到％{名}
+    file_missing: 文件丢失
+    flag_cleared: 标志（s）清除。
+    from: 从
+    group: A组
+    group_message_to: 组邮件到％{组}
+    in: 
+    message: 消息
+    message_by: 消息由
+    messages_in_html: 邮件在<a href="%{url}">％{name}的</一>
+    missing_param: 失踪的消息参数。
+    no_email_for_person: 对不起。我们没有为％{name}的档案的电子邮件地址。
+    not_authorized_delete: 您无权删除该邮件。
+    not_found: 消息未找到。
+    posted_by: 按发布
+    preview: 预览
+    private: 私人
+    reply: 回复
+    reply_by: 回复
+    reply_to_this_message: 回复此邮件
+    send_message: 发送电子邮件
+    sent: 您的邮件已发送。
+    sent_per_day: 邮件发送的每一天
+    show_quoted_content: 显示引用内容
+    some_quoted_text_is_hidden: 一些在此消息引用文字被隐藏;
     subject: Subject
-    this_group_is_not_private: This group is not private, so messages posted here will be visible by people who aren't members of this group.
-    this_will_send_an_email_to: This will send an email to %{group}.
-    this_will_send_a_private_email_html: This will send a <em>private</em> email.
-    to_show_the_entire_message: to show the entire message.
-    unknown_type: Unknown message type.
-    wall_not_found: Wall not found
-    wall_post: Wall Post
+    this_group_is_not_private: 本组不是私人，所以将讯息张贴在这里被人谁不属于该组的成员可见。
+    this_will_send_an_email_to: 这将发送一封电子邮件到％{组}。
+    this_will_send_a_private_email_html: 这将派遣了<em>私人</电磁>“电子邮件。
+    to_show_the_entire_message: 显示整个邮件。
+    unknown_type: 未知信息类型。
+    wall_not_found: 墙未找到
+    wall_post: 墙后
 
   nav: 
-    directory: Directory
-    groups: Groups
-    home: Home
-    podcasts: Podcasts
-    profile: Profile
+    directory: 目录
+    groups: 团体
+    home: 主页
+    podcasts: 播客
+    profile: 简介
 
   news: 
-    body_description: "Share your announcement, information, or news here:"
-    deleted: News deleted.
-    edit_news_post: Edit News Post
-    if_you_have_something_to_share_html: If you have something newsworthy to share, <a href="%{url}">submit it here</a>.
-    news: News
-    news_feed: News Feed
-    no_news_is_available: No news is available at this time.
-    return_to_news: « Return to News
-    save_news: Save News
-    saved: News saved.
-    submit_news: Submit News
-    subscribe_to_community_news_html: <a href="%{url}" class="feed-icon">Subscribe</a> to Community News with your feed reader.
-    title_description: "Give your post a concise title:"
-    welcome_to_the_place: Welcome to the place for community news.
+    body_description: “分享您的公告，信息或新闻浏览
+    deleted: 新闻删除。
+    edit_news_post: 编辑新闻发布
+    if_you_have_something_to_share_html: 如果您有什么新闻价值分享，这里提交的<a href="%{url}"> </一>。
+    news: 新闻
+    news_feed: 新闻饲料
+    no_news_is_available: 没有消息可在这个时候。
+    return_to_news: «返回新闻
+    save_news: 保存新闻
+    saved: 新闻保存。
+    submit_news: 提交新闻
+    subscribe_to_community_news_html: 的<a href="%{url}" class="feed-icon">订阅</一>与您的饲料读者对社区新闻。
+    title_description: “给您的文章简洁的标题
+    welcome_to_the_place: 欢迎对社区新闻的地方。
 
-  notes:
-    about_this_note: about this note
-    add_a_note: Add a Note
-    add_note: Add Note
-    body: Body
-    by: by
-    creating_note_doesnt_send_email_html: "Creating a note does <em>not</em> send an email to the group."
-    delete_note: Delete Note
-    dont_have_notes: "You don't have any notes yet"
-    edit_note: Edit Note
-    new_note: New Note
-    note: Note
-    note_imported_from: Note imported from
-    notes: Notes
-    posted: posted
-    posted_by: posted by
-    save_note: Save Note
-    saved: Note saved.
-    this_note_will_be_posted: This note will be posted to the %{group} blog.
-    this_note_will_not_be_private_html: "This note will <strong>not</strong> be private since it is a blog post. To send a private message, send an email to the group."
-    title: Title
+  notes: 
+    about_this_note: 关于本说明
+    add_a_note: 添加注释
+    add_note: 添加注释
+    body: 身体
+    by: 
+    creating_note_doesnt_send_email_html: “创建并注意<em>不</电磁>”发送电子邮件至本集团。“
+    delete_note: 删除注释
+    dont_have_notes: “你没有任何票据，但”
+    edit_note: 编辑注
+    new_note: 新注
+    note: 请注意
+    note_imported_from: 注意进口
+    notes: 备注
+    posted: 发布
+    posted_by: 按发布
+    save_note: 保存注意
+    saved: 注意保存。
+    this_note_will_be_posted: 这说明将被张贴到组的％{}博客。
+    this_note_will_not_be_private_html: “这说明将<strong>不会</强”是私人的，因为它是一个博客张贴到发送私人邮件，发送电子邮件至本集团。。“
+    title: 标题
 
-  notifier:
-    attached_your_custom_directory: Hello, %{name}. Attached is your custom printed directory from %{site}.
-    be_sure_to_send_verification_email: Be sure to also click to "send verification email" to the user.
-    check_boxes_in_visibility_sidebar: Check all the appropriate boxes in the "Visibility" sidebar and save.
-    click_link_to_complete_process: "Click the following link to complete the process: %{url}"
-    has_submited_profile_update: has submitted a profile update
-    if_you_cannot_click_link: If you cannot click the link above, you may need to copy and paste it into the address bar of your web browser.
-    if_you_approve_this_account_creation: If you approve of this account creation, activate the account at this address
-    if_you_dont_know_why_get_this_email: If you don't know why you're getting this email, you may contact %{name} at %{phone}.
-    message_id: Message ID
-    name_has_requested_join_group: "%{name} has requested to join the group %{group}."
-    name_submitted_birthday_request: "%{name} has submitted a birthday verification request"
-    new: New
-    old: Old
-    person_had_their_email_changed: "%{name} has had their email changed."
-    person_has_signed_for_account: "%{name} has signed up for an account."
-    person_wants_to_be_your_friend: "%{name} wants to be your friend on %{site}."
-    please_make_updates: Please make the appropriate updates to the membership database.
-    this_email_to_verify_email: This email is to verify your email address for access to the %{site} website. To verify your email address, please click the link below
-    this_notify_someone_reported: This is to notify you that someone has reported that the date and time are incorrect at %{site}.
-    to_accept_or_decline: To either accept or decline, please sign in here
-    to_approve_or_ignore: To approve or ignore, sign in and visit the following address
-    update_record_membership: Update their record in the membership database.
-    verification_code: Verification code
-    verify_person_identity: "Verify this person's identity. Be cautious; if in doubt, use the phone number provided to validate this person is who they say they are."
-    wait_one_day_and_wait: WAIT ONE DAY or manually trigger the database update script on the server and wait until it is finished.
+  notifier: 
+    attached_your_custom_directory: 你好，％{name}的。随信附上您的自定义打印从％{网站}目录。
+    be_sure_to_send_verification_email: 一定要还可以点击“发送验证电子邮件”给用户。
+    check_boxes_in_visibility_sidebar: 检查“能见度”所有适当的栏框并保存。
+    click_link_to_complete_process: “点击下面的链接来完成这个过程
+    has_submited_profile_update: 提交了一份文件更新
+    if_you_cannot_click_link: 如果您不能单击上面的链接，您可能需要复制并粘贴到您的Web浏览器的地址栏中。
+    if_you_approve_this_account_creation: 如果你创建这个帐户批准，在这个地址激活帐户
+    if_you_dont_know_why_get_this_email: 如果你不知道你为什么会收到这个电子邮件 ，您可以使用该号码%{phone}联系,ta:%{name}
+    message_id: 消息ID
+    name_has_requested_join_group: “％{name}的要求加入该组％{组}。”
+    name_submitted_birthday_request: “％{name}的提交了一份生日核查要求”
+    new: 新
+    old: 老
+    person_had_their_email_changed: “％{name}的已改变他们的电子邮件。”
+    person_has_signed_for_account: “％{name}的已经签署了一个帐户。”
+    person_wants_to_be_your_friend: “％{name}的希望成为你的朋友在％{网站}。”
+    please_make_updates: 请做适当的更新会员资料库。
+    this_email_to_verify_email: 此邮件是验证用于访问网站的电子邮件地址。为了验证您的电子邮件地址，请点击下面的链接
+    this_notify_someone_reported: 这是为了通知您，有人报告说，日期和时间地点在％{}不正确的。
+    to_accept_or_decline: 可以选择接受或拒绝，请在此登录
+    to_approve_or_ignore: 批准或忽视，登录和访问以下地址
+    update_record_membership: 更新他们的数据库记录中的成员资格。
+    verification_code: 验证码
+    verify_person_identity: “确认此人的身份要谨慎，如果有疑问，可使用提供的电话号码，以验证此人是谁他们说。。”
+    wait_one_day_and_wait: 等待一天或手动触发服务器上的数据库更新脚本，并等待它完成。
 
-  pages:
-    are_you_sure: Are you sure? This will be permanent and will delete all children of this page!
-    body: Body
-    collapse: collapse
-    edit_page: Edit Page
-    expand: expand
-    loading: loading...
-    new_page: new
-    not_found: Page not found.
-    pages: Pages
-    published: Published
-    saved: Page saved.
-    template_not_found: Template not found.
-    title: Title
-    to_add_attachment_first_save_it: To add an attachment to this page, first save it.
-    upload_attachment: Upload Attachment
-    view_page: View Page
+  pages: 
+    are_you_sure: 你确定吗？这将是永久性的，并会删除该网页上所有的孩子们！
+    body: 身体
+    collapse: 崩溃
+    edit_page: 编辑页面
+    expand: 展开
+    loading: 载入中...
+    new_page: 新
+    not_found: 找不到网页。
+    pages: 页
+    published: 出版
+    saved: 页保存。
+    template_not_found: 模板没有找到。
+    title: 标题
+    to_add_attachment_first_save_it: 要添加一个附件到这个网页，先保存它。
+    upload_attachment: 上传附件
+    view_page: 查看页
 
-  people:
-    about_me: About Me
-    add_group: Add Group
-    advanced: Advanced
-    activities: Activities
-    alternate_email: Alternate Email
-    books: Books
-    business: Business
-    business_directory: Business Directory
-    business_address: Business Address
-    business_email: Business Email
-    business_name: Business Name
-    business_phone: Business Phone
-    business_website: Business Website
-    can_sign_in: Can Sign In
-    cant_be_added: No people can be added at this time.
-    cant_delete_yourself: You cannot delete yourself.
-    cant_delete: You cannot delete this person.
-    change_your_picture: Change Your Picture
-    changes_must_be_reviewed_html: Changes to the details below must be <strong>reviewed by staff</strong>. To request changes, enter the details below and click 'Submit.'
-    changes_submitted: Changes submitted.
-    child: Child
-    child_alert: You must specify whether the person is a Child (under %{years}) or not to complete this update.
-    click_to_send_verification_email: Send a password setup email to this user.
-    click_to_change_email_html: <a href="%{url}">Click here</a> to change this email address.
-    deleted_html: This person has been deleted. You can restore the record <a href="%{url}">here</a>.
-    description_of_business: Description of Business
-    determine_by_birthday: Determine by birthday
-    edit:
-      about: About
-      basics: Basics
-      child_hint: If no birthday is specified, you must indicate whether this is a child or an adult.
-      description_hint: "A word or two about yourself — maybe your profession?"
-      email: Change Email Settings
-      family_photo: Family Photo
-      password: Change Password
-      person_type_hint: These do not control access — only designation.
-      photo: Profile Photo
-      privacy: Change Privacy Settings
-      profile: Edit Profile
-    email: Email
-    email_address: email address (account login) is
-    enter_new_category: Enter the new category.
-    family: Family
-    family_legacy_external_id: Family Legacy/External ID
-    find_a_group_html: Find a group <a href="%{url}">here</a>.
-    friend_not_found: Friend not found.
-    friendship_accepted: Friendship accepted.
-    friendship_manage: You may not manage friendships for anyone but yourself.
-    friendship_must_specify: Must specify accept=true or reject=true
-    friendship_rejected: Friendship rejected.
-    full_access: Full Access
-    groups: Groups
-    if_you_have_another_email: If you have another email (perhaps a work address) you wish to utilize to send email to groups, you may enter it here.
-    if_you_wish_to_be_listed_business_dir_html: If you wish to be listed in the <a href="%{url}">Business Directory</a>, Enter your business name, description, and other details below.
-    if_you_wish_to_remove_something_html: If you wish to remove something in order to keep others from seeing it, instead go to the <a href="%{url}">Privacy</a> page and hide it.
-    if_your_system_is_setup_to_sync_change: If your system is set up to synchronize its data with an external source (e.g., a membership managment system), changes you make here may be overwritten on the next sync.
-    interests: Interests
-    legacy_external_id: Legacy/External ID
-    limited_access: "Your account currently has limited access; We're showing you an abbreviated profile page as a result."
-    limited_access_denied: "Your account currently has limited access."
-    movies: Movies
-    music: Music
-    name: Name
-    new_person: New Person
-    no_additional_access_avaiable: No additional access options available at this time.
-    no_email: "%{name} doesn't have an email address in the system"
-    no_family_for_this_person: This person does not belong to a family. They will be unable to sign in and will not be visible to others on the site.
-    no_groups_yet: no groups yet
-    not_deleted: Person not deleted.
-    not_found: Person not found.
-    nothing_here_yet: Nothing here yet!
-    only_an_approximation: only an approximation
-    pending_approval: pending approval
-    people: People
-    person:
-      one: 1 Person
-      other: "%{count} People"
-    person_isnt_any_groups: "%{person} isn't in any groups right now."
-    person_type: Roles
-    quotes: Quotes
-    save_access: Save Access
-    select_file_to_upload: "Select a file on your computer to upload:"
-    send_email: Send Email
-    services_provided_by: Services provided by
-    share_your_personal_testimony: Share your personal testimony — how you came to know Jesus Christ and how he has changed your life.
-    show_a_map_here_html: Show a map here by providing OneBody with your Yahoo Maps API key. <a href="http://github.com/seven1m/onebody/wikis/serviceapikeys">Click here</a> for help.
-    show_full_screen: show full screen
-    show_hidden_groups: Show Hidden Groups
-    suffix: Suffix
-    tell_us_about_yourself: Tell us about yourself. What's your personality like? What would your best friend say about you?
-    testimony: Testimony
-    this_account_is_frozen: This account is frozen. %{name} cannot make changes to this profile or anyone else's until this account is unfrozen.
-    this_email_will_not_be_visible: This email address will not be visible to anyone except administrators.
-    this_event_doesnt_have_pictures: "This event doesn't have any pictures yet."
-    this_person_is_not_an_adult: This person is believed to be less than %{years} years of age, and does not have parental consent.
-    this_profile_is_hidden: This profile is hidden
-    tv_shows: TV Shows
-    upload_a_picture_of_html: Upload a picture of %{name} here.
-    upload_family_picture_html: Upload a family picture here.
-    update_to_profile_is: An update to this profile is
-    verses: Verses
-    visibility: Visibility
-    visible_on_printed_directory: Visible on Printed Directory
-    visible_to_everyone: Visible to everyone
-    website: Website
-    where_are_my_kids: Where are my kids?
-    you_arent_in_any_groups: You aren't in any groups yet.
-    you_many_not_make_changes: You may not make changes to your account at this time.
-    you_will_not_able_use_this_address: You will not be able to use this address to sign into the site.
-    your_account_has_been_frozen: Your account has been frozen. 
-          
+  people: 
+    about_me: 关于我
+    add_group: 添加组
+    advanced: 先进
+    activities: 
+    alternate_email: 备用电子邮件
+    books: 书籍
+    business: 商业
+    business_directory: 企业名录
+    business_address: 公司地址
+    business_email: 企业邮箱
+    business_name: 公司名称
+    business_phone: 商务电话
+    business_website: 商务网站
+    can_sign_in: 可以登录
+    cant_be_added: 没有人能在这个时候加入。
+    cant_delete_yourself: 你不能删除自己。
+    cant_delete: 你不能删除这个人。
+    change_your_picture: 更改图片
+    changes_must_be_reviewed_html: <strong>以下必须由工作人员</强“检讨的细节变化。为了要求更改，输入下面的详细信息，然后点击'提交。'
+    changes_submitted: 变更提交。
+    child: 儿童
+    child_alert: 您必须指定是否该人是儿童（％{年}）或不完成此更新。
+    click_to_send_verification_email: 发送到该用户的密码设置电子邮件。
+    click_to_change_email_html: 的<a href="%{url}">点击这里</一>要改变这个电子邮件地址。
+    deleted_html: 此人已被删除。您可以还原记录的<a href="%{url}">这里</一>。
+    description_of_business: 业务概述
+    determine_by_birthday: 确定的生日
+    edit: 
+      about: 关于
+      basics: 基础知识
+      child_hint: 如果没有指定的生日，你必须说明这是否是儿童或成人。
+      description_hint: “关于你自己的单词或两个 - 也许你的职业吗？”
+      email: 电子邮件设置更改
+      family_photo: 全家福
+      password: 更改密码
+      person_type_hint: 这些不控制访问 - 只有指定。
+      photo: 个人资料照片
+      privacy: 更改隐私设置
+      profile: 编辑个人资料
+    email: 电子邮件
+    email_address: 电子邮件地址（帐户登录）是
+    enter_new_category: 输入新的类别。
+    family: 家庭
+    family_legacy_external_id: 家庭遗产/外部标识
+    find_a_group_html: 找一个群组<a href="%{url}">这里</一>。
+    friend_not_found: 找不到朋友。
+    friendship_accepted: 友谊接受。
+    friendship_manage: 你可能不管理自己负责的友谊。
+    friendship_must_specify: 必须指定接受或拒绝= =真正的真实
+    friendship_rejected: 友谊拒绝。
+    full_access: 完全访问
+    groups: 团体
+    if_you_have_another_email: 如果你有其他的电子邮件（可能是一个工作地址）你想利用电子邮件发送到组，你可以在这里输入。
+    if_you_wish_to_be_listed_business_dir_html: 如果你想成为在<a href="%{url}">上市企业名录</一>，请输入您的公司名称，描述，低于其他细节。
+    if_you_wish_to_remove_something_html: 如果你想删除的东西，以防止其他人看到它，而不是去到<a href="%{url}">隐私</一>“页面并隐藏它。
+    if_your_system_is_setup_to_sync_change: 如果您的系统设置与外部同步源（例如，会员管理系统）的数据，更改您在此可能会在下次同步覆盖。
+    interests: 兴趣
+    legacy_external_id: 传统/外部标识
+    limited_access: “您的帐户目前有限的访问，我们正在展示你作为一个结果的一个简短的个人资料页。”
+    limited_access_denied: “您的帐户目前有限的访问。”
+    movies: 电影
+    music: 音乐
+    name: 姓名
+    new_person: 新的人
+    no_additional_access_avaiable: 没有额外的访问选择在这个时间。
+    no_email: “％{name}的并没有一个系统中的电子邮件地址”
+    no_family_for_this_person: 此人不属于一个家庭。他们将无法登录，而不会看到其他人在网站上。
+    no_groups_yet: 还没有群组
+    not_deleted: 人不会被删除。
+    not_found: 人没有找到。
+    nothing_here_yet: 没什么这儿来！
+    only_an_approximation: 只是一个近似值
+    pending_approval: 等待审批
+    people: 人物
+    person: 
+      one: 1人
+      other: “％{数}人”
+    person_isnt_any_groups: “％{}是人在任何群体不是现在。”
+    person_type: 角色
+    quotes: 行情
+    save_access: 保存访问
+    select_file_to_upload: “选择在您的计算机上传文件
+    send_email: 发送电子邮件
+    services_provided_by: 提供的服务
+    share_your_personal_testimony: 分享您的个人见证 - 你是如何认识耶稣基督，以及他如何改变了你的生活。
+    show_a_map_here_html: 显示在地图上这里提供您的雅虎地图API密钥OneBody。的<a href="http://github.com/seven1m/onebody/wikis/serviceapikeys">点击这里说明“</一>。
+    show_full_screen: 全屏显示
+    show_hidden_groups: 显示隐藏组
+    suffix: 后缀
+    tell_us_about_yourself: 告诉我们你的情况。什么是你的个性呢？如果你的最好的朋友对你说什么？
+    testimony: 见证
+    this_account_is_frozen: 此帐户被冻结。 ％{name}的无法进行此配置文件或其他任何人改变的，直到该帐户解冻。
+    this_email_will_not_be_visible: 此邮件地址将不可见的，除非管理员的人。
+    this_event_doesnt_have_pictures: “这事件没有任何图片呢。”
+    this_person_is_not_an_adult: 此人被认为是比％} {岁岁以下，而且没有父母的同意。
+    this_profile_is_hidden: 此配置文件是隐藏
+    tv_shows: 电视节目
+    upload_a_picture_of_html: 上传了％{name}的图片在这里。
+    upload_family_picture_html: 上传一个家庭的图片在这里。
+    update_to_profile_is: 一个到该配置文件更新
+    verses: 诗篇
+    visibility: 可见
+    visible_on_printed_directory: 在电话簿可见
+    visible_to_everyone: 人可见
+    website: 网站
+    where_are_my_kids: 哪里是我的孩子吗？
+    you_arent_in_any_groups: 您有任何团体还没有。
+    you_many_not_make_changes: 你不能在这个时候更改您的帐户。
+    you_will_not_able_use_this_address: 你将无法使用这个地址登录到该网站。
+    your_account_has_been_frozen: 您的帐户已被冻结。
+
   people_count: 
-    are: people are
-    is: person is
-    one: 1 person
-    other: "%{count} people"
+    are: 人
+    is: 人是
+    one: 1人
+    other: “％{数}人”
 
-  photos:
-    object_not_found: Object not found.
-    remove: Remove Photo
-    unavailable: Photo unavailable.
-    upload: Upload %{name}
+  photos: 
+    object_not_found: 找不到对象。
+    remove: 删除照片
+    unavailable: 照片无法使用。
+    upload: 上传％{名称}
 
   pictures: 
-    add_a_picture: Add a Picture
-    album: Album
-    delete_are_you_sure: "Are you sure? Deleting this album will also delete all its pictures!"
-    cant_delete: You cannot delete this picture.
-    cant_edit: You cannot edit this picture.
-    click_to_enlarge: click to enlarge
-    click_to_see_original: click to see original
-    comment_on_this_picture: Comment on this picture
-    delete_album: Delete Album
-    edit_album: Edit Album
-    failed: "%{fail} not saved due to errors"
-    next: next »
-    picture_uploaded_by: "Picture uploaded %{when} by"
-    prev: « prev
-    rotate_left: Rotate Left
-    rotate_right: Rotate Right
-    saved: "%{success} picture(s) saved"
-    set_as_cover: Set as Cover
-    hide_my_name: "These are general community pictures — don't show my name on them (admin-only option)."
-    upload: Upload!
-  
-  podcasts:
-    not_configured: Sermondrop is not configured.
+    add_a_picture: 添加图片
+    album: 专辑
+    delete_are_you_sure: “你确定删除此专辑也将删除其所有的图片吗？！”
+    cant_delete: 你不能删除该图片。
+    cant_edit: 您不能编辑该图片。
+    click_to_enlarge: 点击放大
+    click_to_see_original: 点击查看原始
+    comment_on_this_picture: 评论此图片
+    delete_album: 删除相册
+    edit_album: 编辑相册
+    failed: “％{}没有失败而节省的错误”
+    next: 下一个»
+    picture_uploaded_by: “图片上传％{}的时候”
+    prev: «上一页
+    rotate_left: 向左旋转
+    rotate_right: 向右旋转
+    saved: “保存图片成功”
+    set_as_cover: 将设置为封面
+    hide_my_name: “这是一般社区图片 - 他们不显示我的名字（仅管理选项）。”
+    upload: 上传！
+
+  podcasts: 
+    not_configured: Sermondrop没有配置。
 
   prayer: 
-    add_a_prayer_request: Add a prayer request
-    add_prayer_request: Add Prayer Request
-    answer: Answer
-    answer_date: Answer Date
-    answered: Answered
-    answered_on: "Answered on %{date}."
-    by: By
-    cant_edit: You cannot edit this prayer request.
-    cant_delete: You cannot delete this prayer request.
-    cant_post: You cannot post a prayer request in this group because you are not a member.
-    delete_request: Delete Request
-    edit_prayer_request: Edit Prayer Request
-    edit_request: Edit Request
-    name: Prayer Request in %{group_name}
-    new_prayer_request: New Prayer Request
-    not_found: Prayer Request not found.
-    posted_by: posted by
-    prayer: Prayer
-    prayer_request: Prayer Request
-    prayer_requests: Prayer Requests
-    prayer_requests_in: Prayer Requests in
-    remember_to_come_back: Remember to come back and fill this section so your group can have a record of answered prayers.
-    request: Request
-    save_prayer_request: Save Prayer Request
-    submitted_by: "Request submitted by %{person_name} in %{group_name} on %{date}."
+    add_a_prayer_request: 添加代祷
+    add_prayer_request: 添加代祷
+    answer: 答案
+    answer_date: 答案日期
+    answered: 已解答
+    answered_on: 回答说
+    by: 
+    cant_edit: 您不能编辑这个祷告的请求。
+    cant_delete: 你不能删除这个祷告的请求。
+    cant_post: 您不能张贴在这一组祷告请求，因为您不是会员。
+    delete_request: 删除请求
+    edit_prayer_request: 编辑代祷
+    edit_request: 编辑请求
+    name: 在％代祷组名} {
+    new_prayer_request: 新代祷
+    not_found: 祷告请求没有找到。
+    posted_by: 按发布
+    prayer: 祈祷
+    prayer_request: 代祷
+    prayer_requests: 代祷
+    prayer_requests_in: 祷告请求
+    remember_to_come_back: 记住要回来，填补了这一部分，这样您的团队能有一个回答祈祷纪录。
+    request: 请求
+    save_prayer_request: 保存代祷
+    submitted_by: “由％} {person_name在％{组名}％{日期}上提交的请求。”
 
-  prayer_signups:
-    add_somebody: Add Somebody
-    home_page_heading: Sign Up To Pray
-    home_page_link: Sign up to pray here.
-    misconfigured: This feature is not configured properly. Check that the dates are configured properly.
-    other_name: Or, someone else
-    other_name_note: Only enter a name here for someone not in the database.
-    shared_slot_are_you_sure: This time slot is already occupied by at least one other person. Are you sure you wish to sign up for this time as well?
-    select_time_slot: Select time slot
-    signup_removed: Sign-up removed.
-    signup_saved: Sign-up saved.
+  prayer_signups: 
+    add_somebody: 添加有人
+    home_page_heading: 注册祷告
+    home_page_link: 注册在这里祈祷。
+    misconfigured: 此功能是配置不正确。检查日期是正确配置。
+    other_name: 或者，别人
+    other_name_note: 只有输入一个名称这里有人在数据库中没有。
+    shared_slot_are_you_sure: 这个时段已经被占用了至少一人。你确定要参加这个时候，作为呢？
+    select_time_slot: 选择时段
+    signup_removed: 注册中删除。
+    signup_saved: 注册保存。
 
   profile: 
-    fax: "[f]"
-    home: "[h]"
-    mobile: "[m]"
-    work: "[w]"
+    fax: “[法]”
+    home: “[H]条”
+    mobile: “[米]”
+    work: “[瓦特]”
 
-  printable_directories:
-    already_sent: It seems a directory was already sent to you a little while ago. Please check your email (and your spam folder just in case).
-    click_to_have_custom_pdf_via_email: Click the button below to have a custom directory PDF file sent to your email.
-    created_for: Created especially for %{name} on %{date}
-    email_custom_directory: Email my Custom Directory
-    include_family_pictures: include family pictures
-    make_sure_you_have_adobe_html: Make sure you have <a href="%{url}">Adobe Reader</a> or another program that can view PDF files.
-    not_allowed: You are not allowed to print the directory. Sorry.
-    were_are_building_custom_pdf: "We're building your custom PDF right now. It will take a little while, but probably not more than a few minutes. Once it is ready, we will email it to you. Feel free to continue your visit to this site (you can leave this page if you want)."
-    will_take_longer: "(will take a little longer)"
+  printable_directories: 
+    already_sent: 这似乎是一个目录已经发出了一会儿以前给你。请检查您的电子邮件（以防万一，你的垃圾邮件文件夹）。
+    click_to_have_custom_pdf_via_email: 点击下面的按钮，有一个自定义目录的PDF文件发送到您的电子邮件。
+    created_for: 创建，特别是对％{％{name}的日期}
+    email_custom_directory: 邮箱我的自定义目录
+    include_family_pictures: 包括家庭照片
+    make_sure_you_have_adobe_html: 确保您<a href="%{url}">土坯器</一“或其他程序，可以浏览PDF文件。
+    not_allowed: 你不能打印目录。抱歉。
+    were_are_building_custom_pdf: 。。“我们正在建立您的自定义PDF现在它会需要一点时间，但可能不会超过几分钟一旦准备就绪，我们将通过电子邮件发送给你觉得自由继续浏览到这个网站。 （你可以离开这个页面，如果你愿意）。“
+    will_take_longer: “（会需要一点时间）”
 
-  privacies:
-    activity: Activity
-    address: Address
-    address2: Address Line 2
-    agreement_saved: Agreement saved.
-    anniversary: Anniversary
-    as_a_parent_agree_html: I, as a parent or legal gaurdian of %{name}, hereby agree that I have read this site's <a href="%{url}">Privacy Policy</a>, that the personal information of %{name} may be displayed for other users of the web site (as determined by the privacy settings on this page), and that %{name} may, if able, utilize this website as a normal user (including profile customization, and communication via private message, groups, etc.).
-    birthday: Birthday
-    child_profile_has_parental_consent: This child's profile has parental consent from %{name}.
-    child_under_age_no_parents_consent: "This child is under the age of %{years}, and his/her parents have not given consent to allow their information to be displayed."
-    child_under_age_you_have_not_consent: "This child is under the age of %{years}, and you have not given consent to 1) allow their information to be displayed, and 2) allow them to sign into and use this web site."
-    children: Children
-    click_the_agree: "Click the 'I Agree' button."
-    detail: Detail
-    email: Email
-    family_hidden: "%{your} family is currently hidden from all pages on this site!"
-    family_privacy: Family
-    fax: Fax
-    group_privacy: Group Privacy
-    hidden: Hidden
-    hide_your_activity: "Hide your activity if you do not want friends and/or fellow group members to see your public messages, notes, verses, etc. on their home page. Note: private messages are never displayed, regardless of this setting."
-    home_phone: Home Phone
-    i_agree: I Agree
-    mobile_phone: Mobile Phone
-    modify_the_privacy_settings_html: You can change the privacy settings for your family here. Items with a checkmark are visible to other members who sign into this website. Click the <img src="/images/plus.gif"/> to set privacy for groups (optional). To understand how we use the personal information of you and your family, please read our <a href="%{url}">Privacy Policy</a>.
-    please_read_our_privacy_policy_html: Please read our <a href="%{url}">Privacy Policy</a> for details regarding the use of your personal information.
-    people_can_still_send_html: "You can still receive email through the site, without revealing your email address on the Web."
-    privacy: Privacy
-    private: Private
-    read_privacy_policy_html: Read our <a href="%{url}">Privacy Policy</a>.
-    read_safeguarding_children_html: Read our page about <a href="%{url}">Safeguarding Children</a>.
-    read_statement_below: Read the statement below and agree to it by checking the corresponding checkbox.
-    saved: Settings saved.
-    sharing_with_html: Sharing with <a href="%{url}">%{name}</a>
-    the_items_are_visible_html: "The following items are visible to everyone <a href=\"%{url}\">change here</a>:"
-    the_items_may_be_shared: "The following items may be shared with other members of %{name}:"
-    this: this
-    to_show_on_this_site: "To show %{name} on this site, please:"
-    visible: Visible
-    visible_note: Setting a profile to be invisible will cause you to not appear in any directory searches. You can still join groups and receive group email and email from site administrators though.
-    work_phone: Work Phone
-    you_are_not_sharing_with_groups: You are not sharing your %{sharing} with any groups specifically.
-    you_are_sharing_with_groups: "You are sharing your %{sharing} with the following groups:"
-    you_may_share_items: "You may share items with fellow members of the following groups:"
-    you_must_check_agreement_statement: You must check the box indicating you agree to the statement below.
+  privacies: 
+    activity: 活动
+    address: 地址
+    address2: 地址2号线
+    agreement_saved: 协议保存。
+    anniversary: 周年纪念
+    as_a_parent_agree_html: 我作为父母或法定gaurdian％{name}的，兹同意本人已阅读本网站的<a href="%{url}">隐私权政策</一>，这对％{名称个人信息}可以显示的网站（如这个页面上的隐私设置而定）的其他用户，而％{name}的可能，如果能够，利用作为一个普通用户（包括个人资料的定制本网站，并通过私人通信消息，团体等）。
+    birthday: 生日
+    child_profile_has_parental_consent: 这孩子的个人资料已经从％{name}的父母的同意。
+    child_under_age_no_parents_consent: “这孩子是根据多年的％{}的年龄，他/她的父母没有给予同意让他们的信息显示出来。”
+    child_under_age_you_have_not_consent: “这孩子是根据多年的％{}年龄，你有没有给同意
+    children: 儿童
+    click_the_agree: “点击'我同意'按钮。”
+    detail: 详细
+    email: 电子邮件
+    family_hidden: “％} {你的家庭是目前隐藏在这个网站的所有网页！”
+    family_privacy: 家庭
+    fax: 传真
+    group_privacy: 集团隐私
+    hidden: 隐藏
+    hide_your_activity: “隐藏你的活动，如果你不想要的朋友和/或同组的成员看到您的公开信息，笔记，诗词等，他们的主页上。注
+    home_phone: 家庭电话
+    i_agree: 我同意
+    mobile_phone: 移动电话
+    modify_the_privacy_settings_html: 您可以更改您的家人在这里的隐私设置。带有复选标记的项目都可以看到其他成员谁登录到这个网站。点击设定的<img src="/images/plus.gif"/>团体（可选）隐私。要了解我们如何使用你和你的家人的个人信息，请阅读我们的<a href="%{url}">隐私权政策</一>。
+    please_read_our_privacy_policy_html: 请阅读我们的<a href="%{url}">隐私权政策</一>了解有关您的个人信息的使用细节。
+    people_can_still_send_html: “您仍然可以接收电子邮件，通过该网站没有透露您在网络上的电子邮件地址。”
+    privacy: 隐私
+    private: 私人
+    read_privacy_policy_html: 请阅读我们的<a href="%{url}">隐私权政策</一>。
+    read_safeguarding_children_html: 阅读关于<a保障儿童</一> href="%{url}">我们的页面。
+    read_statement_below: 阅读以下声明，并同意通过检查相应的复选框它。
+    saved: 设置保存。
+    sharing_with_html: 使用<a href="%{url}">％{共享名} </一>
+    the_items_are_visible_html: “下列项目都可以看到每个人的<a href=\"%{url}\">的改变，</一>
+    the_items_may_be_shared: “以下的项目可共享的％{name}的其他成员
+    this: 这
+    to_show_on_this_site: “这个网站上显示％{name}的，请
+    visible: 可见
+    visible_note: 设置一个配置文件是无形会使你不会出现在任何目录搜索。您仍然可以参加学习小组，接受站点管理员组，但电子邮件和电子邮件。
+    work_phone: 工作电话
+    you_are_not_sharing_with_groups: 你不共享任何集团专门分享您的％{}。
+    you_are_sharing_with_groups: “你分享以下组分享您的％{}
+    you_may_share_items: “你可以分享以下组的其他成员项目
+    you_must_check_agreement_statement: 你必须检查框，表明您同意以下声明。
 
   publications: 
-    add_publication: Add Publication
-    add_publication: Add Publication
-    deleted: Publication deleted.
-    description: Description
-    email_notifications: Email Notifications
-    feed: Publications Feed
-    file: File
-    files_with_acrobat_icon_html: For files with the Acrobat icon %{img}, you will need %{url} (aka "Acrobat Reader") or another program capable of viewing PDF files.
-    inform_publication_available: This is to inform you that a new publication has been added to %{site}.
-    name: Name
-    new_publication: New Publication
-    new_publication_available: New Publication Available
-    no_publications_available: There are currently no publications available.
-    notify_no_one: Notify no one
-    notify_the_group: Notify the %{group} group
-    publications: Publications
-    save_publication: Save Publication
-    saved: Publication saved.
-    start_receiving_notifications: "Recieve notifications via email when new publications are made available on this page:"
-    subscribe: Subscribe
-    subscribe_feed_html: <a href="%{url}">Subscribe</a> to Publications with your feed reader.
-    unsubscribe: Unsubscribe
-    update_notifications: Update Notifications
-    you_must_select_file: You must select a file.
+    add_publication: 添加出版物
+    add_publication: 添加出版物
+    deleted: 出版删除。
+    description: 说明
+    email_notifications: 电子邮件通知
+    feed: 饲料刊物
+    file: 文件
+    files_with_acrobat_icon_html: 为了与Acrobat图标％{img}文件，您需要％{网址}（又名“杂技演员读者”）或其他方案查看PDF文件的能力。
+    inform_publication_available: 这是为了通知你，一个新的出版物已被添加到％{网站}。
+    name: 姓名
+    new_publication: 新出版
+    new_publication_available: 新出版可用
+    no_publications_available: 目前没有出版物。
+    notify_no_one: 没有人通知
+    notify_the_group: 通知％{}组群
+    publications: 出版物
+    save_publication: 保存出版物
+    saved: 出版物保存。
+    start_receiving_notifications: “通过电子邮件接收新的出版物时，就这个页面上提供通知
+    subscribe: 订阅
+    subscribe_feed_html: 的<a href="%{url}">订阅</一>与您的饲料读者对刊物。
+    unsubscribe: 取消订阅
+    update_notifications: 更新通知
+    you_must_select_file: 你必须选择一个文件。
 
   relationships: 
-    Reciprocate: Reciprocate
-    add_a_relationship: "Add a relationship:"
-    add_relationship_button: Add Relationship
-    cannot_be_reciprocated: A reciprocal relationship to %{name} cannot be automatically created.
-    create_family_relationships: Create Family Relationships
-    create_family_relationships_description: You may generate relationships for this immediate family below.
-    family: Family Relationships
-    inward: Inward Relationships
+    Reciprocate: 往复
+    add_a_relationship: “新增的关系
+    add_relationship_button: 添加关系
+    cannot_be_reciprocated: 相互关系到％{名称}不能自动创建。
+    create_family_relationships: 建立家庭关系
+    create_family_relationships_description: 你可能会产生下面这个直系亲属关系。
+    family: 家庭关系
+    inward: 外来的关系
     names: 
-      aunt: Aunt
-      brother: Brother
-      brother_in_law: Brother-in-law
-      cousin: Cousin
-      daughter: Daughter
-      daughter_in_law: Daughter-in-law
-      father: Father
-      father_in_law: Father-in-law
-      granddaughter: Granddaughter
-      grandfather: Grandfather
-      grandmother: Grandmother
-      grandson: Grandson
-      husband: Husband
-      mother: Mother
-      mother_in_law: Mother-in-law
-      nephew: Nephew
-      niece: Niece
-      other: Other
-      sister: Sister
-      sister_in_law: Sister-in-law
-      son: Son
-      son_in_law: Son-in-law
-      stepbrother: Stepbrother
-      stepdaughter: Stepdaughter
-      stepfather: Stepfather
-      stepmother: Stepmother
-      stepsister: Stepsister
-      stepson: Stepson
-      uncle: Uncle
-      wife: Wife
-    no_person_selected: No person selected.
-    outward: Outward Relationships
-    relationship: Relationship
-    relationship_type: "Type:"
-    relationships: Relationships
-    toggle_individual: Toggle Individual Relationship View    
+      aunt: 阿姨
+      brother: 兄弟
+      brother_in_law: 兄弟媳妇
+      cousin: 表哥
+      daughter: 女儿
+      daughter_in_law: 儿媳
+      father: 父亲
+      father_in_law: 岳父岳母
+      granddaughter: 孙女
+      grandfather: 爷爷
+      grandmother: 奶奶
+      grandson: 孙
+      husband: 丈夫
+      mother: 母亲
+      mother_in_law: 婆婆
+      nephew: 侄儿
+      niece: 内测
+      other: 其他
+      sister: 大姐
+      sister_in_law: 嫂嫂
+      son: 儿子
+      son_in_law: 女婿
+      stepbrother: 继兄弟
+      stepdaughter: 继女
+      stepfather: 义父
+      stepmother: 继母
+      stepsister: 继姐妹
+      stepson: 继子
+      uncle: 叔叔
+      wife: 老婆
+    no_person_selected: 没有人选。
+    outward: 外向的关系
+    relationship: 关系
+    relationship_type: “类型
+    relationships: 关系
+    toggle_individual: 拨动个人关系看
 
   search: 
-    add_selected: Add Selected
-    advanced_search: Advanced Search
-    all: All
-    anniversary: Anniversary
-    birthday: Birthday
-    browse: Browse
-    business_category: "Business Category:"
-    business_directory: Business Directory
-    category: Category
-    city: City
-    deacon: Deacon
-    elder: Elder
+    add_selected: 新增选取
+    advanced_search: 高级搜索
+    all: 所有
+    anniversary: 周年纪念
+    birthday: 生日
+    browse: 浏览
+    business_category: “企业类别
+    business_directory: 企业名录
+    category: 分类
+    city: 城市
+    deacon: 执事
+    elder: 长老
     families_found: 
-      one: 1 family found
-      other: "%{count} families found"
-    family_name: Family Name
-    female: Female
-    gender: Gender
-    heading: "%{name} Directory"
-    male: Male
-    member: Member
-    results_not_shown: Some results not shown — be more specific.
-    name: Name
-    no_family: (no family)
-    not_showing_hidden_people: (not showing hidden people)
+      one: 1的家庭中找到
+      other: “％{count}个家庭找到”
+    family_name: 姓
+    female: 女
+    gender: 性别
+    heading: “％{name}的目录”
+    male: 男
+    member: 会员
+    results_not_shown: 一些不显示的结果 - 更具体。
+    name: 姓名
+    no_family: （没有家族）
+    not_showing_hidden_people: （不显示隐藏的人）
     people_found: 
-      one: 1 person found
-      other: "%{count} people found"
-    printed_directory: Printed Directory
-    search: Directory Search
-    search_by_name: Search by name
-    searching: Searching...
-    show_all: (show all)
-    show_hidden: Show Hidden
-    staff: Staff
-    state: State
-    zip: Zip
+      one: 一人发现
+      other: “％{count}个人们发现”
+    printed_directory: 电话簿
+    search: 目录搜索
+    search_by_name: 按名称搜索
+    searching: 搜索...
+    show_all: （显示全部）
+    show_hidden: 显示隐藏
+    staff: 工作人员
+    state: 状态
+    zip: 邮编
 
-  session:
-    account_not_activated_html: Your account hasn't been activated yet. <a href="/pages/help">Click here</a> to get started.
-    create_the_first_user: "You may create the first user by running the command:"
-    email_address: "Email Address:"
-    email_found: That email address was found, but you must verify it before you can sign in.
-    email_not_found: email not found
-    email_not_found_try_another: That email address cannot be found in our system. Please try another email.
-    help_signing_in: Help Signing In
-    i_need_help: I need help.
-    load_sample_data: "Alternatively, you can load up OneBody with some sample data by running the command:"
-    max_sign_in_attempts: We're sorry, but you have exceeded the maximum number of sign in attempts within a 15 minute period. You may try again in 15 minutes.
-    no_users: No Users
-    password: "Password:"
-    password_confirm: "Password (confirm):"
-    password_doesnt_match: The password you entered doesn't match our records. Please try again.
-    password_incorrect: password incorrect
-    please_sign_in: Please sign in.
-    sign_in: Sign In
-    sign_in_error_html: There was an error signing you in. Please <a href="%{url}">try again</a>.
-    sign_out: sign out
-    sign_up_or_sign_in_html: "<a href=\"%{url}\">Sign Up</a> for an account if you don't have one."
-    there_are_no_users_in_the_system: There are no users in the system.
+  session: 
+    account_not_activated_html: 您的帐户没有被激活。的<a href="/pages/help">点击这里</一>开始。
+    create_the_first_user: 你可以通过创建第一个用户运行命令
+    email_address: 电子邮件地址
+    email_found: 该电子邮件地址被发现，但你必须验证，然后才能登录
+    email_not_found: 电子邮件未找到
+    email_not_found_try_another: 该电子邮件地址不能找到我们的制度。请尝试使用其他的电子邮件。
+    help_signing_in: 登入协助
+    i_need_help: 我需要帮助。
+    load_sample_data: “或者，您可以通过运行加载命令和一些示例数据OneBody
+    max_sign_in_attempts: 很抱歉，但你已经超过15分钟的时间内内的登录尝试的最大次数。你可以在15分钟后再试一次。
+    no_users: 没有用户
+    password: 密码
+    password_confirm: 密码（确认）
+    password_doesnt_match: 您输入的密码不符合我们的记录。请再试一次。
+    password_incorrect: 密码不正确
+    please_sign_in: 请登录
+    sign_in: 登录
+    sign_in_error_html: 有一个错误签名你进来请<a href="%{url}">再试一次</一>。
+    sign_out: 登出
+    sign_up_or_sign_in_html: <a href=%{url}>注册</a>一个帐户，如果你没有账户的话
+    there_are_no_users_in_the_system: 有在系统中没有用户。
 
-  setup:
-    admin_account: Admin Account
-    complete: "Now you're ready to sign in for the first time!"
-    congratulations: "Congratulations! OneBody is running. Now it's time to add an admin user and set some other settings..."
-    do_right_away: You should do this right away, especially if your server is available on the public Web.
-    domain_name: Domain Name
-    domain_name_note: "Enter the domain for this site, without any leading \"www\", like so: \"example.com\" or \"members.example.com\"."
-    email_note: This is the email address that will receive real-time bug reports.
-    heading: First-Time Setup
-    invalid_domain_name: Invalid domain name.
-    more_accounts_later: "(You'll be able to create more admin accounts later.)"
+  setup: 
+    admin_account: 管理员帐户
+    complete: “现在你已经准备好登录的第一次！”
+    congratulations: “恭喜OneBody现在正在运行的时候添加一个管理员用户并设置一些其他设置...！”。
+    do_right_away: 你应该立刻做此事，特别是如果您的服务器上提供公共网络。
+    domain_name: 域名
+    domain_name_note: “输入该网站的域名，没有任何前导\的”www \“，像这样
+    email_note: 这是电子邮件地址，并能接收实时错误报告。
+    heading: 第一次安装
+    invalid_domain_name: 无效的域名。
+    more_accounts_later: “（你将能够创造更多的管理员帐户后）。”
 
-  share:
-    default_album_name: Album Name
-    email: Email
-    group: "Share something with your group."
-    note: Note
-    note_label: "What's on your mind?"
-    picture: Picture
-    prayer_answer: Answer
-    prayer_answered_at: Date Answered
-    prayer_request: Prayer Request
-    prayer_share_answer: "This is as an answered prayer..."
-    profile: "Share something with friends."
-    share: Share!
-    verse: Verse
-    verse_label: "Verse or Passage:"
+  share: 
+    default_album_name: 专辑名称
+    email: 电子邮件
+    group: “跟你的小组的东西。”
+    note: 请注意
+    note_label: “什么对你的想法？”
+    picture: 图片
+    prayer_answer: 答案
+    prayer_answered_at: 日期已答复
+    prayer_request: 代祷
+    prayer_share_answer: “这是...作为回答祈祷”
+    profile: “与朋友分享的东西。”
+    share: 分享！
+    verse: 诗
+    verse_label: “诗歌或一段话
 
   stream: 
-    about_heading: Your Homepage
-    about_html: "This is your custom-built homepage — things displayed here are from people in groups with you, your family and friends."
-    ago: ago
-    and_more: and %{length} more by %{name}...
-    feed: Feed
-    flickr: Flickr
-    import_blog_feed: Import Posts From Your Blog...
-    import_facebook_updates: Import your Facebook status updates...
-    import_flickr_photos: Import your Flickr photos...
-    import_twitter_updates: Import your Twitter updates...
-    nothing_to_show: Right now, there's nothing to show.
-    rss: RSS
-    share_heading: Share With Friends
-    share_something_about: Items you share here will appear on your friends and fellow group members' home pages (but no one else's).
-    show: Show
-    twitter: Twitter
-    where_activity_appear: This is where activity from you, your friends, and your groups will appear.
+    about_heading: 您的主页
+    about_html: “这是你定制的网页 - 从东西显示在这里与你，你的家人和朋友组的人。”
+    ago: 前
+    and_more: 长度}和％{％{名称更受} ...
+    feed: 饲料
+    flickr: Flickr的
+    import_blog_feed: 从您的博客导入文章...
+    import_facebook_updates: 导入你的Facebook状态更新...
+    import_flickr_photos: 导入你的Flickr照片...
+    import_twitter_updates: 导入你的Twitter更新...
+    nothing_to_show: 现在，没有什么表现。
+    rss: 的RSS
+    share_heading: 与朋友共享
+    share_something_about: 项目你分享这里将出现在您的朋友和同事工作组成员的主页（但没有其他人的）。
+    show: 显示
+    twitter: Twitter的
+    where_activity_appear: 这是你，你的朋友，和你的团体的活动就会出现。
 
-  styles:
-    heading: Style Editor
-    primary_color: Primary Color
-    secondary_color: Secondary Color
-    top_color: Top Bar Color
-    nav_color: Nav Bar Color
+  styles: 
+    heading: 样式编辑器
+    primary_color: 原色
+    secondary_color: 中色
+    top_color: 顶栏颜色
+    nav_color: 导航栏颜色
 
   tags: 
-    add_tags: Add Tags (space separated)
-    confirm_delete: Are you sure you want to delete this tag?
-    no_tags_yet: no tags yet
-    tag: Tag
-    tags: Tags
+    add_tags: 添加标签（用空格隔开）
+    confirm_delete: 你确定要删除此标签？
+    no_tags_yet: 还没有标签
+    tag: 标签
+    tags: 标签
 
   verses: 
-    about_tags: Tags can group verses together by topic, author, date, or whatever.
-    about_this_verse: about this verse. Share what it means to you or how it has helped you.
-    add_this_verse_to_my_list: Add this verse to my list.
-    add_verse: Add Verse
-    add_your_favorite_verse: "Add your favorite verse:"
-    all_verses: All Verses
-    disclaimer: Scripture quotations marked 'WEB' are taken from the World English Bible, a Modern English update of the American Standard Version of the Holy Bible. WEB is in the public domain. Copy and publish it freely.
-    example_verse: "John 3:16"
-    intro: Share your favorite Bible verses with %{community}.
-    no_verses_yet: No verses yet!
-    not_found: That verse could not be found. Did you type the reference correctly?
-    people_who_like_this_verse: People who like this verse
-    read_this_passage_at_youversion: Read this passage at YouVersion...
-    remove_this_verse: Remove this verse from my list.
-    tools: Tools
-    verses: Verses
+    about_tags: 标签可以组合在一起的诗句主题，作者，日期，或什么的。
+    about_this_verse: 这个诗句。分享你意味着什么或如何才能帮助你。
+    add_this_verse_to_my_list: 加入这一节，导演。
+    add_verse: 添加诗
+    add_your_favorite_verse: “将您喜爱的诗句
+    all_verses: 所有的诗篇
+    disclaimer: 报价经文标示为'网'是从世界英文圣经，现代英语的美国标准版圣经采取更新。网络是在公共领域。自由复制和发布。
+    example_verse: “约翰福音3:16”
+    intro: 分享您最喜欢的圣经经文与％{社会}。
+    no_verses_yet: 没有诗句呢！
+    not_found: 这经文找不到。您是否正确键入引用？
+    people_who_like_this_verse: 人谁喜欢这首诗
+    read_this_passage_at_youversion: 读通过这一YouVersion ...
+    remove_this_verse: 从我的名单中删除这诗句。
+    tools: 工具
+    verses: 诗篇
 
-  wall:
-    description: The Wall is a place for people to post friendly messages for you and others to see.
-    must_specify_two_people: Must specify exactly two people
-    newest_messages_appear_first: newest messages appear first
-    no_messages_yet: No messages yet!
-    not_found: Wall not found.
-    post_a_message: Post a message.
-    one_or_more_not_found: One or more walls not found.
-    respect_privacy: Please respect the privacy of others. Abusing the wall will get you banned from the site.
-    save_message: Save Message
-    to_send_a_private_message_html: All users will see your message; to send a private message, <a href="%{url}">click here</a>.
-    view_all_wall_messages: View all wall messages...
-    wall: Wall
-    wall_to_wall: Wall to Wall
+  wall: 
+    description: 长城是人们对你的友好张贴信息和其他人看到的地方。
+    must_specify_two_people: 必须指定两个人
+    newest_messages_appear_first: 最新消息首次亮相
+    no_messages_yet: 没有消息呢！
+    not_found: 墙面没有找到。
+    post_a_message: 发布一条消息。
+    one_or_more_not_found: 一个或更多的城墙未找到。
+    respect_privacy: 请尊重他人的隐私。滥用隔离墙将让你从网站上被禁止。
+    save_message: 保存消息
+    to_send_a_private_message_html: 所有用户将看到您的消息发送的一个私人信息，请<a href="%{url}">点击这里</一>。
+    view_all_wall_messages: 查看所有墙壁的消息...
+    wall: 墙
+    wall_to_wall: 墙墙

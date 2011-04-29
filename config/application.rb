@@ -22,7 +22,7 @@ module OneBody
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    config.i18n.default_locale = File.exist?("#{config.root}/config/locale") ? File.read("#{config.root}/config/locale").strip.to_sym : :en
+    config.i18n.default_locale = File.exist?("#{config.root}/config/locale") ? File.read("#{config.root}/config/locale").strip.to_sym : :s_zh
     config.i18n.load_path += Dir["#{config.root}/plugins/**/config/locales/*.{rb,yml}"]
 
     # Configure the default encoding used in templates for Ruby 1.9.
