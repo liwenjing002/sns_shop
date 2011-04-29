@@ -1,4 +1,4 @@
-s_zh:
+zh:
 
   About: 关于
   Answer_yes: “是”
@@ -817,14 +817,14 @@ s_zh:
       no_updates: 没有更新
       none: 此时无。
       pending: 
-        one: “%{count}个有待更新”
-        other: “%{count}个有待更新”
+        one: %{count}个有待更新
+        other: %{count}个有待更新
       pending_title: 待定
       person_deleted: 人删除
       per_day: 每日更新
       profile_updates: 个人资料更新
       review_changes: 审阅更改以下更新
-      show_status: 显示%{状态}
+      show_status: 显示%{status}
       updated: 更新
       updates: 更新
     username: 用​​户名
@@ -832,7 +832,7 @@ s_zh:
 
   accounts: 
     birthday: 生日
-    call_office: 调用%} {office_phone在营业时间。
+    call_office: 在营业时间拨打该号码:%{office_phone}。
     cannot_edit: 您不能编辑此帐户。
     change_email_warning: 此更改后，所有来自这个网站的电子邮件将被发送到这个地址。这也将是地址%{}人登录到这个网站。
     check_code: 验证码
@@ -850,7 +850,7 @@ s_zh:
     last_name: 姓
     leave_blank: 给这些领域的空白，如果你不想改变你的密码。
     mobile_number_not_found: 这个手机号码无法找到我们的制度。你可以再试一次。
-    must_be_of_age: 必须至少为%{年}岁。
+    must_be_of_age: 必须至少为%{years}岁。
     must_set_email_pass: 你必须设置你的个人电子邮件地址和密码才能继续。
     pending_approval: 您的帐户正在等待批准。您将收到一封电子邮件，一旦它的批准。
     please_select_your_name: 请选择你的名字从名单如下
@@ -906,7 +906,7 @@ s_zh:
 
   application: 
     api_access: 您必须是超级管理员使用的API。
-    custom_theme_message: 自定义主题必须包含在它的身体某处%{内容}。
+    custom_theme_message: 自定义主题必须包含在它的身体某处%{content}。
     no_default_site: 没有默认网站上找到。
     no_site_configured: “有没有在这个网站的地址配置
     settings_reloaded: 设置重新加载。
@@ -1313,12 +1313,12 @@ s_zh:
     attachment_optional: 附件（可选）
     attachments: 附件
     delete_message: 删除消息
-    email_message_to: 电子邮件发送到%{名}
+    email_message_to: 电子邮件发送到%{name}
     file_missing: 文件丢失
     flag_cleared: 标志（s）清除。
     from: 从
     group: A组
-    group_message_to: 组邮件到%{组}
+    group_message_to: 组邮件到%{group}
     in: 
     message: 消息
     message_by: 消息由
@@ -1340,7 +1340,7 @@ s_zh:
     some_quoted_text_is_hidden: 一些在此消息引用文字被隐藏;
     subject: Subject
     this_group_is_not_private: 本组不是私人，所以将讯息张贴在这里被人谁不属于该组的成员可见。
-    this_will_send_an_email_to: 这将发送一封电子邮件到%{组}。
+    this_will_send_an_email_to: 这将发送一封电子邮件到%{group}。
     this_will_send_a_private_email_html: 这将派遣了<em>私人</电磁>“电子邮件。
     to_show_the_entire_message: 显示整个邮件。
     unknown_type: 未知信息类型。
@@ -1402,7 +1402,7 @@ s_zh:
     if_you_approve_this_account_creation: 如果你创建这个帐户批准，在这个地址激活帐户
     if_you_dont_know_why_get_this_email: 如果你不知道你为什么会收到这个电子邮件 ，您可以使用该号码%{phone}联系,ta:%{name}
     message_id: 消息ID
-    name_has_requested_join_group: “%{name}的要求加入该组%{组}。”
+    name_has_requested_join_group: “%{name}的要求加入该组%{group}。”
     name_submitted_birthday_request: “%{name}的提交了一份生日核查要求”
     new: 新
     old: 老
@@ -1559,7 +1559,7 @@ s_zh:
     object_not_found: 找不到对象。
     remove: 删除照片
     unavailable: 照片无法使用。
-    upload: 上传%{名称}
+    upload: 上传%{name}
 
   pictures: 
     add_a_picture: 添加图片
