@@ -134,7 +134,7 @@ zh:
   your: 你的
 
   errors: 
-    format: “%{消息}”
+    format: “%{message}”
 
   activerecord: 
     errors: 

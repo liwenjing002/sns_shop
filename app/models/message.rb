@@ -109,7 +109,7 @@ class Message < ActiveRecord::Base
       email.deliver
     end
   end
-
+  
   def send_to_group(sent_to=[])
     return unless group
     group.people.each do |person|

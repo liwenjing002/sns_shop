@@ -1,0 +1,77 @@
+<% content_for :sidebar do %>
+  <h2><%= t('admin.settings.settings') %></h2>
+
+  <ul class="list">
+    <li><%= link_to_function t('admin.settings.name_heading'),                  "scrollTo('name')"                  %></li>
+    <li><%= link_to_function t('admin.settings.contact_heading'),               "scrollTo('contact')"               %></li>
+    <li><%= link_to_function t('admin.settings.features_heading'),              "scrollTo('features')"              %></li>
+    <li><%= link_to_function t('admin.settings.sharing_heading'),               "scrollTo('sharing')"               %></li>
+    <li><%= link_to_function t('admin.settings.membership_management_heading'), "scrollTo('membership_management')" %></li>
+    <li><%= link_to_function t('admin.settings.locale_heading'),                "scrollTo('locale')"                %></li>
+    <li><%= link_to_function t('admin.settings.formats_heading'),               "scrollTo('formats')"               %></li>
+    <li><%= link_to_function t('admin.settings.privacy_heading'),               "scrollTo('privacy')"               %></li>
+    <li><%= link_to_function t('admin.settings.services_heading'),              "scrollTo('services')"              %></li>
+  </ul>
+
+  <% if @logged_in.super_admin? %>
+    <p class="small discreet double-margin-top"><%= link_to t('admin.settings.reload'), reload_administration_settings_path, :method => 'put', :title => t('admin.settings.reload_message') %></p>
+  <% end %>
+<% end %>
+
+
+<%= form_tag(batch_administration_settings_path, :method => 'put', :style => "border:none;") do %>
+
+  <table class="members">
+
+    <%= section_row(t('admin.settings.name_heading'), :name) %>
+
+      <%= setting_row('Name', 'Community') %>
+      <%= setting_row('Name', 'Site') %>
+      <%= setting_row('Name', 'Slogan') %>
+
+    <%= section_row(t('admin.settings.contact_heading'), :contact) %>
+
+      <%= subsection_row(t('admin.settings.contact_automated_email_about')) %>
+      <%= setting_row('Contact', 'Send Email Changes To') %>
+      <%= setting_row('Contact', 'Send Updates To') %>
+      <%= setting_row('Contact', 'Birthday Verification Email') %>
+
+      <%= subsection_row(t('admin.settings.contact_community_info_about')) %>
+      <%= setting_row('Contact', 'Community Office Phone') %>
+      <%= setting_row('Contact', 'Community Address') %>
+      <%= setting_row('Contact', 'Community Email') %>
+
+    <%= section_row(t('admin.settings.features_heading'), :features) %>
+
+      <%= setting_row('Features', 'Friends') %>
+      <%= setting_row('Features', 'Groups') %>
+
+      <%= subsection_row(t('admin.settings.features_prayer_event_about')) %>
+      <%= setting_row('Features', 'Prayer Event') %>
+      <%= setting_row('Features', 'Prayer Event First Date and Time') %>
+      <%= setting_row('Features', 'Prayer Event Last Date and Time') %>
+
+    <%= section_row(t('admin.settings.sharing_heading'), :sharing) %>
+
+      <%= subsection_row(t('admin.settings.sharing_communications_about')) %>
+      <%= setting_row('Features', 'News Page') %>
+      <%= setting_row('Features', 'Publications') %>
+
+      <%= subsection_row(t('admin.settings.sharing_about')) %>
+      <%= setting_row('Features', 'News by Users') %>
+      <%= setting_row('Features', 'Notes') %>
+      <%= setting_row('Features', 'Pictures') %>
+      <%= setting_row('Features', 'Verses') %>
+
+    <%= section_row(t('admin.settings.membership_management_heading'), :membership_management) %>
+
+      <%= setting_row('Features', 'Updates Must Be Approved') %>
+      <%= setting_row('Features', 'Sign Up') %>
+      <%= setting_row('Features', 'Sign Up Approval Email') %>
+      <%= setting_row('Features', 'Custom Person Type') %>
+      <%= setting_row('Features', 'Custom Person Fields') %>
+      <%= setting_row('System', 'Adult Age', :options => (13..21)) %>
+      <%= setting_row('System', 'Suffixes') %>
+
+    <%= section_row(t('admin.settings.locale_heading'), :locale) %>
+   
