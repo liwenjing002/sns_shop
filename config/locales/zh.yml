@@ -1821,6 +1821,7 @@ zh:
     sign_in_error_html: 有一个错误签名你进来请<a href="%{url}">再试一次</一>。
     sign_out: 登出
     sign_up_or_sign_in_html: <a href=%{url}>注册</a>一个帐户，如果你没有账户的话
+    forget_password_html: <a href=%{url}>找回密码</a>,如果你遗忘密码的话
     there_are_no_users_in_the_system: 有在系统中没有用户。
 
   setup: 
