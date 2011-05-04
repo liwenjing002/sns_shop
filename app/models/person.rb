@@ -7,7 +7,8 @@ class Person < ActiveRecord::Base
 
   cattr_accessor :logged_in # set in addition to @logged_in (for use by Notifier and other models)
 
-  belongs_to :family
+#  belongs_to :family
+  belongs_to :address
   belongs_to :admin
   belongs_to :donor, :class_name => 'Donortools::Persona', :foreign_key => 'donortools_id'
   has_many :memberships, :dependent => :destroy
@@ -167,8 +168,8 @@ class Person < ActiveRecord::Base
     read_attribute(:salt) || generate_salt
   end
 
-  fall_through_attributes :home_phone, :address, :address1, :address2, :city, :state, :zip, :short_zip, :mapable?, :to => :family
-  sharable_attributes     :home_phone, :mobile_phone, :work_phone, :fax, :email, :birthday, :address, :anniversary, :activity
+#  fall_through_attributes :home_phone, :address, :address1, :address2, :city, :state, :zip, :short_zip, :mapable?, :to => :family
+#  sharable_attributes     :home_phone, :mobile_phone, :work_phone, :fax, :email, :birthday, :address, :anniversary, :activity
 
   self.skip_time_zone_conversion_for_attributes = [:birthday, :anniversary]
   self.digits_only_for_attributes = [:mobile_phone, :work_phone, :fax, :business_phone]
@@ -301,8 +302,7 @@ class Person < ActiveRecord::Base
   def adult_or_consent?; adult? or parental_consent?; end
 
   def visible?(fam=nil)
-    fam ||= self.family
-    fam and fam.visible? and read_attribute(:visible) and adult_or_consent? and visible_to_everyone?
+   read_attribute(:visible) and adult_or_consent? and visible_to_everyone?
   end
 
   def admin?(perm=nil)
@@ -372,15 +372,15 @@ class Person < ActiveRecord::Base
 
   attr_writer :no_auto_sequence
 
-  before_save :update_sequence
-  def update_sequence
-    return if @no_auto_sequence
-    if family and sequence.nil?
-      conditions = ['deleted = ?', false]
-      conditions.add_condition ['id != ?', id] unless new_record?
-      self.sequence = family.people.maximum(:sequence, :conditions => conditions).to_i + 1
-    end
-  end
+#  before_save :update_sequence
+#  def update_sequence
+#    return if @no_auto_sequence
+#    if family and sequence.nil?
+#      conditions = ['deleted = ?', false]
+#      conditions.add_condition ['id != ?', id] unless new_record?
+#      self.sequence = family.people.maximum(:sequence, :conditions => conditions).to_i + 1
+#    end
+#  end
 
   def update_from_params(params)
     params = HashWithIndifferentAccess.new(params) unless params.is_a? HashWithIndifferentAccess
@@ -395,7 +395,7 @@ class Person < ActiveRecord::Base
         params[:family] ||= {}
         params[:family][:legacy_id] = params[:person][:legacy_family_id] if params[:person][:legacy_family_id]
         params[:person].cleanse(:birthday, :anniversary)
-        update_attributes(params[:person]) && family.update_attributes(params[:family])
+        update_attributes(params[:person]) && address.update_attributes(params[:address])
       else
         Update.create_from_params(params, self)
         update_attributes(params[:person].reject { |k, v| !EXTRAS.include?(k) })

@@ -1,8 +1,10 @@
 zh:
+  
+  
 
   About: 关于
-  Answer_yes: “是”
-  Answer_no: “否”
+  Answer_yes: “是 
+  Answer_no: 否 
   Changes: 改变
   Changes_saved: 保存变更。
   Delete: 删除
@@ -24,8 +26,8 @@ zh:
   What: 什么
   When: 何时
   Who: 谁
-  answer_yes: “是的”
-  answer_no: “否”
+  answer_yes: 是的 
+  answer_no: 否 
   are_you_sure: 确定？
   by: 通过
   changes: 改变
@@ -67,8 +69,8 @@ zh:
   you_made_a_change_page: 。看起来你做了更改的东西在此页单击确定以放弃您编辑并离开此页面。
   your: 你的
   About: 关于
-  Answer_yes: “是”
-  Answer_no: “否”
+  Answer_yes: 是 
+  Answer_no: 否 
   Changes: 改变
   Changes_saved: 保存变更。
   Delete: 删除
@@ -90,8 +92,8 @@ zh:
   What: 什么
   When: 何时
   Who: 谁
-  answer_yes: “是的”
-  answer_no: “否”
+  answer_yes: 是的 
+  answer_no: 否 
   are_you_sure: 确定？
   by: 通过
   changes: 改变
@@ -134,7 +136,7 @@ zh:
   your: 你的
 
   errors: 
-    format: “%{message}”
+    format: %{message} 
 
   activerecord: 
     errors: 
@@ -240,7 +242,7 @@ zh:
               taken: 该路径已指向其他页面
             slug: 
               blank: 页面必须要有一个关键字。
-              exclusion: 页面关键字不能为“管理员”，“编辑”，或“新”
+              exclusion: 页面关键字不能为管理员 ，编辑，或新 
               invalid: 页面关键字只能包含小写字母和下划线
             title: 
               blank: 页面必须要有一个标题
@@ -344,10 +346,10 @@ zh:
   admin: 
     active: 主动
     admin: 管理员
-    admin_added: “%{name}的补充。”
+    admin_added: %{name}的补充。 
     admin_count: 
-      one: “%{count}个管理员”
-      other: “%{count}个管理员”
+      one: %{count}个管理员 
+      other: %{count}个管理员 
     admin_removed: 管理员删除。
     admin_template_description: 模板允许你有预定义与多个管理员使用权限集。
     administrators: 管理员
@@ -355,7 +357,7 @@ zh:
     add_person: 添加人
     add_selected: 新增选取
     add_template: 添加模板
-    already_admin: “%{name}的已经是管理员。”
+    already_admin: %{name}的已经是管理员。 
     api: 空气污染指数
     api_login_details: 您的登录信息的API
     back_to_admin_list: 回到管理员列表
@@ -372,8 +374,8 @@ zh:
       search_results: 您搜索的结果显示如下。
       undelete: 取消删除
     deleted_people_count: 
-      one: “%{}删除计数的人”
-      other: “%{count}个已删除的人”
+      one: %{}删除计数的人 
+      other: %{count}个已删除的人 
     display: 显示
     enable: 启用
     enable_api_confirmation: 您确定要启用您的API密钥？
@@ -395,7 +397,7 @@ zh:
     generate: 生成
     group_administrators: 组管理员
     group_administrators_description: 每个人组可以指定谁可以管理该特定的群体，不管他们在这个页面状态。
-    group_administrators_help: 添加/删除管理员为一组人，点击“编辑”旁边的集团，促进现有组的成员。
+    group_administrators_help: 添加/删除管理员为一组人，点击编辑 旁边的集团，促进现有组的成员。
     group_membership_requests: 集团成员资格申请
     home: 管理首页
     import_data_description: 导入人从逗号分隔值（CSV）的文件数据。
@@ -428,7 +430,7 @@ zh:
       update_display: 更新显示
     manage_admins: 管理管理员
     manage_group_administrators: 管理组管理员
-    max_admins_html: 你是在为您选择的限制，目前计划管理。请<a href="http://beonebody.com">升级</一>，以增加更多的管理员。
+    max_admins_html: 你是在为您选择的限制，目前计划管理。请<a href=http://beonebody.com>升级，以增加更多的管理员。
     must_be_superadmin: 您必须是超级管理员修改设置。
     new_admin_template: 创建一个新的管理模板。
     new_api_or: 一个新的API键或
@@ -436,76 +438,76 @@ zh:
     no_more_admins: 没有更多的管理员是允许的。
     pages: 页
     people_not_synced_to_donortools_count: 
-      one: “1。与供体工具同步”
-      other: “%{count}个供者工具同步。”
+      one: 1。与供体工具同步 
+      other: %{count}个供者工具同步。 
     privileges: 
       view_hidden_profiles: 
         title: 查看隐藏的资料
-        about: “查看在数据库中隐藏的人，例如儿童和其他标记为不可见的。”
+        about: 查看在数据库中隐藏的人，例如儿童和其他标记为不可见的。 
         order: 1
       view_hidden_properties: 
         title: 查看隐藏属性
-        about: “。查看隐藏的电话号码，电子邮件地址，以及其他私人信息”
+        about: 查看隐藏的电话号码，电子邮件地址，以及其他私人信息 
         order: 2
       edit_profiles: 
         title: 编辑配置文件
-        about: “编辑姓名，电话号码，电子邮件，密码和其他与用户的个人资料相关的任何东西。”
+        about: 编辑姓名，电话号码，电子邮件，密码和其他与用户的个人资料相关的任何东西。 
         order: 3
       manage_access: 
         title: 管理访问
-        about: “管理网站管理员（'管理管理员'必须选择管理组管理员。）”。
+        about: 管理网站管理员（'管理管理员'必须选择管理组管理员。） 。
         order: 4
       manage_attendance: 
         title: 考勤管理
-        about: “查看，编辑和出口出席。”
+        about: 查看，编辑和出口出席。 
         order: 5
       manage_comments: 
         title: 管理评论
-        about: “能够删除任何网页的意见。”
+        about: 能够删除任何网页的意见。 
         order: 6
       manage_contributions: 
         title: 管理的贡献
-        about: “查看，编辑，删除供款（如有的捐助工具是安装程序）。”
+        about: 查看，编辑，删除供款（如有的捐助工具是安装程序）。 
         order: 7
       manage_groups: 
         title: 管理组
-        about: “查看，编辑，删除任何团体（即使隐藏或私营）。”
+        about: 查看，编辑，删除任何团体（即使隐藏或私营）。 
         order: 8
       manage_news: 
         title: 管理新闻
-        about: “查看，编辑，删除所有消息。”
+        about: 查看，编辑，删除所有消息。 
         order: 9
       manage_notes: 
         title: 管理笔记
-        about: “编辑和删除任何票据（状态更新）。”
+        about: 编辑和删除任何票据（状态更新）。 
         order: 10
       manage_pictures: 
         title: 管理图片
-        about: “查看，编辑，删除任何图片和相册。”
+        about: 查看，编辑，删除任何图片和相册。 
         order: 11
       manage_prayer_signups: 
         title: 管理祈祷注册等
-        about: “编辑和删除祈祷事件注册等。”
+        about: 编辑和删除祈祷事件注册等。 
         order: 12
       manage_publications: 
         title: 管理刊物
-        about: “创建和删除网站的出版物。”
+        about: 创建和删除网站的出版物。 
         order: 13
       manage_updates: 
         title: 管理更新
-        about: “查看，编辑，删除之前由用户个人资料的更新。”
+        about: 查看，编辑，删除之前由用户个人资料的更新。 
         order: 14
       manage_sync: 
         title: 管理同步
-        about: “查看和跟踪同步作出UpdateAgent。”
+        about: 查看和跟踪同步作出UpdateAgent。 
         order: 15
       import_data: 
         title: 导入数据
-        about: “。从CSV或使用UpdateAgent导入数据”
+        about: 从CSV或使用UpdateAgent导入数据 
         order: 16
       export_data: 
         title: 出口数据
-        about: “。导出所有站点数据到XML和CSV”
+        about: 导出所有站点数据到XML和CSV 
         order: 17
     request: 
       one: 要求
@@ -552,7 +554,7 @@ zh:
           description: 您的捐助工具网站完整的URL，例如
         Donor Tools API Email: 
           name: 供体工具API电子邮件
-          description: 用于访问电子邮件捐助工具API admin用户的地址。建议你创建一个特殊的“API”为此用户。
+          description: 用于访问电子邮件捐助工具API admin用户的地址。建议你创建一个特殊的“API 为此用户。
         Campaign Monitor API Key: 
           name: Campaign Monitor的API密钥
           description: 通过一个或多个同步运动监控用户组列表，粘贴广告系列显示器的API密钥。
@@ -562,13 +564,13 @@ zh:
       Name: 
         Community: 
           name: 社区
-          description: 你的教会或社区的名称，如“一堂”或“弗雷斯诺第一浸礼会。”
+          description: 你的教会或社区的名称，如“一堂 或“弗雷斯诺第一浸礼会。 
         Slogan: 
           name: 标语
           description: 标语/口号显示不到网站的名称。没有留下空白。
         Site: 
           name: 网站
-          description: 这个网站的名称，在上方显示，例如“我的教会家庭”，“一堂中环。”
+          description: 这个网站的名称，在上方显示，例如“我的教会家庭 ，“一堂中环。 
       URL: 
         News Feed: 
           name: 新闻饲料
@@ -579,7 +581,7 @@ zh:
       System: 
         Suffixes: 
           name: 后缀
-          description: “”
+          description: 
         Adult Age: 
           name: 成人年龄
           description: 在一个人的年龄被认为是老得足以使用该网站，并在该目录别人看见。
@@ -633,7 +635,7 @@ zh:
           description: 为社会谷歌日历的网址。可以是公共或私有地址，但日历本身将需要共享公开，以便在蹦床网上单人包括
         Updates Must Be Approved: 
           name: 更新，必须经
-          description: 如果启用，所有到用户的“基本”的信息（电话，地址等）的变化将等待来自然后才应用于管理员的批准。
+          description: 如果启用，所有到用户的基本信息（电话，地址等）的变化将等待来自然后才应用于管理员的批准。
         Sign Up: 
           name: 注册
           description: 如果启用，潜在的成员可以创建自己的网站上登录帐户。我们强烈建议您同时输入外地批准，在未来的电子邮件地址，以便您可以先检讨允许登录注册等。
@@ -660,7 +662,7 @@ zh:
           description: 允许用户提交的新闻内容。
         Custom Person Fields: 
           name: 自定义字段人
-          description: 添加自定义字段名称，每行一个。包括单词“日期”（或“日”）作出的日期字段。追加一个星号（*），使现场看到，深受用户编辑。
+          description: 添加自定义字段名称，每行一个。包括单词日期或日作出的日期字段。追加一个星号（*），使现场看到，深受用户编辑。
         Edit Legacy Ids: 
           name: 编辑ID的遗产
           description: 如果启用，将允许管理员访问手动修改ID的家庭和人士的遗产。
@@ -684,7 +686,7 @@ zh:
           description: 这一类人相互团体将显示在用户的个人资料栏。
         Content Management System: 
           name: 内容管理系统
-          description: 启用“页面” - 使用OneBody主办您的网站。
+          description: 启用页面- 使用OneBody主办您的网站。
         Publications: 
           name: 出版物
           description: 启用刊物。
@@ -743,22 +745,22 @@ zh:
         Share Birthday by Default: 
           name: 分享生日
           description: 如果启用后，新用户将自己的生日与其他网站成员共享。
-      contact_automated_email_about: “这些邮件地址发送电子邮件时，某些事情发生在他们的网站，你可以设置所有相同的地址或不同的，这取决于你所在社区的职责分离。”。
-      contact_community_info_about: “请输入您的联系教会或社区办公室，在这里人们可以联系管理人员的信息。”
+      contact_automated_email_about: 这些邮件地址发送电子邮件时，某些事情发生在他们的网站，你可以设置所有相同的地址或不同的，这取决于你所在社区的职责分离。 。
+      contact_community_info_about: 请输入您的联系教会或社区办公室，在这里人们可以联系管理人员的信息。 
       contact_heading: 联系方式
       disabled: 禁用
       enabled: 启用
       features_heading: 软件特点
-      features_prayer_event_about: “下面的设置允许该站点管理祈祷事件注册和可用性。”
+      features_prayer_event_about: “下面的设置允许该站点管理祈祷事件注册和可用性。 
       formats_heading: 格式
-      formats_date_about_html: “请输入您自己的日期和时间格式，以配合你的世界的一部分，请参阅<a href=\"/date_formatting_options.txt\" target=\"_new\">这里格式选项</一>。。”
-      formats_phone_about: “指定的手机格式化和'D'类，如国内长途，国内长途，dddd将或（年）dddd将- dddd将根据您的语言环境而定。”
+      formats_date_about_html: “请输入您自己的日期和时间格式，以配合你的世界的一部分，请参阅<a href=\/date_formatting_options.txt\ target=\_new\>这里格式选项</a>。。 
+      formats_phone_about: “指定的手机格式化和'D'类，如国内长途，国内长途，dddd将或（年）dddd将- dddd将根据您的语言环境而定。 
       locale_heading: 语言环境
       membership_management_heading: 会员管理
       name_heading: 社区名称
-      one_per_line: “（每行一个）”
+      one_per_line: “（每行一个） 
       privacy_defaults: 默认隐私设置
-      privacy_defaults_about: “当一个成员的帐户第一次被创建，下面的隐私设置应用到他们的信息（大家还可以选择显示或隐藏任何的信息，无论在任何时候设置的下面。）。”
+      privacy_defaults_about: “当一个成员的帐户第一次被创建，下面的隐私设置应用到他们的信息（大家还可以选择显示或隐藏任何的信息，无论在任何时候设置的下面。）。 
       privacy_heading: 隐私控制
       reload: 重新设置
       reload_message: 如果你已作出的命令行系统修改，您可能需要重新加载所有设置来查看更改生效。
@@ -788,27 +790,27 @@ zh:
       success: 成功
       sync: 同步
       sync_errors: 
-        one: “%{count}个同步错误”
-        other: “%{count}个同步错误”
+        one: “%{count}个同步错误 
+        other: “%{count}个同步错误 
       syncs: 同步
       type: 类型
     template: 模板
     templates: 模板
     themes: 
       custom_themes: 自定义主题
-      description_html: 您可以调整您的网站由您自定义主题下面的编辑看看。上传的资产，例如图片，CSS等通过点击“资产管理”。 <strong>更改不会看到您的访客，直到你在<a启用自定义主题href="%{url}">设置</一>。</强“
+      description_html: 您可以调整您的网站由您自定义主题下面的编辑看看。上传的资产，例如图片，CSS等通过点击“资产管理 。 <strong>更改不会看到您的访客，直到你在<a启用自定义主题href=%{url}>设置</a>。</强“
       edit: 编辑
       manage_assets: 资产管理
       preview: 预览
-      preview_instructions_html: 预览您的任何附加的<code>自定义主题页面的主题=自定义</代码>到其网址的结尾像href="%{url}">这</一>的<a，？。如果您<strong>自己锁在外面你的网站通过建立一个坏习惯的主题，使用<code>？主题= aqueouslight </代码>取回并禁用它。</强“
+      preview_instructions_html: 预览您的任何附加的<code>自定义主题页面的主题=自定义</代码>到其网址的结尾像href=%{url}>这</a>的<a，？。如果您<strong>自己锁在外面你的网站通过建立一个坏习惯的主题，使用<code>？主题= aqueouslight </代码>取回并禁用它。</强“
       reset: 重置自定义主题回其默认外观，指出了文本框并保存更改上述空白。
       save_preview: 保存更改并预览
-      syntax_description_html: 模板语法是<a href="http://wiki.github.com/tobi/liquid/liquid-for-designers">液</一>。特别是插入模板部件
+      syntax_description_html: 模板语法是<a href=http://wiki.github.com/tobi/liquid/liquid-for-designers>液</a>。特别是插入模板部件
       theme: 主题
     updates: 
       changed_email: 
-        one: “%{count}个变更电子邮件地址”
-        other: “%{count}个变更电子邮件地址”
+        one: %{count}个变更电子邮件地址
+        other: %{count}个变更电子邮件地址
       complete: 完成
       completed: 已完成
       groups_pending: 群组待批准
@@ -872,7 +874,7 @@ zh:
     verify_by_email: 通过电子邮件验证。
     verify_by_email_message: 我们向您发送一封电子邮件，你点击里面的链接，你就大功告成了。
     verify_by_phone: 通过手机验证。
-    verify_by_phone_description_html: 输入您的手机号码，请选择您的运营商，然后点击下面的按钮。如果我们对文件的数量，将文字信息发送给它允许您验证自己，进入这个网站。 <strong>文字信息速率可能会收取您的运营商。 <span class="very-strong">不要启动此验证过程，直到你知道你将收取接收文字信息！</跨度> </强“
+    verify_by_phone_description_html: 输入您的手机号码，请选择您的运营商，然后点击下面的按钮。如果我们对文件的数量，将文字信息发送给它允许您验证自己，进入这个网站。 <strong>文字信息速率可能会收取您的运营商。 <span class=very-strong>不要启动此验证过程，直到你知道你将收取接收文字信息！</跨度> </强“
     verify_by_phone_message: 我们给你发短信，你输入所包含的代码，你就大功告成了。
     verify_by_birthday: 由生日验证。
     verify_by_birthday_message: 这些意见进行审查一个真实的人，可能需要数天才能获得批准。
@@ -899,8 +901,8 @@ zh:
     new: 新专辑
     new_picture: 新画册
     picture_albums: 图片专辑
-    profile: “专页 - 显示这个在我的个人专辑，我的朋友而已。”
-    public: 公开 - 出现在“所有图片”页面，这在我的个人专辑。
+    profile: 私有 - 显示这个在我的个人专辑，只有我的朋友能访问。 
+    public: 公开 - 出现在所有图片页面,所有人能访问
     save: 保存相册
     saved: 相册保存。
 
@@ -959,7 +961,7 @@ zh:
 
   comments: 
     add_a_comment: 添加评论
-    add_read_comments: “添加/读取评论”
+    add_read_comments: “添加/读取评论 
     ago: 前
     and_others: 和其他人
     comment: 评论
@@ -977,8 +979,8 @@ zh:
     which_picture: 你是哪个图片评论？
 
   contributions: 
-    add_to_donor_tools_now: “添加捐助工具了。”
-    api_not_configured_html: 捐赠者工具API没有配置。请输入在管理员的<a href="%{url}">设置</一> API的连接细节。
+    add_to_donor_tools_now: “添加捐助工具了。 
+    api_not_configured_html: 捐赠者工具API没有配置。请输入在管理员的<a href=%{url}>设置</a> API的连接细节。
     Contributions: 捐款
     donation_types: 
       d1: 现金
@@ -1003,12 +1005,12 @@ zh:
       one: “下列个人捐助者不同步工具
       other: “下列个人不同步捐助工具（%{count}个人）
     people_not_synced_count: 
-      one: “一人不同步”
-      other: “%{count}个人不同步”
+      one: “一人不同步 
+      other: “%{count}个人不同步 
     record_synced: 此记录已捐助工具同步。
     remaining: 
-      one: “1记录的剩余...”
-      other: “%{count}个记录，其余的...”
+      one: “1记录的剩余... 
+      other: “%{count}个记录，其余的... 
     Sync_Selected: 同步选定
     Sync_All: 同步所有
     Sync_to_Donor_Tools: 同步捐助工具
@@ -1018,8 +1020,8 @@ zh:
 
   families: 
     add_members: 新增家庭成员
-    add_existing_person_html: “添加一<em>现有</电磁>人这个家庭”
-    adding_will_remove_from_their_family_html: “一个人加入这个家庭将<em>删除</电磁>”从他们目前的家庭他们。“
+    add_existing_person_html: “添加一<em>现有</电磁>人这个家庭 
+    adding_will_remove_from_their_family_html: “一个人加入这个家庭将<em>删除</电磁> 从他们目前的家庭他们。“
     are_you_sure: 你确定吗？单击确定将删除这个家庭和所有的IT人。
     cannot_delete_your_own: 您不能删除您自己的家庭。
     city_st_zip: 省份，城市，邮编
@@ -1035,7 +1037,7 @@ zh:
     legacy_id: 传统的ID
     legacy_family_id: 传统家庭的ID
     name: 姓
-    name_example_html: “<em>李四</电磁>或<em>约翰＆李四</电磁>”
+    name_example_html: “<em>李四</电磁>或<em>约翰＆李四</电磁> 
     new: 新家庭
     no_one_yet: 没有在这个家庭的一年。
     not_found: 家庭没有找到。
@@ -1052,23 +1054,23 @@ zh:
     are_you_sure: 你确定要删除此供稿？删除此供稿不会删除内容（说明，图片等）已经到您的帐户汇入。
     blog_name: 你的博客名称
     copy_the_url_from_bar: 复制从地址栏中的URL并将其粘贴在这里
-    copy_your_notifications_link_html: <strong>从右- </强“上标有该页面（如下图）右侧”通过RSS“点击链接并选择<strong>复制捷径</强”或<strong>复制链接位置“< /强“或类似的。
+    copy_your_notifications_link_html: <strong>从右- </强“上标有该页面（如下图）右侧 通过RSS“点击链接并选择<strong>复制捷径</强 或<strong>复制链接位置“< /强“或类似的。
     deleted: 饲料删除。
-    description: 你可以导入，在“求职”下面的内容和对外服务，社交网络和博客更新。
-    done_html: 完成！单击<a href="%{url}">首页</一>标签查看导入的内容。
+    description: 你可以导入，在“求职 下面的内容和对外服务，社交网络和博客更新。
+    done_html: 完成！单击<a href=%{url}>首页</a>标签查看导入的内容。
     enter_twitter_username: 在这里输入你的Twitter的用户名
     error_retrieving: 有一个错误检索饲料。请检查网址后再试一次。
     facebook_notifications: Facebook的通知
     feeds: 供稿
-    feeds_for: 饲料%{名称}
+    feeds_for: 饲料%{name}
     flickr_url: Flickr的网址
     link_with_facebook: 链接与你的Facebook状态更新...
     link_with_flickr: 链接与你的Flickr照片...
     link_with_twitter: 链接与你的Twitter更新...
     link_with_rss: 链接与你的RSS供稿...
     log_into_blog: 找到您的博客的feed的URL并将其粘贴到外地这里
-    log_into_facebook_html: 的<a href="http://www.facebook.com/notifications.php" target="_new">点击此处</一>并登录到Facebook。
-    log_into_flickr_html: 到<a href="http://flickr.com"> Flickr.com </一>登录，进入你的照片页（点击“你”接近顶部的链接）。
+    log_into_facebook_html: 的<a href=http://www.facebook.com/notifications.php target=_new>点击此处</a>并登录到Facebook。
+    log_into_flickr_html: 到<a href=http://flickr.com> Flickr.com </a>登录，进入你的照片页（点击“你 接近顶部的链接）。
     no_entries_found: 没有条目提供的网址找到。请返回重试。
     no_entries_found_flickr_alert: 如果添加一个Flickr帐户，请检查您的照片是公开的。
     no_entries_found_twitter_alert: 如果添加一个Twitter帐户，请检查你的Twitter更新得不到保障。
@@ -1087,28 +1089,28 @@ zh:
     accept: 接受好友
     add_friend_are_you_sure: 你确定吗？一个电子邮件将被发送到这个请求人的友谊。
     add_to_friends: 加入朋友
-    add_your_friends_to_profile_html: 添加您的<a href="%{url}">朋友</一>您的个人资料页！
-    added_as_friend: “%{name}的追加了一个朋友。”
+    add_your_friends_to_profile_html: 添加您的<a href=%{url}>朋友</a>您的个人资料页！
+    added_as_friend: “%{name}的追加了一个朋友。 
     already_pending: 一个朋友的要求已经与%{name}的悬而未决。
     cannot_request: 你不能要求与%{name}的友谊。
-    decline: 下降的朋友
+    decline: 拒绝好友
     friend_request_pending: 好友请求等待
     friends: 朋友
     pending_requests: 待定好友请求
     people_requested: 下面的人要求成为您的朋友。
-    personal_friends: “%{name}的朋友”
+    personal_friends: “%{name}的朋友 
     remove_from_friends: 从好友中删除
     request_sent: 一个朋友请求已发送到%{name}的。
     search_in_the_directory: 搜索目录中的朋友
     unknown_state: 未知状态
-    you_have_pending_requests_html: 您<a href="%{url}">等待朋友的要求</一>。
+    you_have_pending_requests_html: 您有一个好友请求<a href=%{url}>等待您的处理</a>。
 
   generated_files: 
-    building: “建筑你的文件...”
-    complete_heading: “完成了！”
-    complete_message: “您的文件已经完成，准备下载。”
-    failure_heading: “我们很抱歉...”
-    failure_message: “似乎已经产生了错误，而您的文件。”
+    building: “建筑你的文件... 
+    complete_heading: “完成了！ 
+    complete_message: “您的文件已经完成，准备下载。 
+    failure_heading: “我们很抱歉... 
+    failure_message: “似乎已经产生了错误，而您的文件。 
 
   groups: 
     accept: 接受
@@ -1119,17 +1121,17 @@ zh:
     approve_group: 核准集团
     are_you_sure_option: 你确定要选择}%{%{从组群}电子邮件？
     attendance: 考勤
-    back_to_group: “回到%{name}”的
-    back_to_homepage: “回到你的团体”
+    back_to_group: “回到%{name} 的
+    back_to_homepage: “回到你的团体 
     batch_edit_groups: 批量编辑组
     birthdays: 过生日
     browse_by_category: 按类别浏览
-    by_allow_anyone_to_join: 通过允许任何人加入，而不需要管理员批准这一组中，任何可能的网站用户可以看到在这个“私人”组信息。
-    calendar_help: 在您的谷歌日历，日历中的设置，在此方块复制您的“私人”XML链接并粘贴到网页上显示该组的日历。
+    by_allow_anyone_to_join: 通过允许任何人加入，而不需要管理员批准这一组中，任何可能的网站用户可以看到在这个“私人 组信息。
+    calendar_help: 在您的谷歌日历，日历中的设置，在此方块复制您的“私人 XML链接并粘贴到网页上显示该组的日历。
     calendar_private_link: 谷歌日历的私人链接
     campaign_monitor_sync: “Campaign Monitor的API列表的ID
     campaign_monitor_sync_help: 和A Campaign Monitor的订户名单，贴在这里的API列表ID同步。
-    campaign_monitor_policy_html: '你必须遵守所有的运动监测政策包括<a href="http://www.campaignmonitor.com/resources/entry/558/about-permission/">权限要求</一>。'
+    campaign_monitor_policy_html: '你必须遵守所有的运动监测政策包括<a href=http://www.campaignmonitor.com/resources/entry/558/about-permission/>权限要求</a>。'
     cannot_remove_last_admin: 您不能删除最后一组管理。你可以删除该组，但是。
     category: 分类
     category_hint: 让你的小组通过将很容易找到一个适当的类别。
@@ -1137,8 +1139,8 @@ zh:
     change_email_settings: 更改电子邮件设定
     change_this_picture: 更改此图片
     class_link_code: “类链接代码（补）
-    class_link_code_hint_html: 与外部系统同步'有用。请参阅<a href="https://github.com/seven1m/onebody/wiki/HowGroupMembershipWorks">这里</一>。分隔多个用空格代码。'
-    click_save_changes_to_upload: 点击“保存更改”，在此表底部上传新的图片。
+    class_link_code_hint_html: 与外部系统同步'有用。请参阅<a href=https://github.com/seven1m/onebody/wiki/HowGroupMembershipWorks>这里</a>。分隔多个用空格代码。'
+    click_save_changes_to_upload: 点击“保存更改 ，在此表底部上传新的图片。
     configure_email_from_group: 配置从该小组的电子邮件
     create_a_group: 创建一个组
     created: 小组已经成立。
@@ -1149,7 +1151,7 @@ zh:
     delete_group: 删除组
     deleted: 组中删除。
     description: 说明
-    description_hint: “输入一两句话给人们一见面，为什么你和你的小组的目标的想法。”
+    description_hint: “输入一两句话给人们一见面，为什么你和你的小组的目标的想法。 
     directions: 方向
     directions_hint: 您可能要包括旅行的方向。
     done_removing_people: 完成。
@@ -1157,8 +1159,8 @@ zh:
     edit_members: 编辑组成员
     email_from_group_is_on: 从该小组的电子邮件是ON
     email_from_group_is_off: 从该小组的电子邮件是关
-    email_off: “关闭”
-    email_on: “开”
+    email_off: “关闭 
+    email_on: “开 
     email_settings_changed: 该组的电子邮件设置已被更改。
     enable_attendance_tracking: 启用考勤跟踪
     enable_calendar: 启用日历
@@ -1181,7 +1183,7 @@ zh:
     if_ok_you_will_start_receiving: 如果您单击确定，你将开始接收来自该小组的电子邮件。
     ignore: 忽略
     join_this_group: 加入此群组
-    last_admin_remove: “%{name}的是最后的管理员，不能删除。”
+    last_admin_remove: “%{name}的是最后的管理员，不能删除。 
     leader: 负责人
     leader_id: 领导标识
     leave_this_group: 给此群组
@@ -1191,7 +1193,7 @@ zh:
     location_address_hint: 如果你输入一个物理地址，交互式地图将显示在您的网页。
     meets: 会见
     meets_when: 会见时
-    meets_when_hint: 就像“星期三晚上7点”的东西或“公布”'
+    meets_when_hint: 就像“星期三晚上7点 的东西或“公布 '
     members: 小组成员
     members_send: 会员发送
     must_specify_ids_list: 您必须指定一个ID的列表。
@@ -1202,20 +1204,20 @@ zh:
     not_authorized_view: 您无权查看该组
     not_authorized_post: 你没有被授权发布到该小组。
     not_found: 集团没有找到。
-    no_activity_yet: “这个集团还没有任何活动。”
+    no_activity_yet: “这个集团还没有任何活动。 
     no_groups_found: 没有发现群体
     only_admins_see_this_list: （如你自己），只有管理员看到这个名单
-    or_send_from_your_email_html: “。或者，发送到<a href='mailto:%{email}'>%{电子邮件} </一>”从你的电子邮件客户端“
+    or_send_from_your_email_html: “。或者，发送到<a href='mailto:%{email}'>%{电子邮件} </a> 从你的电子邮件客户端“
     other_notes: 其他说明
     parents_of: “对父母说
-    parents_of_hint: “成员将被自动从选定的组成员的父母产生的。”
+    parents_of_hint: “成员将被自动从选定的组成员的父母产生的。 
     pending_approval_count: 
-      one: “%{count}个小组，批准”
-      other: “%{count}个小组，批准”
+      one: %{count}个小组，批准
+      other: %{count}个小组，批准
     membership_request_count: 
-      one: “%{count}个成员的请求”
-      other: “%{count}个会员国的请求”
-    people_in_group: “在%{name}的人”
+      one: %{count}个成员的请求
+      other: %{count}个会员国的请求
+    people_in_group: 在%{name}的人
     picture: 合影
     picture_hint: 使用一组镜头或剪贴画的图形，以帮助人们认识到在这个网站上的小组。
     privacy_security: 隐私和安全
@@ -1234,14 +1236,14 @@ zh:
     show_all: 显示所有...
     the_settings_are_for_advanced_users: 下面的设置是为高级用户。
     there_was_errors_saving: 有一个或多个保存更改错误。误码记录突出显示为红色。滚动到看到错误消息。
-    this_group_has_pending_html: 该集团已挂起的<a href="%{url}">组成员的请求</一>。
-    this_group_is_hidden: “这个小组是隐藏它的存在是大多数人隐藏起来。。”
+    this_group_has_pending_html: 该集团已挂起的<a href=%{url}>组成员的请求</a>。
+    this_group_is_hidden: “这个小组是隐藏它的存在是大多数人隐藏起来。。 
     this_group_is_pending_approval: 本组正在等待批准。
     this_group_is_pending_you_may_not_add_people: 本组正在等待批准。你可能不加人呢。
     this_group_is_private: 本组是私人的。此组中只有人可以看到它的消息。
     this_group_maintained_by_staff: 本组是由办公室工作人员。
     types: 群的类型
-    unmapable_address: “这并不像一个物理地址，没有地图会显示出来。”
+    unmapable_address: “这并不像一个物理地址，没有地图会显示出来。 
     user_settings_saved: 用户设置保存。
     view_group: 查看组
     view_members: 查看集团成员详情
@@ -1256,18 +1258,18 @@ zh:
     completed_records: 完成记录
     error: 错误
     error_updating: 错误更新纪录。
-    error_updating_message_html: 至少有一个错误，而试图更新数据库中的记录。请更正错误，然后返回<a href="%{url}">挂起更新</一>接口“来完成这一进程。
+    error_updating_message_html: 至少有一个错误，而试图更新数据库中的记录。请更正错误，然后返回<a href=%{url}>挂起更新</a>接口“来完成这一进程。
     errored_records: 错误记录
     first: 首先
     for_list_of_available_attributes: 有关可用属性的列表（不是所有的属性是必须的）。
     hint_excel_docs: “提示
-    import_data: “导入数据...”
+    import_data: “导入数据... 
     import_people: 进口人
     import_results: 导入结果
     import_selected_people: 导入选定的人
     last: 最后
     no_records_were_found: 没有记录被发现进口。
-    only_first_records_will_be_imported_html: 只有第一个%{count}个记录将被导入。对于较大的文件时，必须分成多个文件记录，或者使用<a href="http://wiki.github.com/seven1m/onebody/updateagent"> UpdateAgent </一>大批量导入一次。
+    only_first_records_will_be_imported_html: 只有第一个%{count}个记录将被导入。对于较大的文件时，必须分成多个文件记录，或者使用<a href=http://wiki.github.com/seven1m/onebody/updateagent> UpdateAgent </a>大批量导入一次。
     people: 进口人
     record: 记录
     record_updated: 记录更新。
@@ -1281,7 +1283,7 @@ zh:
 
   layouts: 
     this_is_the_fallback_template: 这是回退的情况下用你的模板选择的主题不能被发现。请检查你的主题设置指向一个在/目录主题的真实目录。
-    powered_by_html: 本站由<a href="http://beonebody.com" rel="external"> OneBody </一>
+    powered_by_html: 本站由<a href=http://beonebody.com rel=external> OneBody </a>
     privacy_policy: 隐私政策
 
   menus: 
@@ -1322,7 +1324,7 @@ zh:
     in: 
     message: 消息
     message_by: 消息由
-    messages_in_html: 邮件在<a href="%{url}">%{name}的</一>
+    messages_in_html: 邮件在<a href=%{url}>%{name}的</a>
     missing_param: 失踪的消息参数。
     no_email_for_person: 对不起。我们没有为%{name}的档案的电子邮件地址。
     not_authorized_delete: 您无权删除该邮件。
@@ -1350,15 +1352,15 @@ zh:
   nav: 
     directory: 目录
     groups: 团体
-    home: 主页
+    home: 首页
     podcasts: 播客
-    profile: 简介
+    profile: 个人主页
 
   news: 
     body_description: “分享您的公告，信息或新闻浏览
     deleted: 新闻删除。
     edit_news_post: 编辑新闻发布
-    if_you_have_something_to_share_html: 如果您有什么新闻价值分享，这里提交的<a href="%{url}"> </一>。
+    if_you_have_something_to_share_html: 如果您有什么新闻价值分享，这里提交的<a href=%{url}> </a>。
     news: 新闻
     news_feed: 新闻饲料
     no_news_is_available: 没有消息可在这个时候。
@@ -1366,7 +1368,7 @@ zh:
     save_news: 保存新闻
     saved: 新闻保存。
     submit_news: 提交新闻
-    subscribe_to_community_news_html: 的<a href="%{url}" class="feed-icon">订阅</一>与您的饲料读者对社区新闻。
+    subscribe_to_community_news_html: 的<a href=%{url} class=feed-icon>订阅</a>与您的饲料读者对社区新闻。
     title_description: “给您的文章简洁的标题
     welcome_to_the_place: 欢迎对社区新闻的地方。
 
@@ -1376,9 +1378,9 @@ zh:
     add_note: 添加注释
     body: 身体
     by: 
-    creating_note_doesnt_send_email_html: “创建并注意<em>不</电磁>”发送电子邮件至本集团。“
+    creating_note_doesnt_send_email_html: “创建并注意<em>不</电磁> 发送电子邮件至本集团。“
     delete_note: 删除注释
-    dont_have_notes: “你没有任何票据，但”
+    dont_have_notes: “你没有任何票据，但 
     edit_note: 编辑注
     new_note: 新注
     note: 请注意
@@ -1389,26 +1391,26 @@ zh:
     save_note: 保存注意
     saved: 注意保存。
     this_note_will_be_posted: 这说明将被张贴到组的%{}博客。
-    this_note_will_not_be_private_html: “这说明将<strong>不会</强”是私人的，因为它是一个博客张贴到发送私人邮件，发送电子邮件至本集团。。“
+    this_note_will_not_be_private_html: “这说明将<strong>不会</强 是私人的，因为它是一个博客张贴到发送私人邮件，发送电子邮件至本集团。。“
     title: 标题
 
   notifier: 
-    attached_your_custom_directory: 你好，%{name}的。随信附上您的自定义打印从%{网站}目录。
-    be_sure_to_send_verification_email: 一定要还可以点击“发送验证电子邮件”给用户。
-    check_boxes_in_visibility_sidebar: 检查“能见度”所有适当的栏框并保存。
+    attached_your_custom_directory: 你好，%{name}的。随信附上您的自定义打印从%{site}目录。
+    be_sure_to_send_verification_email: 一定要还可以点击“发送验证电子邮件 给用户。
+    check_boxes_in_visibility_sidebar: 检查“能见度 所有适当的栏框并保存。
     click_link_to_complete_process: “点击下面的链接来完成这个过程
     has_submited_profile_update: 提交了一份文件更新
     if_you_cannot_click_link: 如果您不能单击上面的链接，您可能需要复制并粘贴到您的Web浏览器的地址栏中。
     if_you_approve_this_account_creation: 如果你创建这个帐户批准，在这个地址激活帐户
     if_you_dont_know_why_get_this_email: 如果你不知道你为什么会收到这个电子邮件 ，您可以使用该号码%{phone}联系,ta:%{name}
     message_id: 消息ID
-    name_has_requested_join_group: “%{name}的要求加入该组%{group}。”
-    name_submitted_birthday_request: “%{name}的提交了一份生日核查要求”
+    name_has_requested_join_group: “%{name}的要求加入该组%{group}。 
+    name_submitted_birthday_request: “%{name}的提交了一份生日核查要求 
     new: 新
     old: 老
-    person_had_their_email_changed: “%{name}的已改变他们的电子邮件。”
-    person_has_signed_for_account: “%{name}的已经签署了一个帐户。”
-    person_wants_to_be_your_friend: “%{name}的希望成为你的朋友在%{网站}。”
+    person_had_their_email_changed: “%{name}的已改变他们的电子邮件。 
+    person_has_signed_for_account: “%{name}的已经签署了一个帐户。 
+    person_wants_to_be_your_friend: “%{name}的希望在%{site}成为你的朋友。 
     please_make_updates: 请做适当的更新会员资料库。
     this_email_to_verify_email: 此邮件是验证用于访问网站的电子邮件地址。为了验证您的电子邮件地址，请点击下面的链接
     this_notify_someone_reported: 这是为了通知您，有人报告说，日期和时间地点在%{}不正确的。
@@ -1416,7 +1418,7 @@ zh:
     to_approve_or_ignore: 批准或忽视，登录和访问以下地址
     update_record_membership: 更新他们的数据库记录中的成员资格。
     verification_code: 验证码
-    verify_person_identity: “确认此人的身份要谨慎，如果有疑问，可使用提供的电话号码，以验证此人是谁他们说。。”
+    verify_person_identity: “确认此人的身份要谨慎，如果有疑问，可使用提供的电话号码，以验证此人是谁他们说。。 
     wait_one_day_and_wait: 等待一天或手动触发服务器上的数据库更新脚本，并等待它完成。
 
   pages: 
@@ -1437,14 +1439,19 @@ zh:
     upload_attachment: 上传附件
     view_page: 查看页
 
-  people: 
+  people:
+    province_city_address: 省/市/街道
+    QQ: QQ
+    MSN: MSN
+    twitter: twitter
+    weibo : 新浪围脖
     about_me: 关于我
     add_group: 添加组
     advanced: 先进
-    activities: 
+    activities: 活动
     alternate_email: 备用电子邮件
     books: 书籍
-    business: 商业
+    business: 职业
     business_directory: 企业名录
     business_address: 公司地址
     business_email: 企业邮箱
@@ -1461,20 +1468,21 @@ zh:
     child: 儿童
     child_alert: 您必须指定是否该人是儿童（%{年}）或不完成此更新。
     click_to_send_verification_email: 发送到该用户的密码设置电子邮件。
-    click_to_change_email_html: 的<a href="%{url}">点击这里</一>要改变这个电子邮件地址。
-    deleted_html: 此人已被删除。您可以还原记录的<a href="%{url}">这里</一>。
-    description_of_business: 业务概述
+    click_to_change_email_html: 的<a href=%{url}>点击这里</a>要改变这个电子邮件地址。
+    deleted_html: 此人已被删除。您可以还原记录的<a href=%{url}>这里</a>。
+    description_of_business: 我上班都在干麻
     determine_by_birthday: 确定的生日
     edit: 
       about: 关于
-      basics: 基础知识
+      address: 我的位置
+      basics: 基本信息
       child_hint: 如果没有指定的生日，你必须说明这是否是儿童或成人。
-      description_hint: “关于你自己的单词或两个 - 也许你的职业吗？”
+      description_hint: 简单的描述你自己,兴趣爱好或职业 
       email: 电子邮件设置更改
       family_photo: 全家福
       password: 更改密码
       person_type_hint: 这些不控制访问 - 只有指定。
-      photo: 个人资料照片
+      photo: 我的头像
       privacy: 更改隐私设置
       profile: 编辑个人资料
     email: 电子邮件
@@ -1482,7 +1490,7 @@ zh:
     enter_new_category: 输入新的类别。
     family: 家庭
     family_legacy_external_id: 家庭遗产/外部标识
-    find_a_group_html: 找一个群组<a href="%{url}">这里</一>。
+    find_a_group_html: 找一个群组<a href=%{url}>这里</a>。
     friend_not_found: 找不到朋友。
     friendship_accepted: 友谊接受。
     friendship_manage: 你可能不管理自己负责的友谊。
@@ -1491,19 +1499,19 @@ zh:
     full_access: 完全访问
     groups: 团体
     if_you_have_another_email: 如果你有其他的电子邮件（可能是一个工作地址）你想利用电子邮件发送到组，你可以在这里输入。
-    if_you_wish_to_be_listed_business_dir_html: 如果你想成为在<a href="%{url}">上市企业名录</一>，请输入您的公司名称，描述，低于其他细节。
-    if_you_wish_to_remove_something_html: 如果你想删除的东西，以防止其他人看到它，而不是去到<a href="%{url}">隐私</一>“页面并隐藏它。
+    if_you_wish_to_be_listed_business_dir_html: 如果你想在<a href=%{url}>公司录</a>被搜索到,请输入您的公司名称，描述，并尽量详细。
+    if_you_wish_to_remove_something_html: 如果你想删除的东西，以防止其他人看到它，而不是去到<a href=%{url}>隐私</a>“页面并隐藏它。
     if_your_system_is_setup_to_sync_change: 如果您的系统设置与外部同步源（例如，会员管理系统）的数据，更改您在此可能会在下次同步覆盖。
     interests: 兴趣
     legacy_external_id: 传统/外部标识
-    limited_access: “您的帐户目前有限的访问，我们正在展示你作为一个结果的一个简短的个人资料页。”
-    limited_access_denied: “您的帐户目前有限的访问。”
+    limited_access: “您的帐户目前有限的访问，我们正在展示你作为一个结果的一个简短的个人资料页。 
+    limited_access_denied: “您的帐户目前有限的访问。 
     movies: 电影
     music: 音乐
     name: 姓名
     new_person: 新的人
     no_additional_access_avaiable: 没有额外的访问选择在这个时间。
-    no_email: “%{name}的并没有一个系统中的电子邮件地址”
+    no_email: “%{name}的并没有一个系统中的电子邮件地址 
     no_family_for_this_person: 此人不属于一个家庭。他们将无法登录，而不会看到其他人在网站上。
     no_groups_yet: 还没有群组
     not_deleted: 人不会被删除。
@@ -1514,16 +1522,16 @@ zh:
     people: 人物
     person: 
       one: 1人
-      other: “%{数}人”
-    person_isnt_any_groups: “%{}是人在任何群体不是现在。”
+      other: %{count}人 
+    person_isnt_any_groups: “%{}是人在任何群体不是现在。 
     person_type: 角色
-    quotes: 行情
+    quotes: 格言
     save_access: 保存访问
-    select_file_to_upload: “选择在您的计算机上传文件
+    select_file_to_upload: 在您的计算机选择文件并上传
     send_email: 发送电子邮件
     services_provided_by: 提供的服务
     share_your_personal_testimony: 分享您的个人见证 - 你是如何认识耶稣基督，以及他如何改变了你的生活。
-    show_a_map_here_html: 显示在地图上这里提供您的雅虎地图API密钥OneBody。的<a href="http://github.com/seven1m/onebody/wikis/serviceapikeys">点击这里说明“</一>。
+    show_a_map_here_html: 显示在地图上这里提供您的雅虎地图API密钥OneBody。的<a href=http://github.com/seven1m/onebody/wikis/serviceapikeys>点击这里说明“</a>。
     show_full_screen: 全屏显示
     show_hidden_groups: 显示隐藏组
     suffix: 后缀
@@ -1531,18 +1539,18 @@ zh:
     testimony: 见证
     this_account_is_frozen: 此帐户被冻结。 %{name}的无法进行此配置文件或其他任何人改变的，直到该帐户解冻。
     this_email_will_not_be_visible: 此邮件地址将不可见的，除非管理员的人。
-    this_event_doesnt_have_pictures: “这事件没有任何图片呢。”
+    this_event_doesnt_have_pictures: “这事件没有任何图片呢。 
     this_person_is_not_an_adult: 此人被认为是比%} {岁岁以下，而且没有父母的同意。
     this_profile_is_hidden: 此配置文件是隐藏
     tv_shows: 电视节目
-    upload_a_picture_of_html: 上传了%{name}的图片在这里。
-    upload_family_picture_html: 上传一个家庭的图片在这里。
+    upload_a_picture_of_html: 在这里上传%{name}的图片。
+    upload_family_picture_html: 在这里上传一个家庭的图片。
     update_to_profile_is: 一个到该配置文件更新
     verses: 诗篇
     visibility: 可见
     visible_on_printed_directory: 在电话簿可见
     visible_to_everyone: 人可见
-    website: 网站
+    website: 个人网站
     where_are_my_kids: 哪里是我的孩子吗？
     you_arent_in_any_groups: 您有任何团体还没有。
     you_many_not_make_changes: 你不能在这个时候更改您的帐户。
@@ -1553,7 +1561,7 @@ zh:
     are: 人
     is: 人是
     one: 1人
-    other: “%{数}人”
+    other: “%{count}人 
 
   photos: 
     object_not_found: 找不到对象。
@@ -1564,7 +1572,7 @@ zh:
   pictures: 
     add_a_picture: 添加图片
     album: 专辑
-    delete_are_you_sure: “你确定删除此专辑也将删除其所有的图片吗？！”
+    delete_are_you_sure: “你确定删除此专辑也将删除其所有的图片吗？！ 
     cant_delete: 你不能删除该图片。
     cant_edit: 您不能编辑该图片。
     click_to_enlarge: 点击放大
@@ -1572,15 +1580,15 @@ zh:
     comment_on_this_picture: 评论此图片
     delete_album: 删除相册
     edit_album: 编辑相册
-    failed: “%{}没有失败而节省的错误”
+    failed: “%{}没有失败而节省的错误 
     next: 下一个»
-    picture_uploaded_by: “图片上传%{}的时候”
+    picture_uploaded_by: “图片于%{when}的时候上传
     prev: «上一页
     rotate_left: 向左旋转
     rotate_right: 向右旋转
-    saved: “保存图片成功”
+    saved: “保存图片成功 
     set_as_cover: 将设置为封面
-    hide_my_name: “这是一般社区图片 - 他们不显示我的名字（仅管理选项）。”
+    hide_my_name: “这是一般社区图片 - 他们不显示我的名字（仅管理选项）。 
     upload: 上传！
 
   podcasts: 
@@ -1611,7 +1619,7 @@ zh:
     remember_to_come_back: 记住要回来，填补了这一部分，这样您的团队能有一个回答祈祷纪录。
     request: 请求
     save_prayer_request: 保存代祷
-    submitted_by: “由%} {person_name在%{组名}%{日期}上提交的请求。”
+    submitted_by: “由%} {person_name在%{组名}%{日期}上提交的请求。 
 
   prayer_signups: 
     add_somebody: 添加有人
@@ -1626,10 +1634,10 @@ zh:
     signup_saved: 注册保存。
 
   profile: 
-    fax: “[法]”
-    home: “[H]条”
-    mobile: “[米]”
-    work: “[瓦特]”
+    fax: 传真 
+    home: 家庭电话
+    mobile: 手机 
+    work: 工作电话 
 
   printable_directories: 
     already_sent: 这似乎是一个目录已经发出了一会儿以前给你。请检查您的电子邮件（以防万一，你的垃圾邮件文件夹）。
@@ -1637,10 +1645,10 @@ zh:
     created_for: 创建，特别是对%{%{name}的日期}
     email_custom_directory: 邮箱我的自定义目录
     include_family_pictures: 包括家庭照片
-    make_sure_you_have_adobe_html: 确保您<a href="%{url}">土坯器</一“或其他程序，可以浏览PDF文件。
+    make_sure_you_have_adobe_html: 确保您<a href=%{url}>土坯器</一“或其他程序，可以浏览PDF文件。
     not_allowed: 你不能打印目录。抱歉。
     were_are_building_custom_pdf: 。。“我们正在建立您的自定义PDF现在它会需要一点时间，但可能不会超过几分钟一旦准备就绪，我们将通过电子邮件发送给你觉得自由继续浏览到这个网站。 （你可以离开这个页面，如果你愿意）。“
-    will_take_longer: “（会需要一点时间）”
+    will_take_longer: “（会需要一点时间） 
 
   privacies: 
     activity: 活动
@@ -1648,16 +1656,16 @@ zh:
     address2: 地址2号线
     agreement_saved: 协议保存。
     anniversary: 周年纪念
-    as_a_parent_agree_html: 我作为父母或法定gaurdian%{name}的，兹同意本人已阅读本网站的<a href="%{url}">隐私权政策</一>，这对%{名称个人信息}可以显示的网站（如这个页面上的隐私设置而定）的其他用户，而%{name}的可能，如果能够，利用作为一个普通用户（包括个人资料的定制本网站，并通过私人通信消息，团体等）。
+    as_a_parent_agree_html: 我作为父母或法定gaurdian%{name}的，兹同意本人已阅读本网站的<a href=%{url}>隐私权政策</a>，这对%{名称个人信息}可以显示的网站（如这个页面上的隐私设置而定）的其他用户，而%{name}的可能，如果能够，利用作为一个普通用户（包括个人资料的定制本网站，并通过私人通信消息，团体等）。
     birthday: 生日
     child_profile_has_parental_consent: 这孩子的个人资料已经从%{name}的父母的同意。
-    child_under_age_no_parents_consent: “这孩子是根据多年的%{}的年龄，他/她的父母没有给予同意让他们的信息显示出来。”
+    child_under_age_no_parents_consent: “这孩子是根据多年的%{}的年龄，他/她的父母没有给予同意让他们的信息显示出来。 
     child_under_age_you_have_not_consent: “这孩子是根据多年的%{}年龄，你有没有给同意
     children: 儿童
-    click_the_agree: “点击'我同意'按钮。”
+    click_the_agree: “点击'我同意'按钮。 
     detail: 详细
     email: 电子邮件
-    family_hidden: “%} {你的家庭是目前隐藏在这个网站的所有网页！”
+    family_hidden: “%} {你的家庭是目前隐藏在这个网站的所有网页！ 
     family_privacy: 家庭
     fax: 传真
     group_privacy: 集团隐私
@@ -1666,17 +1674,17 @@ zh:
     home_phone: 家庭电话
     i_agree: 我同意
     mobile_phone: 移动电话
-    modify_the_privacy_settings_html: 您可以更改您的家人在这里的隐私设置。带有复选标记的项目都可以看到其他成员谁登录到这个网站。点击设定的<img src="/images/plus.gif"/>团体（可选）隐私。要了解我们如何使用你和你的家人的个人信息，请阅读我们的<a href="%{url}">隐私权政策</一>。
-    please_read_our_privacy_policy_html: 请阅读我们的<a href="%{url}">隐私权政策</一>了解有关您的个人信息的使用细节。
-    people_can_still_send_html: “您仍然可以接收电子邮件，通过该网站没有透露您在网络上的电子邮件地址。”
+    modify_the_privacy_settings_html: 您可以更改您的家人在这里的隐私设置。带有复选标记的项目都可以看到其他成员谁登录到这个网站。点击设定的<img src=/images/plus.gif/>团体（可选）隐私。要了解我们如何使用你和你的家人的个人信息，请阅读我们的<a href=%{url}>隐私权政策</a>。
+    please_read_our_privacy_policy_html: 请阅读我们的<a href=%{url}>隐私权政策</a>了解有关您的个人信息的使用细节。
+    people_can_still_send_html: “您仍然可以接收电子邮件，通过该网站没有透露您在网络上的电子邮件地址。 
     privacy: 隐私
     private: 私人
-    read_privacy_policy_html: 请阅读我们的<a href="%{url}">隐私权政策</一>。
-    read_safeguarding_children_html: 阅读关于<a保障儿童</一> href="%{url}">我们的页面。
+    read_privacy_policy_html: 请阅读我们的<a href=%{url}>隐私权政策</a>。
+    read_safeguarding_children_html: 阅读关于<a>保障儿童</a> href=%{url}>我们的页面。
     read_statement_below: 阅读以下声明，并同意通过检查相应的复选框它。
     saved: 设置保存。
-    sharing_with_html: 使用<a href="%{url}">%{共享名} </一>
-    the_items_are_visible_html: “下列项目都可以看到每个人的<a href=\"%{url}\">的改变，</一>
+    sharing_with_html: 使用<a href=%{url}>%{共享名} </a>
+    the_items_are_visible_html: “下列项目都可以看到每个人的<a href=\%{url}\>的改变，</a>
     the_items_may_be_shared: “以下的项目可共享的%{name}的其他成员
     this: 这
     to_show_on_this_site: “这个网站上显示%{name}的，请
@@ -1696,8 +1704,8 @@ zh:
     email_notifications: 电子邮件通知
     feed: 饲料刊物
     file: 文件
-    files_with_acrobat_icon_html: 为了与Acrobat图标%{img}文件，您需要%{网址}（又名“杂技演员读者”）或其他方案查看PDF文件的能力。
-    inform_publication_available: 这是为了通知你，一个新的出版物已被添加到%{网站}。
+    files_with_acrobat_icon_html: 为了与Acrobat图标%{img}文件，您需要%{url}（又名“杂技演员读者 ）或其他方案查看PDF文件的能力。
+    inform_publication_available: 这是为了通知你，一个新的出版物已被添加到%{site}。
     name: 姓名
     new_publication: 新出版
     new_publication_available: 新出版可用
@@ -1709,7 +1717,7 @@ zh:
     saved: 出版物保存。
     start_receiving_notifications: “通过电子邮件接收新的出版物时，就这个页面上提供通知
     subscribe: 订阅
-    subscribe_feed_html: 的<a href="%{url}">订阅</一>与您的饲料读者对刊物。
+    subscribe_feed_html: 的<a href=%{url}>订阅</a>与您的饲料读者对刊物。
     unsubscribe: 取消订阅
     update_notifications: 更新通知
     you_must_select_file: 你必须选择一个文件。
@@ -1768,19 +1776,20 @@ zh:
     anniversary: 周年纪念
     birthday: 生日
     browse: 浏览
-    business_category: “企业类别
-    business_directory: 企业名录
+    business: 公司
+    business_category: 公司类别
+    business_directory: 公司录
     category: 分类
     city: 城市
     deacon: 执事
     elder: 长老
     families_found: 
       one: 1的家庭中找到
-      other: “%{count}个家庭找到”
+      other: “%{count}个家庭找到 
     family_name: 姓
     female: 女
     gender: 性别
-    heading: “%{name}的目录”
+    heading: %{name}的目录 
     male: 男
     member: 会员
     results_not_shown: 一些不显示的结果 - 更具体。
@@ -1789,7 +1798,7 @@ zh:
     not_showing_hidden_people: （不显示隐藏的人）
     people_found: 
       one: 一人发现
-      other: “%{count}个人们发现”
+      other: “%{count}个人们发现 
     printed_directory: 电话簿
     search: 目录搜索
     search_by_name: 按名称搜索
@@ -1801,12 +1810,12 @@ zh:
     zip: 邮编
 
   session: 
-    account_not_activated_html: 您的帐户没有被激活。的<a href="/pages/help">点击这里</一>开始。
+    account_not_activated_html: 您的帐户没有被激活。的<a href=/pages/help>点击这里</a>开始。
     create_the_first_user: 你可以通过创建第一个用户运行命令
     email_address: 电子邮件地址
     email_found: 该电子邮件地址被发现，但你必须验证，然后才能登录
     email_not_found: 电子邮件未找到
-    email_not_found_try_another: 该电子邮件地址不能找到我们的制度。请尝试使用其他的电子邮件。
+    email_not_found_try_another: 该电子邮件地址无效。请尝试使用其他的电子邮件。
     help_signing_in: 登入协助
     i_need_help: 我需要帮助。
     load_sample_data: “或者，您可以通过运行加载命令和一些示例数据OneBody
@@ -1818,7 +1827,7 @@ zh:
     password_incorrect: 密码不正确
     please_sign_in: 请登录
     sign_in: 登录
-    sign_in_error_html: 有一个错误签名你进来请<a href="%{url}">再试一次</一>。
+    sign_in_error_html: 有一个错误签名你进来请<a href=%{url}>再试一次</a>。
     sign_out: 登出
     sign_up_or_sign_in_html: <a href=%{url}>注册</a>一个帐户，如果你没有账户的话
     forget_password_html: <a href=%{url}>找回密码</a>或者
@@ -1826,37 +1835,37 @@ zh:
 
   setup: 
     admin_account: 管理员帐户
-    complete: “现在你已经准备好登录的第一次！”
-    congratulations: “恭喜OneBody现在正在运行的时候添加一个管理员用户并设置一些其他设置...！”。
+    complete: “现在你已经准备好登录的第一次！ 
+    congratulations: “恭喜OneBody现在正在运行的时候添加一个管理员用户并设置一些其他设置...！ 。
     do_right_away: 你应该立刻做此事，特别是如果您的服务器上提供公共网络。
     domain_name: 域名
-    domain_name_note: “输入该网站的域名，没有任何前导\的”www \“，像这样
+    domain_name_note: “输入该网站的域名，没有任何前导\的 www \“，像这样
     email_note: 这是电子邮件地址，并能接收实时错误报告。
     heading: 第一次安装
     invalid_domain_name: 无效的域名。
-    more_accounts_later: “（你将能够创造更多的管理员帐户后）。”
+    more_accounts_later: “（你将能够创造更多的管理员帐户后）。 
 
   share: 
     default_album_name: 专辑名称
     email: 电子邮件
-    group: “跟你的小组的东西。”
+    group: “跟你的小组的东西。 
     note: 请注意
-    note_label: “什么对你的想法？”
+    note_label: “什么对你的想法？ 
     picture: 图片
     prayer_answer: 答案
     prayer_answered_at: 日期已答复
     prayer_request: 代祷
-    prayer_share_answer: “这是...作为回答祈祷”
-    profile: “与朋友分享的东西。”
+    prayer_share_answer: “这是...作为回答祈祷 
+    profile: “与朋友分享的东西。 
     share: 分享！
     verse: 诗
     verse_label: “诗歌或一段话
 
   stream: 
     about_heading: 您的主页
-    about_html: “这是你定制的网页 - 从东西显示在这里与你，你的家人和朋友组的人。”
+    about_html: “这是你定制的网页 - 从东西显示在这里与你，你的家人和朋友组的人。 
     ago: 前
-    and_more: 长度}和%{%{名称更受} ...
+    and_more: 查看更多 %{length}个分享 ,%{name}...
     feed: 饲料
     flickr: Flickr的
     import_blog_feed: 从您的博客导入文章...
@@ -1893,8 +1902,8 @@ zh:
     add_your_favorite_verse: “将您喜爱的诗句
     all_verses: 所有的诗篇
     disclaimer: 报价经文标示为'网'是从世界英文圣经，现代英语的美国标准版圣经采取更新。网络是在公共领域。自由复制和发布。
-    example_verse: “约翰福音3:16”
-    intro: 分享您最喜欢的圣经经文与%{社会}。
+    example_verse: “约翰福音3:16 
+    intro: 分享您最喜欢的圣经经文与%{community}。
     no_verses_yet: 没有诗句呢！
     not_found: 这经文找不到。您是否正确键入引用？
     people_who_like_this_verse: 人谁喜欢这首诗
@@ -1913,7 +1922,87 @@ zh:
     one_or_more_not_found: 一个或更多的城墙未找到。
     respect_privacy: 请尊重他人的隐私。滥用隔离墙将让你从网站上被禁止。
     save_message: 保存消息
-    to_send_a_private_message_html: 所有用户将看到您的消息发送的一个私人信息，请<a href="%{url}">点击这里</一>。
+    to_send_a_private_message_html: 所有用户将看到您的消息发送的一个私人信息，请<a href=%{url}>点击这里</a>。
     view_all_wall_messages: 查看所有墙壁的消息...
-    wall: 墙
-    wall_to_wall: 墙墙
+  # formatos de data e hora
+  datetime:
+    distance_in_words:
+      x_minutes: '%{count} 分钟'
+      half_a_minute: '半分钟'
+      less_than_x_seconds: '不到 %{count} 秒' 
+      
+      x_seconds:
+        one: '1 秒'
+        other: '%{count} 秒'
+      
+      less_than_x_minutes: 不到 %{count} 分钟
+
+      x_minutes: '%{count} 分钟'
+
+      
+      about_x_hours: '大概 %{count} 小时'
+
+      
+      x_days: '%{count} 天'
+      
+      about_x_months: '大概 %{count} 月'
+      
+      x_months:
+        one: '1 mês'
+        other: '%{count} 月'
+      
+      about_x_years: '大概 %{count} 年'
+      
+      over_x_years: '超过 %{count} 年'
+ 
+      almost_x_years: '快 %{count} 年' 
+    
+    prompts:
+      year:   "年"
+      month:  "月"
+      day:    "天"
+      hour:   "小时"
+      minute: "分钟"
+      second: "秒"
+ 
+  # numeros
+  number:
+    format:
+      precision: 3
+      separator: ','
+      delimiter: '.'
+    currency:
+      format:
+        unit: 'R$'
+        precision: 2
+        format: '%u %n'
+        separator: ','
+        delimiter: '.'
+    percentage:
+      format:
+        delimiter: '.'
+    precision:
+      format:
+        delimiter: '.'
+    human:
+      format:
+        precision: 1
+        delimiter: '.'
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+ 
+  # Usado no Array.to_sentence
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " e "
+      last_word_connector: " e "
+  

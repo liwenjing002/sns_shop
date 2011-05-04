@@ -15,9 +15,6 @@
     <% unless @person.visible? %>
       <div class="highlight"><span class="lock-icon"></span> <%= t('people.this_profile_is_hidden') %></div>
     <% end %>
-    <% unless @family %>
-      <div class="alert"><span class="alert-icon"></span> <%= t('people.no_family_for_this_person') %></div>
-    <% end %>
     <%= render :partial => 'pending_updates' %>
     <h2>
       <strong><%= @person.name %></strong>
@@ -25,17 +22,92 @@
         / <%= @person.description %>
       <% end %>
     </h2>
-    <ul class="profile-details">
-      <%= attribute(:website)      do %><li class="website"><%= link_to simple_url(@person.website), @person.website %>                           </li><% end %>
-      <%= attribute(:email)        do %><li class="email"  ><%= mail_to @person.email                                %>                           </li><% end %>
-      <%= attribute(:mobile_phone) do %><li class="phone"  ><%= format_phone @person.mobile_phone                    %> <%= t('profile.mobile') %></li><% end %>
-      <%= attribute(:work_phone)   do %><li class="phone"  ><%= format_phone @person.work_phone                      %> <%= t('profile.work')   %></li><% end %>
-      <%= attribute(:home_phone)   do %><li class="phone"  ><%= format_phone @person.home_phone                      %> <%= t('profile.home'  ) %></li><% end %>
-      <%= attribute(:fax)          do %><li class="phone"  ><%= format_phone @person.fax                             %> <%= t('profile.fax'   ) %></li><% end %>
-      <div class="new-line"></div>
-      <%= attribute(:address) do %>
-        <li class="address"><%= preserve_breaks @person.address %><br/><%= @person.city %>, <%= @person.state %> <%= @person.short_zip %></li>
+
+
+    <div class="favorites-group" style="margin-top: 15px">
+      <%= attribute(:email)        do %>
+        <div class="favorites-group">
+          <h4><%= t('people.email') %></h4>
+          <%= mail_to @person.email                                %>
+        </div>
       <% end %>
+    </div>
+
+
+    <div class="favorites-group" style="margin-top: 15px">
+      <%= attribute(:qq)        do %>
+        <div class="favorites-group">
+          <h4><%= t('people.QQ') %></h4>
+          <%= mail_to @person.qq                                %>
+        </div>
+      <% end %>
+    </div>
+
+
+
+    <div class="favorites-group" style="margin-top: 15px">
+      <%= attribute(:msn)        do %>
+        <div class="favorites-group">
+          <h4><%= t('people.MSN') %></h4>
+          <%= mail_to @person.msn                                %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="favorites-group" style="margin-top: 15px">
+      <%= attribute(:weibo)        do %>
+        <div class="favorites-group">
+          <h4><%= t('people.weibo') %></h4>
+          <%= mail_to @person.weibo                                %>
+        </div>
+      <% end %>
+    </div>
+
+
+    <div class="favorites-group" style="margin-top: 15px">
+      <%= attribute(:twitter)        do %>
+        <div class="favorites-group">
+          <h4><%= t('people.twitter') %></h4>
+          <%= mail_to @person.twitter                                %>
+        </div>
+      <% end %>
+    </div>
+
+
+    <div class="favorites-group" style="margin-top: 15px">
+      <%= attribute(:mobile_phone)        do %>
+        <div class="favorites-group">
+          <h4><%= t('profile.mobile') %></h4>
+          <%= format_phone (@person.mobile_phone,true)                    %> 
+        </div>
+      <% end %>
+    </div>
+
+    <div class="favorites-group" style="margin-top: 15px">
+      <%= attribute(:work_phone)        do %>
+        <div class="favorites-group">
+          <h4><%= t('profile.work'  ) %></h4>
+          <%= format_phone @person.work_phone                      %> 
+        </div>
+      <% end %>
+    </div>
+
+
+
+
+
+    <div class="favorites-group" style="margin-top: 15px">
+      <%= attribute(:website)        do %>
+        <div class="favorites-group">
+          <h4><%= t('people.website'   ) %></h4>
+          <%= link_to simple_url(@person.website), @person.website %> 
+        </div>
+      <% end %>
+    </div>
+      
+
+
+    <ul class="profile-details"> 
       <div class="new-line"></div>
       <li class="icon">
         <%= link_to t('messages.send_message'), new_message_path(:to_person_id => @person), :class => 'email-icon' %>
@@ -51,10 +123,11 @@
 
   <div class="clear"></div>
   <div class="profile-sidebar">
-    <%= render :partial => 'family' %>
+此人不属于一个家庭。他们将无法登录，而不会看到其他人在网
 
     <% if @albums.any? %>
-      <h3><%= t('albums.picture_albums') %></h3>
+      <h3><%= t('albums.picture_albums') %><p style="float: right"><%= link_to t('albums.new'), new_album_path, :class => 'add-icon' %></p></h3>
+
       <p>
         <% @albums.each do |album| %>
           <%= link_to image_tag(album.cover ? album.cover.photo.url(:tn) : 'missing_tn.png', :alt => album.name),
@@ -80,14 +153,14 @@
     <h3><%= t('About') %></h3>
     <div class="about">
       <% unless @person.about.to_s.any? or
-                @verses.any? or
-                @person.activities.to_s.any? or
-                @person.interests.to_s.any? or
-                @person.books.to_s.any? or
-                @person.music.to_s.any? or
-                @person.movies.to_s.any? or
-                @person.tv_shows.to_s.any? or
-                @person.quotes.to_s.any? %>
+          @verses.any? or
+          @person.activities.to_s.any? or
+          @person.interests.to_s.any? or
+          @person.books.to_s.any? or
+          @person.music.to_s.any? or
+          @person.movies.to_s.any? or
+          @person.tv_shows.to_s.any? or
+          @person.quotes.to_s.any? %>
         <em><%= t('people.nothing_here_yet') %></em>
       <% end %>
       <% if @person.about.to_s.any? %>
@@ -154,12 +227,40 @@
       <% end %>
     </div>
 
-    <% if @person.testimony.to_s.any? %>
-      <h3><%= t('people.testimony') %></h3>
-      <div class="testimony">
-        <%= preserve_breaks @person.testimony %>
-      </div>
-    <% end %>
+    <h3><%= t('people.business') %></h3>
+    <div class="favorites-group">
+      <% if @person.business_category.to_s.any? %>
+        <div class="favorites-group">
+          <h4><%= t('search.business_category') %></h4>
+          <%= preserve_breaks @person.business_category %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="favorites-group">
+      <% if @person.business_name.to_s.any? %>
+        <div class="favorites-group">
+          <h4><%= t('people.business_name') %></h4>
+          <%= preserve_breaks @person.business_name %>
+        </div>
+      <% end %>
+    </div>
+    <div class="favorites-group">
+      <% if @person.business_description.to_s.any? %>
+        <div class="favorites-group">
+          <h4><%= t('people.description_of_business') %></h4>
+          <%= preserve_breaks @person.business_description %>
+        </div>
+      <% end %>
+    </div>
+    <div class="favorites-group">
+      <% if @person.business_website.to_s.any? %>
+        <div class="favorites-group">
+          <h4><%= t('people.business_website') %></h4>
+          <%= preserve_breaks @person.business_website %>
+        </div>
+      <% end %>
+    </div>
 
   </div>
 </div>

@@ -1,3 +1,14 @@
+<style type="text/css" media="screen">
+.box ul li {
+  float: left;
+  margin-right: 20px;
+  list-style: none outside none;
+}
+.box ul li a {
+  background-image: none;
+  padding-left: 0px;
+}
+</style>
 <% content_for :sidebar do %>
   <p><%= link_to t('people.edit.privacy'), edit_person_privacy_path(@person), :class => 'lock-icon' %></p>
   <p><%= link_to t('people.edit.email'), edit_person_path(@person, :email => true), :class => 'email-icon' %></p>
@@ -5,9 +16,6 @@
   <p><%= link_to t('feeds.feeds', :name => @person.first_name), person_feeds_path(@person), :class => 'feed-icon' %></p>
   <% if @logged_in.admin?(:edit_profiles) %>
     <p><%= link_to t('relationships.relationships'), person_relationships_path(@person), :class => 'people-icon' %></p>
-    <p class="divider"></p>
-    <p><%= link_to t('families.edit'), family_path(@family), :class => 'edit-icon' %></p>
-    <p><%= link_to t('families.new'), new_family_path, :class => 'add-icon' %></p>
   <% end %>
 <% end %>
 
@@ -37,15 +45,73 @@
     <%= t('privacies.please_read_our_privacy_policy_html', :url => help_path('privacy_policy')) %>
   </p>
 
-  <h3><%= t('people.edit.photo') %></h3>
-  <%= render :partial => 'photo' %>
-  <div class="form-field-hint"><%= t('people.upload_a_picture_of_html', :name => me? ? 'yourself' : @person.name) %></div>
-  <%= photo_upload_for @person %>
 
-  <h3><%= t('people.edit.family_photo') %></h3>
-  <%= render :partial => 'families/photo' %>
-  <div class="form-field-hint"><%= t('people.upload_family_picture_html') %></div>
-  <%= photo_upload_for @family %>
+  <div class="box">
+    <ul id="tabMenu">
+      <li class = "photo"><a href="#"><%= t('people.edit.photo') %></a></li>
+      <li class = "basic"><a href="#"><%= t('people.edit.basics') %></a></li>
+      <li class = "about"><a href="#"><%= t('people.edit.about') %></a></li>
+      <li class = "address"><a href="#"><%= t('people.edit.address') %></a></li>
+      <li class = "business"><a href="#"><%= t('people.business') %></a></li>
+    </ul>
+    </br>
+    </br>
+    </br>
 
-  <%= render :partial => 'form' %>
+    <%= render :partial => 'form' %>
+  </div>
 </div>
+
+
+
+<%= javascript_include_tag "jquery-1.4.4.min.js" %>
+<script type="text/javascript">
+
+  $(document).ready(function() {	
+
+
+    //Get all the LI from the #tabMenu UL
+    $('#tabMenu > li').click(function(){
+        
+      //remove the selected class from all LI    
+      $('#tabMenu > li').removeClass('selected');
+    
+      //Reassign the LI
+      $(this).addClass('selected');
+    
+      //Hide all the DIV in .boxBody
+      $('.boxBody .object').slideUp('1500');
+    
+      //Look for the right DIV in boxBody according to the Navigation UL index, therefore, the arrangement is very important.
+    
+      $('.boxBody .object:eq(' + $('#tabMenu > li').index(this) + ')').slideDown('1500');
+    
+    }).mouseover(function() {
+
+      //Add and remove class, Personally I dont think this is the right way to do it, anyone please suggest    
+      $(this).addClass('mouseover');
+      $(this).removeClass('mouseout');   
+    
+    }).mouseout(function() {
+    
+      //Add and remove class
+      $(this).addClass('mouseout');
+      $(this).removeClass('mouseover');    
+    
+    });
+
+
+	
+    //Mouseover effect for Posts, Comments, Famous Posts and Random Posts menu list.
+    $('.boxBody li').click(function(){
+      window.location = $(this).find("a").attr("href");
+    }).mouseover(function() {
+      $(this).css('backgroundColor','#888');
+    }).mouseout(function() {
+      $(this).css('backgroundColor','');
+    });  	
+	
+  });
+
+</script>
+

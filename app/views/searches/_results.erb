@@ -43,7 +43,6 @@
               <span class="lock-icon">&nbsp;</span>
             <% end %>
           </td>
-          <td><%= person.family ? person.family.name : t('search.no_family') %></td>
         <% end %>
         <% if @show_birthdays %>
           <td><%= person.birthday ? person.birthday.strftime('%B %d') : nil %></td>

@@ -105,7 +105,7 @@ class Search
     @conditions.add_condition ["people.testimony is not null and people.testimony != ''"] if testimony
     unless show_hidden and Person.logged_in.admin?(:view_hidden_profiles)
       @conditions.add_condition ["people.visible_to_everyone = ?", true]
-      @conditions.add_condition ["(people.visible = ? and families.visible = ?)", true, true]
+      @conditions.add_condition ["(people.visible = ?)",  true]
       unless SQLITE
         @conditions.add_condition ["(people.child = ? or (birthday is not null and adddate(birthday, interval 13 year) <= curdate()) or (people.parental_consent is not null and people.parental_consent != ''))", false]
       end
@@ -124,12 +124,11 @@ class Search
         @conditions.add_condition ["people.custom_type = ?", @type]
       end
     end
-    @count = Person.count :conditions => @conditions, :include => :family
+    @count = Person.count :conditions => @conditions
     @people = Person.paginate(
       :all,
       :page => page,
       :conditions => @conditions,
-      :include => :family,
       :order => (show_businesses ? 'people.business_name' : 'people.last_name, people.first_name')
     ).select do |person| # additional checks that don't work well in raw sql
       !person.nil? \

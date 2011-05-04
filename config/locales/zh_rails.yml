@@ -1,0 +1,98 @@
+zh: 
+  # distancia do tempo em palavras
+  datetime:
+    distance_in_words:
+      x_minutes: '%{count} 分钟'
+      half_a_minute: 'meio 分钟'
+      less_than_x_seconds:
+        one: 'menos de 1 秒'
+        other: 'menos de %{count} 秒'
+      
+      x_seconds:
+        one: '1 秒'
+        other: '%{count} 秒'
+      
+      less_than_x_minutes:
+        one: 'menos de um 分钟'
+        other: 'menos de %{count} 分钟'
+      
+      x_minutes:
+        one: '1 minuto'
+        other: '%{count} 分钟'
+      
+      about_x_hours:
+        one: 'aproximadamente 1 小时'
+        other: 'aproximadamente %{count} 小时'
+      
+      x_days:
+        one: '1 dia'
+        other: '%{count} dias'
+      
+      about_x_months:
+        one: 'aproximadamente 1 mês'
+        other: 'aproximadamente %{count} 月'
+      
+      x_months:
+        one: '1 mês'
+        other: '%{count} 月'
+      
+      about_x_years:
+        one: 'aproximadamente 1 年'
+        other: 'aproximadamente %{count} 年'
+      
+      over_x_years:
+        one: 'mais de 1 年'
+        other: 'mais de %{count} 年'
+ 
+      almost_x_years:
+        one: 'quase 1 年'
+        other: 'quase %{count} 年'
+    
+    prompts:
+      year:   "年"
+      month:  "月"
+      day:    "天"
+      hour:   "小时"
+      minute: "分钟"
+      second: "秒"
+ 
+  # numeros
+  number:
+    format:
+      precision: 3
+      separator: ','
+      delimiter: '.'
+    currency:
+      format:
+        unit: 'R$'
+        precision: 2
+        format: '%u %n'
+        separator: ','
+        delimiter: '.'
+    percentage:
+      format:
+        delimiter: '.'
+    precision:
+      format:
+        delimiter: '.'
+    human:
+      format:
+        precision: 1
+        delimiter: '.'
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+ 
+  # Usado no Array.to_sentence
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " e "
+      last_word_connector: " e "

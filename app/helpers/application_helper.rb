@@ -192,7 +192,7 @@ module ApplicationHelper
     format = Setting.get(:formats, mobile ? :mobile_phone : :phone)
     return phone if format.blank?
     groupings = format.scan(/d+/).map { |g| g.length }
-    groupings = [3, 3, 4] unless groupings.length == 3
+    groupings = [4, 4, 4] unless groupings.length == 4
     ActionController::Base.helpers.number_to_phone(
       phone,
       :area_code => format.index('(') ? true : false,

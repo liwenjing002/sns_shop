@@ -73,68 +73,68 @@ class AccountsController < ApplicationController
 
   private
 
-    def create_by_email
-      person = Person.find_by_email(params[:email])
-      family = Family.find_by_email(params[:email])
-      if person or family
-        if (person and person.can_sign_in?) or (family and family.people.any? and family.people.first.can_sign_in?)
-          v = Verification.create :email => params[:email]
-          if v.errors.any?
-            render :text => v.errors.full_messages.join('; '), :layout => true
-          else
-            Notifier.email_verification(v).deliver
-            render :text => t('accounts.verification_email_sent'), :layout => true
-          end
+  def create_by_email
+    person = Person.find_by_email(params[:email])
+    family = Family.find_by_email(params[:email])
+    if person or family
+      if (person and person.can_sign_in?) or (family and family.people.any? and family.people.first.can_sign_in?)
+        v = Verification.create :email => params[:email]
+        if v.errors.any?
+          render :text => v.errors.full_messages.join('; '), :layout => true
         else
-          redirect_to page_for_public_path('system/bad_status')
+          Notifier.email_verification(v).deliver
+          render :text => t('accounts.verification_email_sent'), :layout => true
         end
       else
-        render :text => t('accounts.email_not_found'), :layout => true
+        redirect_to page_for_public_path('system/bad_status')
       end
+    else
+      render :text => t('accounts.email_not_found'), :layout => true
     end
+  end
 
-    def create_by_mobile
-      mobile = params[:phone].scan(/\d/).join('')
-      person = Person.find_by_mobile_phone(mobile)
-      if person
-        if person.can_sign_in?
-          unless gateway = MOBILE_GATEWAYS[params[:carrier]]
-            raise 'Error.'
-          end
-          v = Verification.create :email => gateway % mobile, :mobile_phone => mobile
-          if v.errors.any?
-            render :text => v.errors.full_messages.join('; '), :layout => true
-          else
-            Notifier.mobile_verification(v).deliver
-            flash[:warning] = t('accounts.verification_message_sent')
-            redirect_to verify_code_account_path(:id => v.id)
-          end
+  def create_by_mobile
+    mobile = params[:phone].scan(/\d/).join('')
+    person = Person.find_by_mobile_phone(mobile)
+    if person
+      if person.can_sign_in?
+        unless gateway = MOBILE_GATEWAYS[params[:carrier]]
+          raise 'Error.'
+        end
+        v = Verification.create :email => gateway % mobile, :mobile_phone => mobile
+        if v.errors.any?
+          render :text => v.errors.full_messages.join('; '), :layout => true
         else
-          redirect_to page_for_public_path('system/bad_status')
+          Notifier.mobile_verification(v).deliver
+          flash[:warning] = t('accounts.verification_message_sent')
+          redirect_to verify_code_account_path(:id => v.id)
         end
       else
-        flash[:warning] = t('accounts.mobile_number_not_found')
-        @person = Person.new
-        render :action => 'new'
+        redirect_to page_for_public_path('system/bad_status')
       end
+    else
+      flash[:warning] = t('accounts.mobile_number_not_found')
+      @person = Person.new
+      render :action => 'new'
     end
+  end
 
-    def create_by_birthday
-      if params[:name].to_s.any? and params[:email].to_s.any? and params[:phone].to_s.any? and params[:birthday].to_s.any? and params[:notes].to_s.any?
-        Notifier.birthday_verification(params[:name], params[:email], params[:phone], params[:birthday], params[:notes]).deliver
-        render :text => t('accounts.submission_will_be_reviewed'), :layout => true
-      else
-        flash[:warning] = t('accounts.fill_required_fields')
-        @person = Person.new
-        render :action => 'new'
-      end
+  def create_by_birthday
+    if params[:name].to_s.any? and params[:email].to_s.any? and params[:phone].to_s.any? and params[:birthday].to_s.any? and params[:notes].to_s.any?
+      Notifier.birthday_verification(params[:name], params[:email], params[:phone], params[:birthday], params[:notes]).deliver
+      render :text => t('accounts.submission_will_be_reviewed'), :layout => true
+    else
+      flash[:warning] = t('accounts.fill_required_fields')
+      @person = Person.new
+      render :action => 'new'
     end
+  end
 
   public
 
   def verify_code
     v = Verification.find(params[:id])
-    unless v.pending?
+    if v.pending?
       render :text => t('There_was_an_error'), :layout => true, :status => 500
       return
     end
@@ -230,10 +230,11 @@ class AccountsController < ApplicationController
   end
 
   private
-    def check_ssl
-      unless request.ssl? or !Rails.env.production? or !Setting.get(:features, :ssl)
-        redirect_to :protocol => 'https://', :from => params[:from]
-        return
-      end
+  def check_ssl
+    unless request.ssl? or !Rails.env.production? or !Setting.get(:features, :ssl)
+      redirect_to :protocol => 'https://', :from => params[:from]
+      return
     end
+  end
 end
+

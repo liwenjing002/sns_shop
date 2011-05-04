@@ -29,8 +29,8 @@ class PeopleController < ApplicationController
     if params[:limited] or !@logged_in.full_access?
       render :action => 'show_limited'
     elsif @person and @logged_in.can_see?(@person)
-      @family = @person.family
-      @family_people = @person.family.try(:visible_people) || []
+      @address = @person.address
+      
       @albums = @person.albums.all(:order => 'created_at desc')
       @friends = @person.friends.thumbnails unless fragment_exist?(:controller => 'people', :action => 'show', :id => @person.id, :fragment => 'friends')
       @verses = @person.verses.all(:order => 'book, chapter, verse')
@@ -81,7 +81,8 @@ class PeopleController < ApplicationController
         @custom_types = Person.custom_types
         params[:person].cleanse(:birthday, :anniversary)
         @person = Person.new_with_default_sharing(params[:person])
-        @person.family_id = params[:person][:family_id]
+        
+        @person.address = Address.create()
         respond_to do |format|
           if @person.save
             format.html { redirect_to @person.family }
@@ -102,7 +103,12 @@ class PeopleController < ApplicationController
   def edit
     @person ||= Person.find(params[:id])
     if @logged_in.can_edit?(@person)
-      @family = @person.family
+      @address = @person.address
+      if @address ==nil
+        @person.address = Address.create()
+        @person.save
+      end
+      @address = @person.address
       @business_categories = Person.business_categories
       @custom_types = Person.custom_types
       if params[:email]
