@@ -3,7 +3,7 @@ class Search
   ITEMS_PER_PAGE = 100
 
   attr_accessor :show_businesses, :show_hidden, :testimony, :member
-  attr_reader :count, :people, :family_name, :family_barcode_id, :families
+  attr_reader :count, :people, :family_name, :family_barcode_id, :addresses
 
   def initialize
     @people = []
@@ -15,7 +15,7 @@ class Search
   def name=(name)
     if name
       name.gsub! /\sand\s/, ' & '
-      @conditions.add_condition ["(#{sql_concat('people.first_name', %q(' '), 'people.last_name')} like ? or (#{name.index('&') ? '1=1' : '1=0'} and families.name like ?) or (people.first_name like ? and people.last_name like ?))", "%#{name}%", "%#{name}%", "#{name.split.first}%", "#{name.split.last}%"]
+      @conditions.add_condition ["(#{sql_concat('people.first_name', %q(' '), 'people.last_name')} like ? or (#{name.index('&') ? '1=1' : '1=0'}) or (people.first_name like ? and people.last_name like ?))", "%#{name}%", "#{name.split.first}%", "#{name.split.last}%"]
     end
   end
 
@@ -51,10 +51,20 @@ class Search
   def address=(addr)
     addr.symbolize_keys! if addr.respond_to?(:symbolize_keys!)
     addr.reject_blanks!
-    @conditions.add_condition ["#{sql_lcase('families.city')} LIKE ?", "#{addr[:city].downcase}%"] if addr[:city]
-    @conditions.add_condition ["#{sql_lcase('families.state')} LIKE ?", "#{addr[:state].downcase}%"] if addr[:state]
-    @conditions.add_condition ["families.zip like ?", "#{addr[:zip]}%"] if addr[:zip]
+    @conditions.add_condition(["addresses.hometown_city LIKE ?", "#{addr[:city]}%"],'or') if addr[:city]
+    @conditions.add_condition(["addresses.liveing_city LIKE ?", "#{addr[:city]}%"],'or')  if addr[:city]
+    @conditions.add_condition(["addresses.current_city LIKE ?", "#{addr[:city]}%"],'or')  if addr[:city]
+    
+    @conditions.add_condition(["addresses.hometown_province LIKE ?", "#{addr[:province]}%"],'or') if addr[:province]
+    @conditions.add_condition(["addresses.liveing_province LIKE ?", "#{addr[:province]}%"],'or')  if addr[:province]
+    @conditions.add_condition(["addresses.current_province LIKE ?", "#{addr[:province]}%"],'or')  if addr[:province]
+
+	@conditions.add_condition(["addresses.hometown_address LIKE ?", "#{addr[:address]}%"],'or') if addr[:address]
+    @conditions.add_condition(["addresses.liveing_address LIKE ?", "#{addr[:address]}%"],'or')  if addr[:address]
+    @conditions.add_condition(["addresses.current_address LIKE ?", "#{addr[:address]}%"],'or')  if addr[:address]
+
     @search_address = addr.any?
+    
   end
 
   def birthday=(bday)
@@ -124,20 +134,22 @@ class Search
         @conditions.add_condition ["people.custom_type = ?", @type]
       end
     end
-    @count = Person.count :conditions => @conditions
+    @count = Person.count :conditions => @conditions,:include => :address
     @people = Person.paginate(
       :all,
       :page => page,
       :conditions => @conditions,
+      :include => :address,
       :order => (show_businesses ? 'people.business_name' : 'people.last_name, people.first_name')
-    ).select do |person| # additional checks that don't work well in raw sql
-      !person.nil? \
-        and Person.logged_in.sees?(person) \
-        and (not @search_birthday or person.share_birthday_with(Person.logged_in)) \
-        and (not @search_anniversary or person.share_anniversary_with(Person.logged_in)) \
-        and (not @search_address or person.share_address_with(Person.logged_in)) \
-        and (person.adult_or_consent? or (Person.logged_in.admin?(:view_hidden_profiles) and @show_hidden))
-    end
+    )
+#.select do |person| # additional checks that don't work well in raw sql
+#      !person.nil? \
+#        and Person.logged_in.sees?(person) \
+#        and (not @search_birthday or person.share_birthday_with(Person.logged_in)) \
+#        and (not @search_anniversary or person.share_anniversary_with(Person.logged_in)) \
+#        and (not @search_address or person.share_address_with(Person.logged_in)) \
+#        and (person.adult_or_consent? or (Person.logged_in.admin?(:view_hidden_profiles) and @show_hidden))
+#    end
     @people = WillPaginate::Collection.new(page || 1, 30, @count).replace(@people)
   end
 
@@ -164,7 +176,7 @@ class Search
     search.birthday = {:month => params[:birthday_month], :day => params[:birthday_day]}
     search.anniversary = {:month => params[:anniversary_month], :day => params[:anniversary_day]}
     search.gender = params[:gender]
-    search.address = params.reject { |k, v| not %w(city state zip).include? k }
+    search.address = params.reject { |k, v| not %w(city province address).include? k }
     search.type = params[:type]
     search.favorites = params.reject { |k, v| not %w(activities interests music tv_shows movies books).include? k }
     search.show_hidden = true if params[:select_person] and Person.logged_in.admin?(:view_hidden_profiles)

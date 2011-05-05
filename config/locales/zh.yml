@@ -1085,7 +1085,8 @@ zh:
     sort_by_person: 由人排序
     url: 网址
 
-  friends: 
+  friends:
+    manager: 好友管理 
     accept: 接受好友
     add_friend_are_you_sure: 你确定吗？一个电子邮件将被发送到这个请求人的友谊。
     add_to_friends: 加入朋友
@@ -1440,7 +1441,9 @@ zh:
     view_page: 查看页
 
   people:
-    province_city_address: 省/市/街道
+    hometown_province_city_address: 家乡地址： 省/市/街道
+    liveing_province_city_address: 居住地址： 省/市/街道
+    current_province_city_address: 当前地址： 省/市/街道
     QQ: QQ
     MSN: MSN
     twitter: twitter
@@ -1516,7 +1519,7 @@ zh:
     no_groups_yet: 还没有群组
     not_deleted: 人不会被删除。
     not_found: 人没有找到。
-    nothing_here_yet: 没什么这儿来！
+    nothing_here_yet: 没写什么东西，你该更新了！
     only_an_approximation: 只是一个近似值
     pending_approval: 等待审批
     people: 人物
@@ -1781,6 +1784,8 @@ zh:
     business_directory: 公司录
     category: 分类
     city: 城市
+    province: 省份
+    address: 街道
     deacon: 执事
     elder: 长老
     families_found: 

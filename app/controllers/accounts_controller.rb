@@ -1,7 +1,7 @@
 class AccountsController < ApplicationController
   skip_before_filter :authenticate_user, :except => %w(edit update)
 
-  cache_sweeper :person_sweeper, :family_sweeper, :only => %w(create update)
+  cache_sweeper :person_sweeper, :only => %w(create update)
 
   def show
     if params[:person_id]
@@ -35,7 +35,7 @@ class AccountsController < ApplicationController
           @person = Person.new(attributes)
           if @person.adult?
             if @person.save
-              @person.family = Family.create(:name => @person.name, :last_name => @person.last_name)
+              @person.address = Address.create()
               if Setting.get(:features, :sign_up_approval_email).to_s.any?
                 @person.save
                 Notifier.pending_sign_up(@person).deliver
@@ -75,9 +75,8 @@ class AccountsController < ApplicationController
 
   def create_by_email
     person = Person.find_by_email(params[:email])
-    family = Family.find_by_email(params[:email])
-    if person or family
-      if (person and person.can_sign_in?) or (family and family.people.any? and family.people.first.can_sign_in?)
+    if person or address
+      if person and person.can_sign_in?
         v = Verification.create :email => params[:email]
         if v.errors.any?
           render :text => v.errors.full_messages.join('; '), :layout => true
@@ -143,9 +142,9 @@ class AccountsController < ApplicationController
         if v.mobile_phone
           conditions = ['people.mobile_phone = ?', v.mobile_phone]
         else
-          conditions = ['people.email = ? or families.email = ?', v.email, v.email]
+          conditions = ['people.email = ? ', v.email]
         end
-        @people = Person.find :all, :conditions => conditions, :include => :family
+        @people = Person.find :all, :conditions => conditions
         if @people.nil? or @people.empty?
           render :text => t('accounts.there_was_an_error'), :layout => true, :status => 500
           return
