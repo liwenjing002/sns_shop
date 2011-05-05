@@ -1,6 +1,6 @@
 class Album < ActiveRecord::Base
   belongs_to :group
-  belongs_to :person, :include => :family, :conditions => ['people.visible = ? and families.visible = ?', true, true]
+  belongs_to :person, :conditions => ['people.visible = ? ', true]
   belongs_to :site
   has_many :pictures, :dependent => :destroy
 

@@ -225,9 +225,7 @@ class Person < ActiveRecord::Base
     when 'Ministry'
       admin?(:manage_ministries) or what.administrator == self
     when 'Person'
-      !what.deleted? and (admin?(:edit_profiles) or (what.family == self.family and self.adult?) or what == self)
-    when 'Family'
-      !what.deleted? and (admin?(:edit_profiles) or (what == self.family and self.adult?))
+      !what.deleted? and (admin?(:edit_profiles)  or what == self)
     when 'Message'
       what.person == self or (what.group and what.group.admin? self) or what.wall_id == self.id
     when 'PrayerRequest'
@@ -251,6 +249,8 @@ class Person < ActiveRecord::Base
     when 'NewsItem'
       self.admin?(:manage_news) or (what.person and what.person == self )
     when 'Membership'
+      self.admin?(:manage_groups) or (what.group and what.group.admin?(self)) or self.can_edit?(what.person)
+	when 'Address'
       self.admin?(:manage_groups) or (what.group and what.group.admin?(self)) or self.can_edit?(what.person)
     else
       raise "Unrecognized argument to can_edit? (#{what.inspect})"
@@ -392,8 +392,6 @@ class Person < ActiveRecord::Base
       'photo'
     elsif params[:person]
       if Person.logged_in.can_edit_profile?
-        params[:family] ||= {}
-        params[:family][:legacy_id] = params[:person][:legacy_family_id] if params[:person][:legacy_family_id]
         params[:person].cleanse(:birthday, :anniversary)
         update_attributes(params[:person]) && address.update_attributes(params[:address])
       else

@@ -26,12 +26,12 @@
     <option value=""></option>
     <%= options_for_select ([[t('search.male'), 'Male'], [t('search.female'), 'Female']]), params[:gender] %>
   </select>
-  <label for="city"><%= t('search.city') %>:</label>
+  <label for="province"><%= t('search.province') %>:</label>
+  <%= text_field_tag :province, params[:province] %><br/>
+   <label for="city"><%= t('search.city') %>:</label>
   <%= text_field_tag :city, params[:city] %><br/>
-  <label for="state"><%= t('search.state') %>:</label>
-  <%= text_field_tag :state, params[:state] %><br/>
-  <label for="zip"><%= t('search.zip') %>:</label>
-  <%= text_field_tag :zip, params[:zip] %><br/>
+  <label for="address"><%= t('search.address') %>:</label>
+  <%= text_field_tag :address, params[:address] %><br/>
   <label for="type"><%= t('type') %>:</label>
   <select name="type" id="type">
     <option value=""><%= t('search.all') %></option>

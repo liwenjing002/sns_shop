@@ -123,22 +123,25 @@
 
   <div class="clear"></div>
   <div class="profile-sidebar">
-此人不属于一个家庭。他们将无法登录，而不会看到其他人在网
+	
+      <h3><%= t('albums.picture_albums') %>
+	<p style="float: right"><%= link_to t('albums.new'), new_album_path, :class => 'add-icon' %></p>
+      </h3>
 
     <% if @albums.any? %>
-      <h3><%= t('albums.picture_albums') %><p style="float: right"><%= link_to t('albums.new'), new_album_path, :class => 'add-icon' %></p></h3>
-
-      <p>
+     <p>
         <% @albums.each do |album| %>
           <%= link_to image_tag(album.cover ? album.cover.photo.url(:tn) : 'missing_tn.png', :alt => album.name),
             album, :title => album.name %>
         <% end %>
       </p>
     <% end %>
-
+	
     <% cache(:fragment => 'friends') do %>
+	<h3><%= t('friends.friends') %>
+	<p style="float: right"><%= link_to t('friends.manager'), person_friends_path(@person), :class => 'add-icon' %></p>
+        </h3>
       <% if @friends.any? %>
-        <h3><%= t('friends.friends') %></h3>
         <% @friends.each do |person| %>
           <% content_tag :a, :href => person_path(person) do %>
             <%= render :partial => 'people/thumbnail', :locals => {:person => person} %>
@@ -228,6 +231,15 @@
     </div>
 
     <h3><%= t('people.business') %></h3>
+    <div class="business">
+      <% unless 
+	  @person.business_category.to_s.any? or
+          @person.business_name.to_s.any? or
+          @person.business_description.to_s.any? or
+          @person.business_website.to_s.any? %>
+        <em><%= t('people.nothing_here_yet') %></em>
+      <% end %>
+
     <div class="favorites-group">
       <% if @person.business_category.to_s.any? %>
         <div class="favorites-group">
@@ -261,6 +273,53 @@
         </div>
       <% end %>
     </div>
+   </div>
+
+    <h3><%= t('people.edit.address') %></h3>
+    <div class="business">
+      <% unless 
+	  @person.address.hometown_province.to_s.any? or
+          @person.business_name.to_s.any? or
+          @person.business_description.to_s.any? or
+          @person.business_website.to_s.any? %>
+        <em><%= t('people.nothing_here_yet') %></em>
+      <% end %>
+
+    <div class="favorites-group">
+      <% if @person.address.hometown_province.to_s.any? %>
+        <div class="favorites-group">
+          <h4><%= t('people.hometown_province_city_address') %></h4>
+          <%= @person.address.hometown_province %>
+ 	  <%= @person.address.hometown_city %>
+	  <%= @person.address.hometown_address%>
+        </div>
+      <% end %>
+    </div>
+
+   <div class="favorites-group">
+      <% if @person.address.liveing_province.to_s.any? %>
+        <div class="favorites-group">
+          <h4><%= t('people.liveing_province_city_address') %></h4>
+          <%= @person.address.liveing_province %>
+ 	  <%= @person.address.liveing_city %>
+	  <%= @person.address.liveing_address%>
+        </div>
+      <% end %>
+    </div>
+
+
+    <div class="favorites-group">
+      <% if @person.address.current_province.to_s.any? %>
+        <div class="favorites-group">
+          <h4><%= t('people.current_province_city_address') %></h4>
+          <%= @person.address.current_province %>
+ 	  <%= @person.address.current_city %>
+	  <%= @person.address.current_address%>
+        </div>
+      <% end %>
+    </div>
+   
+   </div>
 
   </div>
 </div>

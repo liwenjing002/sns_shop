@@ -15,6 +15,7 @@ class PrivaciesController < ApplicationController
   end
 
   def edit
+
     if params[:group_id]
       @group ||= Group.find(params[:group_id])
       @membership ||= Membership.find(params[:membership_id])
@@ -28,13 +29,8 @@ class PrivaciesController < ApplicationController
         render :text => t('not_authorized'), :layout => true, :status => 401
       end
     elsif @person = Person.find(params[:person_id])
-      @family = @person.family
-      @children = @family.people.where(:deleted => false).reject(&:adult?)
-      if @logged_in.can_edit?(@family)
-        unless @family.visible?
-          flash[:warning] = t('privacies.family_hidden', :your => @family == @logged_in.family ? t('your') : t('privacies.this'))
-        end
-      else
+      @address = @person.address
+      unless @logged_in.can_edit?(@address)
         render :text => t('not_authorized'), :layout => true, :status => 401
       end
     end
@@ -45,10 +41,7 @@ class PrivaciesController < ApplicationController
       update_consent
     else
       @person = Person.find(params[:person_id])
-      @family = @person.family
-      people_ids = @family.people.all.map { |p| p.id }
-      if @logged_in.can_edit?(@family)
-        @family.update_attributes!(params[:family])
+      if @logged_in.can_edit?(@person)
         Array(params[:memberships]).each do |membership_id, sharing|
           m = Membership.where(["id = ? and person_id in (?)", membership_id, people_ids]).first
           sharing.each do |attribute, value|
@@ -56,12 +49,6 @@ class PrivaciesController < ApplicationController
             m.attributes = {attribute => value}
           end
           m.save!
-        end
-        if @family.visible?
-          flash[:notice] = t('privacies.saved')
-          flash[:warning] = nil
-        else
-          flash[:warning] = t('privacies.family_hidden', :your => @family == @logged_in.family ? t('your') : t('privacies.this'))
         end
         redirect_to @person
       else
