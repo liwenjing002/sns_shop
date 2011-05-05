@@ -7,8 +7,10 @@
 
     <%= form.label :first_name, t('people.name') %>
     <%= form.text_field :first_name, :size => 15 %>
-    <%= form.text_field :last_name, :size => 15 %>
-    <%= form.select :suffix, [nil]+Setting.get(:system, :suffixes) %><br/>
+    <%#= form.text_field :last_name, :size => 15 %>
+    <%#= form.select :suffix, [nil]+Setting.get(:system, :suffixes) %>
+   
+    <br/>
 
     <%= form.label :description, t('accounts.description') %>
     <div class="form-field-hint"><%= t('people.edit.description_hint') %></div>
