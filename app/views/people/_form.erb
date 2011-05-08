@@ -1,3 +1,6 @@
+<% content_for  :head do %>
+  <%= javascript_include_tag "extend/prov_city" %>
+<% end %>
 <div class="boxBody">
 
   <%= render :partial => 'edit_photo' %>
@@ -20,6 +23,78 @@
 </div>
 
 <script type="text/javascript">
+  fillCity(); 
+
+  
+  slt= document.getElementById("province_h")
+  for(var i=0;i<slt.options.length;i++){
+    if(slt.options[i].value=='<%=@address.hometown_province%>'){
+       slt.options[i].selected=true;
+    }
+}
+  slt2= document.getElementById("province_l")
+  for(var i=0;i<slt.options.length;i++){
+    if(slt2.options[i].value=='<%=@address.liveing_province%>'){
+       slt2.options[i].selected=true;
+    }
+}
+  slt3= document.getElementById("province_c")
+  for(var i=0;i<slt3.options.length;i++){
+    if(slt3.options[i].value=='<%=@address.current_province%>'){
+       slt3.options[i].selected=true;
+    }
+}
+
+
+  setCity('<%=@address.hometown_province%>',"city_h")
+  setCity('<%=@address.liveing_province%>',"city_l")
+  setCity('<%=@address.current_province%>',"city_c")
+
+  clt= document.getElementById("city_h")
+  for(var i=0;i<clt.options.length;i++){
+    if(clt.options[i].value=='<%=@address.hometown_city%>'){
+       clt.options[i].selected=true;
+    }
+}
+  clt2= document.getElementById("city_l")
+  for(var i=0;i<clt.options.length;i++){
+    if(clt2.options[i].value=='<%=@address.liveing_city%>'){
+       clt2.options[i].selected=true;
+    }
+}
+  clt3= document.getElementById("city_c")
+  for(var i=0;i<clt3.options.length;i++){
+    if(clt3.options[i].value=='<%=@address.current_city%>'){
+       clt3.options[i].selected=true;
+    }
+}
+
+
+  setCounty('<%=@address.hometown_city%>',"county_h")
+  setCounty('<%=@address.liveing_city%>',"county_l")
+  setCounty('<%=@address.current_city%>',"county_c")
+
+
+  ylt= document.getElementById("county_h")
+  for(var i=0;i<ylt.options.length;i++){
+    if(ylt.options[i].value=='<%=@address.hometown_county%>'){
+       ylt.options[i].selected=true;
+    }
+}
+  ylt2= document.getElementById("county_l")
+  for(var i=0;i<ylt2.options.length;i++){
+    if(ylt2.options[i].value=='<%=@address.liveing_county%>'){
+       ylt2.options[i].selected=true;
+    }
+}
+
+  ylt3= document.getElementById("county_c")
+  for(var i=0;i<ylt3.options.length;i++){
+    if(ylt3.options[i].value=='<%=@address.current_county%>'){
+       ylt3.options[i].selected=true;
+    }
+}
+
   $('#person_birthday, #person_anniversary').datepicker({changeYear:true, yearRange:'1900:2025', dateFormat:'<%= datepicker_format %>'});
 
   $('#person_birthday').bind('keyup', function(){
@@ -42,4 +117,9 @@
   window.onbeforeunload = function() {
     if(changes_made) return '<%= escape_javascript t('you_made_a_change_page') %>';
   }
+
+
+ 
+  
+
 </script>

@@ -1,3 +1,4 @@
+<% content_for  :head do %>
 <style type="text/css" media="screen">
 
 
@@ -11,6 +12,7 @@
   padding-left: 0px;
 }
 </style>
+<% end %>
 <% content_for :sidebar do %>
   <p><%= link_to t('people.edit.privacy'), edit_person_privacy_path(@person), :class => 'lock-icon' %></p>
   <p><%= link_to t('people.edit.email'), edit_person_path(@person, :email => true), :class => 'email-icon' %></p>
@@ -63,8 +65,9 @@
 </div>
 
 
-
+<% content_for  :head do %>
 <%= javascript_include_tag "jquery-1.4.4.min.js" %>
+<% end %>
 <script type="text/javascript">
 
   $(document).ready(function() {	

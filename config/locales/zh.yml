@@ -1441,9 +1441,9 @@ zh:
     view_page: 查看页
 
   people:
-    hometown_province_city_address: 家乡地址： 省/市/街道
-    liveing_province_city_address: 居住地址： 省/市/街道
-    current_province_city_address: 当前地址： 省/市/街道
+    hometown_province_city_address: 家乡地址： 省/市/区县/街道或小区
+    liveing_province_city_address: 居住地址： 省/市/区县/街道或小区
+    current_province_city_address: 当前地址： 省/市/区县/街道或小区
     QQ: QQ
     MSN: MSN
     twitter: twitter
