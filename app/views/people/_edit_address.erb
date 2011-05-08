@@ -6,14 +6,14 @@
     <option value="" selected="selected">请选择</option> 
   </select>
 
-  <select id="city_h" onchange="setCounty(this.value,'county_h');" name="address[hometown_city]" style="display:"> 
+  <select id="city_h" onchange="setCounty(this.value,'county_h');" name="address[hometown_city]" style="width:90px;display"> 
     <option value="" selected="selected">请选择</option> 
   </select>
   
-  <select id="county_h" onchange="setCounty(this.value);" name="address[hometown_county]" style="display:"> 
+  <select id="county_h" onchange="setCounty(this.value);" name="address[hometown_county]" style="width:90px;display"> 
     <option value="" selected="selected">请选择</option> 
   </select> 
-  <%= form.text_field :hometown_address %>
+  <%= form.text_field :hometown_address,:size=>22 %>
   <br/>
   
   
@@ -22,13 +22,13 @@
   <select id="province_l" onchange="setCity(this.value,'city_l')" name="address[liveing_province]"> 
     <option value="" selected="selected">请选择</option> 
   </select>
-  <select id="city_l" onchange="setCounty(this.value,'county_l');" name="address[liveing_city]" style="display:"> 
+  <select id="city_l" onchange="setCounty(this.value,'county_l');" name="address[liveing_city]" style="width:90px;display"> 
     <option value="" selected="selected">请选择</option> 
   </select>
-   <select id="county_l" onchange="setCounty(this.value);" name="address[liveing_county]" style="display:"> 
+   <select id="county_l" onchange="setCounty(this.value);" name="address[liveing_county]" style="width:90px;display"> 
     <option value="" selected="selected">请选择</option> 
   </select> 
-  <%= form.text_field :liveing_address%>
+  <%= form.text_field :liveing_address,:size=>22%>
   <br/>
   
   
@@ -36,14 +36,14 @@
   <select id="province_c" onchange="setCity(this.value,'city_c');" name="address[current_province]"> 
     <option value="" selected="selected">请选择</option> 
   </select>
-  <select id="city_c" onchange="setCounty(this.value,'county_c');" name="address[current_city]" style="display:"> 
+  <select id="city_c" onchange="setCounty(this.value,'county_c');" name="address[current_city]" style="width:90px;display:"> 
     <option value="" selected="selected">请选择</option> 
   </select>
-   <select id="county_c" onchange="setCounty(this.value);" name="address[current_county]" style="display:"> 
+   <select id="county_c" onchange="setCounty(this.value);" name="address[current_county]" style="width:90px;display:"> 
     <option value="" selected="selected">请选择</option> 
   </select> 
 
-  <%= form.text_field :current_address %>
+  <%= form.text_field :current_address,:size=>22 %>
 
 </div>
 <script type="text/javascript">

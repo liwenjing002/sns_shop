@@ -1,6 +1,6 @@
 class PrivaciesController < ApplicationController
 
-  cache_sweeper :person_sweeper, :family_sweeper, :only => %w(update)
+  cache_sweeper :person_sweeper, :only => %w(update)
 
   def show
     if params[:find] == 'memberships'
@@ -43,12 +43,13 @@ class PrivaciesController < ApplicationController
       @person = Person.find(params[:person_id])
       if @logged_in.can_edit?(@person)
         Array(params[:memberships]).each do |membership_id, sharing|
-          m = Membership.where(["id = ? and person_id in (?)", membership_id, people_ids]).first
+          m = Membership.where(["id = ? and person_id = ?", membership_id, @person.id]).first
           sharing.each do |attribute, value|
             value = false if m.person.attributes[attribute]
             m.attributes = {attribute => value}
           end
           m.save!
+          @person.update_attributes(params[:person][:people])
         end
         redirect_to @person
       else
@@ -61,8 +62,7 @@ class PrivaciesController < ApplicationController
 
   def update_consent
     @person = Person.find(params[:person_id])
-    @family = @person.family
-    if @logged_in.can_edit?(@family) and @family == @logged_in.family
+   
       if params[:agree] == t('privacies.i_agree') + "."
         if person = @family.people.find(params[:person_id])
           @person.parental_consent = "#{@logged_in.name} (#{@logged_in.id}) #{Time.now.to_s}"
@@ -73,9 +73,6 @@ class PrivaciesController < ApplicationController
         flash[:warning] = t('privacies.you_must_check_agreement_statement')
       end
       redirect_to edit_person_privacy_path(@person)
-    else
-      render :text => t('not_authorized'), :layout => true, :status => 401
-    end
   end
 
 end

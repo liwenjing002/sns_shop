@@ -1,3 +1,6 @@
+<% content_for  :head do %>
+  <%= javascript_include_tag "extend/prov_city" %>
+<% end %>
 <div class="profile">
 
   <div class="profile-sidebar">
@@ -288,11 +291,17 @@
     <div class="favorites-group">
       <% if @person.address.hometown_province.to_s.any? %>
         <div class="favorites-group">
-          <h4><%= t('people.hometown_province_city_address') %></h4>
-          <%= @person.address.hometown_province %>
- 	  <%= @person.address.hometown_city %>
-	  <%= @person.address.hometown_address%>
+          <h4><%= t('people.liveing_province_city_address') %></h4>
+         <span>
+         <script   language=javascript> 
+           split();
+           add = getNameByCode('<%= @person.address.hometown_province %>') + " " +   getNameByCode('<%= @person.address.hometown_city %>') +  " " +   getNameByCode('<%= @person.address.hometown_county %>')
+           document.write(add);
+         </script>
+         <%= @person.address.hometown_address%>
+         </span>
         </div>
+       
       <% end %>
     </div>
 
@@ -300,9 +309,14 @@
       <% if @person.address.liveing_province.to_s.any? %>
         <div class="favorites-group">
           <h4><%= t('people.liveing_province_city_address') %></h4>
-          <%= @person.address.liveing_province %>
- 	  <%= @person.address.liveing_city %>
-	  <%= @person.address.liveing_address%>
+         <span>
+         <script   language=javascript> 
+           split();
+           add = getNameByCode('<%= @person.address.liveing_province %>') + " " +   getNameByCode('<%= @person.address.liveing_city %>') +  " " +   getNameByCode('<%= @person.address.liveing_county %>')
+           document.write(add);
+         </script>
+          <%= @person.address.liveing_address%>
+           </span>
         </div>
       <% end %>
     </div>
@@ -312,9 +326,14 @@
       <% if @person.address.current_province.to_s.any? %>
         <div class="favorites-group">
           <h4><%= t('people.current_province_city_address') %></h4>
-          <%= @person.address.current_province %>
- 	  <%= @person.address.current_city %>
-	  <%= @person.address.current_address%>
+          <span>	
+             <script   language=javascript> 
+           split();
+           add = getNameByCode('<%= @person.address.current_province %>') + " " +   getNameByCode('<%= @person.address.current_city %>') +  " " +   getNameByCode('<%= @person.address.current_county %>')
+           document.write(add);
+         </script>
+              <%= @person.address.current_address%>
+          </span>
         </div>
       <% end %>
     </div>

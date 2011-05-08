@@ -6,14 +6,6 @@
   <%= form_for @person, :url => person_privacy_path(@person), :html => {:method => 'put', :style => 'border:none;padding:0;'} do |form| %>
 
     <table class="spaced margin-top">
-      <tr>
-        <th></th>
-        <th><%= t('privacies.visible') %><sup>1</sup></th>
-      </tr>
-      <tr>
-        <td><strong><%= t('privacies.family_privacy') %></strong></td>
-        <td><%= form.check_box :visible, :class => 'visible-checkbox' %></td>
-      </tr>
       <tr class="people-header-row">
         <th></th>
         <th><%= t('privacies.visible') %><sup>1</sup></th>
@@ -55,7 +47,7 @@
         <% end %>
         <% @person.memberships.all(:order => 'groups.name', :include => :group, :conditions => {'groups.hidden' => false}).each do |membership| %>
           <%= fields_for "memberships[#{membership.id}]", membership do |membership_form| %>
-            <%= content_tag :tr, :style => 'display:none;', :class => "membership-row membership-for-#{person.id}" do %>
+            <%= content_tag :tr, :style => 'display:none;', :class => "membership-row membership-for-#{@person.id}" do %>
               <td style="padding-left:15px;"><%= membership.group.name %></td>
               <td></td>
               <td></td>

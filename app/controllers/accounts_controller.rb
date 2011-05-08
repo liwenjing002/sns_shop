@@ -77,7 +77,7 @@ class AccountsController < ApplicationController
     person = Person.find_by_email(params[:email])
     if person or address
       if person and person.can_sign_in?
-        v = Verification.create :email => params[:email]
+        v = Verification.create :email => params[:email],:verified=>true
         if v.errors.any?
           render :text => v.errors.full_messages.join('; '), :layout => true
         else

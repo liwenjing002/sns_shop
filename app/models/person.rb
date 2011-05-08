@@ -58,7 +58,7 @@ class Person < ActiveRecord::Base
 
   acts_as_logger LogItem
 
-  validates_presence_of :first_name, :last_name
+  validates_presence_of :first_name
   validates_length_of :password, :minimum => 5, :allow_nil => true, :if => Proc.new { Person.logged_in }
   validates_confirmation_of :password, :if => Proc.new { Person.logged_in }
   validates_uniqueness_of :alternate_email, :allow_nil => true, :scope => [:site_id, :deleted], :unless => Proc.new { |p| p.deleted? }
@@ -393,6 +393,11 @@ class Person < ActiveRecord::Base
     elsif params[:person]
       if Person.logged_in.can_edit_profile?
         params[:person].cleanse(:birthday, :anniversary)
+        if params[:address]
+        params[:address][:hometown_address] ="" if params[:address][:hometown_address]=="请输入您所在的小区或街道"
+        params[:address][:current_address] ="" if params[:address][:current_address]=="请输入您所在的小区或街道"
+        params[:address][:liveing_address] ="" if params[:address][:liveing_address]=="请输入您所在的小区或街道"
+        end
         update_attributes(params[:person]) && address.update_attributes(params[:address])
       else
         Update.create_from_params(params, self)

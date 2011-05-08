@@ -848,7 +848,7 @@ zh:
     fill_required_fields: 请填写所有必填字段。
     gender: 性别
     I_am_this_person: 我这个人。
-    first_name: 名
+    first_name: 姓名
     last_name: 姓
     leave_blank: 给这些领域的空白，如果你不想改变你的密码。
     mobile_number_not_found: 这个手机号码无法找到我们的制度。你可以再试一次。
@@ -1441,9 +1441,9 @@ zh:
     view_page: 查看页
 
   people:
-    hometown_province_city_address: 家乡地址： 省/市/区县/街道或小区
-    liveing_province_city_address: 居住地址： 省/市/区县/街道或小区
-    current_province_city_address: 当前地址： 省/市/区县/街道或小区
+    hometown_province_city_address: 家乡地址： 
+    liveing_province_city_address: 居住地址： 
+    current_province_city_address: 当前地址： 
     QQ: QQ
     MSN: MSN
     twitter: twitter
@@ -1675,7 +1675,7 @@ zh:
     hidden: 隐藏
     hide_your_activity: “隐藏你的活动，如果你不想要的朋友和/或同组的成员看到您的公开信息，笔记，诗词等，他们的主页上。注
     home_phone: 家庭电话
-    i_agree: 我同意
+    i_agree: i agree
     mobile_phone: 移动电话
     modify_the_privacy_settings_html: 您可以更改您的家人在这里的隐私设置。带有复选标记的项目都可以看到其他成员谁登录到这个网站。点击设定的<img src=/images/plus.gif/>团体（可选）隐私。要了解我们如何使用你和你的家人的个人信息，请阅读我们的<a href=%{url}>隐私权政策</a>。
     please_read_our_privacy_policy_html: 请阅读我们的<a href=%{url}>隐私权政策</a>了解有关您的个人信息的使用细节。
