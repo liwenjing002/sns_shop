@@ -41,7 +41,7 @@
       <%= attribute(:qq)        do %>
         <div class="favorites-group">
           <h4><%= t('people.QQ') %></h4>
-          <%= mail_to @person.qq                                %>
+          <%=  @person.qq  %>
         </div>
       <% end %>
     </div>
@@ -52,7 +52,7 @@
       <%= attribute(:msn)        do %>
         <div class="favorites-group">
           <h4><%= t('people.MSN') %></h4>
-          <%= mail_to @person.msn                                %>
+          <%= @person.msn %>
         </div>
       <% end %>
     </div>
@@ -61,7 +61,7 @@
       <%= attribute(:weibo)        do %>
         <div class="favorites-group">
           <h4><%= t('people.weibo') %></h4>
-          <%= mail_to @person.weibo                                %>
+          <%=  @person.weibo %>
         </div>
       <% end %>
     </div>
@@ -71,7 +71,7 @@
       <%= attribute(:twitter)        do %>
         <div class="favorites-group">
           <h4><%= t('people.twitter') %></h4>
-          <%= mail_to @person.twitter                                %>
+          <%= @person.twitter %>
         </div>
       <% end %>
     </div>

@@ -45,8 +45,6 @@
 
     <%= form.label :birthday, t('privacies.birthday') %>
     <%= form.date_field :birthday %><br/>
-     <%= form.date_field :birthday %><br/>
-
     <% if @logged_in.admin?(:edit_profiles) %>
       <div id="child-selection">
         <%= form.label :child, t('people.child') %>
@@ -108,3 +106,4 @@
   <% end %>
  
 </div>
+

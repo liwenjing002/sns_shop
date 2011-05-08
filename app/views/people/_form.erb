@@ -24,9 +24,7 @@
 
 <script type="text/javascript">
   fillCity(); 
-
-  
-  slt= document.getElementById("province_h")
+ slt= document.getElementById("province_h")
   for(var i=0;i<slt.options.length;i++){
     if(slt.options[i].value=='<%=@address.hometown_province%>'){
        slt.options[i].selected=true;
@@ -93,10 +91,10 @@
     if(ylt3.options[i].value=='<%=@address.current_county%>'){
        ylt3.options[i].selected=true;
     }
-}
-
+    }
+alert()
   $('#person_birthday, #person_anniversary').datepicker({changeYear:true, yearRange:'1900:2025', dateFormat:'<%= datepicker_format %>'});
-
+alert(3)
   $('#person_birthday').bind('keyup', function(){
     var val = $(this).val();
     if(val == '' || val.match(/1900/)) {
