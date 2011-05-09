@@ -92,9 +92,9 @@
        ylt3.options[i].selected=true;
     }
     }
-alert()
+
   $('#person_birthday, #person_anniversary').datepicker({changeYear:true, yearRange:'1900:2025', dateFormat:'<%= datepicker_format %>'});
-alert(3)
+
   $('#person_birthday').bind('keyup', function(){
     var val = $(this).val();
     if(val == '' || val.match(/1900/)) {

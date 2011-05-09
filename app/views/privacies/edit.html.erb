@@ -9,13 +9,11 @@
       <tr class="people-header-row">
         <th></th>
         <th><%= t('privacies.visible') %></th>
-        <th><%= t('privacies.activity') %>/</th>
-        <th><%= t('privacies.anniversary') %></th>
+        <th><%= t('privacies.activity') %></th>
         <th><%= t('privacies.address') %></th>
         <th><%= t('privacies.home_phone') %></th>
         <th><%= t('privacies.mobile_phone') %></th>
         <th><%= t('privacies.work_phone') %></th>
-        <th><%= t('privacies.fax') %></th>
         <th><%= t('privacies.email') %></th>
         <th><%= t('privacies.birthday') %></th>
       </tr>
@@ -23,28 +21,37 @@
         <%= form.fields_for :people, @person do |person_form| %>
           <tr class="person-row">
             <td>
-              <%= image_tag 'plus.gif', :class => 'expand-link', :id => "expand-link-#{@person.id}" %>
-              <strong><%= @person.first_name %></strong>
+              <strong><%= t("privacies.all_people") %></strong>
             </td>
-            <% if @person.adult_or_consent? %>
+
               <td><%= person_form.check_box :visible, :class => 'visible-checkbox' %></td>
               <td><%= person_form.check_box :share_activity %></td>
-              <td><%= person_form.check_box :share_anniversary,  :class => "share-checkbox", 'data-share-type' => 'share-anniversary',  'data-person-id' => @person.id %></td>
               <td><%= person_form.check_box :share_address,      :class => "share-checkbox", 'data-share-type' => 'share-address',      'data-person-id' => @person.id %></td>
               <td><%= person_form.check_box :share_home_phone,   :class => "share-checkbox", 'data-share-type' => 'share-home-phone',   'data-person-id' => @person.id %></td>
               <td><%= person_form.check_box :share_mobile_phone, :class => "share-checkbox", 'data-share-type' => 'share-mobile-phone', 'data-person-id' => @person.id %></td>
               <td><%= person_form.check_box :share_work_phone,   :class => "share-checkbox", 'data-share-type' => 'share-work-phone',   'data-person-id' => @person.id %></td>
-              <td><%= person_form.check_box :share_fax,          :class => "share-checkbox", 'data-share-type' => 'share-fax',          'data-person-id' => @person.id %></td>
               <td><%= person_form.check_box :share_email,        :class => "share-checkbox", 'data-share-type' => 'share-email',        'data-person-id' => @person.id %></td>
               <td><%= person_form.check_box :share_birthday,     :class => "share-checkbox", 'data-share-type' => 'share-birthday',     'data-person-id' => @person.id %></td>
-            <% else %>
-              <td>
-                <%= check_box_tag :visible, true, false, :disabled => true %>
-                <span class="lock-icon"></span>
-              </td>
-            <% end %>
           </tr>
         <% end %>
+
+		 <%= form.fields_for :people, @person do |person_form| %>
+          <tr class="person-row">
+            <td>
+              <%= image_tag 'plus.gif', :class => 'expand-link', :id => "expand-link-#{@person.id}" %>
+              <strong><%= t("privacies.friends") %></strong>
+            </td>
+
+              <td><%= person_form.check_box :visible, :class => 'visible-checkbox' %></td>
+              <td><%= person_form.check_box :share_friend_activity %></td>
+              <td><%= person_form.check_box :share_friend_address,      :class => "share-checkbox", 'data-share-type' => 'share-address',      'data-person-id' => @person.id %></td>
+              <td><%= person_form.check_box :share_friend_basic,   :class => "share-checkbox", 'data-share-type' => 'share-home-phone',   'data-person-id' => @person.id %></td>
+              <td><%= person_form.check_box :share_friend_about, :class => "share-checkbox", 'data-share-type' => 'share-mobile-phone', 'data-person-id' => @person.id %></td>
+              <td><%= person_form.check_box :share_friend_company,   :class => "share-checkbox", 'data-share-type' => 'share-work-phone',   'data-person-id' => @person.id %></td>
+          </tr>
+        <% end %>
+
+
         <% @person.memberships.all(:order => 'groups.name', :include => :group, :conditions => {'groups.hidden' => false}).each do |membership| %>
           <%= fields_for "memberships[#{membership.id}]", membership do |membership_form| %>
             <%= content_tag :tr, :style => 'display:none;', :class => "membership-row membership-for-#{@person.id}" do %>

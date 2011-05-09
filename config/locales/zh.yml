@@ -1622,7 +1622,7 @@ zh:
     remember_to_come_back: 记住要回来，填补了这一部分，这样您的团队能有一个回答祈祷纪录。
     request: 请求
     save_prayer_request: 保存代祷
-    submitted_by: “由%} {person_name在%{组名}%{日期}上提交的请求。 
+    submitted_by:  %{person_name} , %{group_name} ,%{date}. 
 
   prayer_signups: 
     add_somebody: 添加有人
@@ -1653,7 +1653,9 @@ zh:
     were_are_building_custom_pdf: 。。“我们正在建立您的自定义PDF现在它会需要一点时间，但可能不会超过几分钟一旦准备就绪，我们将通过电子邮件发送给你觉得自由继续浏览到这个网站。 （你可以离开这个页面，如果你愿意）。“
     will_take_longer: “（会需要一点时间） 
 
-  privacies: 
+  privacies:
+    all_people: 对所有人
+	friends: 对好友
     activity: 活动
     address: 地址
     address2: 地址2号线
@@ -1686,12 +1688,12 @@ zh:
     read_safeguarding_children_html: 阅读关于<a>保障儿童</a> href=%{url}>我们的页面。
     read_statement_below: 阅读以下声明，并同意通过检查相应的复选框它。
     saved: 设置保存。
-    sharing_with_html: 使用<a href=%{url}>%{共享名} </a>
+    sharing_with_html: 与<a href="%{url}">%{name}</a>分享
     the_items_are_visible_html: “下列项目都可以看到每个人的<a href=\%{url}\>的改变，</a>
     the_items_may_be_shared: “以下的项目可共享的%{name}的其他成员
     this: 这
     to_show_on_this_site: “这个网站上显示%{name}的，请
-    visible: 可见
+    visible: 全部可见
     visible_note: 设置一个配置文件是无形会使你不会出现在任何目录搜索。您仍然可以参加学习小组，接受站点管理员组，但电子邮件和电子邮件。
     work_phone: 工作电话
     you_are_not_sharing_with_groups: 你不共享任何集团专门分享您的%{}。
