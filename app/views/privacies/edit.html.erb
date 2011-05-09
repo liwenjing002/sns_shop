@@ -10,12 +10,10 @@
         <th></th>
         <th><%= t('privacies.visible') %></th>
         <th><%= t('privacies.activity') %></th>
+        <th><%= t('privacies.basic') %></th>
+        <th><%= t('privacies.about') %></th>
         <th><%= t('privacies.address') %></th>
-        <th><%= t('privacies.home_phone') %></th>
-        <th><%= t('privacies.mobile_phone') %></th>
-        <th><%= t('privacies.work_phone') %></th>
-        <th><%= t('privacies.email') %></th>
-        <th><%= t('privacies.birthday') %></th>
+        <th><%= t('privacies.company') %></th>
       </tr>
       
         <%= form.fields_for :people, @person do |person_form| %>
@@ -24,51 +22,56 @@
               <strong><%= t("privacies.all_people") %></strong>
             </td>
 
-              <td><%= person_form.check_box :visible, :class => 'visible-checkbox' %></td>
-              <td><%= person_form.check_box :share_activity %></td>
-              <td><%= person_form.check_box :share_address,      :class => "share-checkbox", 'data-share-type' => 'share-address',      'data-person-id' => @person.id %></td>
-              <td><%= person_form.check_box :share_home_phone,   :class => "share-checkbox", 'data-share-type' => 'share-home-phone',   'data-person-id' => @person.id %></td>
-              <td><%= person_form.check_box :share_mobile_phone, :class => "share-checkbox", 'data-share-type' => 'share-mobile-phone', 'data-person-id' => @person.id %></td>
-              <td><%= person_form.check_box :share_work_phone,   :class => "share-checkbox", 'data-share-type' => 'share-work-phone',   'data-person-id' => @person.id %></td>
-              <td><%= person_form.check_box :share_email,        :class => "share-checkbox", 'data-share-type' => 'share-email',        'data-person-id' => @person.id %></td>
-              <td><%= person_form.check_box :share_birthday,     :class => "share-checkbox", 'data-share-type' => 'share-birthday',     'data-person-id' => @person.id %></td>
+              <td><%= person_form.check_box :share_all_visible%></td>
+              <td><%= person_form.check_box :share_all_activity %></td>
+              <td><%= person_form.check_box :share_all_basic %></td>
+              <td><%= person_form.check_box :share_all_about %></td>
+              <td><%= person_form.check_box :share_all_address %></td>
+              <td><%= person_form.check_box :share_all_company %></td>
           </tr>
         <% end %>
 
 		 <%= form.fields_for :people, @person do |person_form| %>
           <tr class="person-row">
             <td>
-              <%= image_tag 'plus.gif', :class => 'expand-link', :id => "expand-link-#{@person.id}" %>
+              
               <strong><%= t("privacies.friends") %></strong>
             </td>
 
-              <td><%= person_form.check_box :visible, :class => 'visible-checkbox' %></td>
+              <td><%= person_form.check_box :share_friend_visible %></td>
               <td><%= person_form.check_box :share_friend_activity %></td>
-              <td><%= person_form.check_box :share_friend_address,      :class => "share-checkbox", 'data-share-type' => 'share-address',      'data-person-id' => @person.id %></td>
-              <td><%= person_form.check_box :share_friend_basic,   :class => "share-checkbox", 'data-share-type' => 'share-home-phone',   'data-person-id' => @person.id %></td>
-              <td><%= person_form.check_box :share_friend_about, :class => "share-checkbox", 'data-share-type' => 'share-mobile-phone', 'data-person-id' => @person.id %></td>
-              <td><%= person_form.check_box :share_friend_company,   :class => "share-checkbox", 'data-share-type' => 'share-work-phone',   'data-person-id' => @person.id %></td>
+              <td><%= person_form.check_box :share_friend_basic%></td>
+              <td><%= person_form.check_box :share_friend_about %></td>
+              <td><%= person_form.check_box :share_friend_address %></td>
+              <td><%= person_form.check_box :share_friend_company %></td>
           </tr>
         <% end %>
-
+          
+          <!--
+           <tr class="person-row">
+            <td>
+              
+              <strong><%= t("privacies.group") %></strong>
+              <%= image_tag 'plus.gif', :class => 'expand-link', :id => "expand-link-#{@person.id}" %>
+            </td>
+           </tr>
+          
 
         <% @person.memberships.all(:order => 'groups.name', :include => :group, :conditions => {'groups.hidden' => false}).each do |membership| %>
           <%= fields_for "memberships[#{membership.id}]", membership do |membership_form| %>
             <%= content_tag :tr, :style => 'display:none;', :class => "membership-row membership-for-#{@person.id}" do %>
               <td style="padding-left:15px;"><%= membership.group.name %></td>
-              <td></td>
-              <td></td>
-              <td><%= membership_form.check_box :share_anniversary,  :class => 'share-anniversary'  %></td>
-              <td><%= membership_form.check_box :share_address,      :class => 'share-address'      %></td>
-              <td><%= membership_form.check_box :share_home_phone,   :class => 'share-home-phone'   %></td>
-              <td><%= membership_form.check_box :share_mobile_phone, :class => 'share-mobile-phone' %></td>
-              <td><%= membership_form.check_box :share_work_phone,   :class => 'share-work-phone'   %></td>
-              <td><%= membership_form.check_box :share_fax,          :class => 'share-fax'          %></td>
-              <td><%= membership_form.check_box :share_email,        :class => 'share-email'        %></td>
-              <td><%= membership_form.check_box :share_birthday,     :class => 'share-birthday'     %></td>
-            <% end %>
+              <td><%= membership_form.check_box :share_visible  %></td>
+              <td><%= membership_form.check_box :share_activity         %></td>
+              <td><%= membership_form.check_box :share_basic    %></td>
+              <td><%= membership_form.check_box :share_address       %></td>
+              <td><%= membership_form.check_box :share_about  %></td>
+              <td><%= membership_form.check_box :share_company   %></td>
+             
+          <% end %>
           <% end %>
         <% end %>
+          -->
     </table>
 
     <p class="discreet margin-top"><sup>1</sup><%= t('privacies.visible_note') %></p>
@@ -87,18 +90,17 @@
 <%= image_tag 'minus.gif', :style => 'display:none;' %>
 
 <script type="text/javascript">
-  $('#family_visible').change(function(){
-    if(this.checked) {
-      $('.people-header-row, .person-row').show();
-    } else {
-      $('.people-header-row, .person-row, .membership-row').hide();
-    }
-  }).trigger('change');
+
 
   $('.visible-checkbox').change(function(){
     var c = $(this).closest('tr').find('input[type=checkbox]:not(.visible-checkbox)');
-    if(this.checked) c.attr('disabled', false).each(function(){ var c=$(this).data('was-checked'); if(c!=null) this.checked = c });
-    else c.attr('disabled', true).each(function(){ $(this).data('was-checked', this.checked) }).attr('checked', false);
+    if(this.checked) {
+      c.attr('disabled', false).each(function(){ var c=$(this).data('was-checked'); if(c!=null) this.checked = c });
+      }
+    else {
+      c.attr('disabled', true).each(function(){ $(this).data('was-checked', this.checked) }).attr('checked', false);
+    }
+      
   }).trigger('change');
 
   $('.share-checkbox').change(function(event, triggered){

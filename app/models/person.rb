@@ -7,7 +7,7 @@ class Person < ActiveRecord::Base
 
   cattr_accessor :logged_in # set in addition to @logged_in (for use by Notifier and other models)
 
-#  belongs_to :family
+  #  belongs_to :family
   belongs_to :address
   belongs_to :admin
   belongs_to :donor, :class_name => 'Donortools::Persona', :foreign_key => 'donortools_id'
@@ -168,8 +168,8 @@ class Person < ActiveRecord::Base
     read_attribute(:salt) || generate_salt
   end
 
-#  fall_through_attributes :home_phone, :address, :address1, :address2, :city, :state, :zip, :short_zip, :mapable?, :to => :family
-#  sharable_attributes     :home_phone, :mobile_phone, :work_phone, :fax, :email, :birthday, :address, :anniversary, :activity
+  #  fall_through_attributes :home_phone, :address, :address1, :address2, :city, :state, :zip, :short_zip, :mapable?, :to => :family
+  #  sharable_attributes     :home_phone, :mobile_phone, :work_phone, :fax, :email, :birthday, :address, :anniversary, :activity
 
   self.skip_time_zone_conversion_for_attributes = [:birthday, :anniversary]
   self.digits_only_for_attributes = [:mobile_phone, :work_phone, :fax, :business_phone]
@@ -184,9 +184,9 @@ class Person < ActiveRecord::Base
       when 'Person'
         !what.deleted? and (
           what == self or
-          what.family_id == self.family_id or
-          admin?(:view_hidden_profiles) or
-          staff? or what.visible?
+            what.family_id == self.family_id or
+            admin?(:view_hidden_profiles) or
+            staff? or what.visible?
         )
       when 'Family'
         !what.deleted? and (what.visible? or admin?(:view_hidden_profiles))
@@ -244,13 +244,13 @@ class Person < ActiveRecord::Base
       self.admin?(:edit_pages)
     when 'Attachment'
       (what.page and self.can_edit?(what.page)) or \
-      (what.message and self.can_edit?(what.message)) or \
-      (what.group and what.group.admin?(self))
+        (what.message and self.can_edit?(what.message)) or \
+        (what.group and what.group.admin?(self))
     when 'NewsItem'
       self.admin?(:manage_news) or (what.person and what.person == self )
     when 'Membership'
       self.admin?(:manage_groups) or (what.group and what.group.admin?(self)) or self.can_edit?(what.person)
-	when 'Address'
+    when 'Address'
       self.admin?(:manage_groups) or (what.group and what.group.admin?(self)) or self.can_edit?(what.person)
     else
       raise "Unrecognized argument to can_edit? (#{what.inspect})"
@@ -302,7 +302,7 @@ class Person < ActiveRecord::Base
   def adult_or_consent?; adult? or parental_consent?; end
 
   def visible?(fam=nil)
-   read_attribute(:visible) and adult_or_consent? and visible_to_everyone?
+    read_attribute(:visible) and adult_or_consent? and visible_to_everyone?
   end
 
   def admin?(perm=nil)
@@ -372,15 +372,15 @@ class Person < ActiveRecord::Base
 
   attr_writer :no_auto_sequence
 
-#  before_save :update_sequence
-#  def update_sequence
-#    return if @no_auto_sequence
-#    if family and sequence.nil?
-#      conditions = ['deleted = ?', false]
-#      conditions.add_condition ['id != ?', id] unless new_record?
-#      self.sequence = family.people.maximum(:sequence, :conditions => conditions).to_i + 1
-#    end
-#  end
+  #  before_save :update_sequence
+  #  def update_sequence
+  #    return if @no_auto_sequence
+  #    if family and sequence.nil?
+  #      conditions = ['deleted = ?', false]
+  #      conditions.add_condition ['id != ?', id] unless new_record?
+  #      self.sequence = family.people.maximum(:sequence, :conditions => conditions).to_i + 1
+  #    end
+  #  end
 
   def update_from_params(params)
     params = HashWithIndifferentAccess.new(params) unless params.is_a? HashWithIndifferentAccess
@@ -394,9 +394,9 @@ class Person < ActiveRecord::Base
       if Person.logged_in.can_edit_profile?
         params[:person].cleanse(:birthday, :anniversary)
         if params[:address]
-        params[:address][:hometown_address] ="" if params[:address][:hometown_address]=="请输入您所在的小区或街道"
-        params[:address][:current_address] ="" if params[:address][:current_address]=="请输入您所在的小区或街道"
-        params[:address][:liveing_address] ="" if params[:address][:liveing_address]=="请输入您所在的小区或街道"
+          params[:address][:hometown_address] ="" if params[:address][:hometown_address]=="请输入您所在的小区或街道"
+          params[:address][:current_address] ="" if params[:address][:current_address]=="请输入您所在的小区或街道"
+          params[:address][:liveing_address] ="" if params[:address][:liveing_address]=="请输入您所在的小区或街道"
         end
         update_attributes(params[:person]) && address.update_attributes(params[:address])
       else
@@ -467,22 +467,22 @@ class Person < ActiveRecord::Base
     group_ids = groups.find_all_by_hidden(false, :select => 'groups.id').map { |g| g.id }
     group_ids = [0] unless group_ids.any?
     relation = StreamItem.scoped \
-               .where(:streamable_type => enabled_types) \
-               .where(:shared => true) \
-               .where("(group_id in (:group_ids) or" +
-                      " (group_id is null and wall_id is null and person_id in (:friend_ids)) or" +
-                      " person_id = :id or" +
-                      " streamable_type in ('NewsItem', 'Publication')" +
-                      ")", :group_ids => group_ids, :friend_ids => friend_ids, :id => id) \
-               .order('created_at desc') \
-               .limit(count) \
-               .includes(:person, :group)
+      .where(:streamable_type => enabled_types) \
+      .where(:shared => true) \
+      .where("(group_id in (:group_ids) or" +
+        " (group_id is null and wall_id is null and person_id in (:friend_ids)) or" +
+        " person_id = :id or" +
+        " streamable_type in ('NewsItem', 'Publication')" +
+        ")", :group_ids => group_ids, :friend_ids => friend_ids, :id => id) \
+      .order('created_at desc') \
+      .limit(count) \
+      .includes(:person, :group)
     relation.to_a.tap do |stream_items|
       # do our own eager loading here...
       comment_people_ids = stream_items.map { |s| Array(s.context['comments']).map { |c| c['person_id'] } }.flatten
       comment_people = Person.where(:id => comment_people_ids) \
-                             .select('first_name, last_name, suffix, gender, id, family_id, updated_at, photo_file_name, photo_fingerprint') \
-                             .inject({}) { |h, p| h[p.id] = p; h } # as a hash with id as the key
+        .select('first_name, last_name, suffix, gender, id, family_id, updated_at, photo_file_name, photo_fingerprint') \
+        .inject({}) { |h, p| h[p.id] = p; h } # as a hash with id as the key
       stream_items.each do |stream_item|
         Array(stream_item.context['comments']).each do |comment|
           comment['person'] = comment_people[comment['person_id']]
@@ -493,10 +493,25 @@ class Person < ActiveRecord::Base
   end
 
   def show_attribute_to?(attribute, who)
-    send(attribute).to_s.strip.any? and
-    (not respond_to?("share_#{attribute}_with?") or
-    send("share_#{attribute}_with?", who))
+    send(attribute).to_s.strip.any? 
+    #    and
+    #    (not respond_to?("share_#{attribute}_with?") or
+    #    send("share_#{attribute}_with?", who))
   end
+  
+  #隐私控制
+  def privacy(type,who)
+    all_v = self.share_all_visible
+    friend_v = self.share_friend_visible
+    all_type = send("share_all_#{type}")
+    friend_type = send("share_friend_#{type}")
+    return true if all_v or all_type
+    if who.friend? self
+      return true if friend_v or friend_type
+    end
+    nil
+  end
+  
 
   def all_friend_and_groupy_ids
     if Setting.get(:features, :friends)
@@ -610,10 +625,10 @@ class Person < ActiveRecord::Base
 
   before_save :set_synced_to_donortools
   def set_synced_to_donortools
-   if (changed & %w(first_name last_name suffix work_phone mobile_phone email)).any?
-     self.synced_to_donortools = false
-   end
-   true
+    if (changed & %w(first_name last_name suffix work_phone mobile_phone email)).any?
+      self.synced_to_donortools = false
+    end
+    true
   end
 
   alias_method :destroy_for_real, :destroy

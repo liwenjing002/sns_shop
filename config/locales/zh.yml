@@ -1446,6 +1446,9 @@ zh:
     current_province_city_address: 当前地址： 
     QQ: QQ
     MSN: MSN
+    birthday: 生日
+    gender: 性别
+    something_hide: 一些信息被设置隐藏，加好友后显示
     twitter: twitter
     weibo : 新浪围脖
     about_me: 关于我
@@ -1655,9 +1658,13 @@ zh:
 
   privacies:
     all_people: 对所有人
-	friends: 对好友
+    friends: 对好友
+    group: 组群
     activity: 活动
     address: 地址
+    basic: 基本信息
+    about: 个人简介
+    company: 地理位置
     address2: 地址2号线
     agreement_saved: 协议保存。
     anniversary: 周年纪念

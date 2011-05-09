@@ -13,4 +13,9 @@ module PeopleHelper
       capture(&block)
     end
   end
+  
+  def private(type)
+    return true if @person==@logged_in
+    @person.privacy(type,@logged_in)
+  end
 end
