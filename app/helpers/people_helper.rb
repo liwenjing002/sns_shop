@@ -16,6 +16,6 @@ module PeopleHelper
   
   def private(type)
     return true if @person==@logged_in
-    @person.privacy(type,@logged_in)
+    @person.privacy_controll(type,@logged_in)
   end
 end

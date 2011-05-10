@@ -1441,6 +1441,7 @@ zh:
     view_page: 查看页
 
   people:
+    albums_hide: 相册被设置隐藏，请加好友或联系TA
     hometown_province_city_address: 家乡地址： 
     liveing_province_city_address: 居住地址： 
     current_province_city_address: 当前地址： 
@@ -1448,7 +1449,7 @@ zh:
     MSN: MSN
     birthday: 生日
     gender: 性别
-    something_hide: 一些信息被设置隐藏，加好友后显示
+    something_hide: 一些信息被设置隐藏，请加好友或联系TA
     twitter: twitter
     weibo : 新浪围脖
     about_me: 关于我
@@ -1657,14 +1658,20 @@ zh:
     will_take_longer: “（会需要一点时间） 
 
   privacies:
-    all_people: 对所有人
     friends: 对好友
+    choose: 请选择
+    normal: 开放模式
+    safe: 好友模式
+    forbid: 禁止模式
+    all_people: 对所有人
+    mode: 模式选择
     group: 组群
     activity: 活动
-    address: 地址
+    address: 地理位置
+    ablums: 相册
     basic: 基本信息
     about: 个人简介
-    company: 地理位置
+    company: 公司
     address2: 地址2号线
     agreement_saved: 协议保存。
     anniversary: 周年纪念

@@ -28,9 +28,14 @@ class PrivaciesController < ApplicationController
       else
         render :text => t('not_authorized'), :layout => true, :status => 401
       end
-    elsif @person = Person.find(params[:person_id])
-      @address = @person.address
-      unless @logged_in.can_edit?(@address)
+	  elsif @person = Person.find(params[:person_id])
+      	  @privacy = @person.privacy
+		  if @privacy == nil
+		  @privacy = Privacy.create
+		  @person.privacy_id = @privacy.id
+		  @person.save
+		  end
+      unless @logged_in.can_edit?(@person)
         render :text => t('not_authorized'), :layout => true, :status => 401
       end
     end
@@ -42,15 +47,15 @@ class PrivaciesController < ApplicationController
     else
       @person = Person.find(params[:person_id])
       if @logged_in.can_edit?(@person)
-        Array(params[:memberships]).each do |membership_id, sharing|
-          m = Membership.where(["id = ? and person_id = ?", membership_id, @person.id]).first
-          sharing.each do |attribute, value|
-            value = false if m.person.attributes[attribute]
-            m.attributes = {attribute => value}
-          end
-          m.save!
-          @person.update_attributes(params[:person][:people])
-        end
+#        Array(params[:memberships]).each do |membership_id, sharing|
+#          m = Membership.where(["id = ? and person_id = ?", membership_id, @person.id]).first
+#          sharing.each do |attribute, value|
+#            value = false if m.person.attributes[attribute]
+#            m.attributes = {attribute => value}
+#          end
+#          m.save!
+          @person.privacy.update_attributes(params[:person][:privacy])
+#        end
         redirect_to @person
       else
         render :text => t('not_authorized'), :layout => true, :status => 401

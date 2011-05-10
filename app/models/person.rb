@@ -9,6 +9,7 @@ class Person < ActiveRecord::Base
 
   #  belongs_to :family
   belongs_to :address
+  belongs_to :privacy
   belongs_to :admin
   belongs_to :donor, :class_name => 'Donortools::Persona', :foreign_key => 'donortools_id'
   has_many :memberships, :dependent => :destroy
@@ -500,11 +501,12 @@ class Person < ActiveRecord::Base
   end
   
   #隐私控制
-  def privacy(type,who)
-    all_v = self.share_all_visible
-    friend_v = self.share_friend_visible
-    all_type = send("share_all_#{type}")
-    friend_type = send("share_friend_#{type}")
+  def privacy_controll(type,who)
+return true unless self.privacy
+    all_v = self.privacy.share_all_visible
+    friend_v = self.privacy.share_friend_visible
+    all_type = self.privacy.send("share_all_#{type}")
+    friend_type = self.privacy.send("share_friend_#{type}")
     return true if all_v or all_type
     if who.friend? self
       return true if friend_v or friend_type

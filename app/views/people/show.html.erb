@@ -159,10 +159,17 @@
 
     <% if @albums.any? %>
       <p>
+<%if private("ablums")%>
         <% @albums.each do |album| %>
           <%= link_to image_tag(album.cover ? album.cover.photo.url(:tn) : 'missing_tn.png', :alt => album.name),
             album, :title => album.name %>
         <% end %>
+<%else%>
+        <% @albums.each do |album| %>
+          <%= link_to image_tag(album.cover ? album.cover.photo.url(:tn) : 'missing_tn.png', :alt => album.name),
+            "javascript:onclick=alert('相册被设置隐藏，请加好友或联系TA')", :title => album.name %>
+        <% end %>
+<%end%>
       </p>
     <% end %>
 
@@ -185,7 +192,7 @@
     <h3><%= t('About') %></h3>
     <% if private("about") %>
       <div class="about">
-        <% unless @person.about.to_s.any? or
+        <% unless( @person.about.to_s.any? or
             @verses.any? or
             @person.activities.to_s.any? or
             @person.interests.to_s.any? or
@@ -193,7 +200,7 @@
             @person.music.to_s.any? or
             @person.movies.to_s.any? or
             @person.tv_shows.to_s.any? or
-            @person.quotes.to_s.any? %>
+            @person.quotes.to_s.any?)%>
           <em><%= t('people.nothing_here_yet') %></em>
         <% end %>
         <% if @person.about.to_s.any? %>
@@ -262,16 +269,15 @@
         <br>
         <p><%= t("people.something_hide") %></p>
       <%end%>
-    </div>
 
     <h3><%= t('people.business') %></h3>
     <div class="business">
       <% if private("company") %>
         <% unless 
-          @person.business_category.to_s.any? or
+          (@person.business_category.to_s.any? or
             @person.business_name.to_s.any? or
             @person.business_description.to_s.any? or
-            @person.business_website.to_s.any? %>
+            @person.business_website.to_s.any?)%>
           <em><%= t('people.nothing_here_yet') %></em>
         <% end %>
 
@@ -308,21 +314,21 @@
             </div>
           <% end %>
         </div>
-
-      <%else%>
+	 	<%else%>
         <br>
         <p><%= t("people.something_hide") %></p>
       <%end%>
-    </div>
+   
 
-    <% if private("address") %>
-      <h3><%= t('people.edit.address') %></h3>
+     <h3><%= t('people.edit.address') %></h3>
+ 	
       <div class="business">
+		<% if private("address") %>
         <% unless 
-          @person.address.hometown_province.to_s.any? or
+          (@person.address.hometown_province.to_s.any? or
             @person.business_name.to_s.any? or
             @person.business_description.to_s.any? or
-            @person.business_website.to_s.any? %>
+            @person.business_website.to_s.any?) %>
           <em><%= t('people.nothing_here_yet') %></em>
         <% end %>
 
@@ -375,10 +381,10 @@
             </div>
           <% end %>
         </div>
-      </div>
     <%else%>
       </br>
       <p><%= t("people.something_hide") %></p>
     <%end%>
+
   </div>
 </div>
