@@ -15,7 +15,7 @@ class Search
   def name=(name)
     if name
       name.gsub! /\sand\s/, ' & '
-      @conditions.add_condition ["(#{sql_concat('people.first_name', %q(' '), 'people.last_name')} like ? or (#{name.index('&') ? '1=1' : '1=0'}) or (people.first_name like ? and people.last_name like ?))", "%#{name}%", "#{name.split.first}%", "#{name.split.last}%"]
+      @conditions.add_condition ["(#{sql_concat('people.first_name')} like ? or (#{name.index('&') ? '1=1' : '1=0'}) or (people.first_name like ?))", "%#{name}%", "#{name.split.last}%"]
     end
   end
 
@@ -23,9 +23,9 @@ class Search
     @family_name = family_name
     if family_name
       family_name.gsub! /\sand\s/, ' & '
-      family_ids = Person.connection.select_values("select distinct family_id from people where #{sql_concat('people.first_name', %q(' '), 'people.last_name')} like #{Person.connection.quote(family_name + '%')} and site_id = #{Site.current.id}").map { |id| id.to_i }
+      family_ids = Person.connection.select_values("select distinct family_id from people where #{sql_concat('people.first_name', %q(' '), 'people.first_name')} like #{Person.connection.quote(family_name + '%')} and site_id = #{Site.current.id}").map { |id| id.to_i }
       family_ids = [0] unless family_ids.any?
-      @conditions.add_condition ["(families.name like ? or families.last_name like ? or families.id in (?))", "%#{family_name}%", "%#{family_name}%", family_ids]
+      @conditions.add_condition ["(families.name like ? or families.first_name like ? or families.id in (?))", "%#{family_name}%", "%#{family_name}%", family_ids]
     end
   end
 
@@ -140,7 +140,7 @@ class Search
       :page => page,
       :conditions => @conditions,
       :include => :address,
-      :order => (show_businesses ? 'people.business_name' : 'people.last_name, people.first_name')
+      :order => (show_businesses ? 'people.business_name' : 'people.first_name')
     )
 #.select do |person| # additional checks that don't work well in raw sql
 #      !person.nil? \
@@ -156,7 +156,7 @@ class Search
   def query_families(page=nil)
     @conditions.add_condition ["families.deleted = ?", false]
     @count = Family.count :conditions => @conditions
-    @families = Family.paginate(:all, :page => page, :conditions => @conditions, :order => "last_name")
+    @families = Family.paginate(:all, :page => page, :conditions => @conditions, :order => "first_name")
   end
 
   def self.new_from_params(params)
