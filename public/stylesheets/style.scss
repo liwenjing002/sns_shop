@@ -1000,3 +1000,23 @@ p.divider {
 .nowrap {
   white-space: nowrap;
 }
+
+.tab_profile{
+  float: left;
+  margin-left: 350px;
+  margin-top: -30px;
+}
+
+.tab_profile ul li {
+  float: left;
+  margin-right: 20px;
+  list-style: none outside none;
+}
+
+.profile-left{
+	float: left;width: 300px;
+}
+
+.profile-right{
+	margin-left: 350px;
+}

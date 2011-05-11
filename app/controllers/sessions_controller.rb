@@ -35,7 +35,7 @@ class SessionsController < ApplicationController
         return
       end
       session[:logged_in_id] = person.id
-      session[:logged_in_name] = person.first_name + ' ' + person.last_name
+      session[:logged_in_name] = person.first_name 
       session[:ip_address] = request.remote_ip
       if params[:from].to_s.any?
         redirect_to 'http://' + request.host + ([80, 443].include?(request.port) ? '' : ":#{request.port}") + params[:from]
