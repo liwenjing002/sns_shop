@@ -68,7 +68,7 @@ function initialize() {
       alert("定位服务失败，我们将您定位在中国，请您手动选择您的位置");
       initialLocation = newyork;
     } else {
-      alert("定位服务失败，我们将您定位在中国，请您手动选择您的位置");
+      alert("您拒绝定位服务，我们将您定位在中国，请您手动选择您的位置");
       initialLocation = siberia;
     }
     map.setCenter(initialLocation);
@@ -87,6 +87,19 @@ $(document).ready(function() {
 
 
 
-<div class='show_php show' style="height:700px;">
+<div class='show_php show' style="height: 600px;">
 	<div id="map_canvas" style="width: 610px; height: 385px;">map div</div> 
+
+ <div >
+	<ul>
+      <li class = ""><a href="#">我的足迹</a></li>
+	  <li class = ""><a href="#">好友的足迹</a></li>
+      <li class = ""><a href="#">我的线路</a></li>
+	  <li class = ""><a href="#">我的活动</a></li>
+      <li class = ""><a href="#">地图找人</a></li>
+    </ul>
+ </div>
 </div>
+
+
+
