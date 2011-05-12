@@ -2,8 +2,8 @@
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script> 
 <script type="text/javascript"> 
 var initialLocation;
-var siberia = new google.maps.LatLng(60, 105);
-var newyork = new google.maps.LatLng(40.69847032728747, -73.9514422416687);
+var siberia = new google.maps.LatLng(34.524661, 103.886719);
+var newyork = new google.maps.LatLng(34.524661, 103.886719);
 var browserSupportFlag =  new Boolean();
 var map
 function initialize() {
@@ -22,7 +22,9 @@ function initialize() {
 	  add_marker(initialLocation)
     }, function() {
       handleNoGeolocation(browserSupportFlag);
-    });
+    },{enableHighAccuracy:true, 
+    maximumAge:30000, 
+    timeout:2000});
   // Try Google Gears Geolocation
   } else if (google.gears) {
     browserSupportFlag = true;
@@ -43,7 +45,6 @@ function initialize() {
 }
 
 	function add_marker(initialLocation){
-	alert(initialLocation)
 	marker = new google.maps.Marker({
       map:map,
       draggable:true,
@@ -64,13 +65,14 @@ function initialize() {
 
   function handleNoGeolocation(errorFlag) {
     if (errorFlag == true) {
-      alert("Geolocation service failed.");
+      alert("定位服务失败，我们将您定位在中国，请您手动选择您的位置");
       initialLocation = newyork;
     } else {
-      alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
+      alert("定位服务失败，我们将您定位在中国，请您手动选择您的位置");
       initialLocation = siberia;
     }
     map.setCenter(initialLocation);
+    map.setZoom(4);
   }
 
 $(document).ready(function() {
@@ -86,5 +88,5 @@ $(document).ready(function() {
 
 
 <div class='show_php show' style="height:700px;">
-	<div id="map_canvas" style="width: 500px; height: 400px;">map div</div> 
+	<div id="map_canvas" style="width: 610px; height: 385px;">map div</div> 
 </div>
