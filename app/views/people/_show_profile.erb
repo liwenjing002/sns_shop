@@ -1,0 +1,366 @@
+<div class="show_profile show" style="display: none; ">
+    <% if flash[:show_verification_link] %>
+      <div class="highlight">
+        <%= link_to t('people.click_to_send_verification_email'), account_path(:email => @person.email), :method => 'post', :confirm => t('are_you_sure'), :class => 'email-icon' %>
+      </div>
+    <% end %>
+    <% unless @person.visible? %>
+      <div class="highlight"><span class="lock-icon"></span> <%= t('people.this_profile_is_hidden') %></div>
+    <% end %>
+    <%= render :partial => 'pending_updates' %>
+    <h2>
+      <strong><%= @person.name %></strong>
+      <% if @person.description.to_s.any? %>
+        / <%= @person.description %>
+      <% end %>
+    </h2>
+
+    <% if private("basic") %>
+      <div class="favorites-group" style="margin-top: 15px">
+        <%= attribute(:birthday)        do %>
+          <div class="favorites-group">
+            <h4><%= t('people.birthday') %></h4>
+            <%= @person.birthday.strftime("%Y-%m-%d")  %>
+          </div>
+        <% end %>
+      </div>     
+
+      <div class="favorites-group" style="margin-top: 15px">
+        <%= attribute(:gender)        do %>
+          <div class="favorites-group">
+            <h4><%= t('people.gender') %></h4>
+            <%= @person.gender  %>
+          </div>
+        <% end %>
+      </div> 
+
+      <div class="favorites-group" style="margin-top: 15px">
+        <%= attribute(:email)        do %>
+          <div class="favorites-group">
+            <h4><%= t('people.email') %></h4>
+            <%= mail_to @person.email   %>   &nbsp;  &nbsp;  &nbsp;  &nbsp; 
+            <%= image_tag 'plus.gif', :id => "more_conncet",:is_plus=>1 %>
+            <span id="more_conncet_span"><%= t("people.more") %></span>
+          </div>
+        <% end %>
+      </div>
+      <script type="text/javascript">
+      
+          $(document).ready(function() {
+            $("#more_conncet").click(function(){
+              if($(this).attr("is_plus") == 1){
+                $('.more_conncet').slideDown('1500');
+                $(this).attr("src","/images/minus.gif")
+                $(this).attr("is_plus","0")
+              }else{
+                $('.more_conncet').slideUp('1500');
+                $(this).attr("src","/images/plus.gif")
+                $(this).attr("is_plus","1")
+              }
+            })
+            
+            $("#more_conncet_span").click(function(){
+              if($("#more_conncet").attr("is_plus") == 1){
+                $('.more_conncet').slideDown('1500');
+                $("#more_conncet").attr("src","/images/minus.gif")
+                $("#more_conncet").attr("is_plus","0")
+              }else{
+                $('.more_conncet').slideUp('1500');
+                $("#more_conncet").attr("src","/images/plus.gif")
+                $("#more_conncet").attr("is_plus","1")
+              }
+            })
+          }
+        )
+      </script>
+
+      <div class="more_conncet" style="display: none; ">
+        <div class="favorites-group" style="margin-top: 15px ">
+          <%= attribute(:qq)        do %>
+            <div class="favorites-group">
+              <h4><%= t('people.QQ') %></h4>
+              <%=  @person.qq  %>
+            </div>
+          <% end %>
+        </div>
+
+
+
+        <div class="favorites-group" style="margin-top: 15px">
+          <%= attribute(:msn)        do %>
+            <div class="favorites-group">
+              <h4><%= t('people.MSN') %></h4>
+              <%= @person.msn %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="favorites-group" style="margin-top: 15px">
+          <%= attribute(:weibo)        do %>
+            <div class="favorites-group">
+              <h4><%= t('people.weibo') %></h4>
+              <%=  @person.weibo %>
+            </div>
+          <% end %>
+        </div>
+
+
+        <div class="favorites-group" style="margin-top: 15px">
+          <%= attribute(:twitter)        do %>
+            <div class="favorites-group">
+              <h4><%= t('people.twitter') %></h4>
+              <%= @person.twitter %>
+            </div>
+          <% end %>
+        </div>
+
+
+        <div class="favorites-group" style="margin-top: 15px">
+          <%= attribute(:mobile_phone)        do %>
+            <div class="favorites-group">
+              <h4><%= t('profile.mobile') %></h4>
+              <%= format_phone (@person.mobile_phone,true)                    %> 
+            </div>
+          <% end %>
+        </div>
+
+        <div class="favorites-group" style="margin-top: 15px">
+          <%= attribute(:work_phone)        do %>
+            <div class="favorites-group">
+              <h4><%= t('profile.work'  ) %></h4>
+              <%= format_phone @person.work_phone                      %> 
+            </div>
+          <% end %>
+        </div>
+
+
+
+
+
+        <div class="favorites-group" style="margin-top: 15px">
+          <%= attribute(:website)        do %>
+            <div class="favorites-group">
+              <h4><%= t('people.website'   ) %></h4>
+              <%= link_to simple_url(@person.website), @person.website %> 
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+    <%else%>
+      <br>
+      <p><%= t("people.something_hide") %></p>
+    <%end%>
+    <ul class="profile-details"> 
+      <div class="new-line"></div>
+      <li class="icon">
+        <%= link_to t('messages.send_message'), new_message_path(:to_person_id => @person), :class => 'email-icon' %>
+      </li>
+      <%= render :partial => 'friendship' %>
+      <% if @logged_in.can_edit?(@person) %>
+        <li class="icon">
+          <%= link_to t('people.edit.profile'), edit_person_path(@person), :class => 'edit-icon' %>
+        </li>
+      <% end %>
+    </ul>
+
+  <div>
+
+    <h3><%= t('About') %></h3>
+    <% if private("about") %>
+      <div class="about">
+        <% unless( @person.about.to_s.any? or
+              @verses.any? or
+              @person.activities.to_s.any? or
+              @person.interests.to_s.any? or
+              @person.books.to_s.any? or
+              @person.music.to_s.any? or
+              @person.movies.to_s.any? or
+              @person.tv_shows.to_s.any? or
+              @person.quotes.to_s.any?)%>
+          <em><%= t('people.nothing_here_yet') %></em>
+        <% end %>
+        <% if @person.about.to_s.any? %>
+          <div class="favorites-group">
+            <%= preserve_breaks @person.about %>
+          </div>
+        <% end %>
+        <% if @verses.any? %>
+          <div class="favorites-group">
+            <h4><%= t('people.verses') %></h4>
+            <ul class="favorites-inline">
+              <% @verses.each do |verse| %>
+                <li><%= link_to verse.reference, verse %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <% if @person.activities.to_s.any? %>
+          <div class="favorites-group">
+            <h4><%= t('people.activities') %></h4>
+            <%= preserve_breaks @person.activities %>
+          </div>
+        <% end %>
+        <% if @person.interests.to_s.any? %>
+          <div class="favorites-group">
+            <h4><%= t('people.interests') %></h4>
+            <%= preserve_breaks @person.interests %>
+          </div>
+        <% end %>
+        <% if @person.books.to_s.any? %>
+          <div class="favorites-group">
+            <h4><%= t('people.books') %></h4>
+            <%= preserve_breaks @person.books %>
+          </div>
+        <% end %>
+        <% if @person.music.to_s.any? %>
+          <div class="favorites-group">
+            <h4><%= t('people.music') %></h4>
+            <%= preserve_breaks @person.music %>
+          </div>
+        <% end %>
+        <% if @person.movies.to_s.any? %>
+          <div class="favorites-group">
+            <h4><%= t('people.movies') %></h4>
+            <%= preserve_breaks @person.movies %>
+          </div>
+        <% end %>
+        <% if @person.tv_shows.to_s.any? %>
+          <div class="favorites-group">
+            <h4><%= t('people.tv_shows') %></h4>
+            <%= preserve_breaks @person.tv_shows %>
+          </div>
+        <% end %>
+        <% if @person.quotes.to_s.any? %>
+          <div class="favorites-group">
+            <h4><%= t('people.quotes') %></h4>
+            <!--
+            <ul class="list quotes">
+              <li>I may not be able to say all I think; but I am not going to say anything that I do not think. I would rather a thousand times be a free soul in jail than to be a sycophant and coward in the streets. — <a href="http://en.wikiquote.org/wiki/Eugene_V._Debs#Canton_Anti-war_Speech_.281918.29">Eugene V. Debs, Canton Anti-war Speech (1918)</a></li>
+            </ul>
+            -->
+            <%= preserve_breaks @person.quotes %>
+          </div>
+        <% end %>
+      <%else%>
+        <br>
+        <p><%= t("people.something_hide") %></p>
+      <%end%>
+
+      <h3><%= t('people.business') %></h3>
+      <div class="business">
+        <% if private("company") %>
+          <% unless 
+            (@person.business_category.to_s.any? or
+                @person.business_name.to_s.any? or
+                @person.business_description.to_s.any? or
+                @person.business_website.to_s.any?)%>
+            <em><%= t('people.nothing_here_yet') %></em>
+          <% end %>
+
+          <div class="favorites-group">
+            <% if @person.business_category.to_s.any? %>
+              <div class="favorites-group">
+                <h4><%= t('search.business_category') %></h4>
+                <%= preserve_breaks @person.business_category %>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="favorites-group">
+            <% if @person.business_name.to_s.any? %>
+              <div class="favorites-group">
+                <h4><%= t('people.business_name') %></h4>
+                <%= preserve_breaks @person.business_name %>
+              </div>
+            <% end %>
+          </div>
+          <div class="favorites-group">
+            <% if @person.business_description.to_s.any? %>
+              <div class="favorites-group">
+                <h4><%= t('people.description_of_business') %></h4>
+                <%= preserve_breaks @person.business_description %>
+              </div>
+            <% end %>
+          </div>
+          <div class="favorites-group">
+            <% if @person.business_website.to_s.any? %>
+              <div class="favorites-group">
+                <h4><%= t('people.business_website') %></h4>
+                <%= preserve_breaks @person.business_website %>
+              </div>
+            <% end %>
+          </div>
+        <%else%>
+          <br>
+          <p><%= t("people.something_hide") %></p>
+        <%end%>
+
+
+        <h3><%= t('people.edit.address') %></h3>
+
+        <div class="business">
+          <% if private("address") %>
+            <% unless 
+              (@person.address.hometown_province.to_s.any? or
+                  @person.business_name.to_s.any? or
+                  @person.business_description.to_s.any? or
+                  @person.business_website.to_s.any?) %>
+              <em><%= t('people.nothing_here_yet') %></em>
+            <% end %>
+
+            <div class="favorites-group">
+              <% if @person.address.hometown_province.to_s.any? %>
+                <div class="favorites-group">
+                  <h4><%= t('people.liveing_province_city_address') %></h4>
+                  <span>
+                    <script   language=javascript> 
+                        split();
+                        add = getNameByCode('<%= @person.address.hometown_province %>') + " " +   getNameByCode('<%= @person.address.hometown_city %>') +  " " +   getNameByCode('<%= @person.address.hometown_county %>')
+                        document.write(add);
+                    </script>
+                    <%= @person.address.hometown_address%>
+                  </span>
+                </div>
+
+              <% end %>
+            </div>
+
+            <div class="favorites-group">
+              <% if @person.address.liveing_province.to_s.any? %>
+                <div class="favorites-group">
+                  <h4><%= t('people.liveing_province_city_address') %></h4>
+                  <span>
+                    <script   language=javascript> 
+                        split();
+                        add = getNameByCode('<%= @person.address.liveing_province %>') + " " +   getNameByCode('<%= @person.address.liveing_city %>') +  " " +   getNameByCode('<%= @person.address.liveing_county %>')
+                        document.write(add);
+                    </script>
+                    <%= @person.address.liveing_address%>
+                  </span>
+                </div>
+              <% end %>
+            </div>
+
+
+            <div class="favorites-group">
+              <% if @person.address.current_province.to_s.any? %>
+                <div class="favorites-group">
+                  <h4><%= t('people.current_province_city_address') %></h4>
+                  <span>	
+                    <script   language=javascript> 
+                        split();
+                        add = getNameByCode('<%= @person.address.current_province %>') + " " +   getNameByCode('<%= @person.address.current_city %>') +  " " +   getNameByCode('<%= @person.address.current_county %>')
+                        document.write(add);
+                    </script>
+                    <%= @person.address.current_address%>
+                  </span>
+                </div>
+              <% end %>
+            </div>
+          <%else%>
+          </br>
+          <p><%= t("people.something_hide") %></p>
+        <%end%>
+ </div>
+</div>
