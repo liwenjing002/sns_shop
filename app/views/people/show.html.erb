@@ -1,29 +1,29 @@
 <% content_for  :head do %>
   <%= javascript_include_tag "extend/prov_city" %>
 
-<script type="text/javascript">
+  <script type="text/javascript">
 
-  $(document).ready(function() {
-	$(".li_php").click(function(){
-		$('.profile-right .show').slideUp('1500');
-		$('.profile-right .show_php').slideDown('1500');
-	})
+    $(document).ready(function() {
+      $(".li_php").click(function(){
+        $('.profile-right .show').slideUp('1500');
+        $('.profile-right .show_php').slideDown('1500');
+      })
 	
-	$(".li_profile").click(function(){
-		$('.profile-right .show').slideUp('1500');
-		$('.profile-right .show_profile').slideDown('1500');
-	})	
-  });
+      $(".li_profile").click(function(){
+        $('.profile-right .show').slideUp('1500');
+        $('.profile-right .show_profile').slideDown('1500');
+      })	
+    });
 
-</script>
+  </script>
 <% end %>
 
-  <div class='tab_profile'>
-	<ul id="tab_profile_ul">
-      <li class = "li_php"><a href="#"><%= t('people.php') %></a></li>
-      <li class = "li_profile"><a href="#"><%= t('people.profile') %></a></li>
-    </ul>
-  </div>
+<div class='tab_profile'>
+  <ul id="tab_profile_ul">
+    <li class = "li_php"><a href="#"><%= t('people.php') %></a></li>
+    <li class = "li_profile"><a href="#"><%= t('people.profile') %></a></li>
+  </ul>
+</div>
 
 
 
@@ -31,51 +31,51 @@
 
 <div class="profile" >
 
-	<div class ='profile-left'>
-	  <div>
-		<div class="profile-pic">
-		  <%= render :partial => 'photo' %>
-		</div>
-	  </div>
-	 <div>
+  <div class ='profile-left'>
+    <div>
+      <div class="profile-pic">
+        <%= render :partial => 'photo' %>
+      </div>
+    </div>
+    <div>
 
-    <h3><%= t('albums.picture_albums') %>
-      <%if @person==@logged_in%>  <p style="float: right"><%= link_to t('albums.new'), new_album_path, :class => 'add-icon' %></p><%end%>
-    </h3>
-
-    <% if @albums.any? %>
-      <p>
-        <%if private("ablums")%>
-          <% @albums.each do |album| %>
-            <%= link_to image_tag(album.cover ? album.cover.photo.url(:tn) : 'missing_tn.png', :alt => album.name),
-              album, :title => album.name %>
-          <% end %>
-        <%else%>
-          <% @albums.each do |album| %>
-            <%= link_to image_tag(album.cover ? album.cover.photo.url(:tn) : 'missing_tn.png', :alt => album.name),
-              "javascript:onclick=alert('相册被设置隐藏，请加好友或联系TA')", :title => album.name %>
-          <% end %>
-        <%end%>
-      </p>
-    <% end %>
-
-    <% cache(:fragment => 'friends') do %>
-      <h3><%= t('friends.friends') %>
-        <%if @person==@logged_in%>  <p style="float: right"><%= link_to t('friends.manager'), person_friends_path(@person), :class => 'add-icon' %></p><%end%>
+      <h3><%= t('albums.picture_albums') %>
+        <%if @person==@logged_in%>  <p style="float: right"><%= link_to t('albums.new'), new_album_path, :class => 'add-icon' %></p><%end%>
       </h3>
-      <% if @friends.any? %>
-        <% @friends.each do |person| %>
-          <% content_tag :a, :href => person_path(person) do %>
-            <%= render :partial => 'people/thumbnail', :locals => {:person => person} %>
+
+      <% if @albums.any? %>
+        <p>
+          <%if private("ablums")%>
+            <% @albums.each do |album| %>
+              <%= link_to image_tag(album.cover ? album.cover.photo.url(:tn) : 'missing_tn.png', :alt => album.name),
+                album, :title => album.name %>
+            <% end %>
+          <%else%>
+            <% @albums.each do |album| %>
+              <%= link_to image_tag(album.cover ? album.cover.photo.url(:tn) : 'missing_tn.png', :alt => album.name),
+                "javascript:onclick=alert('相册被设置隐藏，请加好友或联系TA')", :title => album.name %>
+            <% end %>
+          <%end%>
+        </p>
+      <% end %>
+
+      <% cache(:fragment => 'friends') do %>
+        <h3><%= t('friends.friends') %>
+          <%if @person==@logged_in%>  <p style="float: right"><%= link_to t('friends.manager'), person_friends_path(@person), :class => 'add-icon' %></p><%end%>
+        </h3>
+        <% if @friends.any? %>
+          <% @friends.each do |person| %>
+            <% content_tag :a, :href => person_path(person) do %>
+              <%= render :partial => 'people/thumbnail', :locals => {:person => person} %>
+            <% end %>
           <% end %>
         <% end %>
       <% end %>
-    <% end %>
-  		</div>
-	</div>
+    </div>
+  </div>
 
-	<div class= 'profile-right'>
-     <%= render :partial => 'show_php'%>
-	 <%= render :partial => 'show_profile'%>
-	</div>
+  <div class= 'profile-right'>
+    <%= render :partial => 'show_php'%>
+    <%= render :partial => 'show_profile'%>
+  </div>
 </div>
