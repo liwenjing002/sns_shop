@@ -18,6 +18,19 @@
   </script>
 <% end %>
 
+
+
+
+
+<div id ="map_infowindow" style="display: none" >
+    <%= render :partial=>"common/share_in_map" %>
+</div>
+
+
+<div id="mapCanvas" style="width: 100%; height: 385px;">map div</div> 
+
+<br><br>
+
 <div class='tab_profile'>
   <ul id="tab_profile_ul">
     <li class = "li_php"><a href="#"><%= t('people.php') %></a></li>
@@ -72,16 +85,16 @@
         <% end %>
       <% end %>
 
-	 <h3>活动
-	 <p style="float: right"><%= link_to '活动管理', "#", :class => 'add-icon' %></p>
-     </h3>
+      <h3>活动
+        <p style="float: right"><%= link_to '活动管理', "#", :class => 'add-icon' %></p>
+      </h3>
 
-	 <h3>想去那里
-	 <p style="float: right"></p>
-     </h3>
+      <h3>想去那里
+        <p style="float: right"></p>
+      </h3>
 
-  	</div>
-</div>
+    </div>
+  </div>
 
   <div class= 'profile-right'>
     <%= render :partial => 'show_php'%>
