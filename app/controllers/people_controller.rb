@@ -21,6 +21,11 @@ class PeopleController < ApplicationController
   def show
     if params[:id].to_i == session[:logged_in_id]
       @person = @logged_in
+	#  @json = Person.all.to_gmaps4rails
+	@json =  '[
+             {"description": "test", "title": "test", "sidebar": "true", "longitude": "", "latitude": "", "picture": "", "width": "", "height": ""},
+             {"longitude": "30", "latitude": "40" }
+            ]'
     elsif params[:legacy_id]
       @person = Person.find_by_legacy_id(params[:id])
     else
