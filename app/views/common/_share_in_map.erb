@@ -10,18 +10,18 @@
         
       </ul>
       <% if Setting.get(:features, :notes) %>
-        <%= form_for Note.new, :html => {:id => 'share-note', :class => 'share-type'} do |form| %>
+        <%= form_for Note.new, :html => {:id => 'share-note', :class => 'share-type',:onsubmit=>'MapObject.submit_marker('notes');return false'} do |form| %>
           <%= hidden_field_tag :redirect_to, stream_path %>
           <span class="small"><%= t('share.note_label') %></span><br/>
           <%= form.text_area :body, :rows => 2,:width=>'260px' %><br/>
-          <%= submit_tag t('share.share') %>
+          <%= submit_tag t('share.share'),:onclick=>"return false;" %>
         <% end %>
       <% end %>
       <% if Setting.get(:features, :pictures) %>
-        <%= form_for Picture.new, :html => {:multipart => true, :id => 'share-picture', :class => 'share-type'} do |form| %>
+        <%= form_for Picture.new, :html => {:multipart => true, :id => 'share-picture', :class => 'share-type',:onsubmit=>'MapObject.submit_marker('pictures');return false'} do |form| %>
           <%= file_field_tag 'pictures[]', :multiple => true %><br/>
           <%= text_field_tag 'album', '', :size => 10, :placeholder => t('share.default_album_name') %><br/>
-          <%= submit_tag t('share.share') %>
+          <%= submit_tag t('share.share'),:onclick=>"return false;"  %>
         <% end %>
       <% end %>
 </div>

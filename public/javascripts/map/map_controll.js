@@ -1,12 +1,6 @@
-
-$(document).ready(function() {
-    MapObject.initialize() 
-	
-})
-
-
 var MapObject =  {
-    map: null,									//contains the map we're working on
+    map: null,
+	map_share_html:null,									//contains the map we're working on
     visibleInfoWindow: null,
     map_options: {
         id: 'mapCanvas',
@@ -35,7 +29,7 @@ var MapObject =  {
         this.map = new google.maps.Map(
             document.getElementById(this.map_options.id), 
             myOptions);
-        this .initControl() ;
+        this.initControl() ;
 
     },
     
@@ -64,7 +58,7 @@ var MapObject =  {
 
     //添加marker 监听
     add_marker_listen:function (){
-        google.maps.event.addListener(MapObject.map, 'click', function(event) {
+        google.maps.event.addListenerOnce(MapObject.map, 'click', function(event) {
             MapObject.add_marker(MapObject.map,event.latLng);
         });
     },
@@ -84,16 +78,17 @@ var MapObject =  {
             position: initialLocation
         });
         
-        marker_share = document.getElementById("map_infowindow") 
-        
+       // marker_share = document.getElementById("map_infowindow") 
         infowindow = new google.maps.InfoWindow({
-        content: marker_share.innerHTML
+        content: MapObject.map_share_html,
+		disableAutoPan:false
         })
         infowindow.open(map,marker);
-
-        google.maps.event.addListener(marker, 'click', function(){
-            //toggleBounce(marker);   
-        });  
+		
+		
+		google.maps.event.addListenerOnce(infowindow, 'closeclick', function(){
+           marker.setMap(null);   
+        });
     },
     //跳动动画效果
     toggleBounce: function (marker) {
@@ -153,6 +148,20 @@ var MapObject =  {
         map.setZoom(4);
     }
     
+
+	//提交marker信息到后台
+	submit_marker: function(type){
+
+       
+		$.ajax({                                                
+		type: "POST",                                    
+		url: "/"+type,                                     
+		data: "writer="+$("#writer").val(),    
+		success: function(msg){                 
+		  alert("数据提交成功");                    
+				} 
+			}); 
+	},
     
     
     

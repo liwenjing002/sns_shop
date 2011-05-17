@@ -58,7 +58,7 @@ class Person < ActiveRecord::Base
   has_attached_file :photo, PAPERCLIP_PHOTO_OPTIONS
 
   acts_as_logger LogItem
-  acts_as_gmappable #gmap
+
 
   validates_presence_of :first_name
   validates_length_of :password, :minimum => 5, :allow_nil => true, :if => Proc.new { Person.logged_in }

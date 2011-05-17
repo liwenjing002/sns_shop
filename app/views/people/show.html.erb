@@ -1,5 +1,6 @@
 <% content_for  :head do %>
   <%= javascript_include_tag "extend/prov_city" %>
+ 
 
   <script type="text/javascript">
 
@@ -12,18 +13,28 @@
       $(".li_profile").click(function(){
         $('.profile-right .show').slideUp('1500');
         $('.profile-right .show_profile').slideDown('1500');
-      })	
+      })
+
+	MapObject.map_share_html = document.getElementById("map_infowindow").innerHTML
+
+	$('#map_infowindow').remove() 
+
+
+	MapObject.map_options.center_latitude = <%= @map.center_latitude%>;
+	MapObject.map_options.center_longitude = <%= @map.center_longitude%>;
+	MapObject.map_options.zoom = <%= @map.zoom%>
+ 	MapObject.initialize() 
+	
     });
 
   </script>
 <% end %>
-<%= gmaps4rails(@json) %>
 
 
 
 
 
-<div id ="map_infowindow" style="display: none" >
+<div id ="map_infowindow" style="display: none1" >
     <%= render :partial=>"common/share_in_map" %>
 </div>
 

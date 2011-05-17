@@ -1,5 +1,7 @@
 OneBody::Application.routes.draw do
 
+  resources :maps
+
   root :to => 'pages#show_for_public'
 
   resource :account do
