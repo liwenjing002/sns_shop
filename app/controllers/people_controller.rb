@@ -22,6 +22,8 @@ class PeopleController < ApplicationController
     if params[:id].to_i == session[:logged_in_id]
       @person = @logged_in
 	  @map = Map.find_by_people_id(params[:id])
+    @map = Map.create({:people_id=>@person.id})if !@map 
+      
     elsif params[:legacy_id]
       @person = Person.find_by_legacy_id(params[:id])
     else

@@ -40,11 +40,25 @@ class NotesController < ApplicationController
       raise 'error' unless @note.group.blog? and @note.group.can_post?(@logged_in)
     end
     @note.person = @logged_in
-    if @note.save
-      flash[:notice] = t('notes.saved')
-      redirect_to params[:redirect_to] || @note
+    
+    
+    if params[:ajax]
+      @marker = Marker.new(params[:marker])
+      @marker.marker_html = "<p>#{params[:note][:body]}</p>"
+      @marker.map_id =  Map.find_by_people_id(@logged_in.id).id
+      if @note.save and @marker.save
+        flash[:notice] = t('notes.saved')
+        render :json => {:msg =>  @marker.marker_html,:success=>true}
+      else
+        render :json => {:success=>false}
+      end
     else
-      render :action => 'new'
+      if @note.save
+        flash[:notice] = t('notes.saved')
+        redirect_to params[:redirect_to] || @note 
+      else
+        render :action => 'new' 
+      end
     end
   end
 

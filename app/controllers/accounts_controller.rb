@@ -35,6 +35,7 @@ class AccountsController < ApplicationController
           @person = Person.new(attributes)
           if @person.adult?
             if @person.save
+              Map.create({:people_id => @person.id})
               @person.address = Address.create()
               if Setting.get(:features, :sign_up_approval_email).to_s.any?
                 @person.save

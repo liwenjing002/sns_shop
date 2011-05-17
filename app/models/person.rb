@@ -9,9 +9,11 @@ class Person < ActiveRecord::Base
 
   #  belongs_to :family
   belongs_to :address
+
   belongs_to :privacy
   belongs_to :admin
   belongs_to :donor, :class_name => 'Donortools::Persona', :foreign_key => 'donortools_id'
+
   has_many :memberships, :dependent => :destroy
   has_many :membership_requests, :dependent => :destroy
   has_many :groups, :through => :memberships

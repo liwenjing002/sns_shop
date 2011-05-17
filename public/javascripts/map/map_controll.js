@@ -1,6 +1,7 @@
+
 var MapObject =  {
     map: null,
-	map_share_html:null,									//contains the map we're working on
+    map_share_html:null,									//contains the map we're working on
     visibleInfoWindow: null,
     map_options: {
         id: 'mapCanvas',
@@ -12,6 +13,8 @@ var MapObject =  {
         auto_zoom: true,        //zoom given by auto-adjust
         bounds: []              //adjust map to these limits. Should be [{"lat": , "lng": }]
     },
+    temp_marker:null,
+    temp_infowindow: null,
     markers : [],							  //contains all markers. A marker contains the following: {"description": , "longitude": , "title":, "latitude":, "picture": "", "width": "", "length": "", "sidebar": "", "google_object": google_marker}
     bounds_object: null,				//contains current bounds from markers, polylines etc...
     polygons: [], 						  //contains raw data, array of arrays (first element could be a hash containing options)
@@ -71,23 +74,23 @@ var MapObject =  {
 
     //添加一个marker    
     add_marker:function (map,initialLocation){
-        marker = new google.maps.Marker({
+        this.temp_marker = new google.maps.Marker({
             map:map,
             draggable:false,
             animation: google.maps.Animation.DROP,
             position: initialLocation
         });
         
-       // marker_share = document.getElementById("map_infowindow") 
-        infowindow = new google.maps.InfoWindow({
-        content: MapObject.map_share_html,
-		disableAutoPan:false
+        // marker_share = document.getElementById("map_infowindow") 
+        this.temp_infowindow = new google.maps.InfoWindow({
+            content: MapObject.map_share_html,
+            disableAutoPan:false
         })
-        infowindow.open(map,marker);
+        this.temp_infowindow.open(map,this.temp_marker);
 		
 		
-		google.maps.event.addListenerOnce(infowindow, 'closeclick', function(){
-           marker.setMap(null);   
+        google.maps.event.addListenerOnce(this.temp_infowindow, 'closeclick', function(){
+            MapObject.temp_marker.setMap(null);   
         });
     },
     //跳动动画效果
@@ -146,24 +149,45 @@ var MapObject =  {
         }
         map.setCenter(initialLocation);
         map.setZoom(4);
-    }
+    },
     
 
-	//提交marker信息到后台
-	submit_marker: function(type){
-
+    //提交marker信息到后台
+    submit_marker: function(type){
+        var markerLatLng = MapObject.temp_marker.getPosition()
        
-		$.ajax({                                                
-		type: "POST",                                    
-		url: "/"+type,                                     
-		data: "writer="+$("#writer").val(),    
-		success: function(msg){                 
-		  alert("数据提交成功");                    
-				} 
-			}); 
-	},
+        if(type == 'notes'){
+          
+            $.ajax({                                                
+                type: "POST",                                    
+                url: "/notes",                                     
+                data: "note[body]="+ $("#note_body").val()+ "&ajax=true"+ "&marker[marker_latitude]=" +markerLatLng.lat()+ "&marker[marker_longitude]=" +markerLatLng.lng(),    
+                success: function(message){                 
+                    alert(message.msg); 
+                    MapObject.add_info_to_marker_from_data(MapObject.temp_marker,message.msg)
+                } 
+            });  
+        }else{
+           
+    }
+    },
+    
+    add_info_to_marker_from_data: function(marker,html){
+
+        google.maps.event.addListener(marker, 'click', function(e){
+                    infowindow = new google.maps.InfoWindow({
+            content: html,
+            disableAutoPan:false
+        });
+            infowindow.open(MapObject.map,marker);
+        });
+        this.temp_infowindow.close();
+    //MapObject.markers.push(marker);
+
+    }
     
     
     
   
 }
+

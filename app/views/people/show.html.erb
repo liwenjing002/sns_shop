@@ -1,10 +1,13 @@
 <% content_for  :head do %>
   <%= javascript_include_tag "extend/prov_city" %>
+  <%= javascript_include_tag  'http://maps.google.com/maps/api/js?sensor=true' %> 
+  <%= javascript_include_tag  'map/map_controll' %> 
+
  
 
   <script type="text/javascript">
-
     $(document).ready(function() {
+      
       $(".li_php").click(function(){
         $('.profile-right .show').slideUp('1500');
         $('.profile-right .show_php').slideDown('1500');
@@ -14,16 +17,13 @@
         $('.profile-right .show').slideUp('1500');
         $('.profile-right .show_profile').slideDown('1500');
       })
-
 	MapObject.map_share_html = document.getElementById("map_infowindow").innerHTML
-
 	$('#map_infowindow').remove() 
 
-
-	MapObject.map_options.center_latitude = <%= @map.center_latitude%>;
-	MapObject.map_options.center_longitude = <%= @map.center_longitude%>;
-	MapObject.map_options.zoom = <%= @map.zoom%>
- 	MapObject.initialize() 
+	<% if @map.center_latitude %> MapObject.map_options.center_latitude = <%= @map.center_latitude%>;<%end%> 
+	<% if  @map.center_longitude %> MapObject.map_options.center_longitude = <%= @map.center_longitude%>;<%end%>
+	<% if @map.zoom %>MapObject.map_options.zoom = <%= @map.zoom%>;<%end%>
+ 	MapObject.initialize() ;
 	
     });
 
