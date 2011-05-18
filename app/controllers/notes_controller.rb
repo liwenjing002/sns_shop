@@ -1,5 +1,5 @@
 class NotesController < ApplicationController
-		#respond_to :js
+		respond_to :js
   def index
     if params[:person_id]
       @person = Person.find(params[:person_id])
@@ -44,12 +44,15 @@ class NotesController < ApplicationController
     
     if params[:ajax] #地图上添加note
       @marker = Marker.new(params[:marker])
-	  @marker.marker_type = "1"
+      @marker.marker_type = "1"
       @marker.marker_html = "<p>#{params[:note][:body]}</p>"
+      @marker.object_type = "Note"
       @marker.map_id =  Map.find_by_people_id(@logged_in.id).id
-      if @note.save and @marker.save
+      if @note.save
+        @marker.object_id = @note.id
+        @marker.save
         flash[:notice] = t('notes.saved')
-        render :json => {:msg =>  @marker.marker_html,:success=>true,:id=>@marker.id}
+#        render :json => {:msg =>  @marker.marker_html,:success=>true,:id=>@marker.id}
       else
         render :json => {:success=>false}
       end

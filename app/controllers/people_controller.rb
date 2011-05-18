@@ -21,7 +21,7 @@ class PeopleController < ApplicationController
   def show
     if params[:id].to_i == session[:logged_in_id]
       @person = @logged_in
-	  @map = Map.find_by_people_id(params[:id])
+      @map = Map.find_by_people_id(params[:id])
    	  @map = Map.create({:people_id=>@person.id})if !@map 
       
     elsif params[:legacy_id]
@@ -159,7 +159,7 @@ class PeopleController < ApplicationController
         redirect_to @person.family
       end
     else
-     render :text => t('not_authorized'), :layout => true, :status => 401
+      render :text => t('not_authorized'), :layout => true, :status => 401
     end
   end
 
@@ -202,7 +202,7 @@ class PeopleController < ApplicationController
         format.html { redirect_to family_path(params[:family_id]) }
         format.js   { render(:update) { |p| p.redirect_to family_path(params[:family_id]) } }
       end
-    # API for use by UpdateAgent
+      # API for use by UpdateAgent
     elsif @logged_in.admin?(:import_data) and Site.current.import_export_enabled?
       xml_params = Hash.from_xml(request.body.read)['hash']
       statuses = Person.update_batch(xml_params['records'], xml_params['options'] || {})
@@ -233,11 +233,35 @@ class PeopleController < ApplicationController
   end
 
   def init_marker
-     if !params[:people_id]
-     map_id = Map.find_by_people_id(@logged_in.id).id
-     #@markers = Marker.find_all_by_map_id(map_id).to_json
-	 render :json => Marker.find_all_by_map_id(map_id).to_json
-     end
+    if !params[:people_id]
+      map_id = Map.find_by_people_id(@logged_in.id).id
+      @markers = Marker.find_all_by_map_id(map_id)
+      #render :json => Marker.find_all_by_map_id(map_id).to_json
+    end
+  end
+  
+  def remove_marker
+    if params[:id]
+      marker = Marker.find(params[:id])
+      if marker.destroy
+        render :json => {:success=>true} 
+      else
+        render :json => {:success=>false} 
+      end
+	 
+    end
+  end
+  
+  def updata_marker
+    if params[:marker][:id]
+      marker = Marker.find(params[:marker][:id])
+      if marker.update_attributes(params[:marker])
+        render :json => {:success=>true} 
+      else
+        render :json => {:success=>false} 
+      end
+	 
+    end
   end
 
 end

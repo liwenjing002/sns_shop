@@ -1,17 +1,24 @@
-<div class="map_mark_note stream-item ">
+<div class="stream-item " style='margin-bottom: 0px;min-height:70px;height:auto;'>
        <div class="stream-item-meta">
-    <%= render :partial => 'streams/person_thumbnail', :locals => {:stream_item => @note} %>
+    <%= render :partial => 'streams/person_thumbnail', :locals => {:stream_item => @marker.object} %>
     <div style="clear:left;"></div>
-  	</div>
+  </div>
 
   <div class="stream-item-body">
       <div class="stream-item-content">
-		<p><%= raw @marker.marker_html%></p>
+
+                 <%= raw @marker.html%>
+                 <%= link_to t('comments.view') + '...', @note, :class => 'small',:target=>"_blank" %>
       </div>
         <div class="nowrap stream-item-timestamp">
-      <%= time_ago_in_words @note.created_at %> <%= t('comments.ago') %>
-      <% if @note.person %>
-        by <%= link_to @note.person.name, @note.person %>
+      <%= time_ago_in_words @marker.object.created_at %> <%= t('comments.ago') %>
+      <% if @marker.object.person %>
+        by <%= link_to @marker.object.person.name, @marker.object.person %>
       <% end %>
     </div>
+</div>
+  <div class ='marker_common' >
+    <span><a href='#' onclick='MapObject.marker_del(<%=@marker.id%>)'>delete</a></span>
+    <span><a href='#' onclick='MapObject.marker_move(<%=@marker.id%>)'>move</a></span>
+  </div>
 </div>
