@@ -1,4 +1,4 @@
-<div class="map_infowindow">
+<div class="map_infowindow" style='min-height:70px;height:auto;'>
   <%= text_field_tag 'share-starter', '', :placeholder => t('share.profile') %>
   <ul class="share-details share-selector" style="display:none;">
     <% if Setting.get(:features, :notes) %>
