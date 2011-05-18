@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-
+	#respond_to :html,:js
   cache_sweeper :person_sweeper, :family_sweeper, :only => %w(create update destroy import batch)
 
   def index
@@ -22,7 +22,7 @@ class PeopleController < ApplicationController
     if params[:id].to_i == session[:logged_in_id]
       @person = @logged_in
 	  @map = Map.find_by_people_id(params[:id])
-    @map = Map.create({:people_id=>@person.id})if !@map 
+   	  @map = Map.create({:people_id=>@person.id})if !@map 
       
     elsif params[:legacy_id]
       @person = Person.find_by_legacy_id(params[:id])
@@ -230,6 +230,14 @@ class PeopleController < ApplicationController
     unless @logged_in.can_see?(@person)
       render :text => t('people.not_found'), :status => 404, :layout => true
     end
+  end
+
+  def init_marker
+     if !params[:people_id]
+     map_id = Map.find_by_people_id(@logged_in.id).id
+     #@markers = Marker.find_all_by_map_id(map_id).to_json
+	 render :json => Marker.find_all_by_map_id(map_id).to_json
+     end
   end
 
 end

@@ -1,0 +1,17 @@
+<div class="map_mark_note stream-item ">
+       <div class="stream-item-meta">
+    <%= render :partial => 'streams/person_thumbnail', :locals => {:stream_item => @note} %>
+    <div style="clear:left;"></div>
+  	</div>
+
+  <div class="stream-item-body">
+      <div class="stream-item-content">
+		<p><%= raw @marker.marker_html%></p>
+      </div>
+        <div class="nowrap stream-item-timestamp">
+      <%= time_ago_in_words @note.created_at %> <%= t('comments.ago') %>
+      <% if @note.person %>
+        by <%= link_to @note.person.name, @note.person %>
+      <% end %>
+    </div>
+</div>

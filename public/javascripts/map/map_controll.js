@@ -15,12 +15,11 @@ var MapObject =  {
     },
     temp_marker:null,
     temp_infowindow: null,
-    markers : [],							  //contains all markers. A marker contains the following: {"description": , "longitude": , "title":, "latitude":, "picture": "", "width": "", "length": "", "sidebar": "", "google_object": google_marker}
+    markers : new Map(),							  //contains all markers. A marker contains the following: {"description": , "longitude": , "title":, "latitude":, "picture": "", "width": "", "length": "", "sidebar": "", "google_object": google_marker}
     bounds_object: null,				//contains current bounds from markers, polylines etc...
     polygons: [], 						  //contains raw data, array of arrays (first element could be a hash containing options)
     polylines: [], 						  //contains raw data, array of arrays (first element could be a hash containing options)
     circles: [], 
-    
     //初始化map
     initialize: function () {
         var myOptions = {
@@ -33,6 +32,8 @@ var MapObject =  {
             document.getElementById(this.map_options.id), 
             myOptions);
         this.initControl() ;
+		 
+		this.init_marker_from_data();
 
     },
     
@@ -163,8 +164,8 @@ var MapObject =  {
                 url: "/notes",                                     
                 data: "note[body]="+ $("#note_body").val()+ "&ajax=true"+ "&marker[marker_latitude]=" +markerLatLng.lat()+ "&marker[marker_longitude]=" +markerLatLng.lng(),    
                 success: function(message){                 
-                    alert(message.msg); 
-                    MapObject.add_info_to_marker_from_data(MapObject.temp_marker,message.msg)
+                   // alert(html); 
+                    MapObject.add_info_to_marker_from_data(message.id,MapObject.temp_marker,message.msg,true)
                 } 
             });  
         }else{
@@ -172,22 +173,93 @@ var MapObject =  {
     }
     },
     
-    add_info_to_marker_from_data: function(marker,html){
-
-        google.maps.event.addListener(marker, 'click', function(e){
+    add_info_to_marker_from_data: function(marker_id,marker,html,is_temp){
+		//alert(marker_id)
+		mark_common_html = "<div class ='marker_common' ><span><a href='#' onclick='MapObject.marker_del(" +marker_id+ ")'>delete</a></span><span><a href='#' onclick='MapObject.marker_move("+marker_id+ ")'>move</a></span></div>";
+		//alert(mark_common_html);        
+		google.maps.event.addListener(marker, 'click', function(e){
+			alert(mark_common_html);
                     infowindow = new google.maps.InfoWindow({
-            content: html,
+            content: html+mark_common_html,
             disableAutoPan:false
         });
             infowindow.open(MapObject.map,marker);
         });
-        this.temp_infowindow.close();
-    //MapObject.markers.push(marker);
+		if(is_temp == true){
+				 infowindow = new google.maps.InfoWindow({
+            	 content: html,
+           		 disableAutoPan:false
+        		});
+				this.temp_infowindow.close();
+				infowindow.open(MapObject.map,marker);
+		}
 
-    }
+    	MapObject.markers.put(marker_id,marker);
+    },
     
-    
+	//从后台获取数据后初始化marker
+	init_marker_from_data:function(){
+		  $.ajax({                                                
+                type: "POST",                                    
+                url: "/people/init_marker",                                      
+                success: function(message){                 
+                   // alert(obj2str(message)); 
+			//alert(MapObject.mark_common_html)
+				 for (var i in message)
+				{
+				  // alert(message[i]['marker']['id'])
+					marker = new google.maps.Marker({
+				    map: MapObject.map,
+				    draggable: false,
+				    animation: google.maps.Animation.DROP,
+				    position: new google.maps.LatLng(message[i]['marker']['marker_latitude'], message[i]['marker']['marker_longitude'])
+						});
+					MapObject.add_info_to_marker_from_data(message[i]['marker']['id'],marker,message[i]['marker']['marker_html'],false);
+					//markers.push(marker);					
+				}     
+               } 
+            });
+	},
+	
+	marker_del:function(marker_id){
+		alert(marker_id)
+	},
+	marker_move: function(marker_id){
+		alert(marker_id)
+	}    
     
   
+}
+
+
+
+
+
+function obj2str(o){
+  var r = [];
+  if(typeof o == "string" || o == null) {
+    return o;
+  }
+  if(typeof o == "object"){
+    if(!o.sort){
+      r[0]="{"
+      for(var i in o){
+        r[r.length]=i;
+        r[r.length]=":";
+        r[r.length]=obj2str(o[i]);
+        r[r.length]=",";
+      }
+      r[r.length-1]="}"
+    }else{
+      r[0]="["
+      for(var i =0;i<o.length;i++){
+        r[r.length]=obj2str(o[i]);
+        r[r.length]=",";
+      }
+      r[r.length-1]="]"
+    }
+    return r.join("");
+  }
+  return o.toString();
 }
 
