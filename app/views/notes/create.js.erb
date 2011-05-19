@@ -1,24 +1,4 @@
-<div class="stream-item " style='margin-bottom: 0px;min-height:70px;height:auto;'>
-       <div class="stream-item-meta">
-    <%= render :partial => 'streams/person_thumbnail', :locals => {:stream_item => @marker.object} %>
-    <div style="clear:left;"></div>
-  </div>
+//alert('<%=@marker.id%>')
+MapObject.add_info_to_marker_from_data(<%=@marker.id%>,MapObject.temp_marker,'<%= raw mark_html(@marker) %>',true);
+MapObject.markers.put(<%=@marker.id%>,MapObject.temp_marker);
 
-  <div class="stream-item-body">
-      <div class="stream-item-content">
-
-                 <%= raw @marker.html%>
-                 <%= link_to t('comments.view') + '...', @note, :class => 'small',:target=>"_blank" %>
-      </div>
-        <div class="nowrap stream-item-timestamp">
-      <%= time_ago_in_words @marker.object.created_at %> <%= t('comments.ago') %>
-      <% if @marker.object.person %>
-        by <%= link_to @marker.object.person.name, @marker.object.person %>
-      <% end %>
-    </div>
-</div>
-  <div class ='marker_common' >
-    <span><a href='#' onclick='MapObject.marker_del(<%=@marker.id%>)'>delete</a></span>
-    <span><a href='#' onclick='MapObject.marker_move(<%=@marker.id%>)'>move</a></span>
-  </div>
-</div>
