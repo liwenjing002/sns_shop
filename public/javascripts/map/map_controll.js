@@ -16,7 +16,9 @@ var MapObject =  {
     },
     temp_marker:null,
     temp_infowindow: null,
-    markers : new Map(),							  //contains all markers. A marker contains the following: {"description": , "longitude": , "title":, "latitude":, "picture": "", "width": "", "length": "", "sidebar": "", "google_object": google_marker}
+    markers : new Map(),
+	info_windows: new Map(), //窗体对象map
+	info_windows_html: new Map(),		//窗体的html map					 
     bounds_object: null,				//contains current bounds from markers, polylines etc...
     polygons: [], 						  //contains raw data, array of arrays (first element could be a hash containing options)
     polylines: [], 						  //contains raw data, array of arrays (first element could be a hash containing options)
@@ -84,10 +86,7 @@ var MapObject =  {
         });
         
         // marker_share = document.getElementById("map_infowindow") 
-        this.temp_infowindow = new google.maps.InfoWindow({
-            content: MapObject.map_share_html,
-            disableAutoPan:false
-        })
+        this.temp_infowindow = MapObject.new_info_window_html(MapObject.map_share_html)
         this.temp_infowindow.open(map,this.temp_marker);
 		
 		
@@ -158,43 +157,85 @@ var MapObject =  {
     submit_marker: function(type){
         var markerLatLng = MapObject.temp_marker.getPosition()
        
-        if(type == 'notes'){
-          
-            $.ajax({                                                
+		MapObject.geocoder.geocode({latLng: markerLatLng}, 
+				function(responses) {
+					 if (responses && responses.length > 0) {
+		  				string = '';
+           				for(i = responses[0].address_components.length-1;i>=0;i--){
+           				string += (responses[0].address_components[i].long_name+ "|")
+          				 }
+		        if(type == 'notes'){
+           		 $.ajax({                                                
                 type: "POST",                                    
                 url: "/notes",                                     
-                data: "note[body]="+ $("#note_body").val()+ "&ajax=true"+ "&marker[marker_latitude]=" +markerLatLng.lat()+ "&marker[marker_longitude]=" +markerLatLng.lng(),    
+                data: "marker[geocode_position]="+ string +"&note[body]="+ $("#note_body").val()+ "&ajax=true"+ "&marker[marker_latitude]=" +markerLatLng.lat()+ "&marker[marker_longitude]=" +markerLatLng.lng(),    
                 success: function(message){                 
-                     alert(message); 
-                    //MapObject.add_info_to_marker_from_data(message.id,MapObject.temp_marker,message,true)
-                } 
-            });  
-        }else{
-           
-    }
+                		} 
+            		});  
+        		}
+					}}
+		);
+
     },
-    
-    add_info_to_marker_from_data: function(marker_id,marker,html,is_temp){
-        //alert(marker_id)
-        //alert(mark_common_html);        
-        google.maps.event.addListener(marker, 'click', function(e){
-            //alert(mark_common_html);
-            infowindow = new google.maps.InfoWindow({
-                content: html,
+
+	//实例化一个窗体对象，实例化所需的html 从 map 中获取
+	new_info_window:function(marker_id){
+		//alert(marker_id);
+		//alert(MapObject.markers.get(marker_id))
+		infowindow = null;
+		//alert(MapObject.info_windows.get(marker_id))
+		if (!MapObject.info_windows.get(marker_id)){
+		infowindow = new google.maps.InfoWindow({
+                content: MapObject.info_windows_html.get(marker_id),
                 disableAutoPan:false
             });
-            infowindow.open(MapObject.map,marker);
+		MapObject.info_windows.put(marker_id,infowindow)
+		//alert(MapObject.markers.get(marker_id))
+		infowindow.open(MapObject.map,MapObject.markers.get(marker_id))
+		google.maps.event.addListener(infowindow, 'closeclick', function(){
+			//alert(marker_id)
+			//alert(MapObject.info_windows.get(marker_id));
+			MapObject.info_windows.remove(marker_id);
         });
-        if(is_temp == true){
-            infowindow = new google.maps.InfoWindow({
+		}
+	return infowindow;
+
+	},
+
+		//实例化一个窗体对象，实例化所需的html直接传入
+	new_info_window_html:function(html){
+		infowindow = new google.maps.InfoWindow({
                 content: html,
                 disableAutoPan:false
             });
-            this.temp_infowindow.close();
-            infowindow.open(MapObject.map,marker);
+		return infowindow;
+
+	},
+	
+	
+    
+	//将实例化的marker和info窗体关联起来
+    add_info_to_marker_from_data: function(marker_id,marker,html,is_temp){
+		//alert(marker_id)
+		MapObject.info_windows_html.put(marker_id,html) //存储info窗体的html
+		MapObject.markers.put(marker_id,marker); //储存所有marker
+		//alert(marker_id);
+      	//alert(html)
+        google.maps.event.addListener(marker, 'click', function(e){
+			//alert(html)
+             MapObject.new_info_window(marker_id)
+			//info.open(MapObject.map,marker);
+        });
+		
+        if(is_temp == true){
+			if(this.temp_infowindow){
+				this.temp_infowindow.close();
+			}
+           infowindow = MapObject.new_info_window(marker_id);
+		  // infowindow.open(MapObject.map,marker)
         }
 
-        MapObject.markers.put(marker_id,marker);
+        
 		//alert(marker_id)
     },
     
@@ -203,23 +244,7 @@ var MapObject =  {
         $.ajax({                                                
             type: "POST",                                    
             url: "/people/init_marker",                                      
-            success: function(){
-                    
-            //  alert(message)              
-            // alert(obj2str(message)); 
-            //alert(MapObject.mark_common_html)
-            //				 for (var i in message)
-            //				{
-            //				  // alert(message[i]['marker']['id'])
-            //					marker = new google.maps.Marker({
-            //				    map: MapObject.map,
-            //				    draggable: false,
-            //				    animation: google.maps.Animation.DROP,
-            //				    position: new google.maps.LatLng(message[i]['marker']['marker_latitude'], message[i]['marker']['marker_longitude'])
-            //						});
-            //					MapObject.add_info_to_marker_from_data(message[i]['marker']['id'],marker,message[i]['marker']['marker_html'],false);
-            //					//markers.push(marker);					
-            //				}     
+            success: function(){  
             } 
         });
     },
@@ -236,6 +261,9 @@ var MapObject =  {
                 success: function(message){
                     if(message.success){
                         MapObject.markers.get(marker_id).setMap(null);
+						MapObject.markers.remove(marker_id)
+						MapObject.info_windows.remove(marker_id);
+						MapObject.info_windows_html.remove(marker_id)
                     }else{
                         alert("网络延迟，请重试")
                     }
@@ -256,6 +284,8 @@ var MapObject =  {
         marker.setDraggable(false);
         markerLatLng = marker.getPosition();
 	  //alert(markerLatLng);
+		MapObject.info_windows.get(marker_id).close();
+		MapObject.info_windows.remove(marker_id)
 		MapObject.geocodePosition(marker_id,markerLatLng)
 	//alert(geocodePosition_string);
              
@@ -268,9 +298,7 @@ var MapObject =  {
           data: data,    
           url: "/people/updata_marker",                                      
           success: function(message){
-                   if(!message.success){
-                      alert("网络延迟，请重试")
-                    }
+
                   } 
               });
 	},
@@ -282,18 +310,17 @@ var MapObject =  {
 	  }, function(responses) {
 		if (responses && responses.length > 0) {
 
-		  MapObject.updateMarkerAddress(marker_id,responses);
+		  //MapObject.updateMarkerAddress(marker_id,responses);
 		  string = '';
            for(i = responses[0].address_components.length-1;i>=0;i--){
            	string += (responses[0].address_components[i].long_name+ "|")
            }
-		alert("1 "+ string)
+		//alert("1 "+ string)
 		data = "marker[id]="+marker_id+ "&marker[geocode_position]="+ string +"&marker[marker_latitude]=" +markerLatLng.lat()+ "&marker[marker_longitude]=" +markerLatLng.lng(),  
 				
 		MapObject.updata_data_marker(data)
 		} else {
 		alert("none")
-		 // updateMarkerAddress('Cannot determine address at this location.');
 		}
 	  });
 	},
@@ -303,7 +330,7 @@ var MapObject =  {
 		marker_address = $("#stream_item_"+marker_id+" .marker_address")
          for(i = responses[0].address_components.length-1;i>=0;i--){
            	string = responses[0].address_components[i].long_name
-			alert(string)
+			//alert(string)
 			 $("<span><a>"+ string +"</a></span>").appendTo(marker_address)
            }
 	}  

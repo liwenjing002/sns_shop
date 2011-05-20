@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-	#respond_to :html,:js
+	respond_to :html,:js
   cache_sweeper :person_sweeper, :family_sweeper, :only => %w(create update destroy import batch)
 
   def index
@@ -254,9 +254,11 @@ class PeopleController < ApplicationController
   
   def updata_marker
     if params[:marker][:id]
-      marker = Marker.find(params[:marker][:id])
-      if marker.update_attributes(params[:marker])
-        render :json => {:success=>true} 
+      @marker = Marker.find(params[:marker][:id])
+      if @marker.update_attributes(params[:marker])
+		if @marker.object_type == 'Note'
+        render(:template => "notes/create") 
+		end
       else
         render :json => {:success=>false} 
       end
