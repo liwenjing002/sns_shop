@@ -8,7 +8,7 @@
 
   <script type="text/javascript">
     $(document).ready(function() {
-      
+     
       $(".li_php").click(function(){
         $('.profile-right .show').slideUp('1500');
         $('.profile-right .show_php').slideDown('1500');
@@ -23,11 +23,11 @@
 	//alert(MapObject.mark_common_html)
 
 	$('#map_infowindow').remove() 
-
 	<% if @map.center_latitude %> MapObject.map_options.center_latitude = <%= @map.center_latitude%>;<%end%> 
 	<% if  @map.center_longitude %> MapObject.map_options.center_longitude = <%= @map.center_longitude%>;<%end%>
 	<% if @map.zoom %>MapObject.map_options.zoom = <%= @map.zoom%>;<%end%>
- 		MapObject.initialize() ;
+
+        MapObject.initialize() ;
 	
     });
 

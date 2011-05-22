@@ -220,6 +220,8 @@ class Person < ActiveRecord::Base
         what.is_public? or can_see?(what.person)
       when 'Picture'
         what.album.is_public? or can_see?(what.person)
+      when 'Place'
+        what.is_public? 
       else
         raise "Unrecognized argument to can_see? (#{what.inspect})"
       end
@@ -233,6 +235,8 @@ class Person < ActiveRecord::Base
     case what.class.name
     when 'Group'
       what.admin?(self) or self.admin?(:manage_groups)
+    when 'Place'
+#      what.admin?(self) or self.admin?(:manage_groups)
     when 'Ministry'
       admin?(:manage_ministries) or what.administrator == self
     when 'Person'

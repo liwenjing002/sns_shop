@@ -288,6 +288,33 @@ module ApplicationHelper
   def datepicker_format
     Setting.get(:formats, :date) =~ %r{%d/%m} ? 'dd/mm/yy' : 'mm/dd/yy'
   end
+  
+  
+    #html内容切割
+   def strip_html(text,len=0,endss="...")
+    if text.length>0
+      ss=text.gsub(/<\/?[^>]*>/,"")
+
+      if len>0 && ss.length>0
+        ss = truncate_u(ss,len,endss)
+      end
+    end
+    return ss
+  end
+  
+   def truncate_u(text, length = 30, truncate_string = "...")
+    l=0
+    char_array=text.unpack("U*")
+    char_array.each_with_index do |c,i|
+      l = l+ (c<127 ? 0.5 : 1)
+      if l>=length
+        return char_array[0..i].pack("U*")+(i<char_array.length-1 ? truncate_string : "")
+      end
+    end
+    return text
+  end
+  
+  
 
   class << self
     include ApplicationHelper

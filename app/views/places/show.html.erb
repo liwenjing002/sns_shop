@@ -1,0 +1,62 @@
+<%#= render :partial => 'menu' %>
+
+<% content_for :sidebar do %>
+
+  <%= render :partial => 'photo' %>
+
+  <h2><%= @place.place_name %></h2>
+
+  <% if @place.place_description.to_s.any? %>
+    <p><%= @place.place_description %></p>
+  <% end %>
+
+
+
+  <% if @albums.any? %>
+    <h3><%= t('albums.picture_albums') %></h3>
+    <p>
+      <% @albums.each do |album| %>
+        <%= link_to image_tag(album.cover ? album.cover.photo.url(:tn) : 'missing_tn.png', :alt => album.name),
+          album, :title => album.name %>
+      <% end %>
+    </p>
+  <% end %>
+<% end %>
+
+<% if  @logged_in.admin?(:manage_places) %>
+  <div class="alert">
+    <p><%= t('places.this_place_is_pending_approval') %></p>
+    <%= form_for @place do |form| %>
+      <%= hidden_field_tag 'place[approved]', true %>
+      <%= form.submit t('places.approve_place') %>
+    <% end %>
+  </div>
+<% end %>
+
+
+
+<% if @can_post and (@place.pictures?) %>
+  <div class="share">
+    <%= text_field_tag 'share-starter', '', :size => 50, :placeholder => t('share.place') %>
+    <ul class="share-details share-selector" style="display:none;">
+      <% if @place.pictures? %>
+        <li><%= link_to_function t('share.picture'), "selectShare('share-picture')", :class => 'picture-icon', :id => 'share-picture-icon' %></li>
+      <% end %>
+      <li class="cancel-link"><%= link_to_function '', 'hideShare()', :class =>  'delete-icon' %></li>
+    </ul>
+
+
+      <%= form_for Picture.new, :html => {:multipart => true, :id => 'share-picture', :class => 'share-type'} do |form| %>
+        <%= hidden_field_tag :place_id, @place.id %>
+        <%= file_field_tag 'pictures[]', :multiple => true %>
+        <%= text_field_tag 'album', '', :size => 10, :placeholder => t('share.default_album_name') %>
+        <%= submit_tag t('share.share') %>
+      <% end %>
+    
+  </div>
+<%end%>
+
+<div class="place-stream">
+  <%= render :partial => 'streams/stream_item', :collection => @stream_items %>
+</div>
+
