@@ -2,13 +2,15 @@
 
 <table>
   <tr>
-    <th></th>
-    <th></th>
+    <th>name</th>
+    <th>description</th>
     <th></th>
   </tr>
 
 <% @places.each do |place| %>
   <tr>
+    <th><%=place.place_name%></th>
+    <th><%=place.place_description%></th>
     <td><%= link_to 'Show', place %></td>
     <td><%= link_to 'Edit', edit_place_path(place) %></td>
     <td><%= link_to 'Destroy', place, :confirm => 'Are you sure?', :method => :delete %></td>
