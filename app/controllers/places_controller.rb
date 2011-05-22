@@ -20,10 +20,10 @@ class PlacesController < ApplicationController
     @can_share = @place.can_share?(@logged_in)
     @albums = @place.albums.all(:order => 'name')
 
-    unless @logged_in.can_see?(@place)
-      render :text => t('groups.not_found'), :layout => true, :status => 404
-      return
-    end
+#    unless @logged_in.can_see?(@place)
+#      render :text => t('groups.not_found'), :layout => true, :status => 404
+#      return
+#    end
   end
 
   # GET /places/new
