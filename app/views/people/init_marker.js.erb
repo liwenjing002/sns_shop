@@ -1,16 +1,23 @@
-<%if @markers.each do|marker|%>
 
+<%if @markers.each do|marker|%>
+latLng = new google.maps.LatLng(<%=marker.marker_latitude%>, <%= marker.marker_longitude %>);
 
 marker = new google.maps.Marker({
 				    map: MapObject.map,
 				    draggable: false,
 				    animation: google.maps.Animation.DROP,
-				    position: new google.maps.LatLng(<%=marker.marker_latitude%>, <%= marker.marker_longitude %>)
+				    position: latLng
 						});
-MapObject.add_info_to_marker_from_data(<%=marker.id%>,marker,'<%= raw mark_html(marker) %>',false);
+var fn = MapObject.markerClickFunction('<%= raw mark_html(marker) %>', latLng);
+    google.maps.event.addListener(marker, 'click', fn);
+    MapObject.markers_array.push(marker);
+
+//MapObject.add_info_to_marker_from_data(<%=marker.id%>,marker,'<%= raw mark_html(marker) %>',false);
 MapObject.markers.put(<%=marker.id%>,marker);
 
 <%end%>
 <%end%>
+MapObject.markerClusterer = new MarkerClusterer(MapObject.map, MapObject.markers_array);
+
 
 

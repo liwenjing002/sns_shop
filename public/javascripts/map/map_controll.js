@@ -1,6 +1,9 @@
 
 var MapObject =  {
     map: null,
+	markerClusterer: null,
+	markers_array: [],
+	infoWindow: null,
 	geocoder: new google.maps.Geocoder(),//地址解析对象
     map_share_html:null,	//新增一个marker的初始化html
     visibleInfoWindow: null,
@@ -35,8 +38,11 @@ var MapObject =  {
             document.getElementById(this.map_options.id), 
             myOptions);
         this.initControl() ;
+
+		this.infoWindow = new google.maps.InfoWindow();
 		 
         this.init_marker_from_data();
+
 
     },
     
@@ -215,29 +221,29 @@ var MapObject =  {
 	
     
 	//将实例化的marker和info窗体关联起来
-    add_info_to_marker_from_data: function(marker_id,marker,html,is_temp){
-		//alert(marker_id)
-		MapObject.info_windows_html.put(marker_id,html) //存储info窗体的html
-		MapObject.markers.put(marker_id,marker); //储存所有marker
-		//alert(marker_id);
-      	//alert(html)
-        google.maps.event.addListener(marker, 'click', function(e){
-			//alert(html)
-             MapObject.new_info_window(marker_id)
-			//info.open(MapObject.map,marker);
-        });
+//    add_info_to_marker_from_data: function(marker_id,marker,html,is_temp){
+//    alert(marker_id)
+//		MapObject.info_windows_html.put(marker_id,html) //存储info窗体的html
+//		MapObject.markers.put(marker_id,marker); //储存所有marker
+//		//alert(marker_id);
+//      	//alert(html)
+//        google.maps.event.addListener(marker, 'click', function(e){
+//			//alert(html)
+//             MapObject.new_info_window(marker_id)
+//			//info.open(MapObject.map,marker);
+//        });
 		
-        if(is_temp == true){
-			if(this.temp_infowindow){
-				this.temp_infowindow.close();
-			}
-           infowindow = MapObject.new_info_window(marker_id);
-		  // infowindow.open(MapObject.map,marker)
-        }
+//        if(is_temp == true){
+//			if(this.temp_infowindow){
+//				this.temp_infowindow.close();
+//			}
+//           infowindow = MapObject.new_info_window(marker_id);
+//		  // infowindow.open(MapObject.map,marker)
+//        }
 
         
-		//alert(marker_id)
-    },
+//		//alert(marker_id)
+//    },
     
     //从后台获取数据后初始化marker
     init_marker_from_data:function(){
@@ -260,10 +266,8 @@ var MapObject =  {
                 url: "/people/remove_marker",                                      
                 success: function(message){
                     if(message.success){
-                        MapObject.markers.get(marker_id).setMap(null);
-						MapObject.markers.remove(marker_id)
-						MapObject.info_windows.remove(marker_id);
-						MapObject.info_windows_html.remove(marker_id)
+                        MapObject.markerClusterer.removeMarker(MapObject.markers.get(marker_id));
+						MapObject.infowindow.close();
                     }else{
                         alert("网络延迟，请重试")
                     }
@@ -283,12 +287,10 @@ var MapObject =  {
         google.maps.event.addListenerOnce(marker, 'dragend', function(){
         marker.setDraggable(false);
         markerLatLng = marker.getPosition();
-	  //alert(markerLatLng);
-		MapObject.info_windows.get(marker_id).close();
-		MapObject.info_windows.remove(marker_id)
+	  	//alert(markerLatLng);
+		MapObject.infoWindow.close();
+		google.maps.event.clearListeners(marker, 'click')
 		MapObject.geocodePosition(marker_id,markerLatLng)
-	//alert(geocodePosition_string);
-             
         });
     } ,
 	
@@ -333,7 +335,22 @@ var MapObject =  {
 			//alert(string)
 			 $("<span><a>"+ string +"</a></span>").appendTo(marker_address)
            }
-	}  
+	},
+
+	markerClickFunction:function(html, latlng) {
+  	return function(e) {
+    e.cancelBubble = true;
+    e.returnValue = false;
+    if (e.stopPropagation) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+
+    MapObject.infoWindow.setContent(html);
+    MapObject.infoWindow.setPosition(latlng);
+    MapObject.infoWindow.open(MapObject.map);
+  };
+}  
        
     
   

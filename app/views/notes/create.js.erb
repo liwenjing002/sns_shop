@@ -1,11 +1,19 @@
-//alert('<%=@marker.id%>')
+latLng = new google.maps.LatLng(<%=@marker.marker_latitude%>, <%= @marker.marker_longitude %>);
 
-
+fn = MapObject.markerClickFunction('<%= raw mark_html(@marker) %>', latLng);
+marker = null;
 if(MapObject.markers.get(<%=@marker.id%>)){
-MapObject.add_info_to_marker_from_data(<%=@marker.id%>,MapObject.markers.get(<%=@marker.id%>),'<%= raw mark_html(@marker) %>',true);	
+  marker = MapObject.markers.get(<%=@marker.id%>)
+
 }else{
-MapObject.add_info_to_marker_from_data(<%=@marker.id%>,MapObject.temp_marker,'<%= raw mark_html(@marker) %>',true);
-MapObject.markers.put(<%=@marker.id%>,MapObject.temp_marker);
+	marker = MapObject.temp_marker
+	MapObject.markers_array.push(MapObject.temp_marker);
+	MapObject.markers.put(<%=@marker.id%>,marker);
+	MapObject.markerClusterer.addMarker(marker,true)
+	MapObject.markerClusterer.redraw();
 }
+
+google.maps.event.addListener(marker, 'click', fn);
+MapObject.temp_infowindow.close();
 
 

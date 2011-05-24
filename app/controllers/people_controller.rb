@@ -23,6 +23,8 @@ class PeopleController < ApplicationController
       @person = @logged_in
       @map = Map.find_by_people_id(params[:id])
    	  @map = Map.create({:people_id=>@person.id})if !@map 
+	  @plan = Plan.new
+	  @plans = Plan.all
       
     elsif params[:legacy_id]
       @person = Person.find_by_legacy_id(params[:id])

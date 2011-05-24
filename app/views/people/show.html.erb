@@ -1,6 +1,7 @@
 <% content_for  :head do %>
   <%= javascript_include_tag "extend/prov_city" %>
   <%= javascript_include_tag "extend/map" %>
+	<%= javascript_include_tag "map/markercluster" %>
   <%= javascript_include_tag  'http://maps.google.com/maps/api/js?sensor=true' %> 
   <%= javascript_include_tag  'map/map_controll' %> 
 
@@ -104,8 +105,23 @@
       </h3>
 
       <h3>想去那里
-        <p style="float: right"></p>
+        <p style="float: right"><%= link_to '行程管理', "#", :class => 'add-icon' %></p>
       </h3>
+	<table>
+  <tr>
+    <th>day</th>
+	<th>address</th>
+  </tr>
+
+	<% @plans.each do |plan| %>
+  <tr>
+	<th><%= plan.day.strftime("%y-%M-%d")%></th>
+	<th><%= link_to plan.address,"#" %></th>
+    <td><%= link_to 'Edit', edit_plan_path(plan) %></td>
+    <td><%= link_to 'Destroy', plan, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+	<% end %>
+</table>
 
     </div>
   </div>

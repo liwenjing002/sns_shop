@@ -1373,6 +1373,10 @@ zh:
     title_description: “给您的文章简洁的标题
     welcome_to_the_place: 欢迎对社区新闻的地方。
 
+  plan: 
+    destinations: 目的地
+    day: 出发时间
+
   notes: 
     about_this_note: 关于本说明
     add_a_note: 添加注释
