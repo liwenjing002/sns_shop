@@ -1035,6 +1035,15 @@ p.divider {
 #mark_button{
     background-color: white;
     border-style: solid;
+    float: left;
+    border-width : 2px;
+    cursor: pointer;
+    text-align:  center;
+}
+#friends_button{
+    background-color: white;
+    border-style: solid;
+    float: left;
     border-width : 2px;
     cursor: pointer;
     text-align:  center;

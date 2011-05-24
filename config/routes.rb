@@ -3,7 +3,7 @@ OneBody::Application.routes.draw do
   resources :places
 
   resources :plans
-
+  resources :markers
   resources :maps
 
   root :to => 'pages#show_for_public'
