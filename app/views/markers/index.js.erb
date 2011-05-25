@@ -11,12 +11,23 @@ marker = new google.maps.Marker({
 var fn = MapObject.markerClickFunction('<%= raw mark_html(marker) %>', latLng);
     google.maps.event.addListener(marker, 'click', fn);
     MapObject.markers_array.push(marker);
-
-//MapObject.add_info_to_marker_from_data(<%=marker.id%>,marker,'<%= raw mark_html(marker) %>',false);
 MapObject.markers.put(<%=marker.id%>,marker);
+<%end%>
+<%end%>
 
+<%if @my_home.home_latitude and @my_home.home_longitude%>
+latLng = new google.maps.LatLng(<%=@my_home.home_latitude%>, <%= @my_home.home_longitude %>);
+marker = new google.maps.Marker({
+				    map: MapObject.map,
+				    draggable: false,
+				    animation: google.maps.Animation.DROP,
+				    position: latLng
+						});
+<%else%>
+MapObject.geocodePosition('<%=@my_home.home_address%>',"/images/map/home.png");
 <%end%>
-<%end%>
+
+
 MapObject.markerClusterer = new MarkerClusterer(MapObject.map, MapObject.markers_array);
 
 

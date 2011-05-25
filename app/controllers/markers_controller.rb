@@ -4,6 +4,7 @@ class MarkersController < ApplicationController
     if !params[:people_id]
       map_id = Map.find_by_people_id(@logged_in.id).id
       @markers = Marker.find_all_by_map_id(map_id)
+	  @my_home = @logged_in.postition
       #render :json => Marker.find_all_by_map_id(map_id).to_json
     end
   end

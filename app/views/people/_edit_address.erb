@@ -1,109 +1,31 @@
-<div id="address"  class ="object" style="display: none; ">
+<div id="postition"  class ="object" style="display: none; ">
 
-  <%= form.label :hometown_address,       t('people.hometown_province_city_address') %> 
+  <%= form.label :home_postition,       t('people.home_postition') %> 
 
-  <select id="province_h" onchange="setCity(this.value,'city_h');" name="address[hometown_province]"> 
-    <option value="" selected="selected">请选择</option> 
-  </select>
-
-  <select id="city_h" onchange="setCounty(this.value,'county_h');" name="address[hometown_city]" style="width:90px;display"> 
-    <option value="" selected="selected">请选择</option> 
-  </select>
-  
-  <select id="county_h" onchange="setCounty(this.value);" name="address[hometown_county]" style="width:90px;display"> 
-    <option value="" selected="selected">请选择</option> 
-  </select> 
-  <%= form.text_field :hometown_address,:size=>22 %>
+  <%= form.text_field :home_address,:size=>22 %>
   <br/>
-  
-  
-  
-  <%= form.label :liveing_address,       t('people.liveing_province_city_address') %>
-  <select id="province_l" onchange="setCity(this.value,'city_l')" name="address[liveing_province]"> 
-    <option value="" selected="selected">请选择</option> 
-  </select>
-  <select id="city_l" onchange="setCounty(this.value,'county_l');" name="address[liveing_city]" style="width:90px;display"> 
-    <option value="" selected="selected">请选择</option> 
-  </select>
-   <select id="county_l" onchange="setCounty(this.value);" name="address[liveing_county]" style="width:90px;display"> 
-    <option value="" selected="selected">请选择</option> 
-  </select> 
-  <%= form.text_field :liveing_address,:size=>22%>
-  <br/>
-  
-  
-  <%= form.label :current_address,       t('people.current_province_city_address') %>  
-  <select id="province_c" onchange="setCity(this.value,'city_c');" name="address[current_province]"> 
-    <option value="" selected="selected">请选择</option> 
-  </select>
-  <select id="city_c" onchange="setCounty(this.value,'county_c');" name="address[current_city]" style="width:90px;display:"> 
-    <option value="" selected="selected">请选择</option> 
-  </select>
-   <select id="county_c" onchange="setCounty(this.value);" name="address[current_county]" style="width:90px;display:"> 
-    <option value="" selected="selected">请选择</option> 
-  </select> 
-
-  <%= form.text_field :current_address,:size=>22 %>
 
 </div>
 <script type="text/javascript">
   
-  address_hometown_address = $("#address_hometown_address")
-  if(address_hometown_address.attr("value") == ""){
-    address_hometown_address.attr("value","请输入您所在的小区或街道")
-    address_hometown_address.attr("style"," color:Gray")
+  postition_home_postition = $("#postition_home_address")
+  if(postition_home_postition.attr("value") == ""){
+    postition_home_postition.attr("value","请输入您的居住地址")
+    postition_home_postition.attr("style"," color:Gray")
   }
-  address_hometown_address.focus(function(){
-    if(address_hometown_address.attr("value") == "请输入您所在的小区或街道"){
-     address_hometown_address.attr("value","")
-    address_hometown_address.attr("style"," color:Black")
+  postition_home_postition.focus(function(){
+    if(postition_home_postition.attr("value") == "请输入您的居住地址"){
+     postition_home_postition.attr("value","")
+    postition_home_postition.attr("style"," color:Black")
     }
    
   })
-  address_hometown_address.blur(function(){
-    if(address_hometown_address.attr("value") == ""){
-      address_hometown_address.attr("value","请输入您所在的小区或街道")
-    address_hometown_address.attr("style"," color:Gray")
+  postition_home_postition.blur(function(){
+    if(postition_home_postition.attr("value") == ""){
+      postition_home_postition.attr("value","请输入您的居住地址")
+    postition_home_postition.attr("style"," color:Gray")
     }
   })
   
-  
-  
-    address_liveing_address = $("#address_liveing_address")
-  if(address_liveing_address.attr("value") == ""){
-    address_liveing_address.attr("value","请输入您所在的小区或街道")
-    address_liveing_address.attr("style"," color:Gray")
-  }
-  address_liveing_address.focus(function(){
-    if(address_liveing_address.attr("value") == "请输入您所在的小区或街道"){
-     address_liveing_address.attr("value","")
-    address_liveing_address.attr("style"," color:Black")
-    }
-   
-  })
-  address_liveing_address.blur(function(){
-    if(address_liveing_address.attr("value") == ""){
-      address_liveing_address.attr("value","请输入您所在的小区或街道")
-    address_liveing_address.attr("style"," color:Gray")
-    }
-  })
-  
-    address_current_address = $("#address_current_address")
-  if(address_current_address.attr("value") == ""){
-    address_current_address.attr("value","请输入您所在的小区或街道")
-    address_current_address.attr("style"," color:Gray")
-  }
-  address_current_address.focus(function(){
-    if(address_hometown_address.attr("value") == "请输入您所在的小区或街道"){
-     address_current_address.attr("value","")
-    address_current_address.attr("style"," color:Black")
-    }
-   
-  })
-  address_current_address.blur(function(){
-    if(address_current_address.attr("value") == ""){
-      address_current_address.attr("value","请输入您所在的小区或街道")
-    address_current_address.attr("style"," color:Gray")
-    }
-  })
+
 </script>

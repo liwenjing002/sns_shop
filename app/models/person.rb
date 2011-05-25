@@ -8,7 +8,7 @@ class Person < ActiveRecord::Base
   cattr_accessor :logged_in # set in addition to @logged_in (for use by Notifier and other models)
 
   #  belongs_to :family
-  belongs_to :address
+  belongs_to :postition
 
   belongs_to :privacy
   belongs_to :admin
@@ -413,7 +413,7 @@ class Person < ActiveRecord::Base
           params[:address][:current_address] ="" if params[:address][:current_address]=="请输入您所在的小区或街道"
           params[:address][:liveing_address] ="" if params[:address][:liveing_address]=="请输入您所在的小区或街道"
         end
-        update_attributes(params[:person]) && address.update_attributes(params[:address])
+        update_attributes(params[:person]) && postition.update_attributes(params[:postition])
       else
         Update.create_from_params(params, self)
         update_attributes(params[:person].reject { |k, v| !EXTRAS.include?(k) })

@@ -72,10 +72,7 @@ var MapObject =  {
         friendsText.class = "friends_text";
         friendsText.innerHTML = 'look for my friends';
         friends_button.appendChild(friendsText);
-  
-        google.maps.event.addDomListener(mark_button, 'click', function() {
-            MapObject.add_marker_listen();
-        });
+ 
         
         //  
         ControlDiv.index = 1;
@@ -85,6 +82,7 @@ var MapObject =  {
     //添加marker 监听
     add_marker_listen:function (){
         google.maps.event.addListenerOnce(MapObject.map, 'click', function(event) {
+			//alert(2)
             MapObject.add_marker(MapObject.map,event.latLng);
         });
     },
@@ -97,6 +95,7 @@ var MapObject =  {
 
     //添加一个marker    
     add_marker:function (map,initialLocation){
+		//alert(1)
         this.temp_marker = new google.maps.Marker({
             map:map,
             draggable:false,
@@ -110,8 +109,10 @@ var MapObject =  {
 		
 		
         google.maps.event.addListenerOnce(this.temp_infowindow, 'closeclick', function(){
-            MapObject.temp_marker.setMap(null);   
+            MapObject.temp_marker.setMap(null);
+			alert()  
         });
+
     },
     //跳动动画效果
     toggleBounce: function (marker) {
@@ -279,11 +280,11 @@ marker_del:function(marker_id){
         $.ajax({                                                
             type: "DELETE",
             data: "id="+marker_id,
-            url: "/markers",                                      
+            url: "/markers/"+marker_id,                                      
             success: function(message){
                 if(message.success){
+					MapObject.infoWindow.close();
                     MapObject.markerClusterer.removeMarker(MapObject.markers.get(marker_id));
-                    MapObject.infowindow.close();
                 }else{
                     alert("网络延迟，请重试")
                 }
@@ -321,7 +322,7 @@ updata_data_marker: function(data){
     });
 },
 
-//地址解析方法
+//反向地址解析方法
 geocodePosition:function (marker_id,markerLatLng) {
     MapObject.geocoder.geocode({
         latLng: markerLatLng
@@ -342,6 +343,35 @@ geocodePosition:function (marker_id,markerLatLng) {
         }
     });
 },
+
+
+//地址解析方法
+geocodePosition:function (address,icon) {
+   MapObject.geocoder.geocode({
+        address: address
+    }, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+			alert(results[0].geometry.location)
+			MapObject.geocodePosition_marker(results[0].geometry.location,icon)
+        } else {
+          alert("Geocode was not successful for the following reason: " + status);
+        }
+      });
+},
+
+
+geocodePosition_marker:function(latLng,icon){
+	marker = new google.maps.Marker({
+				    map: MapObject.map,
+				    draggable: false,
+				    animation: google.maps.Animation.DROP,
+					icon: icon,
+				    position: latLng
+						});
+//alert(results[0].geometry.location)
+},
+
+
 
 //根据google返回的数据更新info_window
 updateMarkerAddress:function(marker_id,responses){

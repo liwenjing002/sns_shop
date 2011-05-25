@@ -302,60 +302,19 @@
         <div class="business">
           <% if private("address") %>
             <% unless 
-              (@person.address.hometown_province.to_s.any? or
-                  @person.business_name.to_s.any? or
-                  @person.business_description.to_s.any? or
-                  @person.business_website.to_s.any?) %>
+              (@person.postition.home_address.any?) %>
               <em><%= t('people.nothing_here_yet') %></em>
             <% end %>
 
             <div class="favorites-group">
-              <% if @person.address.hometown_province.to_s.any? %>
+              <% if @person.postition.home_address.to_s.any? %>
                 <div class="favorites-group">
-                  <h4><%= t('people.liveing_province_city_address') %></h4>
+                  <h4><%= t('people.home_postition') %></h4>
                   <span>
-                    <script   language=javascript> 
-                        split();
-                        add = getNameByCode('<%= @person.address.hometown_province %>') + " " +   getNameByCode('<%= @person.address.hometown_city %>') +  " " +   getNameByCode('<%= @person.address.hometown_county %>')
-                        document.write(add);
-                    </script>
-                    <%= @person.address.hometown_address%>
+                    <%= @person.postition.home_address%>
                   </span>
                 </div>
 
-              <% end %>
-            </div>
-
-            <div class="favorites-group">
-              <% if @person.address.liveing_province.to_s.any? %>
-                <div class="favorites-group">
-                  <h4><%= t('people.liveing_province_city_address') %></h4>
-                  <span>
-                    <script   language=javascript> 
-                        split();
-                        add = getNameByCode('<%= @person.address.liveing_province %>') + " " +   getNameByCode('<%= @person.address.liveing_city %>') +  " " +   getNameByCode('<%= @person.address.liveing_county %>')
-                        document.write(add);
-                    </script>
-                    <%= @person.address.liveing_address%>
-                  </span>
-                </div>
-              <% end %>
-            </div>
-
-
-            <div class="favorites-group">
-              <% if @person.address.current_province.to_s.any? %>
-                <div class="favorites-group">
-                  <h4><%= t('people.current_province_city_address') %></h4>
-                  <span>	
-                    <script   language=javascript> 
-                        split();
-                        add = getNameByCode('<%= @person.address.current_province %>') + " " +   getNameByCode('<%= @person.address.current_city %>') +  " " +   getNameByCode('<%= @person.address.current_county %>')
-                        document.write(add);
-                    </script>
-                    <%= @person.address.current_address%>
-                  </span>
-                </div>
               <% end %>
             </div>
           <%else%>
