@@ -41,7 +41,7 @@ var MapObject =  {
 
         this.infoWindow = new google.maps.InfoWindow();
 		 
-        this.init_marker_from_data();
+        this.init_marker_from_data(null);
 
 
     },
@@ -72,7 +72,9 @@ var MapObject =  {
         friendsText.class = "friends_text";
         friendsText.innerHTML = 'look for my friends';
         friends_button.appendChild(friendsText);
- 
+         google.maps.event.addDomListener(friends_button, 'click', function() {
+            MapObject.init_marker_from_data("firend_postition");
+        });
         
         //  
         ControlDiv.index = 1;
@@ -82,7 +84,7 @@ var MapObject =  {
     //添加marker 监听
     add_marker_listen:function (){
         google.maps.event.addListenerOnce(MapObject.map, 'click', function(event) {
-			//alert(2)
+            //alert(2)
             MapObject.add_marker(MapObject.map,event.latLng);
         });
     },
@@ -95,7 +97,7 @@ var MapObject =  {
 
     //添加一个marker    
     add_marker:function (map,initialLocation){
-		//alert(1)
+        //alert(1)
         this.temp_marker = new google.maps.Marker({
             map:map,
             draggable:false,
@@ -110,7 +112,7 @@ var MapObject =  {
 		
         google.maps.event.addListenerOnce(this.temp_infowindow, 'closeclick', function(){
             MapObject.temp_marker.setMap(null);
-			alert()  
+            alert()  
         });
 
     },
@@ -199,204 +201,198 @@ var MapObject =  {
         }
         );
 
-},
+    },
 
-//实例化一个窗体对象，实例化所需的html 从 map 中获取
-new_info_window:function(marker_id){
-    //alert(marker_id);
-    //alert(MapObject.markers.get(marker_id))
-    infowindow = null;
-    //alert(MapObject.info_windows.get(marker_id))
-    if (!MapObject.info_windows.get(marker_id)){
+    //实例化一个窗体对象，实例化所需的html 从 map 中获取
+    new_info_window:function(marker_id){
+        //alert(marker_id);
+        //alert(MapObject.markers.get(marker_id))
+        infowindow = null;
+        //alert(MapObject.info_windows.get(marker_id))
+        if (!MapObject.info_windows.get(marker_id)){
+            infowindow = new google.maps.InfoWindow({
+                content: MapObject.info_windows_html.get(marker_id),
+                disableAutoPan:false
+            });
+            MapObject.info_windows.put(marker_id,infowindow)
+            //alert(MapObject.markers.get(marker_id))
+            infowindow.open(MapObject.map,MapObject.markers.get(marker_id))
+            google.maps.event.addListener(infowindow, 'closeclick', function(){
+                //alert(marker_id)
+                //alert(MapObject.info_windows.get(marker_id));
+                MapObject.info_windows.remove(marker_id);
+            });
+        }
+        return infowindow;
+
+    },
+
+    //实例化一个窗体对象，实例化所需的html直接传入
+    new_info_window_html:function(html){
         infowindow = new google.maps.InfoWindow({
-            content: MapObject.info_windows_html.get(marker_id),
+            content: html,
             disableAutoPan:false
         });
-        MapObject.info_windows.put(marker_id,infowindow)
-        //alert(MapObject.markers.get(marker_id))
-        infowindow.open(MapObject.map,MapObject.markers.get(marker_id))
-        google.maps.event.addListener(infowindow, 'closeclick', function(){
-            //alert(marker_id)
-            //alert(MapObject.info_windows.get(marker_id));
-            MapObject.info_windows.remove(marker_id);
-        });
-    }
-    return infowindow;
+        return infowindow;
 
-},
-
-//实例化一个窗体对象，实例化所需的html直接传入
-new_info_window_html:function(html){
-    infowindow = new google.maps.InfoWindow({
-        content: html,
-        disableAutoPan:false
-    });
-    return infowindow;
-
-},
+    },
 	
 	
-    
-//将实例化的marker和info窗体关联起来
-//    add_info_to_marker_from_data: function(marker_id,marker,html,is_temp){
-//    alert(marker_id)
-//		MapObject.info_windows_html.put(marker_id,html) //存储info窗体的html
-//		MapObject.markers.put(marker_id,marker); //储存所有marker
-//		//alert(marker_id);
-//      	//alert(html)
-//        google.maps.event.addListener(marker, 'click', function(e){
-//			//alert(html)
-//             MapObject.new_info_window(marker_id)
-//			//info.open(MapObject.map,marker);
-//        });
-		
-//        if(is_temp == true){
-//			if(this.temp_infowindow){
-//				this.temp_infowindow.close();
-//			}
-//           infowindow = MapObject.new_info_window(marker_id);
-//		  // infowindow.open(MapObject.map,marker)
-//        }
-
+    //从后台获取数据后初始化marker
+    init_marker_from_data:function(type){
+        if(type==null){
+            $.ajax({                                                
+                type: "GET",                                    
+                url: "/markers",                                      
+                success: function(){  
+                } 
+            });
+        }else{
+            $.ajax({                                                
+                type: "GET",                                    
+                url: "/markers?type="+type,                                      
+                success: function(){  
+                } 
+            });
+            
+        }
         
-//		//alert(marker_id)
-//    },
+
+    },
     
-//从后台获取数据后初始化marker
-init_marker_from_data:function(){
-    $.ajax({                                                
-        type: "GET",                                    
-        url: "/markers",                                      
-        success: function(){  
-        } 
-    });
-},
+    
+    
 	
-marker_del:function(marker_id){
-    //alert(MapObject.markers.get(marker_id))
-    var bln=confirm("真的要删除该标记")
-    if (bln==true)
-    {
-        $.ajax({                                                
-            type: "DELETE",
-            data: "id="+marker_id,
-            url: "/markers/"+marker_id,                                      
-            success: function(message){
-                if(message.success){
-					MapObject.infoWindow.close();
-                    MapObject.markerClusterer.removeMarker(MapObject.markers.get(marker_id));
-                }else{
-                    alert("网络延迟，请重试")
-                }
+    marker_del:function(marker_id){
+        //alert(MapObject.markers.get(marker_id))
+        var bln=confirm("真的要删除该标记")
+        if (bln==true)
+        {
+            $.ajax({                                                
+                type: "DELETE",
+                data: "id="+marker_id,
+                url: "/markers/"+marker_id,                                      
+                success: function(message){
+                    if(message.success){
+                        MapObject.infoWindow.close();
+                        MapObject.markerClusterer.removeMarker(MapObject.markers.get(marker_id));
+                    }else{
+                        alert("网络延迟，请重试")
+                    }
                     
+                } 
+            });
+            
+        }
+                
+    },
+    marker_move: function(marker_id){
+        //alert(marker_id)
+        marker = MapObject.markers.get(marker_id);
+        //alert(marker);
+        marker.setDraggable(true);
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        google.maps.event.addListenerOnce(marker, 'dragend', function(){
+            marker.setDraggable(false);
+            markerLatLng = marker.getPosition();
+            //alert(markerLatLng);
+            MapObject.infoWindow.close();
+            google.maps.event.clearListeners(marker, 'click')
+            MapObject.geocodePosition(marker_id,markerLatLng)
+        });
+    } ,
+	
+    updata_data_marker: function(data){
+        $.ajax({                                                
+            type: "POST",
+            data: data,    
+            url: "/people/updata_marker",                                      
+            success: function(message){
+
             } 
         });
-            
-    }
-                
-},
-marker_move: function(marker_id){
-    //alert(marker_id)
-    marker = MapObject.markers.get(marker_id);
-    //alert(marker);
-    marker.setDraggable(true);
-    marker.setAnimation(google.maps.Animation.BOUNCE);
-    google.maps.event.addListenerOnce(marker, 'dragend', function(){
-        marker.setDraggable(false);
-        markerLatLng = marker.getPosition();
-        //alert(markerLatLng);
-        MapObject.infoWindow.close();
-        google.maps.event.clearListeners(marker, 'click')
-        MapObject.geocodePosition(marker_id,markerLatLng)
-    });
-} ,
-	
-updata_data_marker: function(data){
-    $.ajax({                                                
-        type: "POST",
-        data: data,    
-        url: "/people/updata_marker",                                      
-        success: function(message){
+    },
 
-        } 
-    });
-},
+    //反向地址解析方法
+    geocodePosition:function (marker_id,markerLatLng) {
+        MapObject.geocoder.geocode({
+            latLng: markerLatLng
+        }, function(responses) {
+            if (responses && responses.length > 0) {
 
-//反向地址解析方法
-geocodePosition:function (marker_id,markerLatLng) {
-    MapObject.geocoder.geocode({
-        latLng: markerLatLng
-    }, function(responses) {
-        if (responses && responses.length > 0) {
-
-            //MapObject.updateMarkerAddress(marker_id,responses);
-            string = '';
-            for(i = responses[0].address_components.length-1;i>=0;i--){
-                string += (responses[0].address_components[i].long_name+ "|")
-            }
-            //alert("1 "+ string)
-            data = "marker[id]="+marker_id+ "&marker[geocode_position]="+ string +"&marker[marker_latitude]=" +markerLatLng.lat()+ "&marker[marker_longitude]=" +markerLatLng.lng(),  
+                //MapObject.updateMarkerAddress(marker_id,responses);
+                string = '';
+                for(i = responses[0].address_components.length-1;i>=0;i--){
+                    string += (responses[0].address_components[i].long_name+ "|")
+                }
+                //alert("1 "+ string)
+                data = "marker[id]="+marker_id+ "&marker[geocode_position]="+ string +"&marker[marker_latitude]=" +markerLatLng.lat()+ "&marker[marker_longitude]=" +markerLatLng.lng(),  
 				
-            MapObject.updata_data_marker(data)
-        } else {
-            alert("none")
+                MapObject.updata_data_marker(data)
+            } else {
+                alert("none")
+            }
+        });
+    },
+
+
+    //地址解析方法
+    re_geocodePosition:function (address,icon,info_htm) {
+        MapObject.geocoder.geocode({
+            address: address
+        }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                //alert(results[0].geometry.location)
+                MapObject.geocodePosition_marker(results[0].geometry.location,icon,info_htm)
+            } else {
+                alert("Geocode was not successful for the following reason: " + status);
+            }
+        });
+    },
+
+
+    geocodePosition_marker:function(latLng,icon,info_htm){
+        marker = new google.maps.Marker({
+            map: MapObject.map,
+            draggable: false,
+            animation: google.maps.Animation.DROP,
+            icon: icon,
+            position: latLng
+        });
+        if (info_htm!= null){
+            var fn = MapObject.markerClickFunction(info_htm, latLng);
+            google.maps.event.addListener(marker, 'click', fn);
+            MapObject.markerClusterer.addMarker(marker,true)
         }
-    });
-},
+    //alert(results[0].geometry.location)
+    },
 
 
-//地址解析方法
-geocodePosition:function (address,icon) {
-   MapObject.geocoder.geocode({
-        address: address
-    }, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-			alert(results[0].geometry.location)
-			MapObject.geocodePosition_marker(results[0].geometry.location,icon)
-        } else {
-          alert("Geocode was not successful for the following reason: " + status);
+
+    //根据google返回的数据更新info_window
+    updateMarkerAddress:function(marker_id,responses){
+        marker_address = $("#stream_item_"+marker_id+" .marker_address")
+        for(i = responses[0].address_components.length-1;i>=0;i--){
+            string = responses[0].address_components[i].long_name
+            //alert(string)
+            $("<span><a>"+ string +"</a></span>").appendTo(marker_address)
         }
-      });
-},
+    },
 
+    markerClickFunction:function(html, latlng) {
+        return function(e) {
+            e.cancelBubble = true;
+            e.returnValue = false;
+            if (e.stopPropagation) {
+                e.stopPropagation();
+                e.preventDefault();
+            }
 
-geocodePosition_marker:function(latLng,icon){
-	marker = new google.maps.Marker({
-				    map: MapObject.map,
-				    draggable: false,
-				    animation: google.maps.Animation.DROP,
-					icon: icon,
-				    position: latLng
-						});
-//alert(results[0].geometry.location)
-},
-
-
-
-//根据google返回的数据更新info_window
-updateMarkerAddress:function(marker_id,responses){
-    marker_address = $("#stream_item_"+marker_id+" .marker_address")
-    for(i = responses[0].address_components.length-1;i>=0;i--){
-        string = responses[0].address_components[i].long_name
-        //alert(string)
-        $("<span><a>"+ string +"</a></span>").appendTo(marker_address)
-    }
-},
-
-markerClickFunction:function(html, latlng) {
-    return function(e) {
-        e.cancelBubble = true;
-        e.returnValue = false;
-        if (e.stopPropagation) {
-            e.stopPropagation();
-            e.preventDefault();
-        }
-
-        MapObject.infoWindow.setContent(html);
-        MapObject.infoWindow.setPosition(latlng);
-        MapObject.infoWindow.open(MapObject.map);
-    };
-}  
+            MapObject.infoWindow.setContent(html);
+            MapObject.infoWindow.setPosition(latlng);
+            MapObject.infoWindow.open(MapObject.map);
+        };
+    }  
        
     
   

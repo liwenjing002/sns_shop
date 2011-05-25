@@ -302,7 +302,7 @@
         <div class="business">
           <% if private("address") %>
             <% unless 
-              (@person.postition.home_address.any?) %>
+              (@person.postition.home_address) %>
               <em><%= t('people.nothing_here_yet') %></em>
             <% end %>
 

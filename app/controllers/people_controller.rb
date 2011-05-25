@@ -23,18 +23,26 @@ class PeopleController < ApplicationController
       @person = @logged_in
       @map = Map.find_by_people_id(params[:id])
    	  @map = Map.create({:people_id=>@person.id})if !@map 
-	  @plan = Plan.new
-	  @plans = Plan.all
+      @plan = Plan.new
+      @plans = Plan.all
       
     elsif params[:legacy_id]
       @person = Person.find_by_legacy_id(params[:id])
     else
       @person = Person.find_by_id(params[:id])
+      @map = Map.find_by_people_id(@person.id)
+   	  @map = Map.create({:people_id=>@person.id})if !@map 
+      @plan = Plan.new
+      @plans = Plan.all
     end
     if params[:limited] or !@logged_in.full_access?
       render :action => 'show_limited'
     elsif @person and @logged_in.can_see?(@person)
       @postition = @person.postition
+      if @postition ==nil
+        @person.postition = Postition.create()
+        @person.save
+      end
       
       @albums = @person.albums.all(:order => 'created_at desc')
       @friends = @person.friends.thumbnails unless fragment_exist?(:controller => 'people', :action => 'show', :id => @person.id, :fragment => 'friends')
