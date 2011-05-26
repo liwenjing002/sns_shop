@@ -37,63 +37,19 @@ var MapObject =  {
         this.map = new google.maps.Map(
             document.getElementById(this.map_options.id), 
             myOptions);
-        this.initControl() ;
+//        this.initControl() ;
 
         this.infoWindow = new google.maps.InfoWindow();
-		this.init_marker_from_data("my_home"); 
-        this.init_marker_from_data("firend_postition");
-		this.init_marker_from_data("schedule");
+	this.init_marker_from_data("my_home"); 
+//        this.init_marker_from_data("firend_postition");
+//	this.init_marker_from_data("schedule");
 
 
     },
     
     //控件初始化
     initControl: function () { 
-        var ControlDiv = document.createElement('DIV');
-        ControlDiv.id = "control_div"
-        
-        var mark_button = document.createElement('DIV');
-        mark_button.id = "mark_button"
-        mark_button.title = 'Click to add a marker';
-        ControlDiv.appendChild(mark_button);
-        var controlText = document.createElement('DIV');
-        controlText.class = "control_text";
-        controlText.innerHTML = 'add a marker';
-        mark_button.appendChild(controlText);
-  
-        google.maps.event.addDomListener(mark_button, 'click', function() {
-            MapObject.add_marker_listen();
-        });
-        
-        var friends_button = document.createElement('DIV');
-        friends_button.id = "friends_button"
-        friends_button.title = 'look for my friends';
-        ControlDiv.appendChild(friends_button);
-        var friendsText = document.createElement('DIV');
-        friendsText.class = "friends_text";
-        friendsText.innerHTML = 'look for my friends';
-        friends_button.appendChild(friendsText);
-         google.maps.event.addDomListener(friends_button, 'click', function() {
-            MapObject.init_marker_from_data("firend_postition");
-        });
-
-		var share_button = document.createElement('DIV');
-        share_button.id = "share_button"
-        share_button.title = 'look for my friends';
-        ControlDiv.appendChild(share_button);
-        var shareText = document.createElement('DIV');
-        shareText.class = "share_text";
-        shareText.innerHTML = 'look for my share';
-        share_button.appendChild(shareText);
-         google.maps.event.addDomListener(share_button, 'click', function() {
-            MapObject.init_marker_from_data("share");
-        });
-
-		
-        
-        //  
-        ControlDiv.index = 1;
-        this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(ControlDiv);
+      
     },
 
     //添加marker 监听
@@ -255,6 +211,7 @@ var MapObject =  {
 	
     //从后台获取数据后初始化marker
     init_marker_from_data:function(type){
+        
             $.ajax({                                                
                 type: "GET",                                    
                 url: "/markers?type="+type,                                      
@@ -351,7 +308,7 @@ var MapObject =  {
                 //alert(results[0].geometry.location)
                 MapObject.geocodePosition_marker(results[0].geometry.location,icon,info_htm)
             } else {
-                alert("Geocode was not successful for the following reason: " + status);
+                alert("找不到这个地方");
             }
         });
     },
@@ -368,8 +325,8 @@ var MapObject =  {
         if (info_htm!= null){
             var fn = MapObject.markerClickFunction(info_htm, latLng);
             google.maps.event.addListener(marker, 'click', fn);
-            MapObject.markerClusterer.addMarker(marker,true)
         }
+       MapObject.markerClusterer.addMarker(marker,true);
     //alert(results[0].geometry.location)
     },
 

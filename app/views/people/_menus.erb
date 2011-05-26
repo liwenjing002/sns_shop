@@ -36,3 +36,24 @@
     </ul>
   </div>
 <% end %>
+
+
+<% if (@person and @logged_in and @logged_in.can_edit?(@person)) or (!@person and @logged_in) %>
+  <div id="marker-tab-menu" style="display:none;">
+    <ul>
+      <li><span style= "cursor:pointer" title="我在地图上关注的地点" class ='edit-icon' >我关注的地点</span></li>
+      <li><span style= "cursor:pointer" title="我在地图上发布的地点" class ='lock-icon' onclick="MapObject.init_marker_from_data('share')">我发布的地点</span></li>
+      <li><span style= "cursor:pointer" title="我们向您随机推荐的地点" class ='email-icon' >随机地点推荐</span></li>
+    </ul>
+  </div>
+<% end %>
+
+<% if (@person and @logged_in  or (!@person and @logged_in)) %>
+  <div id="posittion-tab-menu" style="display:none;">
+    <ul>
+      <li><span style= "cursor:pointer" title= "记录我近期的出行安排" class = 'edit-icon' onclick="MapObject.init_marker_from_data('schedule')">我的行程<span></li>
+      <li><span style= "cursor:pointer" title="我梦想着想去的地方" class ='lock-icon' >旅游梦想单</span></li>
+       <li><span style= "cursor:pointer" title="让我们猜猜你想去的地方？" class ='lock-icon' >猜我想去？</span></li>
+    </ul>
+  </div>
+ <% end %>

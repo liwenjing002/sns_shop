@@ -91,8 +91,8 @@ function setupMenus() {
   if($('#group-tab-menu').length == 1) {
     setupMenu('#group-tab', '#group-tab-menu');
   }
-}
 
+}
 $(setupMenus);
 
 $(function(){

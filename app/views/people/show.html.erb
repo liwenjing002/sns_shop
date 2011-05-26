@@ -41,6 +41,13 @@
     <%= render :partial=>"common/share_in_map" %>
 </div>
 
+<div id="map_controll">
+  <ul class="buttons">
+    <li><a href ="#" class="button" id="new-marker-tab" onclick="MapObject.add_marker_listen();">发布地点</a></li>
+    <li><a href ="#" class="button" onclick="MapObject.init_marker_from_data('firend_postition');">查看好友位置</a></li>
+    <li><a href ="#" class="button" id="posittion-tab">我想去？</a></li>
+  </ul>
+</div>
 
 <div id="mapCanvas" style="width: 100%; height: 385px;">map div</div> 
 

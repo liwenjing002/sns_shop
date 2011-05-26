@@ -1,3 +1,20 @@
+MapObject.markers_array = [];
+
+<%if @my_home and @my_home.home_latitude and @my_home.home_longitude%>
+  latLng = new google.maps.LatLng(<%=@my_home.home_latitude%>, <%= @my_home.home_longitude %>);
+  marker = new google.maps.Marker({
+  map: MapObject.map,
+  draggable: false,
+  icon: "/images/map/home.png",
+  animation: google.maps.Animation.DROP,
+  position: latLng
+  });
+ // MapObject.markerClusterer.addMarker(marker,true);
+<%end%>
+<%if @my_home and @my_home.home_address%>
+  MapObject.re_geocodePosition('<%=@my_home.home_address%>',"/images/map/home.png",null);
+<%end%>
+
 <%if @markers%>
  // marker_json = eval('(' + '<%= @markers.to_json.html_safe%>'+ ')');
   //alert(obj2str(marker_json[0]))
@@ -16,7 +33,7 @@
     MapObject.markers_array.push(marker);
     MapObject.markers.put(<%=marker.id%>,marker);
   <%end%>
-MapObject.markerClusterer = new MarkerClusterer(MapObject.map, MapObject.markers_array);
+
 <%end%>
 
 <%if @friends%>
@@ -32,7 +49,7 @@ MapObject.markerClusterer = new MarkerClusterer(MapObject.map, MapObject.markers
     position: latLng
     });
     google.maps.event.addListener(marker, 'click', fn);
-    MapObject.markerClusterer.addMarker(marker,true)
+    MapObject.markers_array.push(marker);
   <%else%>
     MapObject.re_geocodePosition('<%=friend.postition.home_address%>',"/images/map/home.png",'<%=friend.name%>');
   <%end%>
@@ -41,18 +58,7 @@ MapObject.markerClusterer = new MarkerClusterer(MapObject.map, MapObject.markers
 <%end%>
     
     
-<%if @my_home and @my_home.home_latitude and @my_home.home_longitude%>
-  latLng = new google.maps.LatLng(<%=@my_home.home_latitude%>, <%= @my_home.home_longitude %>);
-  marker = new google.maps.Marker({
-  map: MapObject.map,
-  draggable: false,
-  animation: google.maps.Animation.DROP,
-  position: latLng
-  });
-<%end%>
-<%if @my_home and @my_home.home_address%>
-  MapObject.re_geocodePosition('<%=@my_home.home_address%>',"/images/map/home.png",null);
-<%end%>
+
 
 
 <%if @plans%>
@@ -60,6 +66,14 @@ MapObject.markerClusterer = new MarkerClusterer(MapObject.map, MapObject.markers
   MapObject.re_geocodePosition('<%=plan.address%>',"/images/map/schedule.png",'<%= plan.day.to_s+plan.address%>');
 <%end%>
 <%end%>
+
+if (MapObject.markerClusterer){
+alert(1)
+MapObject.markerClusterer.clearMarkers();
+}else{
+MapObject.markerClusterer = new MarkerClusterer(MapObject.map, MapObject.markers_array);
+}  
+
 
 
 
