@@ -9,7 +9,7 @@ MapObject.markers_array = [];
   animation: google.maps.Animation.DROP,
   position: latLng
   });
- // MapObject.markerClusterer.addMarker(marker,true);
+  MapObject.markerClusterer.addMarker(marker,true);
 <%end%>
 <%if @my_home and @my_home.home_address%>
   MapObject.re_geocodePosition('<%=@my_home.home_address%>',"/images/map/home.png",null);
