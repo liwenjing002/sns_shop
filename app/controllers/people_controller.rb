@@ -24,7 +24,7 @@ class PeopleController < ApplicationController
       @map = Map.find_by_people_id(params[:id])
    	  @map = Map.create({:people_id=>@person.id})if !@map 
       @plan = Plan.new
-      @plans = Plan.all
+      @plans =@person.plans
       
     elsif params[:legacy_id]
       @person = Person.find_by_legacy_id(params[:id])
@@ -33,7 +33,7 @@ class PeopleController < ApplicationController
       @map = Map.find_by_people_id(@person.id)
    	  @map = Map.create({:people_id=>@person.id})if !@map 
       @plan = Plan.new
-      @plans = Plan.all
+      @plans =@person.plans
     end
     if params[:limited] or !@logged_in.full_access?
       render :action => 'show_limited'

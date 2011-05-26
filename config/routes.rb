@@ -3,7 +3,7 @@ OneBody::Application.routes.draw do
   resources :places
 
   resources :plans
-  resources :markers
+  resources :markers 
   resources :maps
 
   root :to => 'pages#show_for_public'
@@ -25,9 +25,6 @@ OneBody::Application.routes.draw do
       post :hashify
       post :batch
       put  :import
-      post :init_marker
-      post :remove_marker
-      post :updata_marker
     end
     member do
       get  :favs

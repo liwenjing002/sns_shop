@@ -1,9 +1,7 @@
-if (MapObject.markerClusterer){
-MapObject.markerClusterer.clearMarkers();
-}
-MapObject.markers_array = [];
-
 <%if @markers%>
+ // marker_json = eval('(' + '<%= @markers.to_json.html_safe%>'+ ')');
+  //alert(obj2str(marker_json[0]))
+
   <%  @markers.each do|marker|%>
     latLng = new google.maps.LatLng(<%=marker.marker_latitude%>, <%= marker.marker_longitude %>);
 
@@ -22,12 +20,12 @@ MapObject.markerClusterer = new MarkerClusterer(MapObject.map, MapObject.markers
 <%end%>
 
 <%if @friends%>
-alert(1)
+
 <% @friends.each do |friend| %>
-  var fn = MapObject.markerClickFunction('<%=friend.name%>', latLng);
-  <%if friend.postition.home_latitude and @my_home.home_longitude%>
+  <%if friend.postition.home_latitude and friend.postition.home_longitude%>
     latLng = new google.maps.LatLng(<%friend.postition.home_latitude%>, <%= friend.postition.home_longitude %>);
-    marker = new google.maps.Marker({
+	var fn = MapObject.markerClickFunction('<%=friend.name%>', latLng);    
+	marker = new google.maps.Marker({
     map: MapObject.map,
     draggable: false,
     animation: google.maps.Animation.DROP,
@@ -36,7 +34,6 @@ alert(1)
     google.maps.event.addListener(marker, 'click', fn);
     MapObject.markerClusterer.addMarker(marker,true)
   <%else%>
-    //alert(2)
     MapObject.re_geocodePosition('<%=friend.postition.home_address%>',"/images/map/home.png",'<%=friend.name%>');
   <%end%>
 <%end%>
@@ -44,7 +41,7 @@ alert(1)
 <%end%>
     
     
-<%if @my_home.home_latitude and @my_home.home_longitude%>
+<%if @my_home and @my_home.home_latitude and @my_home.home_longitude%>
   latLng = new google.maps.LatLng(<%=@my_home.home_latitude%>, <%= @my_home.home_longitude %>);
   marker = new google.maps.Marker({
   map: MapObject.map,
@@ -52,7 +49,18 @@ alert(1)
   animation: google.maps.Animation.DROP,
   position: latLng
   });
-<%else%>
+<%end%>
+<%if @my_home and @my_home.home_address%>
   MapObject.re_geocodePosition('<%=@my_home.home_address%>',"/images/map/home.png",null);
 <%end%>
+
+
+<%if @plans%>
+<% @plans.each do |plan| %>
+  MapObject.re_geocodePosition('<%=plan.address%>',"/images/map/schedule.png",'<%= plan.day.to_s+plan.address%>');
+<%end%>
+<%end%>
+
+
+
 

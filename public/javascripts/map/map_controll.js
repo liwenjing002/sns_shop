@@ -40,8 +40,9 @@ var MapObject =  {
         this.initControl() ;
 
         this.infoWindow = new google.maps.InfoWindow();
-		 
-        this.init_marker_from_data(null);
+		this.init_marker_from_data("my_home"); 
+        this.init_marker_from_data("firend_postition");
+		this.init_marker_from_data("schedule");
 
 
     },
@@ -75,6 +76,20 @@ var MapObject =  {
          google.maps.event.addDomListener(friends_button, 'click', function() {
             MapObject.init_marker_from_data("firend_postition");
         });
+
+		var share_button = document.createElement('DIV');
+        share_button.id = "share_button"
+        share_button.title = 'look for my friends';
+        ControlDiv.appendChild(share_button);
+        var shareText = document.createElement('DIV');
+        shareText.class = "share_text";
+        shareText.innerHTML = 'look for my share';
+        share_button.appendChild(shareText);
+         google.maps.event.addDomListener(share_button, 'click', function() {
+            MapObject.init_marker_from_data("share");
+        });
+
+		
         
         //  
         ControlDiv.index = 1;
@@ -240,22 +255,13 @@ var MapObject =  {
 	
     //从后台获取数据后初始化marker
     init_marker_from_data:function(type){
-        if(type==null){
-            $.ajax({                                                
-                type: "GET",                                    
-                url: "/markers",                                      
-                success: function(){  
-                } 
-            });
-        }else{
             $.ajax({                                                
                 type: "GET",                                    
                 url: "/markers?type="+type,                                      
-                success: function(){  
+                success: function(){
                 } 
             });
-            
-        }
+
         
 
     },
@@ -302,11 +308,11 @@ var MapObject =  {
         });
     } ,
 	
-    updata_data_marker: function(data){
+    updata_data_marker: function(data,id){
         $.ajax({                                                
-            type: "POST",
+            type: "PUT",
             data: data,    
-            url: "/people/updata_marker",                                      
+            url: "/markers/"+id,                                      
             success: function(message){
 
             } 
@@ -328,7 +334,7 @@ var MapObject =  {
                 //alert("1 "+ string)
                 data = "marker[id]="+marker_id+ "&marker[geocode_position]="+ string +"&marker[marker_latitude]=" +markerLatLng.lat()+ "&marker[marker_longitude]=" +markerLatLng.lng(),  
 				
-                MapObject.updata_data_marker(data)
+                MapObject.updata_data_marker(data,marker_id)
             } else {
                 alert("none")
             }

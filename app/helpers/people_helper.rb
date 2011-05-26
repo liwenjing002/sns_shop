@@ -20,13 +20,7 @@ module PeopleHelper
   end
   
   
-  def mark_html(marker)
-    html =''
-	html << "#{render :partial => 'common/marker_info',:locals => {:marker=> marker}}"
-  
-    html = html.gsub(/\'/, '"')
-    html = html.gsub(/[\n\r]/,'')
-  end
+
 
   def get_address_href(long_address)
    add_arr = long_address.split(/\|/)

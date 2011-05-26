@@ -1,17 +1,19 @@
 class MarkersController < ApplicationController
   respond_to :html,:js
   def index
-    @my_home = @logged_in.postition
     if !params[:people_id]
       case params[:type]
-      when nil
+      when "share"
         map_id = Map.find_by_people_id(@logged_in.id).id
         @markers = Marker.find_all_by_map_id(map_id)
       when 'firend_postition'
         @friends = @logged_in.friends
-      end
-      
-      
+	 when 'schedule'
+		@plans = @logged_in.plans
+	 when "my_home"
+    	@my_home = @logged_in.postition
+		# render :json => @my_home.to_json
+      end    
       #render :json => Marker.find_all_by_map_id(map_id).to_json
     end
   end
@@ -41,6 +43,8 @@ class MarkersController < ApplicationController
 	 
     end
   end
+
+
   
   
   

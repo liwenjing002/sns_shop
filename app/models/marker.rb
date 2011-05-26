@@ -1,5 +1,4 @@
 class Marker < ActiveRecord::Base
-  
   def object
     if self.object_type == "Note"
       Note.find(self.object_id)
