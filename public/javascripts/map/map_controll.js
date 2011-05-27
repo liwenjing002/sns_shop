@@ -86,7 +86,7 @@ var MapObject =  {
 		//new marker请求地址解析的回调函数
 	    new_marker_Function:function (responses) {
 			string = MapObject.split_responses_address(responses);
-            postition_html = "<div id='new_postition' style='min-height:200px;height:auto;'><div id ='postition_text'><span color: #5F9128>当前位置：</span>"+string +"</div>"   
+            postition_html = "<div id='new_postition' style='height:auto;'><div id ='postition_text'><span color: #5F9128>当前位置：</span>"+string +"</div>"   
 			MapObject.temp_infowindow.setContent(postition_html + MapObject.map_share_html+"</div>")
        		MapObject.temp_infowindow.open(MapObject.map,MapObject.temp_marker);
 			google.maps.event.addListenerOnce(MapObject.temp_infowindow, 'closeclick', function(){MapObject.temp_marker.setMap(null)});
@@ -177,7 +177,7 @@ var MapObject =  {
     //提交marker信息到后台
     submit_marker: function(type){
         var markerLatLng = MapObject.temp_marker.getPosition()
-       
+         alert(type)
         MapObject.geocoder.geocode({
             latLng: markerLatLng
         }, 
@@ -196,11 +196,12 @@ var MapObject =  {
                         } 
                     });  
                 }
-				if(type == 'place'){
+		if(type == 'place'){
+                    
                     $("#place_full_address").attr("value",string)
-					$("#place_place_latitude").attr("value",markerLatLng.lat())
-					$("#place_place_longitude").attr("value",markerLatLng.lng())
-					$("#new_place_form").submit();
+		    $("#place_place_latitude").attr("value",markerLatLng.lat())
+		    $("#place_place_longitude").attr("value",markerLatLng.lng())
+//		    $("#new_place_form").submit();
                 }
             }
         }

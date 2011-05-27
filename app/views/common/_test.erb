@@ -1,12 +1,9 @@
-<div>
-<h2  align="center">我要去的地方</h2>
-<div id = 'place_body'>
-<div id = 'place_pic' style = 'float:left;width:150px;'>
-<%= link_to image_tag(@person.photo.url(:profile), :alt => @person.name,:width=>'150px'), @person.photo.url %>
-</div>
-<div id = 'place_description' style = 'float:left'>
+<div style="">
+  <h2><a>我要去的地方</a></h2>
+<%= link_to image_tag(@person.photo.url(:profile), :alt => @person.name,:width=>"300px"), @person.photo.url %>
+
+
 <p>1111111111111</p>
 <p>111111111111111111111111</p>
-</div>
-</div>
+
 </div>
