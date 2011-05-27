@@ -1,9 +1,10 @@
 
 var MapObject =  {
     map: null,
+	home_marker:null,
     markerClusterer: null,
     markers_array: [],
-    infoWindow: null,
+    infoWindow: new google.maps.InfoWindow(),
     geocoder: new google.maps.Geocoder(),//地址解析对象
     map_share_html:null,	//新增一个marker的初始化html
     visibleInfoWindow: null,
@@ -18,7 +19,7 @@ var MapObject =  {
         bounds: []              //adjust map to these limits. Should be [{"lat": , "lng": }]
     },
     temp_marker:null,
-    temp_infowindow: null,
+    temp_infowindow: new google.maps.InfoWindow(),
     markers : new Map(),
     info_windows: new Map(), //窗体对象map
     info_windows_html: new Map(),		//窗体的html map					 
@@ -39,8 +40,8 @@ var MapObject =  {
             myOptions);
 //        this.initControl() ;
 
-        this.infoWindow = new google.maps.InfoWindow();
-	this.init_marker_from_data("my_home"); 
+//        this.infoWindow = new google.maps.InfoWindow();
+		this.init_marker_from_data("my_home"); 
 //        this.init_marker_from_data("firend_postition");
 //	this.init_marker_from_data("schedule");
 
@@ -71,22 +72,49 @@ var MapObject =  {
         //alert(1)
         this.temp_marker = new google.maps.Marker({
             map:map,
-            draggable:false,
+            draggable:true,
             animation: google.maps.Animation.DROP,
             position: initialLocation
         });
         
-        // marker_share = document.getElementById("map_infowindow") 
-        this.temp_infowindow = MapObject.new_info_window_html(MapObject.map_share_html)
-        this.temp_infowindow.open(map,this.temp_marker);
-		
-		
-        google.maps.event.addListenerOnce(this.temp_infowindow, 'closeclick', function(){
-            MapObject.temp_marker.setMap(null);
-            alert()  
-        });
+        MapObject.geocoder.geocode({
+            latLng: initialLocation
+        }, function(responses){MapObject.new_marker_Function(responses)});
+
 
     },
+		//new marker请求地址解析的回调函数
+	    new_marker_Function:function (responses) {
+			string = MapObject.split_responses_address(responses);
+            postition_html = "<div id='new_postition' style='min-height:200px;height:auto;'><div id ='postition_text'><span color: #5F9128>当前位置：</span>"+string +"</div>"   
+			MapObject.temp_infowindow.setContent(postition_html + MapObject.map_share_html+"</div>")
+       		MapObject.temp_infowindow.open(MapObject.map,MapObject.temp_marker);
+			google.maps.event.addListenerOnce(MapObject.temp_infowindow, 'closeclick', function(){MapObject.temp_marker.setMap(null)});
+			google.maps.event.addListener(MapObject.temp_marker, 'dragend', function(){
+			MapObject.geocoder.geocode({
+           					 latLng: MapObject.temp_marker.getPosition()
+        					}, function(responses){
+												string = MapObject.split_responses_address(responses);
+                     							//alert(string)
+												$("#postition_text").html("<span color: #5F9128>当前位置：</span>"+string )							
+										 });
+			});
+			
+    },
+
+
+	split_responses_address:function(responses){
+	if (responses && responses.length > 0) {
+                //MapObject.updateMarkerAddress(marker_id,responses);
+      string = '';
+     for(i = responses[0].address_components.length-1;i>=0;i--){
+      string += (responses[0].address_components[i].long_name+ "|")
+       }
+	return string;
+		}else{return "找不到该地址"}
+	},
+			
+
     //跳动动画效果
     toggleBounce: function (marker) {
       
@@ -167,6 +195,12 @@ var MapObject =  {
                         success: function(message){                 
                         } 
                     });  
+                }
+				if(type == 'place'){
+                    $("#place_full_address").attr("value",string)
+					$("#place_place_latitude").attr("value",markerLatLng.lat())
+					$("#place_place_longitude").attr("value",markerLatLng.lng())
+					$("#new_place_form").submit();
                 }
             }
         }
@@ -300,13 +334,13 @@ var MapObject =  {
 
 
     //地址解析方法
-    re_geocodePosition:function (address,icon,info_htm) {
+    re_geocodePosition:function (address,icon,info_htm,is_home) {
         MapObject.geocoder.geocode({
             address: address
         }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 //alert(results[0].geometry.location)
-                MapObject.geocodePosition_marker(results[0].geometry.location,icon,info_htm)
+                MapObject.geocodePosition_marker(results[0].geometry.location,icon,info_htm,is_home)
             } else {
                 alert("找不到这个地方");
             }
@@ -314,7 +348,7 @@ var MapObject =  {
     },
 
 
-    geocodePosition_marker:function(latLng,icon,info_htm){
+    geocodePosition_marker:function(latLng,icon,info_htm,is_home){
         marker = new google.maps.Marker({
             map: MapObject.map,
             draggable: false,
@@ -322,11 +356,18 @@ var MapObject =  {
             icon: icon,
             position: latLng
         });
+		//alert(info_htm)
         if (info_htm!= null){
-            var fn = MapObject.markerClickFunction(info_htm, latLng);
+            var fn = MapObject.markerClickFunction(info_htm, marker);
             google.maps.event.addListener(marker, 'click', fn);
         }
-       MapObject.markerClusterer.addMarker(marker,true);
+		if(is_home){
+			MapObject.home_marker = marker;
+			return;
+		}else{
+			 MapObject.markerClusterer.addMarker(marker,true);
+		}
+      
     //alert(results[0].geometry.location)
     },
 
@@ -342,7 +383,7 @@ var MapObject =  {
         }
     },
 
-    markerClickFunction:function(html, latlng) {
+    markerClickFunction:function(html, marker) {
         return function(e) {
             e.cancelBubble = true;
             e.returnValue = false;
@@ -350,10 +391,10 @@ var MapObject =  {
                 e.stopPropagation();
                 e.preventDefault();
             }
-
+			//alert(marker)
             MapObject.infoWindow.setContent(html);
-            MapObject.infoWindow.setPosition(latlng);
-            MapObject.infoWindow.open(MapObject.map);
+            //MapObject.infoWindow.setPosition(latlng);
+            MapObject.infoWindow.open(MapObject.map,marker);
         };
     }  
        

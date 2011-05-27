@@ -642,6 +642,22 @@ a.button {
 }
 }
 
+span.button {
+	cursor: pointer;
+    @include gradient($light, $light - 50);
+    @include curve(4px);
+    @include shadow;
+    font-family: $heading-font;
+    font-size: 1.2em;
+    padding: 6px 8px 4px 8px;
+    color: $dark;
+    text-decoration: none;
+    &:hover, &.active {
+        @include gradient($primary+50, $primary);
+    color: edgevalue($primary)
+}
+}
+
 /* Tags */
 
 .tags {
@@ -1086,4 +1102,10 @@ margin-right: -15px;
 
 .map_mark_note{
 	margin-bottom: opx;
+}
+
+
+
+.add_place{
+	color: #5F9128;
 }

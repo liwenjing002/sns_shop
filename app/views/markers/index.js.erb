@@ -1,19 +1,27 @@
 MapObject.markers_array = [];
 
+//alert(MapObject.home_marker)
+if (MapObject.home_marker !=null){
+	MapObject.home_marker.setMap(null)
+}
+	
 <%if @my_home and @my_home.home_latitude and @my_home.home_longitude%>
   latLng = new google.maps.LatLng(<%=@my_home.home_latitude%>, <%= @my_home.home_longitude %>);
-  marker = new google.maps.Marker({
+  MapObject.home_marker = new google.maps.Marker({
   map: MapObject.map,
   draggable: false,
   icon: "/images/map/home.png",
   animation: google.maps.Animation.DROP,
   position: latLng
   });
-  MapObject.markerClusterer.addMarker(marker,true);
+  //MapObject.markerClusterer.addMarker(marker,true);
 <%end%>
 <%if @my_home and @my_home.home_address%>
-  MapObject.re_geocodePosition('<%=@my_home.home_address%>',"/images/map/home.png",null);
+  MapObject.re_geocodePosition('<%=@my_home.home_address%>',"/images/map/home.png",null,true);
 <%end%>
+
+
+
 
 <%if @markers%>
  // marker_json = eval('(' + '<%= @markers.to_json.html_safe%>'+ ')');
@@ -28,7 +36,7 @@ MapObject.markers_array = [];
     animation: google.maps.Animation.DROP,
     position: latLng
     });
-    var fn = MapObject.markerClickFunction('<%= raw mark_html(marker) %>', latLng);
+    var fn = MapObject.markerClickFunction('<%= raw mark_html(marker) %>', marker);
     google.maps.event.addListener(marker, 'click', fn);
     MapObject.markers_array.push(marker);
     MapObject.markers.put(<%=marker.id%>,marker);
@@ -40,18 +48,18 @@ MapObject.markers_array = [];
 
 <% @friends.each do |friend| %>
   <%if friend.postition.home_latitude and friend.postition.home_longitude%>
-    latLng = new google.maps.LatLng(<%friend.postition.home_latitude%>, <%= friend.postition.home_longitude %>);
-	var fn = MapObject.markerClickFunction('<%=friend.name%>', latLng);    
+    latLng = new google.maps.LatLng(<%friend.postition.home_latitude%>, <%= friend.postition.home_longitude %>); 
 	marker = new google.maps.Marker({
     map: MapObject.map,
     draggable: false,
     animation: google.maps.Animation.DROP,
     position: latLng
     });
+	var fn = MapObject.markerClickFunction('<%=friend.name%>', marker);   
     google.maps.event.addListener(marker, 'click', fn);
     MapObject.markers_array.push(marker);
   <%else%>
-    MapObject.re_geocodePosition('<%=friend.postition.home_address%>',"/images/map/home.png",'<%=friend.name%>');
+    MapObject.re_geocodePosition('<%=friend.postition.home_address%>',"/images/map/home.png",'<%=friend.name%>',false);
   <%end%>
 <%end%>
 
@@ -68,8 +76,10 @@ MapObject.markers_array = [];
 <%end%>
 
 if (MapObject.markerClusterer){
-alert(1)
+//alert(1)
 MapObject.markerClusterer.clearMarkers();
+MapObject.markerClusterer.addMarkers(MapObject.markers_array);
+
 }else{
 MapObject.markerClusterer = new MarkerClusterer(MapObject.map, MapObject.markers_array);
 }  

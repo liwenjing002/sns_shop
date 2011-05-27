@@ -1,6 +1,5 @@
 class PlacesController < ApplicationController
-  # GET /places
-  # GET /places.xml
+  	respond_to :js
   def index
     @places = Place.all
 
@@ -42,19 +41,18 @@ class PlacesController < ApplicationController
     @place = Place.find(params[:id])
   end
 
-  # POST /places
-  # POST /places.xml
   def create
-    @place = Place.new(params[:place])
-
-    respond_to do |format|
+      @place = Place.new(params[:place])
+	  @marker = Marker.new
+	  @marker.geocode_position = @place.full_address
+	  @marker.marker_latitude = @place.place_latitude
+	  @marker.marker_longitude = @place.place_longitude
+      @marker.object_type = "Place"
+      @marker.map_id =  Map.find_by_people_id(@logged_in.id).id
       if @place.save
-        format.html { redirect_to(@place, :notice => 'Place was successfully created.') }
-        format.xml  { render :xml => @place, :status => :created, :location => @place }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @place.errors, :status => :unprocessable_entity }
-      end
+        @marker.object_id = @place.id
+        @marker.save
+	  end	
     end
   end
 
