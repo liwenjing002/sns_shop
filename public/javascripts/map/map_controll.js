@@ -1,7 +1,7 @@
    
 var MapObject =  {
     map: null,
-	home_marker:null,
+    home_marker:null,
     markerClusterer: null,
     markers_array: [],
     infoWindow: new google.maps.InfoWindow(),
@@ -38,12 +38,12 @@ var MapObject =  {
         this.map = new google.maps.Map(
             document.getElementById(this.map_options.id), 
             myOptions);
-//        this.initControl() ;
+        //        this.initControl() ;
 
-//        this.infoWindow = new google.maps.InfoWindow();
-		this.init_marker_from_data("my_home"); 
-//        this.init_marker_from_data("firend_postition");
-//	this.init_marker_from_data("schedule");
+        //        this.infoWindow = new google.maps.InfoWindow();
+        this.init_marker_from_data("my_home"); 
+    //        this.init_marker_from_data("firend_postition");
+    //	this.init_marker_from_data("schedule");
 
 
     },
@@ -79,40 +79,56 @@ var MapObject =  {
         
         MapObject.geocoder.geocode({
             latLng: initialLocation
-        }, function(responses){MapObject.new_marker_Function(responses)});
+        }, function(responses){
+            MapObject.new_marker_Function(responses)
+        });
 
 
     },
-		//new marker请求地址解析的回调函数
-	    new_marker_Function:function (responses) {
-			string = MapObject.split_responses_address(responses);
-            postition_html = "<div id='new_postition' style='height:auto;'><div id ='postition_text'><span color: #5F9128>当前位置：</span>"+string +"</div>"   
-			MapObject.temp_infowindow.setContent(postition_html + MapObject.map_share_html+"</div>")
-       		MapObject.temp_infowindow.open(MapObject.map,MapObject.temp_marker);
-			google.maps.event.addListenerOnce(MapObject.temp_infowindow, 'closeclick', function(){MapObject.temp_marker.setMap(null)});
-			google.maps.event.addListener(MapObject.temp_marker, 'dragend', function(){
-			MapObject.geocoder.geocode({
-           					 latLng: MapObject.temp_marker.getPosition()
-        					}, function(responses){
-												string = MapObject.split_responses_address(responses);
-                     							//alert(string)
-												$("#postition_text").html("<span color: #5F9128>当前位置：</span>"+string )							
-										 });
-			});
+    //new marker请求地址解析的回调函数
+    new_marker_Function:function (responses) {
+        string = MapObject.split_responses_address(responses);
+        
+        postition_html = "<div id='new_postition' style='min-height:200px;height:auto;'><div id ='postition_text'><span color: #5F9128>当前位置：</span>"+string +"</div>"   
+        MapObject.temp_infowindow.setContent(postition_html + MapObject.map_share_html+"</div>")
+        MapObject.temp_infowindow.open(MapObject.map,MapObject.temp_marker);
+         google.maps.event.addListener(MapObject.temp_infowindow, 'domready', function(){
+        $("#place_full_address").attr("value",string);
+        $("#place_place_latitude").attr("value",MapObject.temp_marker.getPosition().lat());
+        $("#place_place_longitude").attr("value",MapObject.temp_marker.getPosition().lng());
+         })
+        
+        google.maps.event.addListenerOnce(MapObject.temp_infowindow, 'closeclick', function(){
+            MapObject.temp_marker.setMap(null)
+        });
+        google.maps.event.addListener(MapObject.temp_marker, 'dragend', function(){
+            MapObject.geocoder.geocode({
+                latLng: MapObject.temp_marker.getPosition()
+            }, function(responses){
+                string = MapObject.split_responses_address(responses);
+                //alert(string)
+                $("#postition_text").html("<span color: #5F9128>当前位置：</span>"+string );
+                $("#place_full_address").attr("value",string)
+                $("#place_place_latitude").attr("value",MapObject.temp_marker.getPosition().lat())
+                $("#place_place_longitude").attr("value",MapObject.temp_marker.getPosition().lng())
+            });
+        });
 			
     },
 
 
-	split_responses_address:function(responses){
-	if (responses && responses.length > 0) {
-                //MapObject.updateMarkerAddress(marker_id,responses);
-      string = '';
-     for(i = responses[0].address_components.length-1;i>=0;i--){
-      string += (responses[0].address_components[i].long_name+ "|")
-       }
-	return string;
-		}else{return "找不到该地址"}
-	},
+    split_responses_address:function(responses){
+        if (responses && responses.length > 0) {
+            //MapObject.updateMarkerAddress(marker_id,responses);
+            string = '';
+            for(i = responses[0].address_components.length-1;i>=0;i--){
+                string += (responses[0].address_components[i].long_name+ "|")
+            }
+            return string;
+        }else{
+            return "找不到该地址"
+        }
+    },
 			
 
     //跳动动画效果
@@ -177,7 +193,7 @@ var MapObject =  {
     //提交marker信息到后台
     submit_marker: function(type){
         var markerLatLng = MapObject.temp_marker.getPosition()
-         alert(type)
+        alert(type)
         MapObject.geocoder.geocode({
             latLng: markerLatLng
         }, 
@@ -196,12 +212,13 @@ var MapObject =  {
                         } 
                     });  
                 }
-		if(type == 'place'){
+                if(type == 'place'){
                     
                     $("#place_full_address").attr("value",string)
-		    $("#place_place_latitude").attr("value",markerLatLng.lat())
-		    $("#place_place_longitude").attr("value",markerLatLng.lng())
-//		    $("#new_place_form").submit();
+                    $("#place_place_latitude").attr("value",markerLatLng.lat())
+                    $("#place_place_longitude").attr("value",markerLatLng.lng())
+                    //alert($("#place_place_longitude").attr("value"))
+                    //$("#new_place_form").submit();
                 }
             }
         }
@@ -247,12 +264,12 @@ var MapObject =  {
     //从后台获取数据后初始化marker
     init_marker_from_data:function(type){
         
-            $.ajax({                                                
-                type: "GET",                                    
-                url: "/markers?type="+type,                                      
-                success: function(){
-                } 
-            });
+        $.ajax({                                                
+            type: "GET",                                    
+            url: "/markers?type="+type,                                      
+            success: function(){
+            } 
+        });
 
         
 
@@ -357,17 +374,17 @@ var MapObject =  {
             icon: icon,
             position: latLng
         });
-		//alert(info_htm)
+        //alert(info_htm)
         if (info_htm!= null){
             var fn = MapObject.markerClickFunction(info_htm, marker);
             google.maps.event.addListener(marker, 'click', fn);
         }
-		if(is_home){
-			MapObject.home_marker = marker;
-			return;
-		}else{
-			 MapObject.markerClusterer.addMarker(marker,true);
-		}
+        if(is_home){
+            MapObject.home_marker = marker;
+            return;
+        }else{
+            MapObject.markerClusterer.addMarker(marker,true);
+        }
       
     //alert(results[0].geometry.location)
     },
@@ -392,7 +409,7 @@ var MapObject =  {
                 e.stopPropagation();
                 e.preventDefault();
             }
-			//alert(marker)
+            //alert(marker)
             MapObject.infoWindow.setContent(html);
             //MapObject.infoWindow.setPosition(latlng);
             MapObject.infoWindow.open(MapObject.map,marker);

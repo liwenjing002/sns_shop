@@ -1,4 +1,4 @@
- <%= form_for Place.new, :html => {:id => 'new_place_form',:onsubmit=>'MapObject.submit_marker("place");'} do |form| %>  
+ <%= form_for Place.new, :html => {:id => 'new_place_form'} do |form| %>  
 	
   <ul class="share-details share-selector">
       <li><span class ='comment2-icon add_place'>发布我的地点<span></li>
@@ -14,7 +14,7 @@
 	  <div style='clear:both;'></div>
  	  <input type="file" onchange="get_file_name(this.value)" style='float:left;margin-top:-20px; *margin-top:-40px; filter:alpha(opacity=0);-moz-opacity:0;opacity:0;'/>
  	<br>
-	<%= submit_tag t('share.share'),:onclick=>"return false;" %>
+	<%= submit_tag t('share.share') %>
   <% end %>
 
 <script>

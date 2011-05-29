@@ -2,11 +2,6 @@ class PlacesController < ApplicationController
   	respond_to :js
   def index
     @places = Place.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @places }
-    end
   end
 
   # GET /places/1
@@ -19,21 +14,12 @@ class PlacesController < ApplicationController
     @can_share = @place.can_share?(@logged_in)
     @albums = @place.albums.all(:order => 'name')
 
-#    unless @logged_in.can_see?(@place)
-#      render :text => t('groups.not_found'), :layout => true, :status => 404
-#      return
-#    end
   end
 
   # GET /places/new
   # GET /places/new.xml
   def new
     @place = Place.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @place }
-    end
   end
 
   # GET /places/1/edit
@@ -52,24 +38,15 @@ class PlacesController < ApplicationController
       if @place.save
         @marker.object_id = @place.id
         @marker.save
+      else
+        render :json => {:success=>false}
+      end
 	  end	
-    end
-  end
 
   # PUT /places/1
   # PUT /places/1.xml
   def update
     @place = Place.find(params[:id])
-
-    respond_to do |format|
-      if @place.update_attributes(params[:place])
-        format.html { redirect_to(@place, :notice => 'Place was successfully updated.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @place.errors, :status => :unprocessable_entity }
-      end
-    end
   end
 
   # DELETE /places/1
@@ -77,9 +54,5 @@ class PlacesController < ApplicationController
   def destroy
     @place = Place.find(params[:id])
     @place.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(places_url) }
-      format.xml  { head :ok }
-    end
   end
+end
