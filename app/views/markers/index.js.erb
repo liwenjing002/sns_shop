@@ -14,18 +14,21 @@ if (MapObject.home_marker !=null){
   animation: google.maps.Animation.DROP,
   position: latLng
   });
+  var fn = MapObject.markerClickFunction('<%= @my_home.home_address%>', MapObject.home_marker);
+  google.maps.event.addListener(marker, 'click', fn);
   //MapObject.markerClusterer.addMarker(marker,true);
 <%end%>
 <%if @my_home and @my_home.home_address%>
-  MapObject.re_geocodePosition('<%=@my_home.home_address%>',"/images/map/home.png",null,true);
+  MapObject.re_geocodePosition('<%=@my_home.home_address%>',"/images/map/home.png",'<%= @my_home.home_address%>',true);
 <%end%>
 
 
 
 
 <%if @markers%>
- // marker_json = eval('(' + '<%= @markers.to_json.html_safe%>'+ ')');
-  //alert(obj2str(marker_json[0]))
+  //alert('<%= @markers.to_json.html_safe%>')
+  //marker_json = eval('(' + '<%= @markers.to_json%>'+ ')');
+ // alert(obj2str(marker_json))
 
   <%  @markers.each do|marker|%>
     latLng = new google.maps.LatLng(<%=marker.marker_latitude%>, <%= marker.marker_longitude %>);
@@ -36,7 +39,7 @@ if (MapObject.home_marker !=null){
     animation: google.maps.Animation.DROP,
     position: latLng
     });
-    var fn = MapObject.markerClickFunction('<%= raw mark_html(marker) %>', marker);
+    var fn = MapObject.markerClickFunction('<%= raw marker.marker_html %>', marker);
     google.maps.event.addListener(marker, 'click', fn);
     MapObject.markers_array.push(marker);
     MapObject.markers.put(<%=marker.id%>,marker);

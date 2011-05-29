@@ -193,7 +193,7 @@ var MapObject =  {
     //提交marker信息到后台
     submit_marker: function(type){
         var markerLatLng = MapObject.temp_marker.getPosition()
-        alert(type)
+        //alert(type)
         MapObject.geocoder.geocode({
             latLng: markerLatLng
         }, 
@@ -213,12 +213,18 @@ var MapObject =  {
                     });  
                 }
                 if(type == 'place'){
-                    
-                    $("#place_full_address").attr("value",string)
-                    $("#place_place_latitude").attr("value",markerLatLng.lat())
-                    $("#place_place_longitude").attr("value",markerLatLng.lng())
-                    //alert($("#place_place_longitude").attr("value"))
-                    //$("#new_place_form").submit();
+                    $.ajax({                                                
+                        type: "POST",                                    
+                        url: "/places",                                     
+                        data: "marker[geocode_position]="+ $("#place_full_address") .attr("value")+ 
+                               "&marker[marker_latitude]=" + $("#place_place_latitude").attr("value")+ 
+                               "&marker[marker_longitude]=" + $("#place_place_longitude").attr("value")+
+                                "&place[place_name]="+ $("#place_place_name").val()+ 
+                                "&place[full_address]="+ $("#place_full_address").val()+ 
+                                "&place[place_description]="+ $("#place_place_description").val()+"&ajax=true",    
+                        success: function(message){                 
+                        } 
+                    });  
                 }
             }
         }
@@ -381,6 +387,7 @@ var MapObject =  {
         }
         if(is_home){
             MapObject.home_marker = marker;
+            
             return;
         }else{
             MapObject.markerClusterer.addMarker(marker,true);

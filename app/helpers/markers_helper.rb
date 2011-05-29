@@ -8,9 +8,10 @@ module MarkersHelper
 
 	 def mark_html(marker)
     html =''
-	html << "#{render :partial => 'common/marker_info',:locals => {:marker=> marker}}"
+  	html << "#{render :partial => 'common/marker_info',:locals => {:marker=> marker}}"
   
     html = html.gsub(/\'/, '"')
     html = html.gsub(/[\n\r]/,'')
   end
+  
 end

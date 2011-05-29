@@ -1,0 +1,10 @@
+<div style="">
+  <h2><%= link_to place.place_name,place,:target=>"_blank" %></h2>
+
+
+  <p><%= place.place_description %></p>
+  <div class = 'marker_address'>
+    <%= get_address_href(place.full_address)%>
+  </div> 
+</div>
+
