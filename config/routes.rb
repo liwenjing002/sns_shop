@@ -1,6 +1,10 @@
 OneBody::Application.routes.draw do
-
-  resources :places
+ 
+  resources :places do
+    collection do
+      post :add_share
+    end
+  end
 
   resources :plans
   resources :markers 

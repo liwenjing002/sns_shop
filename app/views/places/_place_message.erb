@@ -1,26 +1,35 @@
- <%= form_for Place.new, :html => {:id => 'new_place_form',:onsubmit=>'MapObject.submit_marker("place");return false'} do |form| %>  
-	
-  <ul class="share-details share-selector">
-      <li><span class ='comment2-icon add_place'>发布我的地点<span></li>
-  </ul>
-	  <%= form.text_field :place_name, :placeholder => "给你的地点起个名字" %>
-	  <%= form.text_field :full_address, :type=>'hidden' %>
-	  <%= form.text_field :place_latitude, :type=>'hidden' %>
-	  <%= form.text_field :place_longitude, :type=>'hidden' %>
-	  <br>
-      <%= form.text_area :place_description, :rows => 2,:width=>'160px', :placeholder => "留下点说明吧。。。"%><br/>
-	  <span class ='picture-icon' style='cursor:pointer;float:left;'>添加图片:&nbsp</span>
-	  <span id="file_name" style='float:left;'></span>      
-	  <div style='clear:both;'></div>
- 	  <input type="file" onchange="get_file_name(this.value)" style='float:left;margin-top:-20px; *margin-top:-40px; filter:alpha(opacity=0);-moz-opacity:0;opacity:0;'/>
- 	<br>
-	<%= submit_tag t('share.share'),:onclick=>"return false;" %>
-  <% end %>
+<div class="share">
+      <%= text_field_tag 'share-starter', '', :placeholder => "提点建议或者问题" %>
+      <ul class="share-details share-selector" style="display:none;">
+          <li><%= link_to_function "我要建议", "selectShare('share-addvise')", :class => 'comment2-icon', :id => 'share-addvise-icon' %></li>
+          <li><%= link_to_function "我要提问", "selectShare('share-question')", :class => 'picture-icon', :id => 'share-question-icon' %></li>
+        <li class="cancel-link"><%= link_to_function '', 'hideShare()', :class =>  'delete-icon' %></li>
+      </ul>
+  
+        <%= form_for @place_share=PlaceShare.new, :url => { :action => "add_share" },:html => {:id => 'share-addvise', :class => 'share-type'},:remote=>true do |form| %>
+          <%= hidden_field_tag :album, @place.place_name %>
+          <%= hidden_field_tag :type, 'addvise' %>
+          <span class="small"><%= t('share.note_label') %></span><br/>
+          <%= form.text_area :text, :rows => 2 , :placeholder => "对于去"+@place.place_name+"的游客,您有什么建议"%><br/>
+          <%= file_field_tag 'pictures[]', :multiple => false %><br/>
+          <%= submit_tag t('share.share') %>
+        <% end %>
+        
+          <%= form_for @place_share=PlaceShare.new, :url => {:action=>"add_share"},:html => {:id => 'share-question', :class => 'share-type'},:remote=>true do |form| %>
+          <%= hidden_field_tag :album, @place.place_name %>
+          <%= hidden_field_tag :type, 'question' %>
+          <span class="small"><%= t('share.note_label') %></span><br/>
+          <%= form.text_area :text, :rows => 2, :placeholder => "对于"+@place.place_name+",您有什么问题？"%><br/>
+          <%= file_field_tag 'pictures[]', :multiple => false %><br/>
+          <%= submit_tag t('share.share') %>
+        <% end %>
 
-<script>
-function get_file_name(full_path){
-alert();
-	$("#file_name").html(full_path)
-}
-</script>
+     
+</div>
+<%= javascript_include_tag "extend/ui" %>
+
+  <div class="stream-items">
+    <%= render :partial => 'streams/stream_items' %>
+  </div>
+
 

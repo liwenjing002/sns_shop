@@ -1,7 +1,7 @@
 function selectShare(share) {
     $('.share-type').hide();
     $('#'+share).show();
-    $('#'+share+' :input[type!="hidden"]')[0].focus();
+//    $('#'+share+' :input[type!="hidden"]')[0].focus();
     $('.share-selector a').removeClass('active');
     $('#'+share+'-icon').addClass('active');
 }

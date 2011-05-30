@@ -8,10 +8,9 @@ class Place < ActiveRecord::Base
   has_attached_file :photo, PAPERCLIP_PHOTO_OPTIONS
 
   
-    def shared_stream_items(count)
+    def shared_stream_items()
     items = stream_items.all(
       :order => 'stream_items.created_at desc',
-      :limit => count,
       :include => :person
     )
     # do our own eager loading here...
