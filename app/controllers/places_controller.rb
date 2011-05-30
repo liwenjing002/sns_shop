@@ -13,12 +13,8 @@ class PlacesController < ApplicationController
   # GET /places/1.xml
   def show
     @place = Place.find(params[:id])
-
-    @stream_items = @place.shared_stream_items(20)
-    @can_post = @place.can_post?(@logged_in)
-    @can_share = @place.can_share?(@logged_in)
-    @albums = @place.albums.all(:order => 'name')
-
+	@album = @place.albums
+    @pictures = @album.pictures.paginate(:order => 'id') if @album.length >0 
 #    unless @logged_in.can_see?(@place)
 #      render :text => t('groups.not_found'), :layout => true, :status => 404
 #      return
@@ -83,4 +79,3 @@ class PlacesController < ApplicationController
       format.xml  { head :ok }
     end
   end
-end
