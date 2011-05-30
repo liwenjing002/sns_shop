@@ -197,10 +197,7 @@ var MapObject =  {
                     });  
                 }
 				if(type == 'place'){
-                    $("#place_full_address").attr("value",string)
-					$("#place_place_latitude").attr("value",markerLatLng.lat())
-					$("#place_place_longitude").attr("value",markerLatLng.lng())
-					$("#new_place_form").submit();
+                    
                 }
             }
         }
