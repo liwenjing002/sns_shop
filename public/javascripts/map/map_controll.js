@@ -212,6 +212,7 @@ var MapObject =  {
                         } 
                     });  
                 }
+<<<<<<< HEAD
                 if(type == 'place'){
                     $.ajax({                                                
                         type: "POST",                                    
@@ -225,6 +226,19 @@ var MapObject =  {
                         success: function(message){                 
                         } 
                     });  
+=======
+<<<<<<< HEAD
+				if(type == 'place'){
+                    
+=======
+		if(type == 'place'){
+                    
+                    $("#place_full_address").attr("value",string)
+		    $("#place_place_latitude").attr("value",markerLatLng.lat())
+		    $("#place_place_longitude").attr("value",markerLatLng.lng())
+//		    $("#new_place_form").submit();
+>>>>>>> cc43c4b4ddfba9e530217d543b891e91800ac6c3
+>>>>>>> 18a9d8ef76150f72033b1dcf36c7c5c7b4da10fe
                 }
             }
         }

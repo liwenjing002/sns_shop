@@ -1,0 +1,26 @@
+ <%= form_for Place.new, :html => {:id => 'new_place_form',:onsubmit=>'MapObject.submit_marker("place");return false'} do |form| %>  
+	
+  <ul class="share-details share-selector">
+      <li><span class ='comment2-icon add_place'>发布我的地点<span></li>
+  </ul>
+	  <%= form.text_field :place_name, :placeholder => "给你的地点起个名字" %>
+	  <%= form.text_field :full_address, :type=>'hidden' %>
+	  <%= form.text_field :place_latitude, :type=>'hidden' %>
+	  <%= form.text_field :place_longitude, :type=>'hidden' %>
+	  <br>
+      <%= form.text_area :place_description, :rows => 2,:width=>'160px', :placeholder => "留下点说明吧。。。"%><br/>
+	  <span class ='picture-icon' style='cursor:pointer;float:left;'>添加图片:&nbsp</span>
+	  <span id="file_name" style='float:left;'></span>      
+	  <div style='clear:both;'></div>
+ 	  <input type="file" onchange="get_file_name(this.value)" style='float:left;margin-top:-20px; *margin-top:-40px; filter:alpha(opacity=0);-moz-opacity:0;opacity:0;'/>
+ 	<br>
+	<%= submit_tag t('share.share'),:onclick=>"return false;" %>
+  <% end %>
+
+<script>
+function get_file_name(full_path){
+alert();
+	$("#file_name").html(full_path)
+}
+</script>
+

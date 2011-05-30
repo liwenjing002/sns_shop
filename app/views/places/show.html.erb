@@ -1,8 +1,36 @@
+<<<<<<< HEAD
 <div style="">
   <h2><a><%=@place.place_name%></a></h2>
 
 
 <p><%= @place.place_description %></p>
+=======
+<div id ="place_body">
+<div id = "place_left" class= "left" style = "float: left;width: 600px;">
+
+<div id = "place_name">
+<span style = "font-size:25px;"><%= @place.place_name%></span>
+<span style = "margin-left:20px;"><%= @place.full_address%></span>
+</div>
+<div id = "palce_pic">
+<% if !@pictures or @pictures.empty? %>
+<p><%= image_tag('missing_large.png', :alt => t('none')) %></p>
+<% end %>
+</div>
+<div id = "place_leave_message">message</div>
+</div>
+
+<div id = "place_right" class= "right" style= "margin-left: 620px;">
+<div id= "place_people">people</div>
+<div id = "place_description"><%= @place.place_description%></div>
+<div id = "place_tag">tag</div>
+<div id = "place_impression">impression</div>
+<div id = "place_meet_people">meet people</div>
+<div id = "place_tip_or_quesiton">tip question</div>
+<div id = "place_something_arround">something arround </div>
+<div id = "place_add">add</div>
+</div>
+>>>>>>> 18a9d8ef76150f72033b1dcf36c7c5c7b4da10fe
 
 </div>
 
