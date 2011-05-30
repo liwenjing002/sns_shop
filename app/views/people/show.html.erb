@@ -23,7 +23,7 @@
 	//MapObject.mark_common_html = $('#marker_common').html()
 	//alert(MapObject.mark_common_html)
 
-	$('#map_infowindow').remove() 
+	$('#map_infowindow').remove()
 	<% if @map.center_latitude %> MapObject.map_options.center_latitude = <%= @map.center_latitude%>;<%end%> 
 	<% if  @map.center_longitude %> MapObject.map_options.center_longitude = <%= @map.center_longitude%>;<%end%>
 	<% if @map.zoom %>MapObject.map_options.zoom = <%= @map.zoom%>;<%end%>
