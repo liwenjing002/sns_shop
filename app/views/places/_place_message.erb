@@ -8,6 +8,7 @@
   
         <%= form_for @place_share=PlaceShare.new, :url => { :action => "add_share" },:html => {:id => 'share-addvise', :class => 'share-type'},:remote=>true do |form| %>
           <%= hidden_field_tag :album, @place.place_name %>
+          <%= hidden_field_tag :place_id, @place.id %>
           <%= hidden_field_tag :type, 'addvise' %>
           <span class="small"><%= t('share.note_label') %></span><br/>
           <%= form.text_area :text, :rows => 2 , :placeholder => "对于去"+@place.place_name+"的游客,您有什么建议"%><br/>
@@ -29,7 +30,7 @@
 <%= javascript_include_tag "extend/ui" %>
 
   <div class="stream-items">
-    <%= render :partial => 'streams/stream_items' %>
+    <%= render :partial => 'places/place_share_items' %>
   </div>
 
 

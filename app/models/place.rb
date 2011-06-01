@@ -5,7 +5,7 @@ class Place < ActiveRecord::Base
   has_many :admins, :through => :memberships, :source => :person, :order => 'last_name, first_name', :conditions => ['memberships.admin = ?', true]
   
   
-  has_attached_file :photo, PAPERCLIP_PHOTO_OPTIONS
+  belongs_to :picture
 
   
     def shared_stream_items()

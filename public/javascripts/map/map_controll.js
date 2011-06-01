@@ -193,7 +193,7 @@ var MapObject =  {
     //提交marker信息到后台
     submit_marker: function(type){
         var markerLatLng = MapObject.temp_marker.getPosition()
-        //alert(type)
+        alert(type)
         MapObject.geocoder.geocode({
             latLng: markerLatLng
         }, 

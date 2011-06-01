@@ -35,4 +35,8 @@ class StreamItem < ActiveRecord::Base
   def can_have_comments?
     %w(Verse Note Album).include?(streamable_type)
   end
+  
+  def streamable_obj
+    eval(streamable_type).find(streamable_id)
+  end
 end

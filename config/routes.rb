@@ -3,6 +3,7 @@ OneBody::Application.routes.draw do
   resources :places do
     collection do
       post :add_share
+      post :add_temp_pic
     end
   end
 

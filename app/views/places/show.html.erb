@@ -7,8 +7,10 @@
 <span style = "margin-left:20px;"><%= @place.full_address%></span>
 </div>
 <div id = "palce_pic">
-<% if !@pictures or @pictures.empty? %>
+<% if !@place.picture and (!@pictures or @pictures.empty?) %>
 <p><%= image_tag('missing_large.png', :alt => t('none')) %></p>
+<%else%>
+<%= image_tag(@place.picture.photo.url(:large), :alt => t('none')) %>
 <% end %>
 </div>
 <div id = "place_leave_message">

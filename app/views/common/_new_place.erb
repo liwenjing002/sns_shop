@@ -1,26 +1,75 @@
- <%= form_for Place.new,:remote=>true, :html => {:id => 'new_place_form',:onsubmit=>'MapObject.submit_marker("place");'} do |form| %>  
-	
-  <ul class="share-details share-selector">
-      <li><span class ='comment2-icon add_place'>发布我的地点<span></li>
-  </ul>
-	  <%= form.text_field :place_name, :placeholder => "给你的地点起个名字" %>
-	  <%= form.text_field :full_address, :type=>'hidden' %>
-	  <%= form.text_field :place_latitude, :type=>'hidden' %>
-	  <%= form.text_field :place_longitude, :type=>'hidden' %>
-	  <br>
-      <%= form.text_area :place_description, :rows => 2,:width=>'160px', :placeholder => "留下点说明吧。。。"%><br/>
-	  <span class ='picture-icon' style='cursor:pointer;float:left;'>添加图片:&nbsp</span>
-	  <span id="file_name" style='float:left;'></span>      
-	  <div style='clear:both;'></div>
- 	  <input type="file" onchange="get_file_name(this.value)" style='float:left;margin-top:-20px; *margin-top:-40px; filter:alpha(opacity=0);-moz-opacity:0;opacity:0;'/>
- 	<br>
-	<%= submit_tag t('share.share'),:onclick=>"return false;" %>
-  <% end %>
+<%= form_for Place.new, :remote=>true,:html => {:multipart => true,:id => 'new_place_form',:onsubmit=>''} do |form| %>  
 
-<script>
-function get_file_name(full_path){
-alert();
-	$("#file_name").html(full_path)
-}
-</script>
+  <ul class="share-details share-selector">
+    <li><span class ='comment2-icon add_place'>发布我的地点<span></li>
+          </ul>
+          <%= form.text_field :place_name, :placeholder => "给你的地点起个名字" %>
+          <%= form.text_field :full_address, :type=>'hidden' %>
+          <%= form.text_field :place_latitude, :type=>'hidden' %>
+          <%= form.text_field :place_longitude, :type=>'hidden' %>
+          <%= text_field :picture,:id, :type=>'hidden' %>
+          <br>
+          <%= form.text_area :place_description, :rows => 2,:width=>'160px', :placeholder => "留下点说明吧。。。"%><br/>
+          <div style='clear:both;'></div>
+
+        <% end %>
+
+        <div style="height:40px;">
+          <span class ='picture-icon' style='color: #5F9128;cursor:pointer;float:left;'>添加图片:&nbsp</span>    
+          <span id="file_name" style='float:left;'></span>
+
+
+          <div style='clear:both;'></div>
+          <input type="file" id ="fileToUpload" name ="picture" onchange="fileChange(this.value)" style='cursor:pointer;float:left;margin-top:-20px; *margin-top:-40px; filter:alpha(opacity=0);-moz-opacity:0;opacity:0;'/>
+        </div>
+        <div style='clear:both;'></div>
+
+        <span class="button" id="sbumit_button" onclick="alert($('new_place_form')[0]);$('new_place_form')[0].submit();"><%=t('share.share')%></span>        
+        <%=image_tag("loading.gif",:id=>"loading",:style=>"display:none",:height => '30')%>
+        <span style="height:35px;float:right;margin-right: 20px;"><%=image_tag("",:id=>"temp_pic",:style=>"display:none",:height => '30')%></span>
+        <script>
+          function fileChange(full_path){
+            get_file_name(full_path);
+            ajaxFileUpload();
+          }
+          
+          
+          
+          function get_file_name(full_path){
+            $("#file_name").html(full_path)
+          }
+          
+          function ajaxFileUpload(){
+            loading();//动态加载小图标
+            $.ajaxFileUpload({
+              url:'/places/add_temp_pic',
+              secureuri:false,
+              dataType: 'json',
+              fileElementId:'fileToUpload',
+              success: function (data,status){
+                if(data.success=="true"){
+                   $("#picture_id").attr("value",data.pic_id)
+                   $("#temp_pic").attr("src",data.pic_url);
+                   $("#temp_pic").attr("style","display:");
+                }else{
+                  alert("文件保存失败")
+                }
+              },
+              error: function (data, status, e){
+                alert(data.msg);
+                alert(status);
+                alert(e)
+              }
+            })
+            return false;
+          }
+          function loading(){
+            $("#loading").ajaxStart(function(){
+              $(this).show();
+            }).ajaxComplete(function(){
+              $(this).hide();
+            });
+          }
+                    
+        </script>
 
