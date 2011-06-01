@@ -24,7 +24,7 @@
         </div>
         <div style='clear:both;'></div>
 
-        <span class="button" id="sbumit_button" onclick="alert($('new_place_form')[0]);$('new_place_form')[0].submit();"><%=t('share.share')%></span>        
+        <span class="button" id="sbumit_button" onclick="$('#new_place_form').submit();"><%=t('share.share')%></span>        
         <%=image_tag("loading.gif",:id=>"loading",:style=>"display:none",:height => '30')%>
         <span style="height:35px;float:right;margin-right: 20px;"><%=image_tag("",:id=>"temp_pic",:style=>"display:none",:height => '30')%></span>
         <script>
@@ -56,8 +56,6 @@
                 }
               },
               error: function (data, status, e){
-                alert(data.msg);
-                alert(status);
                 alert(e)
               }
             })
