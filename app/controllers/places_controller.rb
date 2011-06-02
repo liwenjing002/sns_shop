@@ -10,8 +10,10 @@ class PlacesController < ApplicationController
     @place = Place.find(params[:id])
     @albums = @place.albums
     @pictures = @albums[0].pictures.paginate(:order => 'id',:page=>1) if @albums.length >0 
-    @stream_items = @place.shared_stream_items
-
+#     unless  fragment_exist?(:controller => 'places', :action => 'show', :for => @logged_in.id, :fragment => 'place_share_items')
+       @stream_items = @place.shared_stream_items
+#    end
+    
   end
 
   # GET /places/new
@@ -75,6 +77,7 @@ class PlacesController < ApplicationController
       :text=>params[:place_share][:text],
       :album=>@album)
     @stream_item = @place_message.stream_item
+#    expire_fragment(:controller => 'places', :action => 'show', :for => @logged_in.id, :fragment => '@stream_item')
     render :template => "places/create_streams"
   end
   
