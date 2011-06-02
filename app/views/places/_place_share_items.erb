@@ -30,7 +30,9 @@
 <% end %>
 
 <% if @stream_items.empty? %>
+  <div id="empty_text">
   <p><%= t('stream.where_activity_appear') %></p>
   <p><em><%= t('stream.nothing_to_show') %></em></p>
+  </div>
 <% end %>
 
