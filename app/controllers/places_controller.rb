@@ -66,11 +66,12 @@ class PlacesController < ApplicationController
     ) { |a| a.person = @logged_in }
     @album.place_id = params[:place_id] 
     @album.save
-
+    pic  = nil
+    pic = Picture.find(params[:picture][:id]) if params[:picture][:id] and params[:picture][:id]!= ""
 
     @place_message = PlaceShare.create(
       :person=>@logged_in,
-      :picture=>Picture.find(params[:picture][:id]),
+      :picture=>pic,
       :text=>params[:place_share][:text],
       :album=>@album)
     @stream_item = @place_message.stream_item
