@@ -28,7 +28,7 @@ class PlacesController < ApplicationController
   def create
     
     @place = Place.new(params[:place])
-    @place.picture = Picture.find(params[:picture][:id])
+    @place.picture = Picture.find(params[:picture][:id]) if params[:picture][:id] and params[:picture][:id]!=""
 	  @marker = Marker.new
     @marker.marker_latitude = @place.place_latitude
     @marker.marker_longitude = @place.place_longitude

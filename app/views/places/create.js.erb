@@ -1,9 +1,11 @@
 
 marker = null;
 if(MapObject.markers.get(<%=@marker.id%>)){
+
   marker = MapObject.markers.get(<%=@marker.id%>)
 
 }else{
+
 	marker = MapObject.temp_marker
 	MapObject.markers_array.push(MapObject.temp_marker);
 	MapObject.markers.put(<%=@marker.id%>,marker);
