@@ -11,17 +11,15 @@
           <br>
           <%= form.text_area :place_description, :rows => 2,:width=>'160px', :placeholder => "留下点说明吧。。。"%><br/>
           <div style='clear:both;'></div>
-
+          <div style="height:40px;">
+            <span class ='picture-icon' style='color: #5F9128;cursor:pointer;float:left;'>添加图片:&nbsp</span>    
+            <span id="file_name" style='float:left;'></span>
+            <div style='clear:both;'></div>
+            <input type="file"  id ="fileToUpload" name ="picture" onchange="fileChange(this.value)" style='cursor:pointer;float:left;margin-top:-20px; *margin-top:-40px; filter:alpha(opacity=0);-moz-opacity:0;opacity:0;'/>
+          </div>
         <% end %>
 
-        <div style="height:40px;">
-          <span class ='picture-icon' style='color: #5F9128;cursor:pointer;float:left;'>添加图片:&nbsp</span>    
-          <span id="file_name" style='float:left;'></span>
 
-
-          <div style='clear:both;'></div>
-          <input type="file" id ="fileToUpload" name ="picture" onchange="fileChange(this.value)" style='cursor:pointer;float:left;margin-top:-20px; *margin-top:-40px; filter:alpha(opacity=0);-moz-opacity:0;opacity:0;'/>
-        </div>
         <div style='clear:both;'></div>
 
         <span class="button" id="sbumit_button" onclick="$('#new_place_form').submit();"><%=t('share.share')%></span>        
@@ -48,9 +46,9 @@
               fileElementId:'fileToUpload',
               success: function (data,status){
                 if(data.success=="true"){
-                   $("#picture_id").attr("value",data.pic_id)
-                   $("#temp_pic").attr("src",data.pic_url);
-                   $("#temp_pic").attr("style","display:");
+                  $("#picture_id").attr("value",data.pic_id)
+                  $("#temp_pic").attr("src",data.pic_url);
+                  $("#temp_pic").attr("style","display:");
                 }else{
                   alert("文件保存失败")
                 }

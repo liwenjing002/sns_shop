@@ -67,14 +67,10 @@ class PlacesController < ApplicationController
     @album.place_id = params[:place_id] 
     @album.save
 
-    pic = @album.pictures.create(
-      :person => (@logged_in),
-      :photo  => params[:picture],
-      :type=>"mix"
-    ) if params[:place_share][:picture]
+
     @place_message = PlaceShare.create(
       :person=>@logged_in,
-      :picture=>pic,
+      :picture=>Picture.find(params[:picture][:id]),
       :text=>params[:place_share][:text],
       :album=>@album)
     @stream_item = @place_message.stream_item
@@ -83,12 +79,24 @@ class PlacesController < ApplicationController
   
   
   def add_temp_pic
-    @album =  Album.find_or_create_by_name(@logged_in.name) { |a| a.person = @logged_in }
+        @album =  Album.find_or_create_by_name(
+      if params[:album].to_s.any? and params[:album] != t('share.default_album_name')
+        params[:album]
+      else
+        @logged_in.name
+      end
+    ) { |a| a.person = @logged_in }
+    if params[:plave_id]
+    @album.place_id = params[:place_id] 
+    @album.save
+    end
+     
     pic = @album.pictures.create(
       :person => (@logged_in),
       :photo  => params[:picture],
       :type=>"mix"
     )
+    
 #    render :json=>{:success=>true}
 render :text => "{success:'" + "true" + "', pic_id:'" + pic.id.to_s + "',pic_url:'" + pic.photo.url(:profile) + "'}";
   end

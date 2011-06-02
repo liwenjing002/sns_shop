@@ -1,24 +1,10 @@
-<%#= stream_item.streamable_obj %>
 <div class="stream-item <%= stream_item.streamable_type.underscore.dasherize %> stream_<%= stream_item.streamable_type.underscore %> <% if stream_item.person == @person %>stream_mine<% end %>">
   <div class="stream-item-meta">
     <%= render :partial => 'streams/person_thumbnail', :locals => {:stream_item => stream_item} %>
     <div style="clear:left;"></div>
   </div>
   <div class="stream-item-body">
-      <% if stream_item.wall and (params[:controller] != 'people' or stream_item.wall_id != @person.id) %>
-        <div style="float:left;margin:0 10px 0 -12px;height:37px;">
-          <a href="<%= url_for stream_item.wall %>">
-            <%= image_tag stream_item.wall.photo.exists? ? stream_item.wall.photo.url(:tn) : (stream_item.wall.gender == 'Female' ? 'clean/womanoutline.tn.png' : 'clean/manoutline.tn.png'),
-              :alt => stream_item.wall.name %>
-          </a>
-        </div>
-      <div class="stream-item-content">
-        <%= stream_item_content(stream_item) %>
-        <% unless stream_item.wall %>
-          <%= link_to t('comments.view') + '...', stream_item, :class => 'small' %>
-        <% end %>
-      </div>
-    <% end %>
+      
     <div class="nowrap stream-item-timestamp">
       <%= time_ago_in_words stream_item.created_at %> <%= t('comments.ago') %>
       <% if stream_item.person %>
@@ -61,9 +47,11 @@
     <% if stream_item.can_have_comments? %>
       <div class="new-comment">
         <%= link_to_function t('comments.add_a_comment'),
-          "$('#new-comment-for-#{stream_item.id}').show(); $(this.parentNode).css('visibility', 'visible');",
+          "$('#new-comment-for-#{stream_item.id}').show();",
           :class => 'discreet small comment-icon' %>
+        <%= link_to_function '', "$('#new-comment-for-#{stream_item.id}').hide()", :class =>  'delete-icon',:style=>"margin-left:270px;" %>
         <div id="new-comment-for-<%= stream_item.id %>" style="display:none;">
+          
           <%= form_for Comment.new do |form| %>
             <% if stream_item.streamable_type == 'Album' %>
               <% if Array(stream_item.context['picture_ids']).length == 1 %>

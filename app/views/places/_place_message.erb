@@ -1,36 +1,108 @@
 <div class="share">
-      <%= text_field_tag 'share-starter', '', :placeholder => "提点建议或者问题" %>
-      <ul class="share-details share-selector" style="display:none;">
-          <li><%= link_to_function "我要建议", "selectShare('share-addvise')", :class => 'comment2-icon', :id => 'share-addvise-icon' %></li>
-          <li><%= link_to_function "我要提问", "selectShare('share-question')", :class => 'picture-icon', :id => 'share-question-icon' %></li>
-        <li class="cancel-link"><%= link_to_function '', 'hideShare()', :class =>  'delete-icon' %></li>
-      </ul>
-  
-        <%= form_for @place_share=PlaceShare.new, :url => { :action => "add_share" },:html => {:id => 'share-addvise', :class => 'share-type'},:remote=>true do |form| %>
-          <%= hidden_field_tag :album, @place.place_name %>
-          <%= hidden_field_tag :place_id, @place.id %>
-          <%= hidden_field_tag :type, 'addvise' %>
-          <span class="small"><%= t('share.note_label') %></span><br/>
-          <%= form.text_area :text, :rows => 2 , :placeholder => "对于去"+@place.place_name+"的游客,您有什么建议"%><br/>
-          <%= file_field_tag 'pictures[]', :multiple => false %><br/>
-          <%= submit_tag t('share.share') %>
-        <% end %>
-        
-          <%= form_for @place_share=PlaceShare.new, :url => {:action=>"add_share"},:html => {:id => 'share-question', :class => 'share-type'},:remote=>true do |form| %>
-          <%= hidden_field_tag :album, @place.place_name %>
-          <%= hidden_field_tag :type, 'question' %>
-          <span class="small"><%= t('share.note_label') %></span><br/>
-          <%= form.text_area :text, :rows => 2, :placeholder => "对于"+@place.place_name+",您有什么问题？"%><br/>
-          <%= file_field_tag 'pictures[]', :multiple => false %><br/>
-          <%= submit_tag t('share.share') %>
-        <% end %>
+  <%= text_field_tag 'share-starter', '', :placeholder => "提点建议或者问题" %>
+  <ul class="share-details share-selector" style="display:none;">
+    <li><%= link_to_function "我要建议", "selectShare('share-addvise')", :class => 'comment2-icon', :id => 'share-addvise-icon' %></li>
+    <li><%= link_to_function "我要提问", "selectShare('share-question')", :class => 'picture-icon', :id => 'share-question-icon' %></li>
+    <li class="cancel-link"><%= link_to_function '', 'hideShare()', :class =>  'delete-icon' %></li>
+  </ul>
 
-     
+  <%= form_for @place_share=PlaceShare.new, :url => { :action => "add_share" },:html => {:id => 'share-addvise', :class => 'share-type'},:remote=>true do |form| %>
+    <%= hidden_field_tag :album, @place.place_name %>
+    <%= hidden_field_tag :place_id, @place.id %>
+    <%= hidden_field_tag :type, 'addvise' %>
+    <%= text_field :picture,:id, :type=>'hidden' %>
+    <span class="small"><%= t('share.note_label') %></span>
+    <%= form.text_area :text, :rows => 2 , :placeholder => "对于去"+@place.place_name+"的游客,您有什么建议"%><br/>
+
+    <div style="height:40px;">
+      <span class ='picture-icon' style='color: #5F9128;cursor:pointer;float:left;'>添加图片:&nbsp</span>    
+      <span id="file_name" style='float:left;'></span>
+      <div style='clear:both;'></div>
+      <input type="file"  id ="fileToUpload" name ="picture" onchange="fileChange(this.value)" style='cursor:pointer;float:left;margin-top:-20px; *margin-top:-40px; filter:alpha(opacity=0);-moz-opacity:0;opacity:0;'/>
+    </div>
+    <%= submit_tag t('share.share'),:class=>"submit_button" %>
+    <%=image_tag("loading.gif",:id=>"loading",:style=>"display:none",:height => '30')%>
+    <span style="height:35px;float:right;margin-right: 20px;"><%=image_tag("",:id=>"temp_pic",:style=>"display:none",:height => '30')%></span>
+  <% end %>
+
+  <%= form_for @place_share=PlaceShare.new, :url => {:action=>"add_share"},:html => {:id => 'share-question', :class => 'share-type'},:remote=>true do |form| %>
+    <%= hidden_field_tag :album, @place.place_name %>
+    <%= hidden_field_tag :place_id, @place.id %>
+    <%= hidden_field_tag :type, 'question' %>
+    <%= text_field :picture,:id, :type=>'hidden' %>
+    <span class="small"><%= t('share.note_label') %></span>
+    <%= form.text_area :text, :rows => 2 , :placeholder => "对于去"+@place.place_name+"的游客,您有什么建议"%><br/>
+    <div style="height:40px;">
+      <span class ='picture-icon' style='color: #5F9128;cursor:pointer;float:left;'>添加图片:&nbsp</span>    
+      <span id="file_name" style='float:left;'></span>
+
+
+      <div style='clear:both;'></div>
+      <input type="file"  id ="fileToUpload" name ="picture" onchange="fileChange(this.value)" style='cursor:pointer;float:left;margin-top:-20px; *margin-top:-40px; filter:alpha(opacity=0);-moz-opacity:0;opacity:0;'/>
+    </div>
+    <%= submit_tag t('share.share'),:class=>"submit_button" %>
+    <%=image_tag("loading.gif",:id=>"loading",:style=>"display:none",:height => '30')%>
+    <span style="height:35px;float:right;margin-right: 20px;"><%=image_tag("",:id=>"temp_pic",:style=>"display:none",:height => '30')%></span>
+  <% end %>
+
+
 </div>
 <%= javascript_include_tag "extend/ui" %>
 
+
+
+
+<% cache(:fragment => 'stream_items', :for => @logged_in.id) do %>
   <div class="stream-items">
     <%= render :partial => 'places/place_share_items' %>
   </div>
+<% end %>
+
+<script>
+  function fileChange(full_path){
+    get_file_name(full_path);
+    ajaxFileUpload();
+  }
+          
+          
+          
+  function get_file_name(full_path){
+    $("#file_name").html(full_path)
+  }
+          
+  function ajaxFileUpload(){
+    loading();//动态加载小图标
+    $.ajaxFileUpload({
+      url:'/places/add_temp_pic',
+      secureuri:false,
+      dataType: 'json',
+      fileElementId:'fileToUpload',
+      success: function (data,status){
+        if(data.success=="true"){
+          $("#picture_id").attr("value",data.pic_id)
+          $("#temp_pic").attr("src",data.pic_url);
+          $("#temp_pic").attr("style","display:");
+        }else{
+          alert("文件保存失败")
+        }
+      },
+      error: function (data, status, e){
+        alert(e)
+      }
+    })
+    return false;
+  }
+  function loading(){
+    $("#loading").ajaxStart(function(){
+      $(this).show();
+      $(".submit_button").attr("disabled","true");
+    }).ajaxComplete(function(){
+      $(this).hide();
+      $(".submit_button").removeAttr("disabled");
+
+    });
+  }
+                    
+</script>
 
 
