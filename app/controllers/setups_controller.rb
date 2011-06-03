@@ -44,10 +44,7 @@ class SetupsController < ApplicationController
       @person.visible_on_printed_directory = true
       @person.full_access = true
       @person.child = false
-      @person.family = Family.create!(
-        :name      => @person.name,
-        :last_name => @person.last_name
-      )
+
       @person.admin = Admin.create!(:super_admin => true)
       if @person.save
         Setting.set_global('Contact', 'Bug Notification Email', @person.email)
