@@ -6,6 +6,7 @@ class Place < ActiveRecord::Base
   
   
   belongs_to :picture
+  belongs_to :marker
 
   
     def shared_stream_items()

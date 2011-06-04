@@ -41,7 +41,7 @@ class PlansController < ApplicationController
   # POST /plans.xml
   def create
     @plan = Plan.new(params[:plan])
-	@plan.person_id = @logged_in.id
+    @plan.person_id = @logged_in.id
     respond_to do |format|
       if @plan.save
         format.html { redirect_to(@plan, :notice => 'Plan was successfully created.') }

@@ -2,38 +2,42 @@
   <%= javascript_include_tag "extend/ajaxfileupload" %>
 <%end%>
 <div id ="place_body">
-<div id = "place_left" class= "left" style = "float: left;width: 600px;height:auto">
+  <div id = "place_left" class= "left" style = "float: left;width: 600px;height:auto">
 
-<div id = "place_name">
-<span style = "font-size:25px;"><%= @place.place_name%></span>
-<span style = "margin-left:20px;"><%= @place.full_address%></span>
-</div>
-<div id = "palce_pic">
-<% if !@place.picture and (!@pictures or @pictures.empty?) %>
-<p><%= image_tag('missing_large.png', :alt => t('none')) %></p>
-<%else%>
-<%= image_tag(@place.picture.photo.url(:large), :alt => t('none')) %>
-<% end %>
-</div>
-<div id = "place_leave_message">
-<%= render "place_message" %>
-</div>
-</div>
+    <div id = "place_name">
+      <span style = "font-size:25px;"><%= @place.place_name%></span>
+      <span style = "margin-left:20px;"><%= @place.full_address%></span>
+    </div>
+    <div id = "palce_pic">
+      <% if !@place.picture and (!@pictures or @pictures.empty?) %>
+        <p><%= image_tag('missing_large.png', :alt => t('none')) %></p>
+      <%else%>
+        <%= image_tag(@place.picture.photo.url(:large), :alt => t('none')) %>
+      <% end %>
+    </div>
+    <div id ="share_bar" style="padding-bottom: 5px;padding-top: 5px;">
+     <%= render "share_bar" %>
+    </div> 
+    
+    <div id = "place_leave_message">
+      <%= render "place_message" %>
+    </div>
+  </div>
 
-<div id = "place_right" class= "right" style= "margin-left: 620px;">
-<div id = "place_description">
-  <span>地点介绍：</span>
-  <p><%= @place.place_description%></p>
-<span style="cursor:pointer">编辑</span>
-</div>
- <div id= "place_people">people</div>
-<div id = "place_tag">tag</div>
-<div id = "place_impression">impression</div>
-<div id = "place_meet_people">meet people</div>
-<div id = "place_tip_or_quesiton">tip question</div>
-<div id = "place_something_arround">something arround </div>
-<div id = "place_add">add</div>
-</div>
+  <div id = "place_right" class= "right" style= "margin-left: 620px;">
+    <div id = "place_description">
+      <span>地点介绍：</span>
+      <p><%= @place.place_description%></p>
+      <span style="cursor:pointer">编辑</span>
+    </div>
+    <div id= "place_people">people</div>
+    <div id = "place_tag">tag</div>
+    <div id = "place_impression">impression</div>
+    <div id = "place_meet_people">meet people</div>
+    <div id = "place_tip_or_quesiton">tip question</div>
+    <div id = "place_something_arround">something arround </div>
+    <div id = "place_add">add</div>
+  </div>
 
 </div>
 <div class="clear"></div>

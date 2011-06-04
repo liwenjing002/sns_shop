@@ -10,9 +10,9 @@ class PlacesController < ApplicationController
     @place = Place.find(params[:id])
     @albums = @place.albums
     @pictures = @albums[0].pictures.paginate(:order => 'id',:page=>1) if @albums.length >0 
-#     unless  fragment_exist?(:controller => 'places', :action => 'show', :for => @logged_in.id, :fragment => 'place_share_items')
-       @stream_items = @place.shared_stream_items
-#    end
+    unless  fragment_exist?(:controller => 'places', :action => 'show', :fragment => 'place_share_items')
+      @stream_items = @place.shared_stream_items
+    end
     
   end
 
@@ -31,15 +31,19 @@ class PlacesController < ApplicationController
     
     @place = Place.new(params[:place])
     @place.picture = Picture.find(params[:picture][:id]) if params[:picture][:id] and params[:picture][:id]!=""
-	  @marker = Marker.new
-    @marker.marker_latitude = @place.place_latitude
-    @marker.marker_longitude = @place.place_longitude
-    @marker.geocode_position = @place.full_address
-    @marker.object_type = "Place"
-    @marker.map_id =  Map.find_by_people_id(@logged_in.id).id
+    
     if @place.save
+      @marker = Marker.new
+      @marker.marker_latitude = @place.place_latitude
+      @marker.marker_longitude = @place.place_longitude
+      @marker.geocode_position = @place.full_address
+      @marker.object_type = "Place"
+      @marker.owner = @logged_in
       @marker.object_id = @place.id
+      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker})
       @marker.save
+      @place.marker = @marker
+      @place.save
     else
       render :json => {:success=>false}
     end
@@ -77,13 +81,13 @@ class PlacesController < ApplicationController
       :text=>params[:place_share][:text],
       :album=>@album)
     @stream_item = @place_message.stream_item
-#    expire_fragment(:controller => 'places', :action => 'show', :for => @logged_in.id, :fragment => '@stream_item')
+    expire_fragment(:controller => 'places', :action => 'show', :fragment => 'place_share_items',:id=>params[:place_id] )
     render :template => "places/create_streams"
   end
   
   
   def add_temp_pic
-        @album =  Album.find_or_create_by_name(
+    @album =  Album.find_or_create_by_name(
       if params[:album].to_s.any? and params[:album] != t('share.default_album_name')
         params[:album]
       else
@@ -91,8 +95,8 @@ class PlacesController < ApplicationController
       end
     ) { |a| a.person = @logged_in }
     if params[:plave_id]
-    @album.place_id = params[:place_id] 
-    @album.save
+      @album.place_id = params[:place_id] 
+      @album.save
     end
      
     pic = @album.pictures.create(
@@ -101,9 +105,28 @@ class PlacesController < ApplicationController
       :type=>"mix"
     )
     
-#    render :json=>{:success=>true}
-render :text => "{success:'" + "true" + "', pic_id:'" + pic.id.to_s + "',pic_url:'" + pic.photo.url(:profile) + "'}";
+    #    render :json=>{:success=>true}
+    render :text => "{success:'" + "true" + "', pic_id:'" + pic.id.to_s + "',pic_url:'" + pic.photo.url(:profile) + "'}";
   end
   
+  
+  def follow_place
+    if params[:marker_id]
+    if params[:follow] =="true"
+      MarkerToMap.find_or_create_by_marker_id_and_map_id(params[:marker_id],@logged_in.map.id)
+      render :json => {:follow=>true,:success=>true}
+      else
+      mm  = MarkerToMap.find_by_marker_id_and_map_id(params[:marker_id],@logged_in.map.id)
+      mm.destroy if mm
+      render :json => {:follow=>false,:success=>true}
+      end 
+    else
+      render :json => {:success=>false}
+    end
+  end
+  
+  def add_or_modify_tag
+    
+  end
   
 end

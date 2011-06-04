@@ -1,0 +1,37 @@
+<span id ="follow_place"class="cursor" title="添加/取消关注" style="" value =<%=  marker_follow? @place.marker.id%> >
+ <%if marker_follow? @place.marker.id%>
+  添加关注
+  <%else%>
+  取消关注
+  <%end%>
+</span>
+<span id ="add_tag" class="cursor" title="设置个性化标签">添加标签 </span>
+<span class="cursor" title="分享到">分享到 </span>
+<% content_for  :head do %>
+  <script>
+    $("#follow_place").live('click',function(){ $.ajax({                                                
+        type: "POST",                                    
+        url: "follow_place",                                     
+        data: "marker_id="+ <%=@place.marker.id%> +"&follow="+ $("#follow_place").attr("value"),    
+        success: function(message){  
+          if(message.success==true ){
+            if(message.follow ==true){
+              $("#follow_place").html("取消关注");
+               $("#follow_place").attr("value",false);
+            }else{
+              $("#follow_place").html("添加关注");
+              $("#follow_place").attr("value",true);
+            }
+                          
+          } else{
+                alert("出错拉。。请重试")             
+          } 
+        } 
+      });  });
+
+
+  
+  
+
+  </script>
+<%end%>

@@ -313,6 +313,10 @@ module ApplicationHelper
     end
     return text
   end
+    def marker_follow? marker_id
+   MarkerToMap.find_by_marker_id_and_map_id(params[:marker_id],@logged_in.map.id) ==nil
+
+  end
   
   
 
@@ -348,4 +352,7 @@ module ActionView
       end
     end
   end
+  
+
+  
 end

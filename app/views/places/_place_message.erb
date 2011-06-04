@@ -52,11 +52,11 @@
 
 
 
-<%# cache(:fragment => 'place_share_items', :for => @logged_in.id) do %>
+<% cache(:fragment => 'place_share_items') do %>
   <div class="stream-items">
     <%= render :partial => 'place_share_items' %>
   </div>
-<%# end %>
+<% end %>
 
 <script>
   function fileChange(full_path){

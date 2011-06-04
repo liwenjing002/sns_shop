@@ -21,8 +21,7 @@ class PeopleController < ApplicationController
   def show
     if params[:id].to_i == session[:logged_in_id]
       @person = @logged_in
-      @map = Map.find_by_people_id(params[:id])
-   	  @map = Map.create({:people_id=>@person.id})if !@map 
+      @map = @person.map
       @plan = Plan.new
       @plans =@person.plans
       
@@ -64,27 +63,18 @@ class PeopleController < ApplicationController
   end
 
   def new
-    if params[:family_id]
       if Person.can_create?
         @business_categories = Person.business_categories
         @custom_types = Person.custom_types
         if @logged_in.admin?(:edit_profiles)
           defaults = {:can_sign_in => true, :visible_to_everyone => true, :visible_on_printed_directory => true, :full_access => true}
           @person = Person.new(defaults)
-          @family = Family.find(params[:family_id])
-          number = @family.people.count(:conditions => ['deleted = ?', false])
-          @person.family_id = @family.id
-          @person.last_name = @family.last_name
-          @person.child = (number >= 2)
         else
           render :text => t('not_authorized'), :layout => true, :status => 401
         end
       else
         render :text => t('people.cant_be_added'), :layout => true, :status => 401
       end
-    else
-      render :text => t('There_was_an_error'), :layout => true, :status => 500
-    end
   end
 
   def create
@@ -95,7 +85,8 @@ class PeopleController < ApplicationController
         params[:person].cleanse(:birthday, :anniversary)
         @person = Person.new_with_default_sharing(params[:person])
         
-        @person.postition = Postitions.create()
+        @person.postition = Postition.create()
+        @person.map = Map.create()
         respond_to do |format|
           if @person.save
             format.html { redirect_to @person.family }
