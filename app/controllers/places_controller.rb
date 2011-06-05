@@ -126,14 +126,15 @@ class PlacesController < ApplicationController
   end
   
   def tags_change
+    tags = params[:place][:tags].gsub(/，/, ',')
     @place = Place.find(params[:place_id])
-    @place.tag_list.add(params[:place][:tags], :parse => true)
+    @place.tag_list.add(tags, :parse => true)
     @place.save
     @mm_new = MarkerToMap.find_by_marker_id_and_map_id(Place.find(params[:place_id]).marker.id,@logged_in.map.id)
-    @mm_new.tag_list = params[:place][:tags] 
+    @mm_new.tag_list = tags
     @mm_new.save
-    
-    @logged_in.tag_list.add(params[:place][:tags], :parse => true)
+    @mm_new = MarkerToMap.find_by_marker_id_and_map_id(Place.find(params[:place_id]).marker.id,@logged_in.map.id)
+    @logged_in.tag_list.add(tags, :parse => true)
     @logged_in.save
   end
   
