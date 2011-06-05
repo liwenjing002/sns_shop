@@ -21,7 +21,11 @@ class PeopleController < ApplicationController
   def show
     if params[:id].to_i == session[:logged_in_id]
       @person = @logged_in
-      @map = @person.map
+      @map = @person.map 
+      if !@map
+      @map = Map.create 
+      @person.map =@map
+      end
       @plan = Plan.new
       @plans =@person.plans
       

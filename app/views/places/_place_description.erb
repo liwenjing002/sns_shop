@@ -20,7 +20,7 @@
 
 <div id = "place_tag" style="padding-bottom: 5px;padding-top: 10px;">
   <span>标签：</span>
-    <%= render :partial=>"tags/tags",:locals=>{:object=>@place} %>
+  <span id = "place_all_tags"> <%= render :partial=>"tags/tags",:locals=>{:object=>@place} %></span>
 </div>
 
 <script>

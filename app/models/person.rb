@@ -1,5 +1,5 @@
 class Person < ActiveRecord::Base
-  acts_as_taggable_on
+  acts_as_taggable
   MAX_TO_BATCH_AT_A_TIME = 50
 
   BASICS = %w(first_name last_name suffix mobile_phone work_phone fax city state zip birthday anniversary gender address1 address2 city state zip)

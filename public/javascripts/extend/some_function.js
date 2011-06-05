@@ -44,12 +44,21 @@ jQuery(function ($) {
 			})
 		},
 		close: function (d) {
+
 			var self = this; // this = SimpleModal object
 			d.container.animate(
 				{top:"-" + (d.container.height() + 20)},
 				500,
 				function () {
+                                        temp_my_all_tags= $("#my_all_tags").clone();
+                                        temp_place_tags_input = $("#place_tags_input").attr("value")
+//                                        alert(temp_my_all_tags.html())
+//                                        alert($("#place_tags_input").attr("value"))
+                                        
 					self.close(); // or $.modal.close();
+                                       $("#my_all_tags").html(temp_my_all_tags.html())
+                                       $("#place_tags_input").attr("value",temp_place_tags_input)
+                                        
 				}
 			);
 		}

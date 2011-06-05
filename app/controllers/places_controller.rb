@@ -8,7 +8,6 @@ class PlacesController < ApplicationController
   # GET /places/1.xml
   def show
     @place = Place.find(params[:id])
-    
     @mm = MarkerToMap.find_by_marker_id_and_map_id(@place.marker_id,@logged_in.map.id)
     @albums = @place.albums
     @pictures = @albums[0].pictures.paginate(:order => 'id',:page=>1) if @albums.length >0 
@@ -128,13 +127,13 @@ class PlacesController < ApplicationController
   
   def tags_change
     @place = Place.find(params[:place_id])
-    @place.tag_list= params[:place][:tags]
+    @place.tag_list.add(params[:place][:tags], :parse => true)
     @place.save
     @mm_new = MarkerToMap.find_by_marker_id_and_map_id(Place.find(params[:place_id]).marker.id,@logged_in.map.id)
     @mm_new.tag_list = params[:place][:tags] 
     @mm_new.save
     
-    @logged_in.tag_list =params[:place][:tags]
+    @logged_in.tag_list.add(params[:place][:tags], :parse => true)
     @logged_in.save
   end
   

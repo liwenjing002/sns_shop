@@ -4,6 +4,7 @@ class CreateMarkerToMaps < ActiveRecord::Migration
       t.integer :map_id
       t.integer :marker_id
     end
+    
   end
 
   def self.down

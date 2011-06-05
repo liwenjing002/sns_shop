@@ -25,7 +25,7 @@
       <span id="my_all_tags"> <%= render :partial=>"tags/tags",:locals=>{:object=>@logged_in} %></span>
       <%= form_for @place_new= Place.new, :url => { :action => "tags_change" },:remote=>true do |form| %>
         <div>
-          <%= form.text_field :tags, :placeholder => "添加标签,用逗号隔开" %>
+          <%= form.text_field :tags, :placeholder => "添加标签,用逗号隔开",:value=>@mm.tag_list.to_s,:id=>"place_tags_input" %>
            <%= hidden_field_tag :place_id, @place.id %>
         </div>
         <%= submit_tag t('share.share'),:class=>"submit_button"%>
