@@ -3,9 +3,10 @@ OneBody::Application.routes.draw do
   resources :places do
     collection do
       post :follow_place
-      post :add_or_modify_tag
       post :add_share
+      post :tags_change
       post :add_temp_pic
+      post :owner_manager
     end
   end
 
