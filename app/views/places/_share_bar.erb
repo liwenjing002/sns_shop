@@ -8,7 +8,7 @@
 <%end%>
 
 <span id ="add_tag" class="cursor" title="设置个性化标签"><%= (@mm.tags.length == 0) ?"添加标签" : "修改标签"%> </span>
-<span id="my_place_tags"> <%= render :partial=>"tags/tags",:locals=>{:object=>@mm} %></span>
+<span id="my_place_tags"><%if @mm.tag_list.length != 0%><%= render :partial=>"tags/tags",:locals=>{:object=>@mm} %><%end%></span>
 <span class="cursor" title="分享到">分享到 </span>
 
 
