@@ -1,0 +1,7 @@
+﻿$(".stream-items").append("<%= escape_javascript(render :partial=>"places/place_share_item",:locals=>{:stream_item =>@stream_item }) %>");
+$(".stream-items:last-child").slideDown("slow");
+$("#place_share_text").text("");
+$("#file_name").html("")
+$("#temp_pic").attr("style","display:none");
+$("#empty_text").html("")
+$("#picture_id").attr("value",null)

@@ -1,0 +1,44 @@
+<% content_for  :head do %>
+  <%= javascript_include_tag "wmd/wmd.js" %>
+<% end %>
+<span>地点介绍：</span>
+<div id ="description_text"><p><%= @place.place_description%></p></div>
+<div id ="description_textarea" style="display:none">
+
+  <%= form_for @place,:remote=>true do |form| %>
+    <%= form.text_area :place_description, :rows => 2,:placeholder => "编辑对"+ @place.place_name + "的描述"  %><br/>
+    <span id ="updata_button" style="display:none">
+      <%= submit_tag t('share.share'),:class=>"submit_button",:id =>"description_update"  %>
+      <span style="cursor:pointer" id ="description_cancel" class ="button">取消</span>
+
+    </span>
+  <%end%>
+
+</div>
+<span style="cursor:pointer" id ="edit_button" class ="button">编辑</span>
+
+
+<div id = "place_tag" style="padding-bottom: 5px;padding-top: 10px;">
+  <span>标签：</span>
+    <%= render :partial=>"tags/tags",:locals=>{:object=>@place} %>
+</div>
+
+<script>
+  $("#edit_button").live("click",function(){
+    $("#description_textarea").show();
+    $("#updata_button").show();
+    $("#description_text").hide();
+    $("#edit_button").hide();
+
+  })
+  
+  
+  $("#description_cancel").live("click",function(){
+    $("#description_textarea").hide();
+    $("#updata_button").hide();
+    $("#description_text").show();
+    $("#edit_button").show();
+  })
+  
+</script>
+

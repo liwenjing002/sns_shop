@@ -1,0 +1,7 @@
+
+$("#add_tag").html("修改标签");
+$("#my_place_tags").html("")
+$("#my_place_tags").html("<%= escape_javascript(render :partial=>"tags/tags",:locals=>{:object=>@mm_new}) %>");
+$("#my_all_tags").html("")
+$("#my_all_tags").html("<%= escape_javascript(render :partial=>"tags/tags",:locals=>{:object=>@logged_in}) %>");
+$("#tags_cancel").trigger('click')

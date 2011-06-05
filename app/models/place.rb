@@ -1,4 +1,5 @@
 class Place < ActiveRecord::Base
+  acts_as_taggable_on
   has_many :albums
   has_many :stream_items, :dependent => :destroy
   has_many :attachments, :dependent => :delete_all

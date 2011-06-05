@@ -1,6 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  include TagsHelper
+  include ActsAsTaggableOn::TagsHelper
   include PicturesHelper
   include PhotosHelper
 
@@ -13,11 +13,11 @@ module ApplicationHelper
   def head_tags
     (
       '<meta http-equiv="content-type" content="text/html; charset=utf-8"/>' + \
-      '<meta http-equiv="Pragma" content="no-cache"/>' + \
-      '<meta http-equiv="no-cache"/>' + \
-      '<meta http-equiv="Expires" content="-1"/>' + \
-      '<meta http-equiv="Cache-Control" content="no-cache"/>' + \
-      (mobile? ? '<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>' : '')
+        '<meta http-equiv="Pragma" content="no-cache"/>' + \
+        '<meta http-equiv="no-cache"/>' + \
+        '<meta http-equiv="Expires" content="-1"/>' + \
+        '<meta http-equiv="Cache-Control" content="no-cache"/>' + \
+        (mobile? ? '<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>' : '')
     ).html_safe
   end
 
@@ -38,9 +38,9 @@ module ApplicationHelper
 
   def stylesheet_path(browser=nil)
     theme_colors = Setting.get(:appearance, :theme_primary_color).to_s   + \
-                   Setting.get(:appearance, :theme_secondary_color).to_s + \
-                   Setting.get(:appearance, :theme_top_color).to_s       + \
-                   Setting.get(:appearance, :theme_nav_color).to_s
+      Setting.get(:appearance, :theme_secondary_color).to_s + \
+      Setting.get(:appearance, :theme_top_color).to_s       + \
+      Setting.get(:appearance, :theme_nav_color).to_s
     if browser == :ie
       path = 'public/stylesheets/style.ie.scss'
       browser_style_path(:browser => :ie) + '?' + cached_mtime_for_path(path) + theme_colors
@@ -55,20 +55,20 @@ module ApplicationHelper
 
   def stylesheet_tags
     stylesheet_link_tag(stylesheet_path) + "\n" + \
-    stylesheet_link_tag('print.css', :media => 'print') + "\n" + \
-    (mobile? ? (stylesheet_link_tag(stylesheet_path(:mobile)) + "\n") : '') + \
-    "<!--[if lte IE 8]>\n".html_safe + \
+      stylesheet_link_tag('print.css', :media => 'print') + "\n" + \
+      (mobile? ? (stylesheet_link_tag(stylesheet_path(:mobile)) + "\n") : '') + \
+      "<!--[if lte IE 8]>\n".html_safe + \
       stylesheet_link_tag(stylesheet_path(:ie)) + "\n" + \
-    "<![endif]-->".html_safe
+      "<![endif]-->".html_safe
   end
 
   def javascript_tags
     javascript_include_tag('jquery-1.4.4.min', 'jquery-ui-1.8.7.custom.min', 'jquery.qtip-1.0.0-rc3.min.js', 'rails', 'application', :cache => true) + "\n" + \
-    csrf_meta_tag + "\n" + \
-    "<!--[if lte IE 8]>\n".html_safe + \
+      csrf_meta_tag + "\n" + \
+      "<!--[if lte IE 8]>\n".html_safe + \
       javascript_include_tag('ie') + "\n" + \
-    "<![endif]-->\n".html_safe + \
-    "<script type=\"text/javascript\">logged_in = #{@logged_in ? @logged_in.id : 'null'}</script>".html_safe
+      "<![endif]-->\n".html_safe + \
+      "<script type=\"text/javascript\">logged_in = #{@logged_in ? @logged_in.id : 'null'}</script>".html_safe
   end
 
   def heading
@@ -138,8 +138,8 @@ module ApplicationHelper
 
   def footer_content
     "&copy; #{Date.today.year}, #{Setting.get(:name, :community)} &middot; " + \
-    "<a href=\"/pages/help/privacy_policy\">#{t('layouts.privacy_policy')}</a> &middot; " + \
-    t('layouts.powered_by_html')
+      "<a href=\"/pages/help/privacy_policy\">#{t('layouts.privacy_policy')}</a> &middot; " + \
+      t('layouts.powered_by_html')
   end
 
   def news_js
@@ -220,11 +220,11 @@ module ApplicationHelper
     if obj.errors.any?
       (
         "<div class=\"errorExplanation\">" + \
-        "<h3>#{t('There_were_errors')}</h3>" + \
-        "<ul class=\"list\">" + \
-        obj.errors.full_messages.map { |m| "<li>#{h m}</li>" }.join("\n") + \
-        "</ul>" + \
-        "</div>"
+          "<h3>#{t('There_were_errors')}</h3>" + \
+          "<ul class=\"list\">" + \
+          obj.errors.full_messages.map { |m| "<li>#{h m}</li>" }.join("\n") + \
+          "</ul>" + \
+          "</div>"
       ).html_safe
     end
   end
@@ -290,8 +290,8 @@ module ApplicationHelper
   end
   
   
-    #html内容切割
-   def strip_html(text,len=0,endss="...")
+  #html内容切割
+  def strip_html(text,len=0,endss="...")
     if text.length>0
       ss=text.gsub(/<\/?[^>]*>/,"")
 
@@ -302,7 +302,7 @@ module ApplicationHelper
     return ss
   end
   
-   def truncate_u(text, length = 30, truncate_string = "...")
+  def truncate_u(text, length = 30, truncate_string = "...")
     l=0
     char_array=text.unpack("U*")
     char_array.each_with_index do |c,i|
@@ -313,9 +313,12 @@ module ApplicationHelper
     end
     return text
   end
-    def marker_follow? marker_id
-   MarkerToMap.find_by_marker_id_and_map_id(params[:marker_id],@logged_in.map.id) ==nil
-
+  def marker_follow? marker_id
+    MarkerToMap.find_by_marker_id_and_map_id(marker_id,@logged_in.map.id) ==nil
+  end
+  
+  def is_owner? marker
+    marker.owner == @logged_in
   end
   
   
