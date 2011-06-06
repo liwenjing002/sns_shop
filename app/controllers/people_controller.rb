@@ -26,7 +26,6 @@ class PeopleController < ApplicationController
       @map = Map.create 
       @person.map =@map
       end
-      @plan = Plan.new
       @plans =@person.plans
       
     elsif params[:legacy_id]

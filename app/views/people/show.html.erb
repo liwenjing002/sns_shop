@@ -1,11 +1,13 @@
 <% content_for  :head do %>
   <%= javascript_include_tag "extend/map" %>
+  <%= javascript_include_tag "extend/jquery.simplemodal" %>
+  <%= javascript_include_tag "extend/some_function" %>
   <%= javascript_include_tag "extend/ajaxfileupload" %>
   <%= javascript_include_tag "map/markercluster" %>
   <%= javascript_include_tag "extend/jquery.form" %>
   <%= javascript_include_tag  'http://maps.google.com/maps/api/js?sensor=true' %> 
   <%= javascript_include_tag  'map/map_controll' %> 
-
+  <%= stylesheet_link_tag  "osx" %>
 
 
   <script type="text/javascript">
@@ -41,7 +43,6 @@
 
 <div id ="map_infowindow" style="display: none" >
   <%= render :partial=>"common/new_place" %>
-<%#= render :partial=>"common/test" %>
 </div>
 
 <div id="map_controll">
@@ -141,3 +142,7 @@
     <%= render :partial => 'show_profile'%>
   </div>
 </div>
+
+
+<!--我想去窗口 -->
+<%= render :partial=>"i_want_go" %>

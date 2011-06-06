@@ -19,31 +19,9 @@
 <br>
 <br>
 <br>
-<div>
-<%= form_for @plan do |form| %>
 
-<%= form.label :day, t('plan.day')%>
- <%= form.date_field :day %><br/>
-<%= form.label :destinations,       t('plan.destinations') %>
-   <%= form.text_field :address,:size=>22%>
-  <%= form.submit%>
-<%end%>
-</div>
 </div>
 
-<script>
-  $('#plan_day').datepicker({changeYear:true, yearRange:'1900:2025', dateFormat:'<%= datepicker_format %>'});
-
-  $('#plan_day').bind('keyup', function(){
-    var val = $(this).val();
-    if(val == '' || val.match(/1900/)) {
-      $('#child-selection').show();
-    } else {
-      $('#child-selection select').val('');
-      $('#child-selection').hide();
-    }
-  }).trigger('keyup');
-</script>
 
 
 
