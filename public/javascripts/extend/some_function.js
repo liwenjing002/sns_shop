@@ -1,7 +1,9 @@
+var OSX = null
+var OSX2 = null
 jQuery(function ($) {
     
     //标签窗口
-    var OSX = {
+    OSX = {
         container: null,
         init: function () {
             $("#add_tag").click(function (e) {
@@ -41,6 +43,24 @@ jQuery(function ($) {
                         function () {
                             $("div.close", self.container).show();
                             $("#osx-modal-data", self.container).show();
+                            $('#plan_day').datepicker({
+                                changeYear:true, 
+                                yearRange:'1900:2025', 
+                                dateFormat:'mm/dd/yy'
+                            });
+
+                            $('#plan_day').live('keyup', function(){
+                                var val = $(this).val();
+                                if(val == '' || val.match(/1900/)) {
+                                    $('#child-selection').show();
+                                } else {
+                                    $('#child-selection select').val('');
+                                    $('#child-selection').hide();
+                                }
+                            }).trigger('keyup');
+                            
+                            
+                            
                         }
                         );
                     }, 300);
@@ -53,7 +73,7 @@ jQuery(function ($) {
             d.container.animate(
             {
                 top:"-" + (d.container.height() + 20)
-                },
+            },
             500,
             function () {
                 temp_my_all_tags= $("#my_all_tags").clone();
@@ -76,7 +96,7 @@ jQuery(function ($) {
         
         
     //我想去 
-    var OSX2 = {
+    OSX2 = {
         container: null,
         init: function () {
             $("#posittion-tab").click(function (e) {
@@ -130,7 +150,7 @@ jQuery(function ($) {
             d.container.animate(
             {
                 top:"-" + (d.container.height() + 20)
-                },
+            },
             500,
             function () {
                 temp_my_all_tags= $("#my_all_tags").clone();

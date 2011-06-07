@@ -2,7 +2,7 @@ class PlansController < ApplicationController
   # GET /plans
   # GET /plans.xml
   def index
-    @plans = Plan.all
+    @plans = Plan.find_all_by_person_id @logged_in.id
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,7 +14,7 @@ class PlansController < ApplicationController
   # GET /plans/1.xml
   def show
     @plan = Plan.find(params[:id])
-
+    @plans = Plan.find_all_by_person_id @logged_in.id
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @plan }
@@ -42,15 +42,8 @@ class PlansController < ApplicationController
   def create
     @plan = Plan.new(params[:plan])
     @plan.person_id = @logged_in.id
-    respond_to do |format|
-      if @plan.save
-        format.html { redirect_to(@plan, :notice => 'Plan was successfully created.') }
-        format.xml  { render :xml => @plan, :status => :created, :location => @plan }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @plan.errors, :status => :unprocessable_entity }
-      end
-    end
+     @plan.save
+
   end
 
   # PUT /plans/1

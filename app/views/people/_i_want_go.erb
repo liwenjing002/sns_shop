@@ -1,11 +1,11 @@
 <!-- modal content --> 
-<div id="osx-modal-content" style="display:none1"> 
+<div id="osx-modal-content" style="display:none"> 
   <div id="osx-modal-title">添加我的旅游计划</div> 
   <div class="close"><a href="#" class="simplemodal-close">x</a></div> 
   <div id="osx-modal-data"> 
     <div id = "place_tag" style="padding-bottom: 5px;padding-top: 10px;">
       <div>
-        <%= form_for @plan = Plan.new do |form| %>
+        <%= form_for @plan = Plan.new ,:remote=>true do |form| %>
           <div>
             <%= form.label :day, t('plan.day')%>
             <%= form.date_field :day %>
@@ -62,17 +62,7 @@
 <script type="text/javascript">
       
   $(document).ready(function() {
-    $('#plan_day').datepicker({changeYear:true, yearRange:'1900:2025', dateFormat:'<%= datepicker_format %>'});
-
-    $('#plan_day').live('keyup', function(){
-      var val = $(this).val();
-      if(val == '' || val.match(/1900/)) {
-        $('#child-selection').show();
-      } else {
-        $('#child-selection select').val('');
-        $('#child-selection').hide();
-      }
-    }).trigger('keyup');
+    
   
             
             
@@ -81,10 +71,12 @@
         $('.more_plan_detail').slideDown('1500');
         $(this).attr("src","/images/minus.gif")
         $(this).attr("is_plus","0")
+        $("#osx-container").height(550);
       }else{
         $('.more_plan_detail').slideUp('1500');
         $(this).attr("src","/images/plus.gif")
         $(this).attr("is_plus","1")
+         $("#osx-container").height(229);
       }
     })
             
