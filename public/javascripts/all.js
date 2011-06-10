@@ -676,7 +676,7 @@ function setupMenu(selector, contentSelector) {
   $(selector).qtip({
     content: $(contentSelector).html(),
     show: {
-      delay: 500,
+      delay: 0,
       when: {
         event: 'mouseover'
       },
@@ -685,7 +685,7 @@ function setupMenu(selector, contentSelector) {
       }
     },
     hide: {
-      delay: 1000,
+      delay: 500,
       fixed: true,
       when: {
         event: 'mouseout'
@@ -719,7 +719,10 @@ function setupMenus() {
   }
     if($('#posittion-tab-menu').length == 1) {
     setupMenu('#posittion-tab', '#posittion-tab-menu');
-  } 
+  }
+    if($('#activities-tab-menu').length == 1) {
+    setupMenu('#activities-tab', '#activities-tab-menu');
+  }
 }
 
 $(setupMenus);

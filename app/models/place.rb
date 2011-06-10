@@ -1,4 +1,5 @@
 class Place < ActiveRecord::Base
+  acts_as_taggable
   has_many :albums
   has_many :stream_items, :dependent => :destroy
   has_many :attachments, :dependent => :delete_all
@@ -6,6 +7,7 @@ class Place < ActiveRecord::Base
   
   
   belongs_to :picture
+  belongs_to :marker
 
   
     def shared_stream_items()

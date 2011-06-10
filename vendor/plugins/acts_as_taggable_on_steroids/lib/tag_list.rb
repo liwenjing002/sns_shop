@@ -54,9 +54,9 @@ class TagList < Array
   def to_s
     clean!
     
-    map do |name|
-      name.include?(delimiter) ? "\"#{name}\"" : name
-    end.join(' ')
+  map do |name|
+      name.match(delimiter) ? "\"#{name}\"" : name
+    end.join(', ')
   end
   
  private

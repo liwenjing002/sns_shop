@@ -75,7 +75,8 @@ if (MapObject.home_marker !=null){
 
 <%if @plans%>
 <% @plans.each do |plan| %>
-  MapObject.re_geocodePosition('<%=plan.address%>',"/images/map/schedule.png",'<%= plan.day.to_s+plan.address%>');
+    html = '<%= plan.day.to_s+plan.address%>' + '<%= link_to "查看计划",plan,:target=>"_blank"%>'
+  MapObject.re_geocodePosition('<%=plan.address%>',"/images/map/schedule.png",html);
 <%end%>
 <%end%>
 

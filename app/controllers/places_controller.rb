@@ -8,11 +8,12 @@ class PlacesController < ApplicationController
   # GET /places/1.xml
   def show
     @place = Place.find(params[:id])
+    @mm = MarkerToMap.find_by_marker_id_and_map_id(@place.marker_id,@logged_in.map.id)
     @albums = @place.albums
     @pictures = @albums[0].pictures.paginate(:order => 'id',:page=>1) if @albums.length >0 
-#     unless  fragment_exist?(:controller => 'places', :action => 'show', :for => @logged_in.id, :fragment => 'place_share_items')
-       @stream_items = @place.shared_stream_items
-#    end
+    unless  fragment_exist?(:controller => 'places', :action => 'show', :fragment => 'place_share_items')
+      @stream_items = @place.shared_stream_items
+    end
     
   end
 
@@ -31,24 +32,28 @@ class PlacesController < ApplicationController
     
     @place = Place.new(params[:place])
     @place.picture = Picture.find(params[:picture][:id]) if params[:picture][:id] and params[:picture][:id]!=""
-	  @marker = Marker.new
-    @marker.marker_latitude = @place.place_latitude
-    @marker.marker_longitude = @place.place_longitude
-    @marker.geocode_position = @place.full_address
-    @marker.object_type = "Place"
-    @marker.map_id =  Map.find_by_people_id(@logged_in.id).id
+    
     if @place.save
+      @marker = Marker.new
+      @marker.marker_latitude = @place.place_latitude
+      @marker.marker_longitude = @place.place_longitude
+      @marker.geocode_position = @place.full_address
+      @marker.object_type = "Place"
+      @marker.owner = @logged_in
       @marker.object_id = @place.id
+      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker})
       @marker.save
+      @place.marker = @marker
+      @place.save
     else
       render :json => {:success=>false}
     end
   end	
 
-  # PUT /places/1
-  # PUT /places/1.xml
+
   def update
     @place = Place.find(params[:id])
+    @place.update_attributes(params[:place])
   end
 
   # DELETE /places/1
@@ -77,13 +82,12 @@ class PlacesController < ApplicationController
       :text=>params[:place_share][:text],
       :album=>@album)
     @stream_item = @place_message.stream_item
-#    expire_fragment(:controller => 'places', :action => 'show', :for => @logged_in.id, :fragment => '@stream_item')
-    render :template => "places/create_streams"
+    expire_fragment(:controller => 'places', :action => 'show', :fragment => 'place_share_items',:id=>params[:place_id] )
   end
   
   
   def add_temp_pic
-        @album =  Album.find_or_create_by_name(
+    @album =  Album.find_or_create_by_name(
       if params[:album].to_s.any? and params[:album] != t('share.default_album_name')
         params[:album]
       else
@@ -91,8 +95,8 @@ class PlacesController < ApplicationController
       end
     ) { |a| a.person = @logged_in }
     if params[:plave_id]
-    @album.place_id = params[:place_id] 
-    @album.save
+      @album.place_id = params[:place_id] 
+      @album.save
     end
      
     pic = @album.pictures.create(
@@ -101,9 +105,63 @@ class PlacesController < ApplicationController
       :type=>"mix"
     )
     
-#    render :json=>{:success=>true}
-render :text => "{success:'" + "true" + "', pic_id:'" + pic.id.to_s + "',pic_url:'" + pic.photo.url(:profile) + "'}";
+    #    render :json=>{:success=>true}
+    render :text => "{success:'" + "true" + "', pic_id:'" + pic.id.to_s + "',pic_url:'" + pic.photo.url(:profile) + "'}";
   end
   
   
+  def follow_place
+    if params[:marker_id]
+      if params[:follow] =="true"
+        MarkerToMap.find_or_create_by_marker_id_and_map_id(params[:marker_id],@logged_in.map.id)
+        render :json => {:follow=>true,:success=>true}
+      else
+        mm  = MarkerToMap.find_by_marker_id_and_map_id(params[:marker_id],@logged_in.map.id)
+        mm.destroy if mm
+        render :json => {:follow=>false,:success=>true}
+      end 
+    else
+      render :json => {:success=>false}
+    end
+  end
+  
+  def tags_change
+    tags = params[:place][:tags].gsub(/，/, ',')
+    @place = Place.find(params[:place_id])
+    @place.tag_list.add(tags, :parse => true)
+    @place.save
+    @mm_new = MarkerToMap.find_by_marker_id_and_map_id(Place.find(params[:place_id]).marker.id,@logged_in.map.id)
+    @mm_new.tag_list = tags
+    @mm_new.save
+    @mm_new = MarkerToMap.find_by_marker_id_and_map_id(Place.find(params[:place_id]).marker.id,@logged_in.map.id)
+    @logged_in.tag_list.add(tags, :parse => true)
+    @logged_in.save
+  end
+  
+  
+  def owner_manager
+    if params[:marker_id]
+      if params[:owner] =="false"
+        marker = Marker.find_by_owner_id_and_id(@logged_in.id,params[:marker_id])
+        if marker
+          marker.owner_id = nil
+          marker.save
+          render :json => {:owner =>false,:success=>true}
+        end
+      else
+        marker = Marker.find(params[:marker_id])
+        if marker
+          marker.owner_id = @logged_in.id
+          marker.save
+          render :json => {:owner =>true,:success=>true}
+        end 
+      end
+      return
+    end
+     render :json => {:success=>false}
+  end
+  
+  
+  
+
 end

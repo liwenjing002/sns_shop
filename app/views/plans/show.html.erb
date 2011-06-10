@@ -1,5 +1,49 @@
-<p id="notice"><%= notice %></p>
+<div class="profile">
+  <div class = "profile-left">
+     <h3>想去那里
+        <p style="float: right"><%= link_to '行程管理', "#", :class => 'add-icon' %></p>
+      </h3>
+      <table>
+        <tr>
+          <th>day</th>
+          <th>address</th>
+        </tr>
+
+        <% @plans.each do |plan| %>
+          <tr>
+            <th><%= plan.day.strftime("%y-%M-%d")%></th>
+            <th><%= link_to plan.address,"#" %></th>
+             <td><%= link_to 'show', plan_path(plan) %></td>
+            <td><%= link_to 'Edit', edit_plan_path(plan) %></td>
+            <td><%= link_to 'Destroy', plan, :confirm => 'Are you sure?', :method => :delete %></td>
+          </tr>
+        <% end %>
+      </table>
+  </div>
+  <div class = "profile-right">
+    <h2 align="center" style="font-size: 40px;"><span style="font-size: 20px;color: #5F9128;">我要去</span><%=  link_to @plan.address,"#"%></span></h2>
+
+  <h3>出发时间</h3>
+  <div class="favorites-group"><%= @plan.day.strftime("%Y-%m-%d") %></div>
+  <h3>行程预计几天</h3>
+  <div class="favorites-group"><%= @plan.days_num %></div>
+  <h3>出行方式/交通工具</h3>
+    <div class="favorites-group"><%= Plan::Travel_way_map[@plan.travel_way] %></div>
+  <h3>住宿条件</h3>
+    <div class="favorites-group"><%= Plan::Accommodation_map[@plan.accommodation] %></div>
+  <h3>饮食口味</h3>
+    <div class="favorites-group"><%= Plan::Food_taste_map[@plan.food_taste] %></div>
+  <h3>喜欢的游玩项目</h3>
+      <div class="favorites-group"><%= Plan::Play_interesting_map[@plan.play_interesting] %></div>
+  <h3>游玩形式</h3>
+     <div class="favorites-group"><%= Plan::Play_way_map[@plan.play_way] %></div>
+    
 
 
 <%= link_to 'Edit', edit_plan_path(@plan) %> |
 <%= link_to 'Back', plans_path %>
+  </div>
+ </div>
+
+
+

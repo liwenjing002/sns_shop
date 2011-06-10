@@ -1374,8 +1374,14 @@ zh:
     welcome_to_the_place: 欢迎对社区新闻的地方。
 
   plan: 
-    destinations: 目的地
-    day: 出发时间
+    destinations: 目的地：
+    day: 出发时间：
+    days_num: 预计天数：
+    travel_way: 出行方式：
+    accommodation: 住宿条件：
+    food_taste: 饮食口味：
+    play_interesting: 游玩目标：
+    play_way: 旅游方式：
 
   notes: 
     about_this_note: 关于本说明

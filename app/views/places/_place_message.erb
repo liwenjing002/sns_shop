@@ -1,10 +1,11 @@
 <div class="share">
-  <%= text_field_tag 'share-starter', '', :placeholder => "提点建议或者问题" %>
+  <%= text_field_tag 'share-starter-text', '', :placeholder => "提点建议或者问题" %>
   <ul class="share-details share-selector" style="display:none;">
-    <li><%= link_to_function "我要建议", "selectShare('share-addvise')", :class => 'comment2-icon', :id => 'share-addvise-icon' %></li>
-    <li><%= link_to_function "我要提问", "selectShare('share-question')", :class => 'picture-icon', :id => 'share-question-icon' %></li>
-    <li class="cancel-link"><%= link_to_function '', 'hideShare()', :class =>  'delete-icon' %></li>
+    <li><%= link_to_function "我要建议", :class => 'comment2-icon share_link active', :id => 'share-advise-icon',:value=>"advise" %></li>
+    <li><%= link_to_function "我要提问", :class => 'picture-icon share_link', :id => 'share-question-icon',:value => "question" %></li>
+    <li class="cancel-link"><%= link_to_function '', 'hideSharebar()', :class =>  'delete-icon' %></li>
   </ul>
+
 
   <%= form_for @place_share=PlaceShare.new, :url => { :action => "add_share" },:html => {:id => 'share-addvise', :class => 'share-type'},:remote=>true do |form| %>
     <%= hidden_field_tag :album, @place.place_name %>
@@ -24,39 +25,17 @@
     <%=image_tag("loading.gif",:id=>"loading",:style=>"display:none",:height => '30')%>
     <span style="height:35px;float:right;margin-right: 20px;"><%=image_tag("",:id=>"temp_pic",:style=>"display:none",:height => '30')%></span>
   <% end %>
-
-  <%= form_for @place_share=PlaceShare.new, :url => {:action=>"add_share"},:html => {:id => 'share-question', :class => 'share-type'},:remote=>true do |form| %>
-    <%= hidden_field_tag :album, @place.place_name %>
-    <%= hidden_field_tag :place_id, @place.id %>
-    <%= hidden_field_tag :type, 'question' %>
-    <%= text_field :picture,:id, :type=>'hidden' %>
-    <span class="small"><%= t('share.note_label') %></span>
-    <%= form.text_area :text, :rows => 2 , :placeholder => "对于去"+@place.place_name+"的游客,您有什么建议"%><br/>
-    <div style="height:40px;">
-      <span class ='picture-icon' style='color: #5F9128;cursor:pointer;float:left;'>添加图片:&nbsp</span>    
-      <span id="file_name" style='float:left;'></span>
-
-
-      <div style='clear:both;'></div>
-      <input type="file"  id ="fileToUpload" name ="picture" onchange="fileChange(this.value)" style='cursor:pointer;float:left;margin-top:-20px; *margin-top:-40px; filter:alpha(opacity=0);-moz-opacity:0;opacity:0;'/>
-    </div>
-    <%= submit_tag t('share.share'),:class=>"submit_button" %>
-    <%=image_tag("loading.gif",:id=>"loading",:style=>"display:none",:height => '30')%>
-    <span style="height:35px;float:right;margin-right: 20px;"><%=image_tag("",:id=>"temp_pic",:style=>"display:none",:height => '30')%></span>
-  <% end %>
-
-
 </div>
 <%= javascript_include_tag "extend/ui" %>
 
 
 
 
-<%# cache(:fragment => 'place_share_items', :for => @logged_in.id) do %>
+<% cache(:fragment => 'place_share_items') do %>
   <div class="stream-items">
     <%= render :partial => 'place_share_items' %>
   </div>
-<%# end %>
+<% end %>
 
 <script>
   function fileChange(full_path){
@@ -102,7 +81,23 @@
 
     });
   }
-                    
+  
+  
+  $(".share_link").live("click",function(){
+  $("#type").attr("value",$(this).attr("value"))
+  $('.share_link').removeClass('active');
+    $(this).addClass('active');
+  })
+  $("#share-starter-text").live("focus",function(){
+    $('.share-details').show();
+    $('#share-starter-text').hide();
+    $('#share-addvise').show();
+  })
+  
+  function hideSharebar() {
+    $('.share-type, .share-details').hide();
+    $('#share-starter-text').show();
+}
 </script>
 
 
