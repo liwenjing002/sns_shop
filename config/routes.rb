@@ -1,5 +1,7 @@
 OneBody::Application.routes.draw do
  
+  resources :impressions
+
   resources :places do
     collection do
       post :follow_place
@@ -7,6 +9,7 @@ OneBody::Application.routes.draw do
       post :tags_change
       post :add_temp_pic
       post :owner_manager
+      post :add_impression
     end
   end
 

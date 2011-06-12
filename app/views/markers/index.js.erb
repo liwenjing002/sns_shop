@@ -86,7 +86,8 @@ MapObject.markerClusterer.clearMarkers();
 MapObject.markerClusterer.addMarkers(MapObject.markers_array);
 
 }else{
-MapObject.markerClusterer = new MarkerClusterer(MapObject.map, MapObject.markers_array);
+var mcOptions = {gridSize: 50, maxZoom: 15};
+MapObject.markerClusterer = new MarkerClusterer(MapObject.map, MapObject.markers_array,mcOptions);
 }  
 
 

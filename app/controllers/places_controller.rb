@@ -10,7 +10,9 @@ class PlacesController < ApplicationController
     @place = Place.find(params[:id])
     @mm = MarkerToMap.find_by_marker_id_and_map_id(@place.marker_id,@logged_in.map.id)
     @albums = @place.albums
-    @pictures = @albums[0].pictures.paginate(:order => 'id',:page=>1) if @albums.length >0 
+    @pictures = @albums[0].pictures.paginate(:order => 'id',:page=>1) if @albums.length >0
+    @impressions = Impression.find_all_by_i_type 'Place'
+    @p_impression = PersonImpression.find_by_person_id_and_object_type_and_object_id(@logged_in.id,'Place',params[:id])
     unless  fragment_exist?(:controller => 'places', :action => 'show', :fragment => 'place_share_items')
       @stream_items = @place.shared_stream_items
     end
@@ -41,7 +43,7 @@ class PlacesController < ApplicationController
       @marker.object_type = "Place"
       @marker.owner = @logged_in
       @marker.object_id = @place.id
-      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker})
+#      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker})
       @marker.save
       @place.marker = @marker
       @place.save
@@ -82,6 +84,8 @@ class PlacesController < ApplicationController
       :text=>params[:place_share][:text],
       :album=>@album)
     @stream_item = @place_message.stream_item
+    @album.place.picture = pic if !@album.place.picture
+    @album.place.save
     expire_fragment(:controller => 'places', :action => 'show', :fragment => 'place_share_items',:id=>params[:place_id] )
   end
   
@@ -161,7 +165,13 @@ class PlacesController < ApplicationController
      render :json => {:success=>false}
   end
   
-  
+  #place 的印象
+  def add_impression
+    @p_impression = PersonImpression.find_or_create_by_person_id_and_impression_id_and_object_type_and_object_id(
+      @logged_in.id,params[:id],'Place',params[:place_id])
+    @p_impression ? (render :json => {:success=>true}):(render :json => {:success=>false}) 
+    
+  end
   
 
 end

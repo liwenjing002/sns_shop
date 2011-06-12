@@ -1,0 +1,24 @@
+<h3>我的印象：</h3>
+<ul class="buttons">
+<% @impressions.each do |impression| %>
+  <%if @p_impression.impression != impression%>
+    <li><span class="button impression_bt" id="<%=impression.id%>" style=""><%= impression.name %></span></li>  
+<%else%>
+    <%end%>
+  <%end%>
+</ul>
+<script>
+  $('.impression_bt').click(function(){
+    id = $(this).attr("id")
+    $.ajax({                                                
+            type: "POST",
+            data: "id="+id+"&place_id=<%=@place.id%>",    
+            url: "add_impression",                                      
+            success: function(message){
+                $("#"+id).attr("style","background: #91C35A;color: white;")
+            } 
+        });
+    
+    
+  })
+</script>

@@ -1,14 +1,14 @@
 <span id ="owner_bar"class="cursor" title=<%= is_owner?(@place.marker) ? "辞去本地地主的职位": "我要当地主" %> style="" value = <%= !is_owner? @place.marker%>>
   <%= is_owner?(@place.marker) ? "不当地主":"申请地主"%>
 </span>
- <%if is_owner?(@place.marker) == nil %>
+ <%if !is_owner?(@place.marker) %>
 <span id ="follow_place"class="cursor" title="添加/取消关注" style="" value =<%=  marker_follow? @place.marker.id%>>
   <%= marker_follow?(@place.marker.id) ? "添加关注":"取消关注"%>
 </span>
 <%end%>
 
-<span id ="add_tag" class="cursor" title="设置个性化标签"><%= (@mm.tags.length == 0) ?"添加标签" : "修改标签"%> </span>
-<span id="my_place_tags"><%if @mm.tag_list.length != 0%><%= render :partial=>"tags/tags",:locals=>{:object=>@mm} %><%end%></span>
+<%if @mm %><span id ="add_tag" class="cursor" title="设置个性化标签"><%= (@mm.tags.length == 0) ?"添加标签" : "修改标签"%> </span>
+<span id="my_place_tags"><%if @mm.tag_list.length != 0%><%= render :partial=>"tags/tags",:locals=>{:object=>@mm} %><%end%></span><%end%>
 <span class="cursor" title="分享到">分享到 </span>
 
 
@@ -27,7 +27,7 @@
       <span id="my_all_tags"> <%= render :partial=>"tags/tags",:locals=>{:object=>@logged_in} %></span>
       <%= form_for @place_new= Place.new, :url => { :action => "tags_change" },:remote=>true do |form| %>
         <div>
-          <%= form.text_field :tags, :placeholder => "添加标签,用逗号隔开",:value=>@mm.tag_list.to_s,:id=>"place_tags_input" %>
+          <%= form.text_field :tags, :placeholder => "添加标签,用逗号隔开",:value=>@mm ?@mm.tag_list.to_s : "",:id=>"place_tags_input" %>
            <%= hidden_field_tag :place_id, @place.id %>
         </div>
         <%= submit_tag t('share.share'),:class=>"submit_button"%>

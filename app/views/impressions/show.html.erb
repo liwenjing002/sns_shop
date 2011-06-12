@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @impression.name %>
+</p>
+
+<p>
+  <b>I type:</b>
+  <%= @impression.i_type %>
+</p>
+
+
+<%= link_to 'Edit', edit_impression_path(@impression) %> |
+<%= link_to 'Back', impressions_path %>

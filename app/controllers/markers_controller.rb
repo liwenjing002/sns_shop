@@ -4,6 +4,9 @@ class MarkersController < ApplicationController
     @my_home = @logged_in.postition
     if !params[:people_id]
       case params[:type]
+        when "own"
+        map = @logged_in.map
+        @markers = Marker.find_all_by_owner_id map.id
       when "share"
         map = @logged_in.map
         @markers = map.markers
