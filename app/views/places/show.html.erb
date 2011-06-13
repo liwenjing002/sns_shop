@@ -1,5 +1,6 @@
 <% content_for  :head do %>
   <%= javascript_include_tag "extend/ajaxfileupload" %>
+  <%= javascript_include_tag "extend/jquery.tools.min" %>
 <%end%>
 
 <div id ="place_body">
@@ -29,7 +30,7 @@
     <div id = "place_description">
      <%= render 'place_description' %>
     </div>
-    <div id= "place_people">people</div>
+    <div id= "place_people"><%=  render :partial=>"people"%></div>
     <div id = "place_impression"><%= render "impression" %></div>
     <div id = "place_meet_people">meet people</div>
     <div id = "place_tip_or_quesiton">tip question</div>

@@ -1,0 +1,95 @@
+<div class="profile-pic">
+  <% if @person.photo.exists? %>
+    <%= image_tag(@person.photo.url(:profile), :alt => @person.name) %>
+  <% elsif me? and params[:controller] == 'people' and params[:action] == 'show' %>
+    <div class="temp_pic silhouette-<%= @person.gender.to_s == 'Female' ? 'woman' : 'man' %>" >
+      <span class="span_link">
+        <input type="file"  id ="fileToUpload" name ="picture" onchange="fileChange(this.value)"/>
+      </span>        
+      <%=image_tag("loading.gif",:id=>"loading",:style=>"display:none",:height => '30')%>
+
+    </div>
+  <% else %>
+    <div class="silhouette-<%= @person.gender.to_s == 'Female' ? 'woman' : 'man' %>"></div>
+  <% end %>
+</div>
+
+<!-- tooltip element -->
+<div class="tooltip">
+  <h3 style="font-size: 10pt;">头像相册</h3>
+  <a href="/3.2/">What's new in 3.2</a>
+</div>
+
+<script>
+
+  $(document).ready(function(){
+   
+    $(".profile-pic").tooltip({
+
+      // tweak the position
+      offset: [10, 2],
+      position: "bottom center ",
+
+      // use the "slide" effect
+      effect: 'slide'
+
+      // add dynamic plugin with optional configuration for bottom edge
+    });
+  })
+
+
+  function fileChange(full_path){
+    ajaxFileUpload();
+  }
+          
+          
+        
+  function ajaxFileUpload(){
+    loading();//动态加载小图标
+    $.ajaxFileUpload({
+      url:'change_pic',
+      secureuri:false,
+      dataType: 'json',
+      fileElementId:'fileToUpload',
+      success: function (data,status){
+        if(data.success=="true"){
+          $(".temp_pic").remove();
+          $(".profile-pic").append("<img alt=<%=@person.name%> src=" +data.pic_url +" title=<%=@person.name%> >")
+        }else{
+          alert("文件保存失败")
+        }
+      },
+      error: function (data, status, e){
+        alert(e)
+      }
+    })
+    return false;
+  }
+  function loading(){
+    $("#loading").ajaxStart(function(){
+      $(this).show();
+
+    }).ajaxComplete(function(){
+      $(this).hide();
+    });
+  }
+                    
+</script>
+
+<style>
+  /* trigger button */
+
+
+  /* tooltip styling */
+  .tooltip {
+    display:none;
+    background:url(/images/black_arrow_big.png);
+    height:163px;
+    padding:40px 30px 10px 30px;
+    width:310px;
+    font-size:11px;
+    color:#fff;
+  }
+
+</style>
+

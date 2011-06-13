@@ -237,5 +237,23 @@ class PeopleController < ApplicationController
   end
 
 
+  #改头像
+  def change_pic
+    if @logged_in.can_edit?(@logged_in)
+      if params[:picture]
+        @logged_in.photo = params[:picture]
+        # annoying to users if changing their photo fails due to some other unrelated validation failure
+        # this is a total hack
+        if @logged_in.valid? or @logged_in.errors.select { |a, e| a == :photo_content_type }.empty?
+          @logged_in.save(:validate => false)
+        else
+          flash[:warning] = @object.errors.full_messages.join('; ')
+        end
+      end
+       render :text => "{success:'" + "true" + "', pic_id:'" +@logged_in.photo.id.to_s + "',pic_url:'" + @logged_in.photo.url(:profile) + "'}";
+    else
+       render :text => "{success:'" + "false" + "', pic_id:'" + pic.id.to_s + "',pic_url:'" + pic.photo.url(:profile) + "'}";
+    end
+  end
 
 end

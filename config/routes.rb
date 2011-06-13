@@ -36,6 +36,7 @@ OneBody::Application.routes.draw do
       post :hashify
       post :batch
       put  :import
+      post :change_pic
     end
     member do
       get  :favs
