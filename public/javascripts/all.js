@@ -719,7 +719,10 @@ function setupMenus() {
   }
     if($('#posittion-tab-menu').length == 1) {
     setupMenu('#posittion-tab', '#posittion-tab-menu');
-  } 
+  }
+    if($('#activities-tab-menu').length == 1) {
+    setupMenu('#activities-tab', '#activities-tab-menu');
+  }
 }
 
 $(setupMenus);

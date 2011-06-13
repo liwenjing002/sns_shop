@@ -59,6 +59,9 @@ var MapObject =  {
             //alert(2)
             MapObject.add_marker(MapObject.map,event.latLng);
         });
+         google.maps.event.addListener(MapObject.map, 'mousemove', function(event) {
+           MapObject.map.setOptions({ draggableCursor: 'crosshair' });
+      });
     },
 
     //删除marker 监听
@@ -82,7 +85,8 @@ var MapObject =  {
         }, function(responses){
             MapObject.new_marker_Function(responses)
         });
-
+        google.maps.event.clearListeners(MapObject.map, 'mousemove')
+         MapObject.map.setOptions({ draggableCursor: 'default' });
 
     },
     //new marker请求地址解析的回调函数

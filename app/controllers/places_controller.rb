@@ -43,7 +43,7 @@ class PlacesController < ApplicationController
       @marker.object_type = "Place"
       @marker.owner = @logged_in
       @marker.object_id = @place.id
-#      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker})
+      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker})
       @marker.save
       @place.marker = @marker
       @place.save

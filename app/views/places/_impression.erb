@@ -1,12 +1,15 @@
 <h3>我的印象：</h3>
-<ul class="buttons">
+
+<div><ul class="buttons">
 <% @impressions.each do |impression| %>
-  <%if @p_impression.impression != impression%>
-    <li><span class="button impression_bt" id="<%=impression.id%>" style=""><%= impression.name %></span></li>  
+  <%if @p_impression==nil  or  (@p_impression and@p_impression.impression != impression)%>
+    <li><span class="button impression_bt" id="<%=impression.id%>" style=""><%= impression.name %></span></li>
 <%else%>
+    <li><span class="button impression_bt" id="<%=impression.id%>" style="background: #91C35A;color: white;"><%= impression.name %></span></li>
     <%end%>
   <%end%>
-</ul>
+</ul></div>
+
 <script>
   $('.impression_bt').click(function(){
     id = $(this).attr("id")
