@@ -1,0 +1,19 @@
+html = '<%= @plan.day.to_s+@plan.address%>' + '<%= link_to "查看计划",@plan,:target=>"_blank"%>'
+MapObject.re_geocodePosition('<%=@plan.address%>',"/images/map/schedule.png",html);
+
+if (MapObject.markerClusterer){
+//alert(1)
+MapObject.markerClusterer.clearMarkers();
+MapObject.markerClusterer.addMarkers(MapObject.markers_array);
+
+}else{
+MapObject.markerClusterer = new MarkerClusterer(MapObject.map, MapObject.markers_array);
+}
+
+
+
+if(confirm("是否生成旅游指南")){
+$(".simplemodal-close").trigger('click');
+}else{
+ $(".simplemodal-close").trigger('click');
+}

@@ -1,0 +1,96 @@
+<!-- modal content --> 
+<div id="osx-modal-content" style="display:none"> 
+  <div id="osx-modal-title">添加我的旅游计划</div> 
+  <div class="close"><a href="#" class="simplemodal-close">x</a></div> 
+  <div id="osx-modal-data"> 
+    <div id = "place_tag" style="padding-bottom: 5px;padding-top: 10px;">
+      <div>
+        <%= form_for @plan = Plan.new ,:remote=>true do |form| %>
+          <div>
+            <%= form.label :day, t('plan.day')%>
+            <%= form.date_field :day %>
+          </div>
+          <div>
+            <%= form.label :destinations,       t('plan.destinations') %>
+            <%= form.text_field :address,:size=>22,:placeholder => "您想去的城市名或旅游圣地名称"%>
+          </div>
+
+          <%= image_tag 'plus.gif', :id => "more_plan_detail",:is_plus=>1 %>
+          <span id="more_plan_detail_span"><%= t("people.more") %></span>
+          <div class="more_plan_detail" style="display: none; ">
+            <div>
+              <%= form.label :days_num, t('plan.days_num')%>
+              <%= form.select :days_num,Plan::Days_num_map.collect{|t| [t[1],t[0]]},:prompt=>"你要出去玩多久"%>
+            </div>
+            <div>
+              <%= form.label :travel_way, t('plan.travel_way')%>
+              <%= form.select :travel_way,Plan::Travel_way_map.collect{|t| [t[1],t[0]]},:prompt=>"选择你的出行方式"%>
+            </div>
+            <div>
+              <%= form.label :accommodation, t('plan.accommodation')%>
+              <%= form.select :accommodation,Plan::Accommodation_map.collect{|t| [t[1],t[0]]},:prompt=>"选择你的住宿条件"%>
+            </div>
+            <div>
+              <%= form.label :food_taste, t('plan.food_taste')%>
+              <%= form.select :food_taste,Plan::Food_taste_map.collect{|t| [t[1],t[0]]},:prompt=>"选择你的饮食习惯"%>
+            </div>
+            <div>
+              <%= form.label :play_interesting, t('plan.play_interesting')%>
+              <%= form.select :play_interesting,Plan::Play_interesting_map.collect{|t| [t[1],t[0]]},:prompt=>"选择你的饮食习惯"%>          
+
+            </div>
+            <div>
+              <%= form.label :play_way, t('plan.play_way')%>
+              <%= form.select :play_way,Plan::Play_way_map.collect{|t| [t[1],t[0]]},:prompt=>"选择你的游玩方式"%>   
+            </div>
+          </div>
+
+
+
+          <br/>
+
+
+          <%= form.submit%>
+          <span style="cursor:pointer" id ="tags_cancel" class ="button simplemodal-close">取消</span>
+        <%end%>
+      </div>
+    </div> 
+  </div> 
+</div>
+<!-- modal content --> 
+
+<script type="text/javascript">
+      
+  $(document).ready(function() {
+    
+  
+            
+            
+    $("#more_plan_detail").click(function(){
+      if($(this).attr("is_plus") == 1){
+        $('.more_plan_detail').slideDown('1500');
+        $(this).attr("src","/images/minus.gif")
+        $(this).attr("is_plus","0")
+        $("#osx-container").height(550);
+      }else{
+        $('.more_plan_detail').slideUp('1500');
+        $(this).attr("src","/images/plus.gif")
+        $(this).attr("is_plus","1")
+         $("#osx-container").height(229);
+      }
+    })
+            
+    $("#more_plan_detail_span").click(function(){
+      if($("#more_plan_detail").attr("is_plus") == 1){
+        $('.more_plan_detail').slideDown('1500');
+        $("#more_plan_detail").attr("src","/images/minus.gif")
+        $("#more_plan_detail").attr("is_plus","0")
+      }else{
+        $('.more_plan_detail').slideUp('1500');
+        $("#more_plan_detail").attr("src","/images/plus.gif")
+        $("#more_plan_detail").attr("is_plus","1")
+      }
+    })
+  }
+)
+</script>

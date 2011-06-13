@@ -35,8 +35,8 @@ class AccountsController < ApplicationController
           @person = Person.new(attributes)
           if @person.adult?
             if @person.save
-              Map.create({:people_id => @person.id})
-              @person.address = Address.create()
+              Map.create({:person_id => @person.id})
+              @person.postition = Postition.create()
               if Setting.get(:features, :sign_up_approval_email).to_s.any?
                 @person.save
                 Notifier.pending_sign_up(@person).deliver
