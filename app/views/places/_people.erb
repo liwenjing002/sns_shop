@@ -12,14 +12,14 @@
                  <%i =0%>
           <% @follow_peoples.each do |mm| %>
          <%i += 1%>
-          <%if i%4==1 %>
+          <%if i%1==1 %>
          <div>
           <%end%>
 
           <% content_tag :a, :href => person_path(mm.map.person) do %>
             <%= render :partial => 'people/thumbnail', :locals => {:person => mm.map.person} %>
           <% end %>
-             <%if i%4==0 or i==@follow_peoples.length %>
+             <%if i%1==0 or i==@follow_peoples.length %>
          </div>
           <%end%>
         <% end %>
@@ -27,11 +27,11 @@
       </div>
     </div>
     
-        <%if @follow_peoples.length >6%>
+        <%#if @follow_peoples.length >6%>
         <a class="prev browse left" ></a>
         <!-- "next page" action -->
         <a class="next browse right"></a>
-        <%end%>
+        <%#end%>
   </div>
 
     <div class="tab_pane">Second pane. You can open other tabs with normal <a href="#first">anchor links</a></div>

@@ -1134,7 +1134,7 @@ color: #3286B5;
 .scrollable {
 position: relative;
 overflow: hidden;
-width: 250px;
+width: 270px;
 height: 60px;
 border: 1px solid #CCC;
 }
@@ -1154,7 +1154,7 @@ border: 1px solid #CCC;
 
 .items div {
     float:left;
-
+    width:270px;
 }
 
 /* single scrollable item */
