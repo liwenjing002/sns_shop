@@ -25,3 +25,4 @@ pkg
 *.deb
 script/package
 db/bible.web.osis.xml
+public/images/Thumbs.db
