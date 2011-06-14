@@ -6,7 +6,7 @@
 
 
 <div class="panes" >
-	<div style="margin:20px -15px">
+	<div style="margin:20px -15px" class="tab_pane">
           <a class="prev browse left"></a>
           <div class="scrollable" id="scroller">
             <div class="items" >
@@ -31,15 +31,15 @@
 
 
         </div>
-	<div>Second pane. You can open other tabs with normal <a href="#first">anchor links</a></div>
-	<div>Third tab content</div>
+	<div class="tab_pane">Second pane. You can open other tabs with normal <a href="#first">anchor links</a></div>
+	<div class="tab_pane">Third tab content</div>
 </div>
 <br></br><br></br>
 <script type="text/javascript">
 
   $(function() {
 	// setup ul.tabs to work as tabs for each div directly under div.panes
-	$("ul.tabs").tabs("div.panes > div");
+	$("ul.tabs").tabs("div.panes > div.tab_pane");
         $("#scroller").scrollable({circular: true}).autoscroll({ autoplay: false });
 });
 

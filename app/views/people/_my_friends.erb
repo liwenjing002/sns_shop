@@ -1,0 +1,13 @@
+
+    <% cache(:fragment => 'friends') do %>
+      <h3><%= t('friends.friends') %>
+        <%if @person==@logged_in%>  <p style="float: right"><%= link_to t('friends.manager'), person_friends_path(@person), :class => 'add-icon' %></p><%end%>
+      </h3>
+      <% if @friends.any? %>
+        <% @friends.each do |person| %>
+          <% content_tag :a, :href => person_path(person) do %>
+            <%= render :partial => 'people/thumbnail', :locals => {:person => person} %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>

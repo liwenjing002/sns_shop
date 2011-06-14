@@ -1,6 +1,20 @@
 
   <div  class="object" >
-  <%= render :partial => 'photo' %>
+  <div class="profile-pic">
+  <% if @person.photo.exists? %>
+    <%= image_tag(@person.photo.url(:profile), :alt => @person.name) %>
+  <% elsif me? and params[:controller] == 'people' and params[:action] == 'show' %>
+    <div class="temp_pic silhouette-<%= @person.gender.to_s == 'Female' ? 'woman' : 'man' %>" >
+      <span class="span_link">
+        <input type="file"  id ="fileToUpload" name ="picture" onchange="fileChange(this.value)"/>
+      </span>
+      <%=image_tag("loading.gif",:id=>"loading",:style=>"display:none",:height => '30')%>
+
+    </div>
+  <% else %>
+    <div class="silhouette-<%= @person.gender.to_s == 'Female' ? 'woman' : 'man' %>"></div>
+  <% end %>
+</div>
   <div class="form-field-hint"><%= t('people.upload_a_picture_of_html', :name => me? ? 'yourself' : @person.name) %></div>
   <%= photo_upload_for @person %>
 

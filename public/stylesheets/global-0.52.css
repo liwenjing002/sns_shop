@@ -1,28 +1,4 @@
 
-/*{{{ very basic styles */
-
-body {
-	margin:0;
-	background-color:#fff;
-	padding:0 0 50px 0;
-}
-
-body, p, div, a {
-	font-family:"Lucida Grande","Lucida Sans Unicode","bitstream vera sans","trebuchet ms",verdana,sans-serif;
-	font-size:12px;
-}
-
-a {
-	color:#295c72;		
-	outline:none;
-}
-
-a.external {
-	background:transparent url(/images/external.png) no-repeat scroll right 0;
-	padding-right:15px;		
-}
-
-
 .clear, hr {
 	clear:both;
 	display:block;
@@ -62,17 +38,8 @@ hr {
 	margin:0 0 5px 0;		
 }
 
-img {
-	border:0;		
-}
 
-table {
-	border-collapse:collapse;		
-}
 
-a:active {
-  outline:none;
-}
 
 :focus, button {
   -moz-outline-style:none;
@@ -112,13 +79,8 @@ body.ie7 #content ul, body.ie7 #content ol {
 
 
 
-ul, ol, p, table {
-	margin:10px 0px;		
-}
 
-samp {
-	color:#112699;		
-}
+
 
 .first {
 	margin-top:0px;		

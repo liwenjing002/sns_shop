@@ -32,7 +32,7 @@ class PeopleController < ApplicationController
       @person = Person.find_by_legacy_id(params[:id])
     else
       @person = Person.find_by_id(params[:id])
-      @map = Map.find_by_people_id(@person.id)
+      @map = Map.find_by_person_id(@person.id)
    	  @map = Map.create({:people_id=>@person.id})if !@map 
       @plan = Plan.new
       @plans =@person.plans
