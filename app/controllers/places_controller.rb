@@ -13,6 +13,7 @@ class PlacesController < ApplicationController
     @pictures = @albums[0].pictures.paginate(:order => 'id',:page=>1) if @albums.length >0
     @impressions = Impression.find_all_by_i_type 'Place'
     @p_impression = PersonImpression.find_by_person_id_and_object_type_and_object_id(@logged_in.id,'Place',params[:id])
+    @follow_peoples = MarkerToMap.find_all_by_marker_id @place.marker_id
     unless  fragment_exist?(:controller => 'places', :action => 'show', :fragment => 'place_share_items')
       @stream_items = @place.shared_stream_items
     end

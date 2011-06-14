@@ -1,17 +1,6 @@
 <% content_for  :head do %>
-<style type="text/css" media="screen">
-
-
-.box ul li {
-  float: left;
-  margin-right: 20px;
-  list-style: none outside none;
-}
-.box ul li a {
-  background-image: none;
-  padding-left: 0px;
-}
-</style>
+  <%= javascript_include_tag "extend/jquery.tools.min" %>
+<%= stylesheet_link_tag 'global-0.52' %>
 <% end %>
 <% content_for :sidebar do %>
   <p><%= link_to t('people.edit.privacy'), edit_person_privacy_path(@person), :class => 'lock-icon' %></p>
@@ -50,70 +39,28 @@
   </p>
 
 
-  <div class="box">
-    <ul id="tabMenu">
-      <li class = "photo"><a href="#"><%= t('people.edit.photo') %></a></li>
-      <li class = "basic"><a href="#"><%= t('people.edit.basics') %></a></li>
-      <li class = "about"><a href="#"><%= t('people.edit.about') %></a></li>
-      <li class = "address"><a href="#"><%= t('people.edit.address') %></a></li>
-      <li class = "business"><a href="#"><%= t('people.business') %></a></li>
-    </ul>
-    <br/>
-    <br/>
-    <%= render :partial => 'form' %>
-  </div>
+
+  <ul class="tabs">
+    <li class = "photo"><a href="#"><%= t('people.edit.photo') %></a></li>
+    <li class = "basic"><a href="#"><%= t('people.edit.basics') %></a></li>
+    <li class = "about"><a href="#"><%= t('people.edit.about') %></a></li>
+    <li class = "address"><a href="#"><%= t('people.edit.address') %></a></li>
+    <li class = "business"><a href="#"><%= t('people.business') %></a></li>
+  </ul>
+  <br/>
+  <br/>
+  <%= render :partial => 'form' %>
 </div>
+
 
 
 
 <script type="text/javascript">
 
-  $(document).ready(function() {	
-
-
-    //Get all the LI from the #tabMenu UL
-    $('#tabMenu > li').click(function(){
-        
-      //remove the selected class from all LI    
-      $('#tabMenu > li').removeClass('selected');
-    
-      //Reassign the LI
-      $(this).addClass('selected');
-    
-      //Hide all the DIV in .boxBody
-      $('.boxBody .object').slideUp('1500');
-      
-    
-      //Look for the right DIV in boxBody according to the Navigation UL index, therefore, the arrangement is very important.
-    
-      $('.boxBody .object:eq(' + $('#tabMenu > li').index(this) + ')').slideDown('1500');
-    
-    }).mouseover(function() {
-
-      //Add and remove class, Personally I dont think this is the right way to do it, anyone please suggest    
-      $(this).addClass('mouseover');
-      $(this).removeClass('mouseout');   
-    
-    }).mouseout(function() {
-    
-      //Add and remove class
-      $(this).addClass('mouseout');
-      $(this).removeClass('mouseover');    
-    
-    });
-
-
-	
-    //Mouseover effect for Posts, Comments, Famous Posts and Random Posts menu list.
-    $('.boxBody li').click(function(){
-      window.location = $(this).find("a").attr("href");
-    }).mouseover(function() {
-      $(this).css('backgroundColor','#888');
-    }).mouseout(function() {
-      $(this).css('backgroundColor','');
-    });  	
-	
-  });
+  $(function() {
+	// setup ul.tabs to work as tabs for each div directly under div.panes
+	$("ul.tabs").tabs("div.panes > div.object");
+});
 
 </script>
 

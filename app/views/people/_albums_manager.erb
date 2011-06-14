@@ -2,12 +2,31 @@
         <%if @person==@logged_in%>  <p style="float: right"><%= link_to t('albums.new'), new_album_path, :class => 'add-icon' %></p><%end%>
       </h3>
 
-      <% if @albums.any? %>
-        <p>
+     
+        
+        
+
+<div style="margin:20px -15px">
+<!-- root element for scrollable -->
+<div class="scrollable">   
+   
+   <!-- root element for the items -->
+   <div class="items">
+       <% if @albums.any? %>
+     <%i =0%>
           <%if private("ablums")%>
             <% @albums.each do |album| %>
-              <%= link_to image_tag(album.cover ? album.cover.photo.url(:tn) : 'missing_tn.png', :alt => album.name),
-                album, :title => album.name %>
+          <%i +=1%>
+          <%if i%4==1 %>
+         <div>
+          <%end%>
+
+              <%= link_to image_tag(album.cover ? album.cover.photo.url(:small) : 'missing_tn.png', :alt => album.name),
+                     album, :title => album.name %>
+          <%if i%4==0 or i == @albums.length%>
+         </div>
+          <%end%>
+
             <% end %>
           <%else%>
             <% @albums.each do |album| %>
@@ -15,54 +34,24 @@
                 "javascript:onclick=alert('相册被设置隐藏，请加好友或联系TA')", :title => album.name %>
             <% end %>
           <%end%>
-        </p>
       <% end %>
-        
-        
-<!-- "previous page" action -->
-<a class="prev browse left"></a>
 
-<!-- root element for scrollable -->
-<div class="scrollable">   
-   
-   <!-- root element for the items -->
-   <div class="items">
-   
-      <!-- 1-5 -->
-      <div>
-         <img src="http://farm1.static.flickr.com/143/321464099_a7cfcb95cf_t.jpg" width="20px"/>
-         <img src="http://farm4.static.flickr.com/3089/2796719087_c3ee89a730_t.jpg" width="20px"/>
-         <img src="http://farm1.static.flickr.com/79/244441862_08ec9b6b49_t.jpg" width="20px"/>
-         <img src="http://farm1.static.flickr.com/28/66523124_b468cf4978_t.jpg" width="20px"/>
-         <img src="http://farm1.static.flickr.com/164/399223606_b875ddf797_t.jpg" width="20px"/>
-      </div>
+
       
-      <!-- 5-10 -->
-      <div>
-         <img src="http://farm1.static.flickr.com/143/321464099_a7cfcb95cf_t.jpg" width="20px"/>
-         <img src="http://farm4.static.flickr.com/3089/2796719087_c3ee89a730_t.jpg" width="20px"/>
-         <img src="http://farm1.static.flickr.com/79/244441862_08ec9b6b49_t.jpg" width="20px"/>
-         <img src="http://farm1.static.flickr.com/28/66523124_b468cf4978_t.jpg" width="20px"/>
-         <img src="http://farm1.static.flickr.com/164/399223606_b875ddf797_t.jpg" width="20px"/>
-      </div>
-      
-      <!-- 10-15 -->
-      <div>
-         <img src="http://farm1.static.flickr.com/143/321464099_a7cfcb95cf_t.jpg" width="20px"/>
-         <img src="http://farm4.static.flickr.com/3089/2796719087_c3ee89a730_t.jpg" width="20px"/>
-         <img src="http://farm1.static.flickr.com/79/244441862_08ec9b6b49_t.jpg" width="20px"/>
-         <img src="http://farm1.static.flickr.com/28/66523124_b468cf4978_t.jpg" width="20px"/>
-         <img src="http://farm1.static.flickr.com/164/399223606_b875ddf797_t.jpg" width="20px"/>
-      </div>
       
    </div>
-   
+  
 </div>
-
+ <%if @albums.length >4%>
+<a class="prev browse left" ></a>
 <!-- "next page" action -->
 <a class="next browse right"></a>
+<%end%>
 
 <br></br>
+</div>
+<!-- "previous page" action -->
+
 <script>
   $(document).ready(function(){
 $(function() {

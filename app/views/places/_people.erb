@@ -1,6 +1,50 @@
-<%#
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-%>
+<ul class="tabs">
+  <li><a href="#follow_user">关注的用户</a></li>
+  <li><a href="#be_here_user">到过的用户</a></li>
+  <li><a href="#want_to_user">想去的用户</a></li>
+</ul>
 
-<%= "_people" %>
+
+<div class="panes" >
+  <div style="margin-top: 10px;margin-bottom: 10px;" class="tab_pane">
+    <div class="scrollable " id="scroller" style="width:390px">
+      <div class="items" >
+                 <%i =0%>
+          <% @follow_peoples.each do |mm| %>
+         <%i += 1%>
+          <%if i%4==1 %>
+         <div>
+          <%end%>
+
+          <% content_tag :a, :href => person_path(mm.map.person) do %>
+            <%= render :partial => 'people/thumbnail', :locals => {:person => mm.map.person} %>
+          <% end %>
+             <%if i%4==0 or i==@follow_peoples.length %>
+         </div>
+          <%end%>
+        <% end %>
+
+      </div>
+    </div>
+    
+        <%if @follow_peoples.length >6%>
+        <a class="prev browse left" ></a>
+        <!-- "next page" action -->
+        <a class="next browse right"></a>
+        <%end%>
+  </div>
+
+    <div class="tab_pane">Second pane. You can open other tabs with normal <a href="#first">anchor links</a></div>
+    <div class="tab_pane">Third tab content</div>
+</div>
+<br></br>
+<script type="text/javascript">
+
+  $(function() {
+    // setup ul.tabs to work as tabs for each div directly under div.panes
+    $("ul.tabs").tabs("div.panes > div.tab_pane");
+    $("#scroller").scrollable();
+  });
+
+</script>
+

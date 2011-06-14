@@ -1,7 +1,8 @@
-<div class="boxBody">
+<%= form_for @person do |form| %>
+<div class="panes">
 
   <%= render :partial => 'edit_photo' %>
-  <%= form_for @person do |form| %>
+  
     <%= render :partial => 'edit_basic' ,:locals => { :form => form}%>
 
     <%= render :partial => 'edit_about' ,:locals => { :form => form}%>
@@ -15,10 +16,10 @@
 
     <p class="double-margin-top"><%= form.submit t('save_changes') %></p>
 
-  <% end %>
+ 
 
 </div>
-
+ <% end %>
 <script type="text/javascript">
  
 

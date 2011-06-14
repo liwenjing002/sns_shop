@@ -1,3 +1,4 @@
+
 <% if Setting.get(:features, :friends) %>
   <% if @logged_in.friend? @person %>
     <li class="icon"><%= link_to t('friends.remove_from_friends'), person_friend_path(@logged_in, @person), :method => 'delete', :confirm => t('are_you_sure'), :class => 'delete-icon' %></li>
