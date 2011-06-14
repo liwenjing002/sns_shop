@@ -1,7 +1,7 @@
 <% content_for  :head do %>
   <%= javascript_include_tag "wmd/wmd.js" %>
 <% end %>
-<span>地点介绍：</span>
+<h3>地点介绍：</h3>
 <div id ="description_text"><p><%= @place.place_description%></p></div>
 <div id ="description_textarea" style="display:none">
 
@@ -17,9 +17,9 @@
 </div>
 <span style="cursor:pointer" id ="edit_button" class ="button">编辑</span>
 
-
-<div id = "place_tag" style="padding-bottom: 5px;padding-top: 10px;">
-  <span>标签：</span>
+<h3>标签云：</h3>
+<div id = "place_tag" style="margin-bottom: 10px;margin-top: 10px;">
+  
   <span id = "place_all_tags"> <%= render :partial=>"tags/tags",:locals=>{:object=>@place} %></span>
 </div>
 
