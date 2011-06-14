@@ -1,0 +1,47 @@
+
+<ul class="tabs">
+	<li><a href="#follow_user">关注的用户</a></li>
+	<li><a href="#be_here_user">到过的用户</a></li>
+	<li><a href="#want_to_user">想去的用户</a></li>
+</ul>
+
+
+<div class="panes" >
+	<div style="margin:20px -15px">
+          <a class="prev browse left"></a>
+          <div class="scrollable" id="scroller">
+            <div class="items" >
+              <div class="cloned">
+         <img src="http://farm4.static.flickr.com/3629/3323896446_3b87a8bf75_t.jpg">
+         <img src="http://farm4.static.flickr.com/3023/3323897466_e61624f6de_t.jpg">
+         <img src="http://farm4.static.flickr.com/3650/3323058611_d35c894fab_t.jpg">
+      </div>
+              <div>
+         <img src="http://farm1.static.flickr.com/143/321464099_a7cfcb95cf_t.jpg">
+         <img src="http://farm4.static.flickr.com/3089/2796719087_c3ee89a730_t.jpg">
+         <img src="http://farm1.static.flickr.com/79/244441862_08ec9b6b49_t.jpg">
+      </div>
+              <div class="cloned">
+         <img src="http://farm1.static.flickr.com/143/321464099_a7cfcb95cf_t.jpg">
+         <img src="http://farm4.static.flickr.com/3089/2796719087_c3ee89a730_t.jpg">
+         <img src="http://farm1.static.flickr.com/79/244441862_08ec9b6b49_t.jpg">
+      </div>
+            </div>
+          </div>
+          <a class="next browse right"></a>
+
+
+        </div>
+	<div>Second pane. You can open other tabs with normal <a href="#first">anchor links</a></div>
+	<div>Third tab content</div>
+</div>
+<br></br><br></br>
+<script type="text/javascript">
+
+  $(function() {
+	// setup ul.tabs to work as tabs for each div directly under div.panes
+	$("ul.tabs").tabs("div.panes > div");
+        $("#scroller").scrollable({circular: true}).autoscroll({ autoplay: false });
+});
+
+</script>

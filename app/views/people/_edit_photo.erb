@@ -1,14 +1,8 @@
 
-  <div  class="object show" >
+  <div  class="object" >
   <%= render :partial => 'photo' %>
   <div class="form-field-hint"><%= t('people.upload_a_picture_of_html', :name => me? ? 'yourself' : @person.name) %></div>
   <%= photo_upload_for @person %>
 
-  <!--
-  <%#*<h3><%= t('people.edit.family_photo') %></h3>%>
-  <%#= render :partial => 'families/photo' %>
-  <%#*<div class="form-field-hint"><%= t('people.upload_family_picture_html') %></div>%>
-  <%#= photo_upload_for @family %>
-  -->
   </div>
 
