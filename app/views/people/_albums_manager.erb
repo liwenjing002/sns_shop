@@ -13,17 +13,28 @@
    <!-- root element for the items -->
    <div class="items">
        <% if @albums.any? %>
+<<<<<<< HEAD
      <%i =0%>
           <%if private("ablums")%>
             <% @albums.each do |album| %>
           <%i +=1%>
           <%if i%4==1 %>
+=======
+          <%if private("ablums")%>
+            <% @albums.each do |album| %>
+          <%i =0%>
+          <%if i%4==0 %>
+>>>>>>> 2fb0330a2d768e945fb3e3781fefda87be9897d1
          <div>
           <%end%>
 
               <%= link_to image_tag(album.cover ? album.cover.photo.url(:small) : 'missing_tn.png', :alt => album.name),
                      album, :title => album.name %>
+<<<<<<< HEAD
           <%if i%4==0 or i == @albums.length%>
+=======
+                     <%if i%4==0 %>
+>>>>>>> 2fb0330a2d768e945fb3e3781fefda87be9897d1
          </div>
           <%end%>
 
@@ -42,7 +53,11 @@
    </div>
   
 </div>
+<<<<<<< HEAD
  <%if @albums.length >4%>
+=======
+<%if @albums.length >4%>
+>>>>>>> 2fb0330a2d768e945fb3e3781fefda87be9897d1
 <a class="prev browse left" ></a>
 <!-- "next page" action -->
 <a class="next browse right"></a>

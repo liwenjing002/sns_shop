@@ -1132,11 +1132,24 @@ color: #3286B5;
     when scrolling occurs this element stays still.
 */
 .scrollable {
+<<<<<<< HEAD
 position: relative;
 overflow: hidden;
 width: 270px;
 height: 60px;
 border: 1px solid #CCC;
+=======
+
+    /* required settings */
+    position:relative;
+    overflow:hidden;
+    width: 270px;
+    height:60px;
+
+    /* custom decorations */
+    border:1px solid #ccc;
+
+>>>>>>> 2fb0330a2d768e945fb3e3781fefda87be9897d1
 }
 
 /*
