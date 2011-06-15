@@ -52,6 +52,13 @@
       $ps_container.find('img').remove();
       $.post('/albums/get_pics_by_id', {id:$(this).attr("id")} , function(data) {
         var items_count	= data.length;
+        if(items_count==0){
+          alert("相册没有照片")
+          $loading.remove();
+           $ps_container.hide();
+           $ps_overlay.fadeOut(400);
+           return 
+        }
         for(var i = 0; i < items_count; ++i){
           var item_source = data[i];
           var cnt 		= 0;
@@ -105,7 +112,6 @@
         marginLeft	: $current.css('margin-left'),
         marginTop	: $current.css('margin-top')
       }
-      var   timebgein   =   (new   Date()).getTime(); 
       var $new_current = $current.prev();
       
       $current.animate({
