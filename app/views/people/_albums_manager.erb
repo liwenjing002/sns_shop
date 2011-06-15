@@ -46,9 +46,9 @@
     var $ps_close		= $('#ps_close');
 
     $(".album_icon").bind('click',function(){
-      var $elem = $(this);
+       $ps_overlay.show();
       var $loading 	= $('<div />',{className:'loading'});
-      $elem.append($loading);
+      $("body").append($loading);
       $ps_container.find('img').remove();
       $.post('/albums/get_pics_by_id', {id:$(this).attr("id")} , function(data) {
         var items_count	= data.length;
@@ -66,8 +66,8 @@
                 '-moz-transform'	:'rotate('+r+'deg)',
                 '-webkit-transform'	:'rotate('+r+'deg)',
                 'transform'			:'rotate('+r+'deg)',
-                'width':    '600px',
-                'height':'400px'
+                'max-width':    '600px',
+                'max-height':'400px'
               });
             }
             if(cnt == items_count){
@@ -81,14 +81,6 @@
       });
     });
 
-    $(".album_icon").ajaxStart(function(){
-      $(this).show();
-      $(".submit_button").attr("disabled","true");
-    }).ajaxComplete(function(){
-      $(this).hide();
-      $(".submit_button").removeAttr("disabled");
-
-    });
 
     /**
      * when hovering each one of the images,
