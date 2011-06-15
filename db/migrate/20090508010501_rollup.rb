@@ -554,7 +554,7 @@ class Rollup < ActiveRecord::Migration
       t.integer  "site_id"
     end
 
-#    Site.current = Site.create :name => 'Default', :host => 'example.com'
+    Site.current = Site.create :name => 'Default', :host => 'example.com'
   end
 
   def self.down

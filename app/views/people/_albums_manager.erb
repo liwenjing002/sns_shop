@@ -60,7 +60,7 @@
             ++cnt;
             resizeCenterImage($image);
             $ps_container.append($image);
-            var r		= Math.floor(Math.random()*41)-20;
+            var r		= Math.floor(Math.random()*25)-20;
             if(cnt < items_count){
               $image.css({
                 '-moz-transform'	:'rotate('+r+'deg)',
@@ -105,12 +105,14 @@
         marginLeft	: $current.css('margin-left'),
         marginTop	: $current.css('margin-top')
       }
+      var   timebgein   =   (new   Date()).getTime(); 
       var $new_current = $current.prev();
-
+      
       $current.animate({
         'marginLeft':'250px',
         'marginTop':'-385px'
-      },250,function(){
+      },25,function(){
+
         $(this).insertBefore($ps_container.find('img:first'))
         .css({
           '-moz-transform'	:'rotate('+r+'deg)',
@@ -120,7 +122,7 @@
         .animate({
           'marginLeft':currentPositions.marginLeft,
           'marginTop'	:currentPositions.marginTop
-        },250,function(){
+        },25,function(){
           $new_current.css({
             '-moz-transform'	:'rotate(0deg)',
             '-webkit-transform'	:'rotate(0deg)',
