@@ -96,4 +96,13 @@ class AlbumsController < ApplicationController
     end
   end
 
+  def get_pics_by_id
+     @album = Album.find(params[:id])
+     pics = []
+     @album.pictures.each do |pic|
+       pics.push(pic.photo.url(:original))
+     end
+      render :json =>pics
+  end
+
 end

@@ -147,6 +147,9 @@ OneBody::Application.routes.draw do
       end
       resource :photo
     end
+    collection do
+      post :get_pics_by_id
+    end
   end
 
   resources :messages do

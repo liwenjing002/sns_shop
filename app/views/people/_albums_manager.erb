@@ -1,60 +1,210 @@
- <h3><%= t('albums.picture_albums') %>
-        <%if @person==@logged_in%>  <p style="float: right"><%= link_to t('albums.new'), new_album_path, :class => 'add-icon' %></p><%end%>
-      </h3>
-
-     
-        
-        
+<h3 ><%= t('albums.picture_albums') %>
+  <%if @person==@logged_in%>  <p style="float: right"><%= link_to t('albums.new'), new_album_path, :class => 'add-icon' %></p><%end%>
+</h3>
 
 
-<!-- root element for scrollable -->
-<div class="scrollable">   
-   
-   <!-- root element for the items -->
-   <div class="items">
-       <% if @albums.any? %>
-          <%if private("ablums")%>
-            <% @albums.each do |album| %>
-          <%i =0%>
-          <%if i%4==0 %>
-         <div>
-          <%end%>
-
-              <%= link_to image_tag(album.cover ? album.cover.photo.url(:small) : 'missing_tn.png', :alt => album.name),
-                     album, :title => album.name %>
-                     <%if i%4==0 %>
-         </div>
-          <%end%>
-
-            <% end %>
-          <%else%>
-            <% @albums.each do |album| %>
-              <%= link_to image_tag(album.cover ? album.cover.photo.url(:tn) : 'missing_tn.png', :alt => album.name),
-                "javascript:onclick=alert('相册被设置隐藏，请加好友或联系TA')", :title => album.name %>
-            <% end %>
-          <%end%>
+<div class="listing">
+  <% if @albums.any? %>
+    <%if private("ablums")%>
+      <% @albums.each do |album| %>
+        <img alt="<%=album.name%>" src="<%=album.cover ? album.cover.photo.url(:small) : '/images/missing_tn.png'%>" class="icon thumbnail album_icon" id="<%=album.id%>"/>
+        <div class="tooltip_ablum" >
+          <span style="float: left;"><%=image_tag(album.cover ? album.cover.photo.url(:profile) : 'missing_tn.png', :alt => album.name ,:class=>"profile_icon")%>
+          </span>
+          <span style="float: left;margin-left: 10px;">
+            <p>创建时间：<%=album.created_at.strftime("%y-%m-%d")%></p>
+            <p>照片数：<%=album.pictures.length%></p>
+            <p>地理位置：<%=album.pictures.length%></p>
+            <p><%= link_to "进入相册", album, :title => album.name,:style=>"color:white" %></p>
+          </span>
+        </div>
       <% end %>
-
-
-      
-      
-   </div>
-   
+    <%else%>
+      <% @albums.each do |album| %>
+        <%= link_to image_tag(album.cover ? album.cover.photo.url(:tn) : 'missing_tn.png', :alt => album.name),
+          "javascript:onclick=alert('相册被设置隐藏，请加好友或联系TA')", :title => album.name %>
+      <% end %>
+    <%end%>
+  <% end %>
 </div>
-<a class="prev browse left" ></a>
-<!-- "next page" action -->
-<a class="next browse right"></a>
-
-<br></br>
-
-<!-- "previous page" action -->
+<div id="ps_overlay" class="ps_overlay" style="display:none;"></div>
+<a id="ps_close" class="ps_close" style="display:none;"></a>
+<div id="ps_container" class="ps_container" style="display:none;">
+  <a id="ps_next_photo" class="ps_next_photo" style="display:none;"></a>
+</div>
 
 <script>
+
   $(document).ready(function(){
-$(function() {
+    $(".listing img.icon").tooltip({ position: 'top center ',  delay: 50 });
+  })
 
-	// initialize scrollable
-	$(".scrollable").scrollable();
+  $(function() {
 
-});  })
+    var $ps_container 	= $('#ps_container');
+    var $ps_overlay 	= $('#ps_overlay');
+    var $ps_close		= $('#ps_close');
+
+    $(".album_icon").bind('click',function(){
+      var $elem = $(this);
+      var $loading 	= $('<div />',{className:'loading'});
+      $elem.append($loading);
+      $ps_container.find('img').remove();
+      $.post('/albums/get_pics_by_id', {id:$(this).attr("id")} , function(data) {
+        var items_count	= data.length;
+        for(var i = 0; i < items_count; ++i){
+          var item_source = data[i];
+          var cnt 		= 0;
+          $('<img />').load(function(){
+            var $image = $(this);
+            ++cnt;
+            resizeCenterImage($image);
+            $ps_container.append($image);
+            var r		= Math.floor(Math.random()*41)-20;
+            if(cnt < items_count){
+              $image.css({
+                '-moz-transform'	:'rotate('+r+'deg)',
+                '-webkit-transform'	:'rotate('+r+'deg)',
+                'transform'			:'rotate('+r+'deg)',
+                'width':    '600px',
+                'height':'400px'
+              });
+            }
+            if(cnt == items_count){
+              $loading.remove();
+              $ps_container.show();
+              $ps_close.show();
+              $ps_overlay.show();
+            }
+          }).attr('src',item_source);
+        }
+      });
+    });
+
+    $(".album_icon").ajaxStart(function(){
+      $(this).show();
+      $(".submit_button").attr("disabled","true");
+    }).ajaxComplete(function(){
+      $(this).hide();
+      $(".submit_button").removeAttr("disabled");
+
+    });
+
+    /**
+     * when hovering each one of the images,
+     * we show the button to navigate through them
+     */
+    $ps_container.live('mouseenter',function(){
+      $('#ps_next_photo').show();
+    }).live('mouseleave',function(){
+      $('#ps_next_photo').hide();
+    });
+
+    /**
+     * navigate through the images:
+     * the last one (the visible one) becomes the first one.
+     * we also rotate 0 degrees the new visible picture
+     */
+    $('#ps_next_photo').bind('click',function(){
+      var $current 	= $ps_container.find('img:last');
+      var r			= Math.floor(Math.random()*41)-20;
+
+      var currentPositions = {
+        marginLeft	: $current.css('margin-left'),
+        marginTop	: $current.css('margin-top')
+      }
+      var $new_current = $current.prev();
+
+      $current.animate({
+        'marginLeft':'250px',
+        'marginTop':'-385px'
+      },250,function(){
+        $(this).insertBefore($ps_container.find('img:first'))
+        .css({
+          '-moz-transform'	:'rotate('+r+'deg)',
+          '-webkit-transform'	:'rotate('+r+'deg)',
+          'transform'			:'rotate('+r+'deg)'
+        })
+        .animate({
+          'marginLeft':currentPositions.marginLeft,
+          'marginTop'	:currentPositions.marginTop
+        },250,function(){
+          $new_current.css({
+            '-moz-transform'	:'rotate(0deg)',
+            '-webkit-transform'	:'rotate(0deg)',
+            'transform'			:'rotate(0deg)'
+          });
+        });
+      });
+    });
+
+    /**
+     * close the images view, and go back to albums
+     */
+    $('#ps_close').bind('click',function(){
+      $ps_container.hide();
+      $ps_close.hide();
+      $ps_overlay.fadeOut(400);
+    });
+
+    /**
+     * resize and center the images
+     */
+    function resizeCenterImage($image){
+      var theImage 	= new Image();
+      theImage.src 	= $image.attr("src");
+      var imgwidth 	= theImage.width;
+      var imgheight 	= theImage.height;
+      var containerwidth  = 600;
+      var containerheight = 400;
+
+      if(imgwidth	> containerwidth){
+        var newwidth = containerwidth;
+        var ratio = imgwidth / containerwidth;
+        var newheight = imgheight / ratio;
+        if(newheight > containerheight){
+          var newnewheight = containerheight;
+          var newratio = newheight/containerheight;
+          var newnewwidth =newwidth/newratio;
+          theImage.width = newnewwidth;
+          theImage.height= newnewheight;
+        }
+        else{
+          theImage.width = newwidth;
+          theImage.height= newheight;
+        }
+      }
+      else if(imgheight > containerheight){
+        var newheight = containerheight;
+        var ratio = imgheight / containerheight;
+        var newwidth = imgwidth / ratio;
+        if(newwidth > containerwidth){
+          var newnewwidth = containerwidth;
+          var newratio = newwidth/containerwidth;
+          var newnewheight =newheight/newratio;
+          theImage.height = newnewheight;
+          theImage.width= newnewwidth;
+        }
+        else{
+          theImage.width = newwidth;
+          theImage.height= newheight;
+        }
+      }
+      $image.css({
+        'width'			:theImage.width,
+        'height'		:theImage.height,
+        'margin-top'	:-(theImage.height/2)-10+'px',
+        'margin-left'	:-(theImage.width/2)-10+'px'
+      });
+    }
+  });
+
+
+
+
+
+
+
+
+
 </script>
