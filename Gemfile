@@ -14,7 +14,7 @@ gem 'loofah',                 '~> 1.0.0'
 #gem 'feedzirra',              '~> 0.0.24'
 #gem 'fastercsv',              '~> 1.5.0'
 #gem 'pdf-writer',             '~> 1.1.8', :require => 'pdf/writer'
-gem 'rubyzip',                '~> 0.9.4', :require => 'zip/zip'
+#gem 'rubyzip',                '~> 0.9.4', :require => 'zip/zip'
 gem 'sanitize',               '~> 1.2.1'
 gem 'haml',                   '~> 3.0.24'
 gem 'paperclip',              '~> 2.3.6'
@@ -23,4 +23,5 @@ gem 'ar_mailer_rails3'
 group :development, :test do
   gem 'faker',                '~> 0.3.1'
   gem 'shoulda',              '~> 2.11.3'
+  gem "hoe"
 end
