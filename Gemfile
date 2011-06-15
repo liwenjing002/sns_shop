@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-gem 'hoe', '= 1.5.1'
+
 gem 'rails',                  '= 3.0.4'
 gem 'mysql',                  '~> 2.8.1'
 gem 'liquid',                 '~> 2.2.2'
@@ -23,5 +23,5 @@ gem 'ar_mailer_rails3'
 group :test,:development do
   gem 'faker',                '~> 0.3.1'
   gem 'shoulda',              '~> 2.11.3'
-  gem 'hoe', '= 1.5.1'
+  gem 'hoe'
 end
