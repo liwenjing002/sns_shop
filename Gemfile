@@ -23,5 +23,5 @@ gem 'ar_mailer_rails3'
 group :test,:development do
   gem 'faker',                '~> 0.3.1'
   gem 'shoulda',              '~> 2.11.3'
-  gem "hoe"
+  gem 'hoe', '= 1.5.1'
 end
