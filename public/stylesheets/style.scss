@@ -1249,11 +1249,12 @@ a.disabled {
 }
 .profile_icon{
 width:170px;
-max-height:160px;
+max-height:140px;
 }
 .thumbnail{
 width:32px;
 height:32px;
+margin-bottom:10px;
 }
 
 
@@ -1300,8 +1301,8 @@ a.ps_close{
 	width:56px;
 	height:56px;
 	position:fixed;
-	right:10px;
-	top:10px;
+	right:80px;
+	top:240px;
 	z-index:1000;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
@@ -1341,3 +1342,44 @@ a.ps_close:hover{
 
         z-index: 100;
 }
+
+
+
+/* 图片原图查看效果*/
+
+
+/* the overlayed element */
+.simple_overlay {
+
+    /* must be initially hidden */
+    display:none;
+
+    /* place overlay on top of other elements */
+    z-index:10000;
+
+
+
+}
+.simple_overlay img{
+    /* CSS3 styling for latest browsers */
+    -moz-box-shadow:0 0 90px 5px #000;
+    -webkit-box-shadow: 0 0 90px #000;
+}
+/* close button positioned on upper right corner */
+.simple_overlay .close {
+    background-image:url(/images/close.png);
+    position:absolute;
+    right: -15px;
+    top: -15px;
+    cursor:pointer;
+    height:32px;
+    width:32px;
+}
+.details {
+                bottom: -100px;
+                left: 0px;
+		font-size:11px;
+		color:#fff;
+		width:150px;
+}
+	
