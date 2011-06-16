@@ -14,18 +14,25 @@ module StreamsHelper
 
     if stream_item.context.any?
       content += "<div id= 'pic_share'>"
+      content += "<div id= 'triggers'>"
       content +=  "".tap do |content_temp|
         stream_item.context['picture_ids'].to_a.each do |picture_id, fingerprint, extension|
-          content_temp << link_to(
-            image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :large), :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic'),
+           
+          temp = ''+link_to(
+            image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :large), :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic',:rel=>"#mies#{picture_id}"),
             album_picture_path(stream_item.streamable_id, picture_id), :title => t('pictures.click_to_enlarge')
-          ) + ' '
+          ) 
+          
+          temp += '<div class="simple_overlay" id="mies'+picture_id.to_s+'">' + image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :original),:alt => t('pictures.click_to_enlarge')) +'</div>'
+          content_temp <<  temp
         end
       end.html_safe
       content += "</div>"
+      content += "</div>"
+      
     end
-     if stream_item.body
-       content += "<div id= 'text_share'>"
+    if stream_item.body
+      content += "<div id= 'text_share'>"
       content += if stream_item.streamable_type == 'Message'
         render_message_body(stream_item)
       else
@@ -39,7 +46,7 @@ module StreamsHelper
         "<img#{$1}src=\"#{url}\""
       end
     end
-   raw content
+    raw content
   end
 
   def recent_time_ago_in_words(time)
