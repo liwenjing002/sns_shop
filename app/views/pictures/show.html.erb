@@ -1,3 +1,7 @@
+<% content_for  :head do %>
+  <%= javascript_include_tag "extend/jquery.tools.min" %>
+<%end%>
+
 <% content_for :sidebar do %>
   <h2><%= link_to @picture.album.name, @picture.album %></h2>
   <% if @picture.album.group %>
@@ -34,10 +38,75 @@
   <%= link_to t('pictures.next'), next_album_picture_path(@album, @picture) %>
 </p>
 
-<p>
-  <%= link_to image_tag(@picture.photo.url(:large), :alt => t('pictures.click_to_see_original')), @picture.original_url || @picture.photo.url %>
-</p>
+<div id="triggers">
+  <%= image_tag(@picture.photo.url(:large), :alt => t('pictures.click_to_see_original'),:rel=>"#mies") %>
+</div>
 <% if Setting.get(:privacy, :allow_picture_comments) %>
-<h3><%= t('Comments') %></h3>
-<%= render :partial => 'comments/comments', :locals => {:object => @picture, :intro => t('pictures.comment_on_this_picture')} %>
+  <h3><%= t('Comments') %></h3>
+  <%= render :partial => 'comments/comments', :locals => {:object => @picture, :intro => t('pictures.comment_on_this_picture')} %>
 <% end %>
+
+
+
+<div class="simple_overlay" id="mies">
+  <%= image_tag(@picture.photo.url(:original), :alt => t('pictures.click_to_see_original')) %>
+  <div class="details">
+    <p>照片描述：</p>
+    <p>上传时间：<%=@picture.created_at.strftime("%y-%m-%d")%></p>
+    <p>地理位置：</p>
+  </div>
+</div>
+
+<script>
+
+  $(document).ready(function() {
+
+    $("img[rel]").overlay({
+      effect: 'drop',
+      mask: '#789'
+    });
+  });
+
+
+  $.easing.drop = function (x, t, b, c, d) {
+    return -c * (Math.sqrt(1 - (t/=d)*t) - 1) + b;
+  };
+
+
+  // loading animation
+  $.tools.overlay.addEffect("drop", function(css, done) {
+    // use Overlay API to gain access to crucial elements
+    var conf = this.getConf(),
+    overlay = this.getOverlay();
+
+    // determine initial position for the overlay
+    if (conf.fixed)  {
+      css.position = 'fixed';
+    } else {
+      css.top += $(window).scrollTop();
+      css.left += $(window).scrollLeft();
+      css.position = 'absolute';
+    }
+
+    // position the overlay and show it
+    overlay.css(css).show();
+
+    // begin animating with our custom easing
+    overlay.animate({ top: '+=55',  opacity: 1,  width: '+=20'}, 400, 'drop', done);
+
+    /* closing animation */
+  }, function(done) {
+    this.getOverlay().animate({top:'-=55', opacity:0, width:'-=20'}, 300, 'drop', function() {
+      $(this).hide();
+      done.call();
+    });
+  }
+);
+
+  $("img[rel]").overlay({
+    effect: 'drop',
+    mask: '#789'
+  });
+
+
+</script>

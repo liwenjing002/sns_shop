@@ -12,6 +12,7 @@
           <span style="float: left;"><%=image_tag(album.cover ? album.cover.photo.url(:profile) : 'missing_tn.png', :alt => album.name ,:class=>"profile_icon")%>
           </span>
           <span style="float: left;margin-left: 10px;">
+            <p>相册名称：<%=album.name%></p>
             <p>创建时间：<%=album.created_at.strftime("%y-%m-%d")%></p>
             <p>照片数：<%=album.pictures.length%></p>
             <p>地理位置：<%=album.pictures.length%></p>
@@ -80,6 +81,9 @@
         }
       });
     });
+
+
+ 
 
 
     /**
