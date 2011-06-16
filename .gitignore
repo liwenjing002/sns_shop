@@ -26,7 +26,7 @@ pkg
 script/package
 db/bible.web.osis.xml
 public/images/Thumbs.db
-/nbproject
+nbproject
 /nbproject/project.properties
 /nbproject/project.xml
 /nbproject/private
