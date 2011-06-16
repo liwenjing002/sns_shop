@@ -53,6 +53,13 @@
       $ps_container.find('img').remove();
       $.post('/albums/get_pics_by_id', {id:$(this).attr("id")} , function(data) {
         var items_count	= data.length;
+        if(items_count==0){
+          alert("相册没有照片")
+          $loading.remove();
+           $ps_container.hide();
+           $ps_overlay.fadeOut(400);
+           return 
+        }
         for(var i = 0; i < items_count; ++i){
           var item_source = data[i];
           var cnt 		= 0;
@@ -61,7 +68,7 @@
             ++cnt;
             resizeCenterImage($image);
             $ps_container.append($image);
-            var r		= Math.floor(Math.random()*41)-20;
+            var r		= Math.floor(Math.random()*25)-20;
             if(cnt < items_count){
               $image.css({
                 '-moz-transform'	:'rotate('+r+'deg)',
@@ -110,11 +117,12 @@
         marginTop	: $current.css('margin-top')
       }
       var $new_current = $current.prev();
-
+      
       $current.animate({
         'marginLeft':'250px',
         'marginTop':'-385px'
-      },250,function(){
+      },25,function(){
+
         $(this).insertBefore($ps_container.find('img:first'))
         .css({
           '-moz-transform'	:'rotate('+r+'deg)',
@@ -124,7 +132,7 @@
         .animate({
           'marginLeft':currentPositions.marginLeft,
           'marginTop'	:currentPositions.marginTop
-        },250,function(){
+        },25,function(){
           $new_current.css({
             '-moz-transform'	:'rotate(0deg)',
             '-webkit-transform'	:'rotate(0deg)',
