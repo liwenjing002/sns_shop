@@ -3,7 +3,7 @@ db/schema.rb
 db/*.sql
 db/*.backup.*
 tmp
-cache
+cache/*
 nbproject
 .DS_Store
 setup-authorized-ip
