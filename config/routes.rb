@@ -159,8 +159,8 @@ OneBody::Application.routes.draw do
   resources :tags, :only => :show
 
   resources :pictures, :prayer_signups, :authentications, :feeds, :verses, :shares,
-            :publications, :notes, :comments, :prayer_requests, :podcasts,
-            :generated_files
+    :publications, :notes, :comments, :prayer_requests, :podcasts,
+    :generated_files
 
   resource  :setup, :stream, :session, :search, :printable_directory, :privacy, :pc_sync
 

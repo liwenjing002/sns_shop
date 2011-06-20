@@ -95,5 +95,7 @@ class PicturesController < ApplicationController
       render :text => t('pictures.cant_delete'), :layout => true, :status => 401
     end
   end
+  
+
 
 end

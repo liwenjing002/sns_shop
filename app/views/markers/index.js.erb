@@ -20,7 +20,10 @@ if (MapObject.home_marker !=null){
   //MapObject.markerClusterer.addMarker(marker,true);
 <%end%>
 <%if @my_home and @my_home.home_address%>
-  MapObject.re_geocodePosition('<%=@my_home.home_address%>',"/images/map/home.png",'<%= @my_home.home_address%>',true);
+  MapObject.re_geocodePosition('<%=@my_home.home_address%>',"/images/map/home.png",'我家在：<%= @my_home.home_address%>',true);
+<%end%>
+<%if @ta_home and @ta_home.home_address%>
+  MapObject.re_geocodePosition('<%=@ta_home.home_address%>',"/images/map/home.png",'Ta家在：<%= @ta_home.home_address%>',true);
 <%end%>
 
 

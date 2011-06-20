@@ -60,7 +60,9 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.16)
     mysql (2.8.1)
+    mysql (2.8.1-x86-mingw32)
     nokogiri (1.4.4)
+    nokogiri (1.4.4-x86-mingw32)
     paperclip (2.3.11)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
@@ -100,6 +102,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   ar_mailer_rails3

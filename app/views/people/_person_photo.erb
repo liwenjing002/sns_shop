@@ -4,7 +4,7 @@
   <% elsif me? and params[:controller] == 'people' and params[:action] == 'show' %>
     <div class="temp_pic silhouette-<%= @person.gender.to_s == 'Female' ? 'woman' : 'man' %>" >
       <span class="span_link">
-        <input type="file"  id ="fileToUpload" name ="picture" onchange="fileChange(this.value)"/>
+        <input type="file"  id ="fileToUpload" name ="picture" onchange="profile_pic_Change(this.value)"/>
       </span>        
       <%=image_tag("loading.gif",:id=>"loading",:style=>"display:none",:height => '30')%>
 
@@ -38,13 +38,13 @@
   })
 
 
-  function fileChange(full_path){
-    ajaxFileUpload();
+  function profile_pic_Change(full_path){
+    profile_ajaxFileUpload();
   }
           
           
         
-  function ajaxFileUpload(){
+  function profile_ajaxFileUpload(){
     loading();//动态加载小图标
     $.ajaxFileUpload({
       url:'change_pic',

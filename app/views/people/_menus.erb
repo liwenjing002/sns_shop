@@ -38,15 +38,17 @@
 <% end %>
 
 
-<% if (@person and @logged_in and @logged_in.can_edit?(@person)) or (!@person and @logged_in) %>
+
   <div id="marker-tab-menu" style="display:none;">
     <ul>
-      <li><span style= "cursor:pointer" title="我在地图上关注的地点" class ='edit-icon' onclick="MapObject.init_marker_from_data('own')" >我关注的地点</span></li>
-      <li><span style= "cursor:pointer" title="我在地图上发布的地点" class ='lock-icon' onclick="MapObject.init_marker_from_data('share')">我发布的地点</span></li>
-      <li><span style= "cursor:pointer" title="我们向您随机推荐的地点" class ='email-icon' >随机地点推荐</span></li>
+      <li><span style= "cursor:pointer" title="<%= t('people.marker_i_or_hei_follow',:iorhei=>(@person==@logged_in? '我':'Ta')) %>" class ='edit-icon' onclick="MapObject.init_marker_from_data('own','<%=(@person==@logged_in? "":@person.id)%>')" >
+          <%= t('people.marker_i_or_hei',:iorhei=>(@person==@logged_in? '我':'Ta')) %></span></li>
+      <li><span style= "cursor:pointer" title="<%= t('people.marker_i_or_hei_own',:iorhei=>(@person==@logged_in? '我':'Ta')) %>" class ='lock-icon' onclick="MapObject.init_marker_from_data('share','<%=(@person==@logged_in? "":@person.id)%>')">
+        <%= t('people.i_or_hei_own',:iorhei=>(@person==@logged_in? '我':'Ta')) %></span></li>
+      <li><span style= "cursor:pointer" title="<%= t('people.marker_rander_to') %>" class ='email-icon'onclick="MapObject.init_marker_from_data('rander')" ><%= t('people.marker_rander') %></span></li>
     </ul>
   </div>
-<% end %>
+
 
 <% if (@person and @logged_in  or (!@person and @logged_in)) %>
   <div id="posittion-tab-menu" style="display:none;">
