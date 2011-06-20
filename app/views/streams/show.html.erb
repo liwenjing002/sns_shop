@@ -1,6 +1,9 @@
 <% content_for :head do %>
   <link rel="alternate" type="application/atom+xml" title='<%= t("stream.feed") %>' href="<%= url_for stream_path(:format => 'xml', :code => @logged_in.feed_code) %>"/>
+  <%= javascript_include_tag "extend/jquery.tools.min" %>
+<%= javascript_include_tag "extend/pic_effects" %>
 <% end %>
+
 
 <% cache(:fragment => 'friendship_requests', :for => @logged_in.id) do %>
   <% if @has_friendship_requests %>
