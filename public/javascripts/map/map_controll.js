@@ -28,7 +28,7 @@ var MapObject =  {
     polylines: [], 						  //contains raw data, array of arrays (first element could be a hash containing options)
     circles: [], 
     //初始化map
-    initialize: function () {
+    initialize: function (id) {
         var myOptions = {
             zoom: this.map_options.zoom,
             draggableCursor: "default",
@@ -41,7 +41,7 @@ var MapObject =  {
         //        this.initControl() ;
 
         //        this.infoWindow = new google.maps.InfoWindow();
-        this.init_marker_from_data("my_home"); 
+        this.init_marker_from_data("my_home",id);
     //        this.init_marker_from_data("firend_postition");
     //	this.init_marker_from_data("schedule");
 
@@ -61,6 +61,9 @@ var MapObject =  {
         });
          google.maps.event.addListener(MapObject.map, 'mousemove', function(event) {
            MapObject.map.setOptions({ draggableCursor: 'crosshair' });
+      });
+               google.maps.event.addListener(MapObject.map, 'rightclick', function(event) {
+           clear_marker_listen();
       });
     },
 
@@ -130,7 +133,7 @@ var MapObject =  {
             }
             return string;
         }else{
-            return "找不到该地址"
+            return //"找不到该地址"
         }
     },
 			
@@ -278,17 +281,17 @@ var MapObject =  {
 	
 	
     //从后台获取数据后初始化marker
-    init_marker_from_data:function(type){
-        
+    init_marker_from_data:function(type,people_id){
+        id_string = ''
+        if(people_id !=null && people_id != ''){
+            id_string +=("&people_id="+people_id)
+        }
         $.ajax({                                                
             type: "GET",                                    
-            url: "/markers?type="+type,                                      
+            url: "/markers?type="+type+id_string,
             success: function(){
             } 
         });
-
-        
-
     },
     
     

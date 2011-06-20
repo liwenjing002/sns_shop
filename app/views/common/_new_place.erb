@@ -1,14 +1,14 @@
 <%= form_for Place.new, :remote=>true,:html => {:multipart => true,:id => 'new_place_form',:onsubmit=>''} do |form| %>  
 
   <ul class="share-details share-selector">
-    <li><span class ='comment2-icon add_place'>发布我的地点<span></li>
+    <li><span class ='comment2-icon add_place'>发布我的地点</span></li>
           </ul>
           <%= form.text_field :place_name, :placeholder => "给你的地点起个名字" %>
           <%= form.text_field :full_address, :type=>'hidden' %>
           <%= form.text_field :place_latitude, :type=>'hidden' %>
           <%= form.text_field :place_longitude, :type=>'hidden' %>
           <%= text_field :picture,:id, :type=>'hidden' %>
-          <br>
+          <br/>
           <%= form.text_area :place_description, :rows => 2,:width=>'160px', :placeholder => "留下点说明吧。。。"%><br/>
           <div style='clear:both;'></div>
           <div style="height:40px;">

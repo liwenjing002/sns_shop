@@ -49,10 +49,9 @@ class Update < ActiveRecord::Base
 
   def do!
     raise 'Unauthorized' unless Person.logged_in.admin?(:manage_updates)
-    success = person.update_attributes(person_attributes) && person.family.update_attributes(family_attributes)
+    success = person.update_attributes(person_attributes) 
     unless success
       person.errors.full_messages.each        { |m| self.errors.add :base, m }
-      person.family.errors.full_messages.each { |m| self.errors.add :base, m }
     end
     return success
   end
@@ -106,12 +105,6 @@ class Update < ActiveRecord::Base
     p.attributes = person_attributes
     p_changes = p.changes.clone
     p_changes.delete('custom_fields') if p_changes['custom_fields'] and p_changes['custom_fields'] == [nil, []]
-    f = p.family
-    f.attributes = family_attributes
-    f_changes = f.changes.clone
-    f_changes['family_name']      = f_changes.delete('name')      if f_changes['name']
-    f_changes['family_last_name'] = f_changes.delete('last_name') if f_changes['last_name']
-    p_changes.merge(f_changes)
   end
 
   def self.create_from_params(params, person)

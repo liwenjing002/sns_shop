@@ -1491,6 +1491,12 @@ zh:
     deleted_html: 此人已被删除。您可以还原记录的<a href=%{url}>这里</a>。
     description_of_business: 我上班都在干麻
     determine_by_birthday: 确定的生日
+    marker_i_or_hei_follow: %{iorhei}在地图上关注的地点
+    marker_i_or_hei: %{iorhei}关注的地点
+    marker_i_or_hei_own: %{iorhei}在地图上发布的地点
+    i_or_hei_own: %{iorhei}发布的地点
+    marker_rander_to: 我们向您随机推荐的地点
+    marker_rander: 随机地点推荐
     edit: 
       about: 关于
       address: 我的位置

@@ -256,4 +256,6 @@ class PeopleController < ApplicationController
     end
   end
 
+  
+
 end

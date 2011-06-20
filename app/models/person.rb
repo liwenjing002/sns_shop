@@ -201,8 +201,6 @@ class Person < ActiveRecord::Base
             admin?(:view_hidden_profiles) or
             staff? or what.visible?
         )
-      when 'Family'
-        !what.deleted? and (what.visible? or admin?(:view_hidden_profiles))
       when 'Group'
         not (what.hidden? or what.private?) or self.member_of?(what) or what.admin?(self)
       when 'Message'
@@ -410,11 +408,6 @@ class Person < ActiveRecord::Base
     elsif params[:person]
       if Person.logged_in.can_edit_profile?
         params[:person].cleanse(:birthday, :anniversary)
-        if params[:address]
-          params[:address][:hometown_address] ="" if params[:address][:hometown_address]=="请输入您所在的小区或街道"
-          params[:address][:current_address] ="" if params[:address][:current_address]=="请输入您所在的小区或街道"
-          params[:address][:liveing_address] ="" if params[:address][:liveing_address]=="请输入您所在的小区或街道"
-        end
         update_attributes(params[:person]) && postition.update_attributes(params[:postition])
       else
         Update.create_from_params(params, self)

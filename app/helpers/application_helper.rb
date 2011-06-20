@@ -64,7 +64,7 @@ module ApplicationHelper
 
   def javascript_tags
 #    javascript_include_tag('jquery-1.4.4.min', 'jquery-ui-1.8.7.custom.min', 'jquery.qtip-1.0.0-rc3.min.js', 'rails', 'application', :cache => true) + "\n" + \
-    javascript_include_tag('all', :cache => true) + "\n" + \
+    javascript_include_tag('all','extend/ajaxfileupload','extend/jquery.simplemodal','extend/jquery.tools.min') + "\n" + \
     csrf_meta_tag + "\n" + \
       "<!--[if lte IE 8]>\n".html_safe + \
       javascript_include_tag('ie') + "\n" + \
