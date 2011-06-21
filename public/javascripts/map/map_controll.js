@@ -379,7 +379,7 @@ var MapObject =  {
                 //alert(results[0].geometry.location)
                 MapObject.geocodePosition_marker(results[0].geometry.location,icon,info_htm,is_home)
             } else {
-                alert("找不到这个地方");
+               // alert("找不到这个地方");
             }
         });
     },
