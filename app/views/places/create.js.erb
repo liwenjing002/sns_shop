@@ -1,4 +1,9 @@
-
+<%if flash[:warning]%>
+//alert("<%=flash[:warning]%>")
+$("#notice").html("<%=flash[:warning]%>")
+$("#notice").show()
+$('#notice').fadeOut(15000);
+<%else%>
 marker = null;
 if(MapObject.markers.get(<%=@marker.id%>)){
 
@@ -16,9 +21,12 @@ if(MapObject.markers.get(<%=@marker.id%>)){
 fn = MapObject.markerClickFunction('<%= raw place_html(@marker,@place) %>', marker);
 
 google.maps.event.addListener(marker, 'click', fn);
+google.maps.event.addListener(marker, 'mouseover', fn);
+google.maps.event.addListener(marker, 'mouseout', MapObject.markerCloseFunction);
 MapObject.temp_infowindow.close();
 
 google.maps.event.trigger(marker, 'click',1);
+<%end%>
 
 
 

@@ -1,10 +1,27 @@
-<div style="">
-  <h2><%= link_to place.place_name,place,:target=>"_blank" %></h2>
 
+  <div id="place_title"><span  style=" font-size:25px;"><%= link_to place.place_name,place,:target=>"_blank" %></span>
+ <%if is_follow_marker(marker.id)%>
+    <span style="margin-left:20px;"><%= link_to "取消关注","#",:class=>"follow_link",:action=>"cancer",:marker_id=>marker.id%></span>
+<%else%>
+  <span style="margin-left:20px;"><%= link_to "添加关注","#",:class=>"follow_link",:action=>"add",:marker_id=>marker.id%></span>
+  <%end%>
+  </div>
 
-  <p><%= place.place_description %></p>
+  <div style="min-height:100px;">
+   
+   <% if !place.picture%>
+        <p><%= image_tag('missing_small.png', :alt => t('none'),:style=>"float: left") %></p>
+      <%else%>
+        <%= image_tag(place.picture.photo.url(:small), :alt =>place.place_name,:style=>"float: left") %>
+      <% end %>
+   <span style="float: left;margin-left: 10px;"><p><%= place.place_description %></p></span>
+  </div>
   <div class = 'marker_address'>
     <%= get_address_href(place.full_address)%>
-  </div> 
-</div>
+  </div>
+
+  
+
+
+
 

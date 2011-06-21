@@ -64,7 +64,7 @@ class Person < ActiveRecord::Base
   acts_as_logger LogItem
 
 
-  validates_presence_of :first_name
+  validates :first_name, :presence=>true
   validates_length_of :password, :minimum => 5, :allow_nil => true, :if => Proc.new { Person.logged_in }
   validates_confirmation_of :password, :if => Proc.new { Person.logged_in }
   validates_uniqueness_of :alternate_email, :allow_nil => true, :scope => [:site_id, :deleted], :unless => Proc.new { |p| p.deleted? }

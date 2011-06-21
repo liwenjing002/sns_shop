@@ -64,7 +64,7 @@ module ApplicationHelper
 
   def javascript_tags
 #    javascript_include_tag('jquery-1.4.4.min', 'jquery-ui-1.8.7.custom.min', 'jquery.qtip-1.0.0-rc3.min.js', 'rails', 'application', :cache => true) + "\n" + \
-    javascript_include_tag('all','extend/ajaxfileupload','extend/jquery.simplemodal','extend/jquery.tools.min') + "\n" + \
+    javascript_include_tag('all','extend/some_function','extend/ajaxfileupload','extend/jquery.simplemodal','extend/jquery.tools.min') + "\n" + \
     csrf_meta_tag + "\n" + \
       "<!--[if lte IE 8]>\n".html_safe + \
       javascript_include_tag('ie') + "\n" + \
@@ -133,6 +133,10 @@ module ApplicationHelper
         <script type="text/javascript">
           #{flash[:sticky_notice] ? '' : "$('#notice').fadeOut(15000);"}
         </script>
+      HTML
+    else
+       <<-HTML
+        <div id="notice" style="display:none"></div>
       HTML
     end
   end
@@ -320,6 +324,10 @@ module ApplicationHelper
   
   def is_owner? marker
     marker.owner == @logged_in
+  end
+  
+  def is_follow_marker(marker_id)
+    MarkerToMap.find_by_marker_id_and_map_id(marker_id,@logged_in.map.id)
   end
   
   

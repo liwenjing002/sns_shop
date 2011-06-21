@@ -16,7 +16,8 @@ if (MapObject.home_marker !=null){
   position: latLng
   });
   var fn = MapObject.markerClickFunction('<%= @my_home.home_address%>', MapObject.home_marker);
-  google.maps.event.addListener(marker, 'click', fn);
+  google.maps.event.addListener(MapObject.home_marker, 'mouseover', fn);
+
   //MapObject.markerClusterer.addMarker(marker,true);
 <%end%>
 <%if @my_home and @my_home.home_address%>
@@ -43,8 +44,10 @@ if (MapObject.home_marker !=null){
     animation: google.maps.Animation.DROP,
     position: latLng
     });
-    var fn = MapObject.markerClickFunction('<%= raw marker.marker_html %>', marker);
-    google.maps.event.addListener(marker, 'click', fn);
+    //var fn = MapObject.markerClickFunction('<%= raw marker.marker_html %>', marker);
+     var fn = MapObject.markerClickFunction('<%= raw place_html(marker,marker.object) %>', marker);
+    //google.maps.event.addListener(marker, 'click', fn);
+    google.maps.event.addListener(marker, 'mouseover', fn);
     MapObject.markers_array.push(marker);
     MapObject.markers.put(<%=marker.id%>,marker);
   <%end%>
@@ -63,7 +66,8 @@ if (MapObject.home_marker !=null){
     position: latLng
     });
 	var fn = MapObject.markerClickFunction('<%=friend.name%>', marker);   
-    google.maps.event.addListener(marker, 'click', fn);
+    //google.maps.event.addListener(marker, 'click', fn);
+    google.maps.event.addListener(marker, 'mouseover', fn);
     MapObject.markers_array.push(marker);
   <%else%>
     MapObject.re_geocodePosition('<%=friend.postition.home_address%>',"/images/map/home.png",'<%=friend.name%>',false);
@@ -84,14 +88,14 @@ if (MapObject.home_marker !=null){
 <%end%>
 
 if (MapObject.markerClusterer){
-//alert(1)
 MapObject.markerClusterer.clearMarkers();
 MapObject.markerClusterer.addMarkers(MapObject.markers_array);
 
 }else{
-var mcOptions = {gridSize: 50, maxZoom: 15};
+var mcOptions = {gridSize: 50, maxZoom: 15,minZoom: 5};
 MapObject.markerClusterer = new MarkerClusterer(MapObject.map, MapObject.markers_array,mcOptions);
-}  
+}
+
 
 
 
