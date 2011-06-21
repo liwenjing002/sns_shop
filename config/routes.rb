@@ -14,7 +14,13 @@ OneBody::Application.routes.draw do
   end
 
   resources :plans
-  resources :markers 
+  resources :markers do
+    collection do
+      post :follow
+    end
+  end
+
+
   resources :maps
 
   root :to => 'pages#show_for_public'

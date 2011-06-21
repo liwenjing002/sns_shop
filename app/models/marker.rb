@@ -5,6 +5,9 @@ class Marker < ActiveRecord::Base
     if self.object_type == "Note"
       Note.find(self.object_id)
     end
+    if self.object_type == 'Place'
+      Place.find(self.object_id)
+    end
   end
   
   def html

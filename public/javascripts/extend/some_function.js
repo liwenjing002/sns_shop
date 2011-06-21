@@ -168,8 +168,34 @@ jQuery(function ($) {
     };
 
     OSX2.init();
-        
-        
-        
 
 });
+
+
+//一些加載文檔后執行的js
+ $(document).ready(function() {
+     //添加和刪除關注place
+     $(".follow_link").live("click",function(){
+         link = $(this)
+         marker_id =link.attr("marker_id")
+         action = link.attr("action")
+                 $.ajax({
+            type: "post",
+            url: "/markers/follow?marker_id="+marker_id +"&do="+action,
+            success: function(message){
+                if(message.success ==true){
+                    if(action=='add'){
+                         link.attr("action",'cancer')
+                         link.html("取消关注")
+                    }else{
+                       link.attr("action",'add')
+                        link.html("添加关注")
+                    }
+                }
+            }
+        });
+     })
+
+
+
+ })

@@ -9,6 +9,9 @@ class Place < ActiveRecord::Base
   belongs_to :picture
   belongs_to :marker
 
+
+ validates_presence_of :place_name,:message => '地点名称不为空'
+  validates_uniqueness_of :place_name,:message => "该名称已经被使用"
   
     def shared_stream_items()
     items = stream_items.all(
