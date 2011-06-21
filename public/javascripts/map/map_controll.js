@@ -59,7 +59,6 @@ var MapObject =  {
            MapObject.map.setOptions({ draggableCursor: 'crosshair' });
       });
            google.maps.event.addListener(MapObject.map, 'rightclick', function(event) {
-
            MapObject.clear_marker_listen();
       });
     },

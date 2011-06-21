@@ -16,7 +16,7 @@
   <% end %>
   <% if grouped_items.any? and not grouped_items.include?(stream_item.id); grouped_items << stream_item.id; end %>
 
-  <%= render :partial => 'stream_item', :object => stream_item %>
+  <%= render :partial => 'streams/stream_item', :object => stream_item %>
 
   <% last_stream_item = stream_item %>
 <% end %>

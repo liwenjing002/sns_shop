@@ -2,7 +2,7 @@ class WallsController < ApplicationController
 
   def show
     @person = Person.find(params[:person_id])
-    if @logged_in.can_see?(@person) and @person.wall_enabled?
+    if @logged_in.can_see?(@person) #and @person.wall_enabled?
       respond_to do |wants|
         wants.html do
           @messages = @person.wall_messages.paginate(:all, :page => params[:page])

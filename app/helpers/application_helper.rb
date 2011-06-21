@@ -319,16 +319,13 @@ module ApplicationHelper
     return text
   end
   def marker_follow? marker_id
-    MarkerToMap.find_by_marker_id_and_map_id(marker_id,@logged_in.map.id) ==nil
+    MarkerToMap.find_by_marker_id_and_map_id(marker_id,@logged_in.map.id)
   end
   
   def is_owner? marker
     marker.owner == @logged_in
   end
-  
-  def is_follow_marker(marker_id)
-    MarkerToMap.find_by_marker_id_and_map_id(marker_id,@logged_in.map.id)
-  end
+
   
   
 

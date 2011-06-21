@@ -27,7 +27,7 @@ class PeopleController < ApplicationController
       @person.map =@map
       end
       @plans =@person.plans
-      
+      @stream_items = @logged_in.shared_stream_items(40,true)
     elsif params[:legacy_id]
       @person = Person.find_by_legacy_id(params[:id])
     else

@@ -14,7 +14,7 @@ class Place < ActiveRecord::Base
   validates_uniqueness_of :place_name,:message => "该名称已经被使用"
   
     def shared_stream_items()
-    items = stream_items.all(
+    items = self.stream_items.all(
       :order => 'stream_items.created_at desc',
       :include => :person
     )

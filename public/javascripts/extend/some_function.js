@@ -187,9 +187,11 @@ jQuery(function ($) {
                     if(action=='add'){
                          link.attr("action",'cancer')
                          link.html("取消关注")
+                         link.attr("data-confirm","真的要取消关注")
                     }else{
                        link.attr("action",'add')
                         link.html("添加关注")
+                        link.removeAttr("data-confirm")
                     }
                 }
             }

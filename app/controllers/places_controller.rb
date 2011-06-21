@@ -119,20 +119,7 @@ class PlacesController < ApplicationController
   end
   
   
-  def follow_place
-    if params[:marker_id]
-      if params[:follow] =="true"
-        MarkerToMap.find_or_create_by_marker_id_and_map_id(params[:marker_id],@logged_in.map.id)
-        render :json => {:follow=>true,:success=>true}
-      else
-        mm  = MarkerToMap.find_by_marker_id_and_map_id(params[:marker_id],@logged_in.map.id)
-        mm.destroy if mm
-        render :json => {:follow=>false,:success=>true}
-      end 
-    else
-      render :json => {:success=>false}
-    end
-  end
+
   
   def tags_change
     tags = params[:place][:tags].gsub(/，/, ',')

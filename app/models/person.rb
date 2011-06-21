@@ -464,7 +464,8 @@ class Person < ActiveRecord::Base
     end
   end
 
-  def shared_stream_items(count=30)
+  #查询所有分享，分全部跟只查询自己的 分享两种
+  def shared_stream_items(count=30,is_self=nil)
     enabled_types = []
     enabled_types << 'Message' # wall posts and group posts (not personal messages)
     enabled_types << 'NewsItem'    if Setting.get(:features, :news_page   )
@@ -473,9 +474,12 @@ class Person < ActiveRecord::Base
     enabled_types << 'Album'       if Setting.get(:features, :pictures    )
     enabled_types << 'Note'        if Setting.get(:features, :notes       )
     enabled_types << 'PrayerRequest'
+    enabled_types << 'Place'
     friend_ids = all_friend_and_groupy_ids
+    place_ids = all_places_ids
     group_ids = groups.find_all_by_hidden(false, :select => 'groups.id').map { |g| g.id }
     group_ids = [0] unless group_ids.any?
+    if !is_self
     relation = StreamItem.scoped \
       .where(:streamable_type => enabled_types) \
       .where(:shared => true) \
@@ -483,10 +487,23 @@ class Person < ActiveRecord::Base
         " (group_id is null and wall_id is null and person_id in (:friend_ids)) or" +
         " person_id = :id or" +
         " streamable_type in ('NewsItem', 'Publication')" +
-        ")", :group_ids => group_ids, :friend_ids => friend_ids, :id => id) \
+        "or (place_id in (:place_ids)))", :group_ids => group_ids, :friend_ids => friend_ids, :id => id,:place_ids=>place_ids) \
       .order('created_at desc') \
       .limit(count) \
       .includes(:person, :group)
+    else
+          relation = StreamItem.scoped \
+      .where(:streamable_type => enabled_types) \
+      .where(:shared => true) \
+      .where("(group_id in (:group_ids) or" +
+        " (group_id is null and wall_id is null) or" +
+        " person_id = :id or" +
+        " streamable_type in ('NewsItem', 'Publication')" +
+        "or (place_id in (:place_ids)))", :group_ids => group_ids,:id => id,:place_ids=>place_ids) \
+      .order('created_at desc') \
+      .limit(count) \
+      .includes(:person, :group)
+    end
     relation.to_a.tap do |stream_items|
       # do our own eager loading here...
       comment_people_ids = stream_items.map { |s| Array(s.context['comments']).map { |c| c['person_id'] } }.flatten
@@ -531,6 +548,10 @@ return true unless self.privacy
       friend_ids = []
     end
     friend_ids + sidebar_group_people.map { |p| p.id }
+  end
+  
+  def all_places_ids
+    map.markers.all(:select => 'object_id').map { |m| m.object_id }
   end
 
   def to_liquid; inspect; end
