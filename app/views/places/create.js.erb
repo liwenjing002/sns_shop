@@ -1,6 +1,6 @@
-<%if flash[:warning]%>
+<%if @error_string%>
 //alert("<%=flash[:warning]%>")
-$("#notice").html("<%=flash[:warning]%>")
+$("#notice").html("<%=@error_string%>")
 $("#notice").show()
 $('#notice').fadeOut(15000);
 <%else%>
