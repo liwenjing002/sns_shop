@@ -1,6 +1,8 @@
-﻿$(".stream-items").append("<%= escape_javascript(render :partial=>"places/place_share_item",:locals=>{:stream_item =>@stream_item }) %>");
-$(".stream-items:last-child").slideDown("slow");
-$("#place_share_text").text("");
+﻿$(".stream-items").prepend("<%= escape_javascript(render :partial=>"places/place_share_item",:locals=>{:stream_item =>@stream_item ,:is_hide=>true}) %>");
+
+
+$(".stream-items :first-child").slideDown("slow");
+$("#place_share_text").val("");
 $("#file_name").html("")
 $("#temp_pic").attr("style","display:none");
 $("#empty_text").html("")

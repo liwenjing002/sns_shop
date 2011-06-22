@@ -9,3 +9,6 @@ $("#my_all_tags").html("")
 $("#my_all_tags").html("<%= escape_javascript(render :partial=>"tags/tags",:locals=>{:object=>@logged_in}) %>");
 
 $("#tags_cancel").trigger('click')
+$(".follow_link").attr("action",'cancer')
+$(".follow_link").html("取消关注")
+$(".follow_link").attr("data-confirm","真的要取消关注")

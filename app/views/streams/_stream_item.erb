@@ -72,6 +72,7 @@
         <%= link_to_function t('comments.add_a_comment'),
           "$('#new-comment-for-#{stream_item.id}').show(); $(this.parentNode).css('visibility', 'visible');",
           :class => 'discreet small comment-icon' %>
+         <%= link_to_function '', "$('#new-comment-for-#{stream_item.id}').hide()", :class =>  'delete-icon',:style=>"margin-left:270px;" %>
         <div id="new-comment-for-<%= stream_item.id %>" style="display:none;">
           <%= form_for Comment.new do |form| %>
             <% if stream_item.streamable_type == 'Album' %>

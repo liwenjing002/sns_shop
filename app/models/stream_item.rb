@@ -33,7 +33,7 @@ class StreamItem < ActiveRecord::Base
   end
 
   def can_have_comments?
-    %w(Verse Note Album PlaceShare).include?(streamable_type)
+    %w(Verse Note Album PlaceShare Place).include?(streamable_type)
   end
   
   def streamable_obj

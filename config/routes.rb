@@ -1,7 +1,7 @@
 OneBody::Application.routes.draw do
  
   resources :impressions
-
+  resources :place_shares
   resources :places do
     collection do
       post :follow_place

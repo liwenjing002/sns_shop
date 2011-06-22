@@ -14,9 +14,9 @@ class PlacesController < ApplicationController
     @impressions = Impression.find_all_by_i_type 'Place'
     @p_impression = PersonImpression.find_by_person_id_and_object_type_and_object_id(@logged_in.id,'Place',params[:id])
     @follow_peoples = MarkerToMap.find_all_by_marker_id @place.marker_id
-    unless  fragment_exist?(:controller => 'places', :action => 'show', :fragment => 'place_share_items')
+#    unless  fragment_exist?(:controller => 'places', :action => 'show', :fragment => 'place_share_items')
       @stream_items = @place.shared_stream_items
-    end
+#    end
     
   end
 
@@ -87,6 +87,7 @@ class PlacesController < ApplicationController
       :person=>@logged_in,
       :picture=>pic,
       :text=>params[:place_share][:text],
+      :is_public=>true,
       :album=>@album)
     @stream_item = @place_message.stream_item
     @album.place.picture = pic if !@album.place.picture
@@ -126,7 +127,7 @@ class PlacesController < ApplicationController
     @place = Place.find(params[:place_id])
     @place.tag_list.add(tags, :parse => true)
     @place.save
-    @mm_new = MarkerToMap.find_by_marker_id_and_map_id(Place.find(params[:place_id]).marker.id,@logged_in.map.id)
+    @mm_new = MarkerToMap.find_or_create_by_marker_id_and_map_id(Place.find(params[:place_id]).marker.id,@logged_in.map.id)
     @mm_new.tag_list = tags
     @mm_new.save
     @mm_new = MarkerToMap.find_by_marker_id_and_map_id(Place.find(params[:place_id]).marker.id,@logged_in.map.id)

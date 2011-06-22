@@ -221,7 +221,9 @@ class Person < ActiveRecord::Base
       when 'Picture'
         what.album.is_public? or can_see?(what.person)
       when 'Place'
-        what.is_public? 
+        what.is_public?
+       when 'PlaceShare'
+       what.is_public? 
       else
         raise "Unrecognized argument to can_see? (#{what.inspect})"
       end
@@ -475,6 +477,7 @@ class Person < ActiveRecord::Base
     enabled_types << 'Note'        if Setting.get(:features, :notes       )
     enabled_types << 'PrayerRequest'
     enabled_types << 'Place'
+    enabled_types << 'PlaceShare'
     friend_ids = all_friend_and_groupy_ids
     place_ids = all_places_ids
     group_ids = groups.find_all_by_hidden(false, :select => 'groups.id').map { |g| g.id }

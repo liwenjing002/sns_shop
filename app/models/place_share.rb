@@ -4,6 +4,7 @@ class PlaceShare < ActiveRecord::Base
   belongs_to :stream_item
   belongs_to :picture
   attr_accessor:album
+    has_many :comments, :dependent => :destroy
 
 
 
@@ -18,8 +19,8 @@ class PlaceShare < ActiveRecord::Base
         :context         => context,
         :person_id       => person_id,
         :place_id        => album.place_id,
-        :streamable_type => 'Place',
-        :streamable_id   => album.place_id,
+        :streamable_type => 'PlaceShare',
+        :streamable_id   => id,
         :created_at      => created_at,
         :shared          => album.place_id || person.share_activity? ? true : false
       )

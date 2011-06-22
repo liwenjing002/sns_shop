@@ -65,12 +65,11 @@ if (MapObject.home_marker !=null){
     animation: google.maps.Animation.DROP,
     position: latLng
     });
-	var fn = MapObject.markerClickFunction('<%=friend.name%>', marker);   
-    //google.maps.event.addListener(marker, 'click', fn);
+	var fn = MapObject.markerClickFunction('<%=friend.name%>'+'Ta家在：<%= friend.postition.home_address%>', marker);
     google.maps.event.addListener(marker, 'mouseover', fn);
     MapObject.markers_array.push(marker);
   <%else%>
-    MapObject.re_geocodePosition('<%=friend.postition.home_address%>',"/images/map/home.png",'<%=friend.name%>',false);
+    MapObject.re_geocodePosition('<%=friend.postition.home_address%>',"/images/map/home.png",'<%=friend.name%>'+'Ta家在：<%= friend.postition.home_address%>',false);
   <%end%>
 <%end%>
 

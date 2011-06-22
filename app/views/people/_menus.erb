@@ -41,9 +41,9 @@
 
   <div id="marker-tab-menu" style="display:none;">
     <ul>
-      <li><span style= "cursor:pointer" title="<%= t('people.marker_i_or_hei_follow',:iorhei=>(@person==@logged_in? '我':'Ta')) %>" class ='edit-icon' onclick="MapObject.init_marker_from_data('follow','<%=(@person==@logged_in? "":@person.id)%>')" >
+      <li><span style= "cursor:pointer" title="<%= t('people.marker_i_or_hei_follow',:iorhei=>(@person==@logged_in? '我':'Ta')) %>" class ='edit-icon' onclick="MapObject.init_marker_from_data('follow','<%=((!@person or @person==@logged_in)? "":@person.id)%>')" >
           <%= t('people.marker_i_or_hei',:iorhei=>(@person==@logged_in? '我':'Ta')) %></span></li>
-      <li><span style= "cursor:pointer" title="<%= t('people.marker_i_or_hei_own',:iorhei=>(@person==@logged_in? '我':'Ta')) %>" class ='lock-icon' onclick="MapObject.init_marker_from_data('own','<%=(@person==@logged_in? "":@person.id)%>')">
+      <li><span style= "cursor:pointer" title="<%= t('people.marker_i_or_hei_own',:iorhei=>(@person==@logged_in? '我':'Ta')) %>" class ='lock-icon' onclick="MapObject.init_marker_from_data('own','<%=((!@person or @person==@logged_in)? "":@person.id)%>')">
         <%= t('people.i_or_hei_own',:iorhei=>(@person==@logged_in? '我':'Ta')) %></span></li>
       <li><span style= "cursor:pointer" title="<%= t('people.marker_rander_to') %>" class ='email-icon'onclick="MapObject.init_marker_from_data('rander')" ><%= t('people.marker_rander') %></span></li>
     </ul>
@@ -63,7 +63,7 @@
 <% if (@person and @logged_in  or (!@person and @logged_in)) %>
   <div id="activities-tab-menu" style="display:none;">
     <ul>
-      <li><span style= "cursor:pointer" title= "记录我近期的出行安排" class = 'edit-icon' onclick="MapObject.init_marker_from_data('schedule')">我的行程<span></li>
+      <li><span style= "cursor:pointer" title= "记录我近期的出行安排" class = 'edit-icon' onclick="MapObject.init_marker_from_data('schedule')">我的行程</span></li>
       <li><span style= "cursor:pointer" title="我梦想着想去的地方" class ='lock-icon' >旅游梦想单</span></li>
        <li><span style= "cursor:pointer" title="让我们猜猜你想去的地方？" class ='lock-icon' >猜我想去？</span></li>
     </ul>

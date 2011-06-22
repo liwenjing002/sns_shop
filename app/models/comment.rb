@@ -6,15 +6,16 @@ class Comment < ActiveRecord::Base
   belongs_to :verse
   belongs_to :note
   belongs_to :picture
+  belongs_to :place_share
 
   scope_by_site_id
 
   def on
-    verse || note || picture
+    verse || note || picture ||place_share
   end
 
   def name
-    "Comment on #{on ? on.name : '?'}"
+    "Comment on ?"
   end
 
   acts_as_logger LogItem
