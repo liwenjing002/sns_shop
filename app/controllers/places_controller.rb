@@ -92,6 +92,7 @@ class PlacesController < ApplicationController
     @stream_item = @place_message.stream_item
     @album.place.picture = pic if !@album.place.picture
     @album.place.save
+    flash[:warning] = "添加地点分享成功"
     expire_fragment(:controller => 'places', :action => 'show', :fragment => 'place_share_items',:id=>params[:place_id] )
   end
   

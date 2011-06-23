@@ -1379,4 +1379,8 @@ a.ps_close:hover{
 		color:#fff;
 		width:150px;
 }
-	
+
+/*搜索下下拉css*/
+.suggest-container{border:1px solid #C1C1C1;visibility:hidden;background-color:white}
+.suggest-item{padding:3px 2px;}
+.suggest-active {background:#33CCFF;color:white;padding:3px 2px;}	

@@ -1,5 +1,9 @@
 OneBody::Application.routes.draw do
- 
+  resources :addresses do
+    collection do
+      post :search_address
+    end
+  end
   resources :impressions
   resources :place_shares
   resources :places do

@@ -1,5 +1,7 @@
 <% content_for  :head do %>
   <%= stylesheet_link_tag 'global-0.52' %>
+<%= stylesheet_link_tag 'wmd' %>
+ <%= javascript_include_tag "wmd/wmd" %>
 <%end%>
 
 <div id ="place_body">
@@ -39,4 +41,9 @@
 
 </div>
 <div class="clear"></div>
+<script>
+  $(function() {
+  $('textarea').wmd();
+});
+  </script>
 

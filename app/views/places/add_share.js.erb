@@ -7,3 +7,9 @@ $("#file_name").html("")
 $("#temp_pic").attr("style","display:none");
 $("#empty_text").html("")
 $("#picture_id").attr("value",null)
+<%if flash[:warning]%>
+//alert("<%=flash[:warning]%>")
+$("#notice").html("<%=flash[:warning]%>")
+$("#notice").show()
+$('#notice').fadeOut(15000);
+<%end%>

@@ -1,6 +1,6 @@
 
 <h3>地点介绍：</h3>
-<div id ="description_text"><p><%= @place.place_description%></p></div>
+<div id ="description_text"><p><%= @place.place_description.html_safe%></p></div>
 <div id ="description_textarea" style="display:none">
 
   <%= form_for @place,:remote=>true do |form| %>
