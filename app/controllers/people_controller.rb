@@ -35,6 +35,7 @@ class PeopleController < ApplicationController
    	  @map = Map.create({:people_id=>@person.id})if !@map 
       @plan = Plan.new
       @plans =@person.plans
+
     end
           @stream_items = @person.shared_stream_items(40,true)
     if params[:limited] or !@logged_in.full_access?

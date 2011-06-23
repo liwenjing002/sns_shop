@@ -1,5 +1,5 @@
 <% content_for :sidebar do %>
-  <%= render :partial => 'people/photo' %>
+  <%= render :partial => 'people/person_photo' %>
   <p>
     <%= t('notes.posted') %> <%= @note.created_at.to_time.to_s %>
     <% if @note.group %><%= t('to') %> <%= link_to @note.group.name, group_url(:id => @note.group) %><% end %>

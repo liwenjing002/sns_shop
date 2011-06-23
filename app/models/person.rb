@@ -498,11 +498,7 @@ class Person < ActiveRecord::Base
           relation = StreamItem.scoped \
       .where(:streamable_type => enabled_types) \
       .where(:shared => true) \
-      .where("(group_id in (:group_ids) or" +
-        " (group_id is null and wall_id is null) or" +
-        " person_id = :id or" +
-        " streamable_type in ('NewsItem', 'Publication')" +
-        "or (place_id in (:place_ids)))", :group_ids => group_ids,:id => id,:place_ids=>place_ids) \
+      .where(" person_id = :id ", :id => id) \
       .order('created_at desc') \
       .limit(count) \
       .includes(:person, :group)

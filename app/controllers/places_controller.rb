@@ -49,11 +49,11 @@ class PlacesController < ApplicationController
       @place.marker = @marker
       @place.save
     else
-      error_string = ''
+      @error_string = ''
       @place.errors.full_messages.each { |error|
-        error_string += (error+ " ")
+        @error_string += (error+ " ")
       }
-      flash[:warning] =error_string
+     
     end
   end	
 
