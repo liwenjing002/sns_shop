@@ -241,6 +241,12 @@ InputSuggest.prototype = {
 			}
 
 		});
+                
+              this.on(input,'change',function(e){
+				_this.onChange(e);
+
+		});
+                
 		// blur会在click前发生，这里使用mousedown
 		this.on(input,'blur',function(e){
 			_this.hide();
@@ -379,9 +385,17 @@ InputSuggest.prototype = {
 		if(input.value.indexOf('@')!=-1){return;}
 		this.items = [];
 		if(this.attr(input,'curr_val')!=input.value){
-			this.getDataFromService(this,input)
+			//this.getDataFromService(this,input)
 		}
 	},
+        
+        onChange:function(e){
+            input = this.input
+            if(this.attr(input,'curr_val')!=input.value){
+			this.getDataFromService(this,input)
+		}
+            
+        },
 
 	//从后台获取省市搜索信息
 	getDataFromService: function(obj,input){
@@ -463,13 +477,7 @@ InputSuggest.prototype = {
      });
 
 
-     //ajax查询初始化
 
-     new InputSuggest({
-					width: 300,
-					//opacity: 0.3,
-					input: document.getElementById('search_address')
-                                    });
 
 
 
