@@ -242,10 +242,10 @@ InputSuggest.prototype = {
 
 		});
                 
-              this.on(input,'change',function(e){
-				_this.onChange(e);
-
-		});
+//              this.on(input,'change',function(e){
+//				_this.onChange(e);
+//
+//		});
                 
 		// blur会在click前发生，这里使用mousedown
 		this.on(input,'blur',function(e){
@@ -385,7 +385,7 @@ InputSuggest.prototype = {
 		if(input.value.indexOf('@')!=-1){return;}
 		this.items = [];
 		if(this.attr(input,'curr_val')!=input.value){
-			//this.getDataFromService(this,input)
+			this.getDataFromService(this,input)
 		}
 	},
         
@@ -413,8 +413,11 @@ InputSuggest.prototype = {
 				obj.items[i] = item;
 				obj.container.appendChild(item);
 			}
-			obj.attr(input,'curr_val',input.value);
-                        		obj.show();
+                        if (obj.data.length>0){
+                         obj.attr(input,'curr_val',input.value);
+                        obj.show();   
+                        }
+			
             }
         });
 
