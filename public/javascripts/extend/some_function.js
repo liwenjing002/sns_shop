@@ -212,6 +212,8 @@ function InputSuggest(opt){
 	this.container = null;
 	this.items = null;
 	this.dataType = 'simple'; //查询类型，包括基本的省市信息查询和网站整体的marker查询
+        this.ajaxing = false;
+        this.last_ajax_time = null; //每隔一段时间才去AJAX请求
 	this.input = opt.input || null;
 	this.containerCls = opt.containerCls || 'suggest-container';
 	this.itemCls = opt.itemCls || 'suggest-item';
@@ -230,7 +232,7 @@ InputSuggest.prototype = {
 		this.container = this.$C('div');
 		this.attr(this.container, 'class', this.containerCls);
 		this.doc.body.appendChild(this.container);
-		this.setPos();
+		
 		var _this = this, input = this.input;
 
 		this.on(input,'keyup',function(e){
@@ -242,10 +244,6 @@ InputSuggest.prototype = {
 
 		});
                 
-//              this.on(input,'change',function(e){
-//				_this.onChange(e);
-//
-//		});
                 
 		// blur会在click前发生，这里使用mousedown
 		this.on(input,'blur',function(e){
@@ -253,24 +251,56 @@ InputSuggest.prototype = {
 		});
 		this.onMouseover();
 		this.onMousedown();
+                this.setPos();
 
 	},
 	$C: function(tag){
 		return this.doc.createElement(tag);
 	},
 	getPos: function (el){
-		var pos=[0,0], a=el;
-		if(el.getBoundingClientRect){
-			var box = el.getBoundingClientRect();
-			pos=[box.left,box.top];
-		}else{
-			while(a && a.offsetParent){
-				pos[0] += a.offsetLeft;
-				pos[1] += a.offsetTop;
-				a = a.offsetParent
-			}
-		}
-		return pos;
+//		var pos=[0,0], a=el;
+//		if(el.getBoundingClientRect){
+//			var box = el.getBoundingClientRect();
+//			pos=[box.left,box.top];
+//                        alert("a"+ box.left)
+//		}else{
+//			while(a ){
+//                            alert( a.offsetLeft)
+//				pos[0] += a.offsetLeft;
+//				pos[1] += a.offsetTop;
+//				a = a.offsetParent
+//			}
+//                        alert("b" + pos[0] +"b"+pos[1])
+//		}
+//
+//    var target = el;
+//    var pos = [target.offsetLeft, target.offsetTop];
+//    
+//    var target = target.offsetParent;
+//    while (target)
+//    {
+//        pos[0] += target.offsetLeft;
+//        pos[1] += target.offsetTop;
+//        
+//        target = target.offsetParent
+//    }
+//    
+//    return pos;
+ var target = el;
+    var pos = [target.offsetLeft, target.offsetTop];
+    
+    var target = target.offsetParent;
+    while (target)
+    {
+        pos[0] += target.offsetLeft;
+        pos[1] += target.offsetTop;
+        
+        target = target.offsetParent
+    }
+   
+    return pos;
+
+
 	},
 	setPos: function(){
 		var input = this.input,
@@ -326,8 +356,10 @@ InputSuggest.prototype = {
 		};
 	}(navigator.userAgent.toLowerCase()),
 	onKeyup: function(e){
+                // this.setPos();
 		var container = this.container, input = this.input, iCls = this.itemCls, aCls = this.activeCls;
 		if(this.visible){
+                    
 			switch(e.keyCode){
 				case 13: // Enter
 					if(this.active){
@@ -389,17 +421,16 @@ InputSuggest.prototype = {
 		}
 	},
         
-        onChange:function(e){
-            input = this.input
-            if(this.attr(input,'curr_val')!=input.value){
-			this.getDataFromService(this,input)
-		}
-            
-        },
 
 	//从后台获取省市搜索信息
 	getDataFromService: function(obj,input){
- 
+            obj.ajaxing = true;
+            now = (new   Date()).getTime()
+            if (obj.last_ajax_time !=null && eval(now - obj.last_ajax_time)<'500'){
+                return
+            }
+            obj.last_ajax_time = now
+            this.setPos();
 	        $.ajax({
             type: "POST",
             url: "/addresses/search_address?type="+obj.dataType+"&key="+input.value,
@@ -415,8 +446,9 @@ InputSuggest.prototype = {
 			}
                         if (obj.data.length>0){
                          obj.attr(input,'curr_val',input.value);
-                        obj.show();   
+                          obj.show();   
                         }
+                        this.ajaxing =false
 			
             }
         });

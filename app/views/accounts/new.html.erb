@@ -12,7 +12,7 @@
       
       <%= form.label :gender, t('accounts.gender') %>         <%= form.select :gender, [[t('search.male'), 'Male'], [t('search.female'), 'Female']] %><br/>
       <%= form.label :birthday, t('accounts.birthday') %>     <%= form.date_field :birthday %><br/>
-       <%= form.label :email, t('people.address') %>             <%= form.text_field :postition,:id=>'search_address' %><br/>
+       <%= form.label :email, t('people.address') %>             <%= form.text_field :postition,:id=>'search_address' ,:placeholder =>"输入您所在城市或区县"%><br/>
       <%= text_field_tag :phone, nil, :id => 'dummy_phone' %>
       <%= form.submit t('accounts.create') %>
     </p>
@@ -32,10 +32,11 @@
 <script type="text/javascript">
   $('#person_birthday').datepicker({changeYear:true, yearRange:'1900:2025', dateFormat:'<%= datepicker_format %>'});
        //ajax查询初始化
-
+ $(document).ready(function(){
      new InputSuggest({
 					width: 300,
 					//opacity: 0.3,
 					input: document.getElementById('search_address')
                                     });
+ })
 </script>

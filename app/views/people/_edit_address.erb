@@ -2,30 +2,20 @@
 
   <%= form.label :home_postition,       t('people.home_postition') %> 
 
-  <%= form.text_field :home_address,:size=>22 %>
+  <%= form.text_field :home_address,:size=>22,:id=>'search_address',:onclick=>"javascript:var pos = GetObjPos(this)",:placeholder =>"输入您所在城市或区县" %>
   <br/>
 
 </div>
 <script type="text/javascript">
-  
-  postition_home_postition = $("#postition_home_address")
-  if(postition_home_postition.attr("value") == ""){
-    postition_home_postition.attr("value","请输入您的居住地址")
-    postition_home_postition.attr("style"," color:Gray")
-  }
-  postition_home_postition.focus(function(){
-    if(postition_home_postition.attr("value") == "请输入您的居住地址"){
-     postition_home_postition.attr("value","")
-    postition_home_postition.attr("style"," color:Black")
-    }
-   
-  })
-  postition_home_postition.blur(function(){
-    if(postition_home_postition.attr("value") == ""){
-      postition_home_postition.attr("value","请输入您的居住地址")
-    postition_home_postition.attr("style"," color:Gray")
-    }
-  })
-  
+       //ajax查询初始化
+       $(document).ready(function(){
+          new InputSuggest({
+					width: 300,
+					//opacity: 0.3,
+					input: document.getElementById('search_address')
+                                    });
+       })
+       
 
+    
 </script>
