@@ -27,6 +27,7 @@ var MapObject =  {
     polygons: [], 						  //contains raw data, array of arrays (first element could be a hash containing options)
     polylines: [], 						  //contains raw data, array of arrays (first element could be a hash containing options)
     circles: [], 
+    
     //初始化map
     initialize: function (id) {
         var myOptions = {
@@ -38,17 +39,81 @@ var MapObject =  {
         this.map = new google.maps.Map(
             document.getElementById(this.map_options.id), 
             myOptions);
+            //加入搜索框
+
 
         this.init_marker_from_data("my_home",id);
-
+        this.initControl();
 
 
     },
     
     //控件初始化
     initControl: function () { 
-      
+      var googleSeachControlDiv = document.createElement('DIV');
+               this.GoogleSeachControl(googleSeachControlDiv, this.map);
+                googleSeachControlDiv.index = 1;
+                this.map.controls[google.maps.ControlPosition.RIGHT].push(googleSeachControlDiv);
     },
+    
+    
+    
+    
+    GoogleSeachControl:function (controlDiv, map) {
+            controlDiv.style.margin = '5px';
+            var controlUI = document.createElement('DIV');
+            controlUI.style.backgroundColor = 'white';
+            controlUI.style.cursor = 'pointer';
+            controlUI.style.textAlign = 'center';
+            controlUI.title = "Seach";
+            controlDiv.appendChild(controlUI);
+            var controltxtbox = document.createElement('input');
+            controltxtbox.setAttribute("id", "txt_googleseach");
+            controltxtbox.setAttribute("type", "text");
+            controltxtbox.setAttribute("value", "shenzhen");
+            controlUI.appendChild(controltxtbox);
+            var controlbtn = document.createElement('input');
+            controlbtn.setAttribute("id", "btn_googleseach");
+            controlbtn.setAttribute("type", "button");
+            controlbtn.setAttribute("value", "GO");
+            controlUI.appendChild(controlbtn);
+            google.maps.event.addDomListener(controlbtn, 'click', function() {
+                MapObject.GoogleSeachAddress();
+            });
+
+        },
+
+        GoogleSeachAddress:function () {
+            map = MapObject.map;
+            var address = document.getElementById("txt_googleseach").value;
+            if (MapObject.geocoder) {
+                MapObject.geocoder.geocode({ 'address': address }, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        map.setCenter(results[0].geometry.location);
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location
+                        });
+                        content ="<div><font size='2' face='Verdana' color='#000099'>lat "
+            + results[0].geometry.location.lat() + "</font></div><div><font size='2' face='Verdana' color='#000099'>lng "
+            + results[0].geometry.location.lng() + "</font></div><div><font size='2' face='Verdana' color='#FF0000'>address:"
+            + address + "</font></div>"
+                        var infowindow = new google.maps.InfoWindow(
+        {
+            content: content
+        });
+                        infowindow.open(map, marker);
+                        google.maps.event.addListener(marker, 'click', function() {
+                            infowindow.open(map, marker);
+                        });
+                    } else {
+                        alert("Geocode was not successful for the following reason: " + status);
+                    }
+                });
+            }
+        },
+    
+    
 
     //添加marker 监听
     add_marker_listen:function (){
@@ -398,7 +463,11 @@ var MapObject =  {
         }
         if(is_home){
             MapObject.home_marker = marker;
-            
+             MapObject.map.setCenter(latLng)
+             google.maps.event.addListener(marker, 'click', function(){
+                 MapObject.map.setCenter(latLng)
+                 MapObject.map.setZoom(8)
+             });
             return;
         }else{
             MapObject.markerClusterer.addMarker(marker,true);

@@ -17,7 +17,8 @@ if (MapObject.home_marker !=null){
   });
   var fn = MapObject.markerClickFunction('<%= @my_home.home_address%>', MapObject.home_marker);
   google.maps.event.addListener(MapObject.home_marker, 'mouseover', fn);
-
+  MapObject.map.setCenter(latLng)
+  
   //MapObject.markerClusterer.addMarker(marker,true);
 <%end%>
 <%if @my_home and @my_home.home_address%>
