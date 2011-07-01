@@ -41,9 +41,12 @@ var MapObject =  {
             myOptions);
             //加入搜索框
 
-
+             gLocalSearch = new GlocalSearch();
+              gLocalSearch.setSearchCompleteCallback(null, this.initControl);
         this.init_marker_from_data("my_home",id);
         this.initControl();
+        // Initialize the local searcher
+     
 
 
     },
@@ -84,33 +87,33 @@ var MapObject =  {
         },
 
         GoogleSeachAddress:function () {
-            map = MapObject.map;
-            var address = document.getElementById("txt_googleseach").value;
-            if (MapObject.geocoder) {
-                MapObject.geocoder.geocode({ 'address': address }, function(results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        map.setCenter(results[0].geometry.location);
-                        var marker = new google.maps.Marker({
-                            map: map,
-                            position: results[0].geometry.location
-                        });
-                        content ="<div><font size='2' face='Verdana' color='#000099'>lat "
-            + results[0].geometry.location.lat() + "</font></div><div><font size='2' face='Verdana' color='#000099'>lng "
-            + results[0].geometry.location.lng() + "</font></div><div><font size='2' face='Verdana' color='#FF0000'>address:"
-            + address + "</font></div>"
-                        var infowindow = new google.maps.InfoWindow(
-        {
-            content: content
-        });
-                        infowindow.open(map, marker);
-                        google.maps.event.addListener(marker, 'click', function() {
-                            infowindow.open(map, marker);
-                        });
-                    } else {
-                        alert("Geocode was not successful for the following reason: " + status);
-                    }
-                });
-            }
+//            map = MapObject.map;
+//            var address = document.getElementById("txt_googleseach").value;
+//            if (MapObject.geocoder) {
+//                MapObject.geocoder.geocode({ 'address': address }, function(results, status) {
+//                    if (status == google.maps.GeocoderStatus.OK) {
+//                        map.setCenter(results[0].geometry.location);
+//                        var marker = new google.maps.Marker({
+//                            map: map,
+//                            position: results[0].geometry.location
+//                        });
+//                        content ="<div><font size='2' face='Verdana' color='#000099'>lat "
+//            + results[0].geometry.location.lat() + "</font></div><div><font size='2' face='Verdana' color='#000099'>lng "
+//            + results[0].geometry.location.lng() + "</font></div><div><font size='2' face='Verdana' color='#FF0000'>address:"
+//            + address + "</font></div>"
+//                        var infowindow = new google.maps.InfoWindow(
+//        {
+//            content: content
+//        });
+//                        infowindow.open(map, marker);
+//                        google.maps.event.addListener(marker, 'click', function() {
+//                            infowindow.open(map, marker);
+//                        });
+//                    } else {
+//                        alert("Geocode was not successful for the following reason: " + status);
+//                    }
+//                });
+//            }
         },
     
     

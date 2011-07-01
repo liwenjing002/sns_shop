@@ -1,0 +1,21 @@
+development:
+  adapter: mysql
+  database: onebody_dev
+  host: localhost
+  username: root
+  encodings: utf8
+  password: lee123
+test:
+  adapter: mysql
+  database: onebody_test
+  host: localhost
+  encodings: utf8
+  username: root
+  password: lee123
+production:
+  adapter: mysql
+  database: onebody
+  encodings: utf8
+  host: localhost
+  username: root
+  password: lee123
