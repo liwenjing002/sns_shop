@@ -14,7 +14,7 @@ set :repository, "git@github.com:0612800232/sns_shop.git"
 set :scm, :git
 
 set :application, 'onebody'
-set :user, 'lee'
+set :user, 'deploy'
 set :runner, user
 set :repository_cache, 'git_cache'
 set :deploy_via, :remote_cache
