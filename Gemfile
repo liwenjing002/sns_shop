@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 #gem 'hoe', '= 1.5.1'
-gem 'rails',                  '= 3.0.7'
+gem 'rails',                  '= 3.0.4'
 gem 'mysql'   
 gem 'aws-s3'
 gem 'liquid',                 '~> 2.2.2'
