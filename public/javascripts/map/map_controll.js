@@ -39,13 +39,11 @@ var MapObject =  {
         this.map = new google.maps.Map(
             document.getElementById(this.map_options.id), 
             myOptions);
-            //加入搜索框
+        //加入搜索框
 
-             gLocalSearch = new GlocalSearch();
-              gLocalSearch.setSearchCompleteCallback(null, this.initControl);
         this.init_marker_from_data("my_home",id);
         this.initControl();
-        // Initialize the local searcher
+    // Initialize the local searcher
      
 
 
@@ -53,89 +51,62 @@ var MapObject =  {
     
     //控件初始化
     initControl: function () { 
-      var googleSeachControlDiv = document.createElement('DIV');
-               this.GoogleSeachControl(googleSeachControlDiv, this.map);
-                googleSeachControlDiv.index = 1;
-                this.map.controls[google.maps.ControlPosition.RIGHT].push(googleSeachControlDiv);
+        var googleSeachControlDiv = document.createElement('DIV');
+        this.GoogleSeachControl(googleSeachControlDiv, this.map);
+        googleSeachControlDiv.index = 1;
+        this.map.controls[google.maps.ControlPosition.RIGHT].push(googleSeachControlDiv);
     },
     
     
     
     
     GoogleSeachControl:function (controlDiv, map) {
-            controlDiv.style.margin = '5px';
-            var controlUI = document.createElement('DIV');
-            controlUI.style.backgroundColor = 'white';
-            controlUI.style.cursor = 'pointer';
-            controlUI.style.textAlign = 'center';
-            controlUI.title = "Seach";
-            controlDiv.appendChild(controlUI);
-            var controltxtbox = document.createElement('input');
-            controltxtbox.setAttribute("id", "txt_googleseach");
-            controltxtbox.setAttribute("type", "text");
-            controltxtbox.setAttribute("value", "shenzhen");
-            controlUI.appendChild(controltxtbox);
-            var controlbtn = document.createElement('input');
-            controlbtn.setAttribute("id", "btn_googleseach");
-            controlbtn.setAttribute("type", "button");
-            controlbtn.setAttribute("value", "GO");
-            controlUI.appendChild(controlbtn);
-            google.maps.event.addDomListener(controlbtn, 'click', function() {
-                MapObject.GoogleSeachAddress();
-            });
+        controlDiv.style.margin = '5px';
+        var controlUI = document.createElement('DIV');
+        controlUI.style.backgroundColor = 'white';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.textAlign = 'center';
+        controlUI.title = "Seach";
+        controlDiv.appendChild(controlUI);
+        var controltxtbox = document.createElement('input');
+        controltxtbox.setAttribute("id", "txt_googleseach");
+        controltxtbox.setAttribute("type", "text");
+        controltxtbox.setAttribute("placeholder", "找地点？，找人？，找活动？");
+        controlUI.appendChild(controltxtbox);
+        var controlbtn = document.createElement('input');
+        controlbtn.setAttribute("id", "btn_googleseach");
+        controlbtn.setAttribute("type", "button");
+        controlbtn.setAttribute("value", "GO");
+        controlUI.appendChild(controlbtn);
+        google.maps.event.addDomListener(controlbtn, 'click', function() {
+            doSearch();
+        });
 
-        },
+    },
 
-        GoogleSeachAddress:function () {
-//            map = MapObject.map;
-//            var address = document.getElementById("txt_googleseach").value;
-//            if (MapObject.geocoder) {
-//                MapObject.geocoder.geocode({ 'address': address }, function(results, status) {
-//                    if (status == google.maps.GeocoderStatus.OK) {
-//                        map.setCenter(results[0].geometry.location);
-//                        var marker = new google.maps.Marker({
-//                            map: map,
-//                            position: results[0].geometry.location
-//                        });
-//                        content ="<div><font size='2' face='Verdana' color='#000099'>lat "
-//            + results[0].geometry.location.lat() + "</font></div><div><font size='2' face='Verdana' color='#000099'>lng "
-//            + results[0].geometry.location.lng() + "</font></div><div><font size='2' face='Verdana' color='#FF0000'>address:"
-//            + address + "</font></div>"
-//                        var infowindow = new google.maps.InfoWindow(
-//        {
-//            content: content
-//        });
-//                        infowindow.open(map, marker);
-//                        google.maps.event.addListener(marker, 'click', function() {
-//                            infowindow.open(map, marker);
-//                        });
-//                    } else {
-//                        alert("Geocode was not successful for the following reason: " + status);
-//                    }
-//                });
-//            }
-        },
-    
-    
 
     //添加marker 监听
     add_marker_listen:function (){
         google.maps.event.addListenerOnce(MapObject.map, 'click', function(event) {
             MapObject.add_marker(MapObject.map,event.latLng);
         });
-         google.maps.event.addListener(MapObject.map, 'mousemove', function(event) {
-           MapObject.map.setOptions({ draggableCursor: 'crosshair' });
-      });
-           google.maps.event.addListener(MapObject.map, 'rightclick', function(event) {
-           MapObject.clear_marker_listen();
-      });
+        google.maps.event.addListener(MapObject.map, 'mousemove', function(event) {
+            MapObject.map.setOptions({
+                draggableCursor: 'crosshair'
+            });
+        });
+        google.maps.event.addListener(MapObject.map, 'rightclick', function(event) {
+            MapObject.clear_marker_listen();
+        });
     },
 
     //删除marker 监听
     clear_marker_listen: function (){
         google.maps.event.clearListeners(MapObject.map, 'click');
         google.maps.event.clearListeners(MapObject.map, 'mousemove')
-         MapObject.map.setOptions({ draggableCursor: 'default' });
+        MapObject.map.setOptions({
+            draggableCursor: 'default'
+        });
     },
 
 
@@ -155,7 +126,9 @@ var MapObject =  {
             MapObject.new_marker_Function(responses)
         });
         google.maps.event.clearListeners(MapObject.map, 'mousemove')
-         MapObject.map.setOptions({ draggableCursor: 'default' });
+        MapObject.map.setOptions({
+            draggableCursor: 'default'
+        });
 
     },
     //new marker请求地址解析的回调函数
@@ -165,11 +138,11 @@ var MapObject =  {
         postition_html = "<div id='new_postition' style='min-height:200px;height:auto;'><div id ='postition_text'><span color: #5F9128>当前位置：</span>"+string +"</div>"
         MapObject.temp_infowindow.setContent(postition_html + MapObject.map_share_html+"</div>")
         MapObject.temp_infowindow.open(MapObject.map,MapObject.temp_marker);
-         google.maps.event.addListener(MapObject.temp_infowindow, 'domready', function(){
-        $("#place_full_address").attr("value",string);
-        $("#place_place_latitude").attr("value",MapObject.temp_marker.getPosition().lat());
-        $("#place_place_longitude").attr("value",MapObject.temp_marker.getPosition().lng());
-         })
+        google.maps.event.addListener(MapObject.temp_infowindow, 'domready', function(){
+            $("#place_full_address").attr("value",string);
+            $("#place_place_latitude").attr("value",MapObject.temp_marker.getPosition().lat());
+            $("#place_place_longitude").attr("value",MapObject.temp_marker.getPosition().lng());
+        })
         
         google.maps.event.addListenerOnce(MapObject.temp_infowindow, 'closeclick', function(){
             MapObject.temp_marker.setMap(null)
@@ -287,22 +260,22 @@ var MapObject =  {
                 }
 
                 if(type == 'place'){
-//                    $.ajax({                                                
-//                        type: "POST",                                    
-//                        url: "/places",                                     
-//                        data: "marker[geocode_position]="+ $("#place_full_address") .attr("value")+ 
-//                               "&marker[marker_latitude]=" + $("#place_place_latitude").attr("value")+ 
-//                               "&marker[marker_longitude]=" + $("#place_place_longitude").attr("value")+
-//                                "&place[place_name]="+ $("#place_place_name").val()+ 
-//                                "&place[full_address]="+ $("#place_full_address").val()+ 
-//                                "&place[place_description]="+ $("#place_place_description").val()+"&ajax=true",    
-//                        success: function(message){                 
-//                        } 
-//                    });  
+                    //                    $.ajax({                                                
+                    //                        type: "POST",                                    
+                    //                        url: "/places",                                     
+                    //                        data: "marker[geocode_position]="+ $("#place_full_address") .attr("value")+ 
+                    //                               "&marker[marker_latitude]=" + $("#place_place_latitude").attr("value")+ 
+                    //                               "&marker[marker_longitude]=" + $("#place_place_longitude").attr("value")+
+                    //                                "&place[place_name]="+ $("#place_place_name").val()+ 
+                    //                                "&place[full_address]="+ $("#place_full_address").val()+ 
+                    //                                "&place[place_description]="+ $("#place_place_description").val()+"&ajax=true",    
+                    //                        success: function(message){                 
+                    //                        } 
+                    //                    });  
                                     
                     $("#place_full_address").attr("value",string)
-		    $("#place_place_latitude").attr("value",markerLatLng.lat())
-		    $("#place_place_longitude").attr("value",markerLatLng.lng())
+                    $("#place_place_latitude").attr("value",markerLatLng.lat())
+                    $("#place_place_longitude").attr("value",markerLatLng.lng())
 
                 }
             }
@@ -445,8 +418,8 @@ var MapObject =  {
                 //alert(results[0].geometry.location)
                 MapObject.geocodePosition_marker(results[0].geometry.location,icon,info_htm,is_home)
             } else {
-               // alert("找不到这个地方");
-            }
+        // alert("找不到这个地方");
+        }
         });
     },
 
@@ -462,15 +435,15 @@ var MapObject =  {
         //alert(info_htm)
         if (info_htm!= null){
             var fn = MapObject.markerClickFunction(info_htm, marker);
-             google.maps.event.addListener(marker, 'mouseover', fn);
+            google.maps.event.addListener(marker, 'mouseover', fn);
         }
         if(is_home){
             MapObject.home_marker = marker;
-             MapObject.map.setCenter(latLng)
-             google.maps.event.addListener(marker, 'click', function(){
-                 MapObject.map.setCenter(latLng)
-                 MapObject.map.setZoom(8)
-             });
+            MapObject.map.setCenter(latLng)
+            google.maps.event.addListener(marker, 'click', function(){
+                MapObject.map.setCenter(latLng)
+                MapObject.map.setZoom(8)
+            });
             return;
         }else{
             MapObject.markerClusterer.addMarker(marker,true);
@@ -505,7 +478,7 @@ var MapObject =  {
             //MapObject.infoWindow.setPosition(latlng);
             MapObject.infoWindow.open(MapObject.map,marker);
         };
-    }  ,
+    } ,
     //鼠标离开mark关闭窗体
     markerCloseFunction:function() {
         return function(e) {

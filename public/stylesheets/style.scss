@@ -1383,4 +1383,40 @@ a.ps_close:hover{
 /*搜索下下拉css*/
 .suggest-container{border:1px solid #C1C1C1;visibility:hidden;background-color:white}
 .suggest-item{padding:3px 2px;}
-.suggest-active {background:#33CCFF;color:white;padding:3px 2px;}	
+.suggest-active {background:#33CCFF;color:white;padding:3px 2px;}
+
+/** google 搜索返回的样式控制，隐藏一些东西 */
+#searchwell {
+  width : 330px;
+}
+
+#searchwell .unselected {
+  padding-left: 18px;
+  padding-top: 1px;
+  margin-top: 5px;
+
+  background-repeat: no-repeat;
+  background-position: top left;
+}
+
+.unselected .gs-watermark {
+  display: none;
+}
+
+.unselected .gs-directions {
+  display: none;
+}
+
+.unselected .gs-directions-to-from {
+  display: none;
+}
+
+.unselected .select {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #7777cc;
+}
+div.gs-country {
+display: none;
+}
+
