@@ -29,6 +29,8 @@ class LiquidView
 
     @action_view.instance_variables.each do |name|
       assigns[name.to_s.sub('@', '')] = @action_view.instance_eval(name)
+#      assigns[name.to_s.sub('@', '')] = @action_view.public_methods(name)
+      
     end
 
     liquid = Liquid::Template.parse(source)
