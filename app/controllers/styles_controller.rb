@@ -32,7 +32,7 @@ class StylesController < ApplicationController
       :cache  => false,
       :style  => :compressed
     ).render
-#    expires_in(1.year)
+    expires_in(1.year)
     render :text => css, :type => 'text/css'
   end
 

@@ -1,21 +1,21 @@
-development:
-  adapter: mysql
-  database: onebody
-  host: leedb.c8znmw6lf4ly.us-east-1.rds.amazonaws.com
-#  host: localhost
-  username: root
-  encodings: utf8
-  password: lee123
-  
-  
-  
-#  development:
+#development:
 #  adapter: mysql
-##  database: onebody_dev
+#  database: onebody
+#  host: leedb.c8znmw6lf4ly.us-east-1.rds.amazonaws.com
 ##  host: localhost
 #  username: root
 #  encodings: utf8
-#  password: 
+#  password: lee123
+  
+  
+  
+development:
+  adapter: mysql
+  database: onebody_dev
+  host: localhost
+  username: root
+  encodings: utf8
+  password: 
   
 test:
   adapter: mysql

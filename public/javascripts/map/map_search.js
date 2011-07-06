@@ -1,151 +1,87 @@
-
- 
-    // Our global state
-    var gLocalSearch;
-    var gMap;
-    var gInfoWindow;
-    var gSelectedResults = [];
-    var gCurrentResults = [];
-    var gSearchForm;
- 
-    // Create our "tiny" marker icon
-
- 
-     // Set up the map and the local searcher.
-    function OnLoadSearch() {
-      gMap = MapObject.map
-      // Initialize the local searcher
-      gInfoWindow = new google.maps.InfoWindow;
-      gLocalSearch = new GlocalSearch();
-//      alert(gLocalSearch)
-      gLocalSearch.setSearchCompleteCallback(null, OnLocalSearch);
-    }
- 
-    function unselectMarkers() {
-      for (var i = 0; i < gCurrentResults.length; i++) {
-        gCurrentResults[i].unselect();
-      }
-    }
- 
-    function doSearch() {
-//        alert(1)
-      searchInside(); //先内部搜索
-      var query = document.getElementById("txt_googleseach").value;
-      gLocalSearch.setCenterPoint(gMap.getCenter());
-     // alert(query)
-      gLocalSearch.execute(query);
-    }
- 
-    // Called when Local Search results are returned, we clear the old
-    // results and load the new ones.
-    function OnLocalSearch() {
-    //    alert(gLocalSearch)
-      if (!gLocalSearch.results) return;
-      var searchWell = document.getElementById("searchwell");
- 
-      // Clear the map and the old search well
-      searchWell.innerHTML = "";
-      for (var i = 0; i < gCurrentResults.length; i++) {
-        gCurrentResults[i].marker().setMap(null);
-      }
-      // Close the infowindow
-      gInfoWindow.close();
- 
-      gCurrentResults = [];
-      for (var i = 0; i < gLocalSearch.results.length; i++) {
-        gCurrentResults.push(new LocalResult(gLocalSearch.results[i]));
-      }
- 
-      var attribution = gLocalSearch.getAttribution();
-      if (attribution) {
-        document.getElementById("searchwell").appendChild(attribution);
-      }
- 
-      // Move the map to the first result
-      var first = gLocalSearch.results[0];
-      gMap.setCenter(new google.maps.LatLng(parseFloat(first.lat),
-                                            parseFloat(first.lng)));
- 
-    }
- 
-    // Cancel the form submission, executing an AJAX Search API search.
-    function CaptureForm(searchForm) {
-      gLocalSearch.execute(searchForm.input.value);
-      return false;
-    }
- 
- 
- 
-    // A class representing a single Local Search result returned by the
-    // Google AJAX Search API.
-    function LocalResult(result) {
-      var me = this;
-      me.result_ = result;
-      me.resultNode_ = me.node();
-      me.marker_ = me.marker();
-      google.maps.event.addDomListener(me.resultNode_, 'mouseover', function() {
-        me.select();
-      });
-      document.getElementById("searchwell").appendChild(me.resultNode_);
-    }
- 
-    LocalResult.prototype.node = function() {
-      if (this.resultNode_) return this.resultNode_;
-      return this.html();
-    };
- 
-    // Returns the GMap marker for this result, creating it with the given
-    // icon if it has not already been created.
-    LocalResult.prototype.marker = function() {
-      var me = this;
-      if (me.marker_) return me.marker_;
-      var marker = me.marker_ = new google.maps.Marker({
-        position: new google.maps.LatLng(parseFloat(me.result_.lat),
-                                         parseFloat(me.result_.lng)), map: gMap});
-      google.maps.event.addListener(marker, "mouseover", function() {
-        me.select();
-      });
-      return marker;
-    };
- 
-    // Unselect any selected markers and then highlight this result and
-    // display the info window on it.
-    LocalResult.prototype.select = function() {
-      unselectMarkers();
-      this.selected_ = true;
-      this.highlight(true);
-      gInfoWindow.setContent(this.html(true));
-      gInfoWindow.open(gMap, this.marker());
-    };
- 
-    LocalResult.prototype.isSelected = function() {
-      return this.selected_;
-    };
- 
-    // Remove any highlighting on this result.
-    LocalResult.prototype.unselect = function() {
-      this.selected_ = false;
-      this.highlight(false);
-    };
- 
-    // Returns the HTML we display for a result before it has been "saved"
-    LocalResult.prototype.html = function() {
-      var me = this;
-      var container = document.createElement("div");
-      container.className = "unselected";
-      container.appendChild(me.result_.html.cloneNode(true));
-      return container;
-    }
- 
-    LocalResult.prototype.highlight = function(highlight) {
-      this.node().className = "unselected" + (highlight ? " red" : "");
-    }
-    
-    GSearch.setOnLoadCallback(OnLoadSearch);
-    
-    
-    
-    //内部搜索，搜索place people 和活动 路线等。目前先做 place和peple
-    function searchInside(){
+/*  
+*Author:karry  
+*Version:1.0  
+*Time:2008-12-01  
+*KMapSearch 类  
+*把GOOGLE MAP 和LocalSearch结合。只需要传入MAP\经纬度值，就可以把该经纬度附近的相关本地搜索内容取出来，在地图上标注出来，并可以在指定容器显示搜索结果  
+*/  
+  
+(function() {   
+    var KMapSearch=window.KMapSearch= function(map_, opts_) {   
+        this.opts = {   
+            container:opts_.container || "searchwell", 
+            autoClear:true
+        };   
+        this.map = map_;   
+        this.gLocalSearch = new google.search.LocalSearch();   
         
-    }
+        this.gLocalSearch.setResultSetSize(GSearch.LARGE_RESULTSET);   
+        this.gLocalSearch.setSearchCompleteCallback(this, function() {   
+            if (this.gLocalSearch.results) {   
+                var savedResults = document.getElementById(this.opts.container);   
+                if (this.opts.autoClear) {   
+                    savedResults.innerHTML = "";   
+                }   
+                for (var i = 0; i < this.gLocalSearch.results.length; i++) {   
+                    savedResults.appendChild(this.getResult(this.gLocalSearch.results[i]));   
+                }   
+            }   
+        });   
+    }   
+    KMapSearch.prototype.getResult = function(result) {   
+        var container = document.createElement("div");   
+        container.className = "list";   
+        var myRadom =(new Date()).getTime().toString()+Math.floor(Math.random()*10000);   
+        container.id=myRadom;   
+        container.innerHTML = result.title + "<br />地址：" + result.streetAddress;   
+        this.createMarker( new google.maps.LatLng(result.lat, result.lng), result.html);   
+        return container;   
+    }   
+    KMapSearch.prototype.createMarker = function(latLng, content)   
+    {   
+        var marker = new google.maps.Marker({
+             map:MapObject.map,
+            animation: google.maps.Animation.DROP,
+            position: latLng
+            });   
+//            
+        google.maps.event.addListener(marker, "mouseover", function() {   
+             MapObject.infoWindow.setContent(content);
+            //MapObject.infoWindow.setPosition(latlng);
+            MapObject.infoWindow.open(MapObject.map,marker);
+        });   
+        MapObject.markers_array.push(marker);
+    }   
+    KMapSearch.prototype.clearAll = function() {   
+       
+        MapObject.markers_array = [];
+    }   
+    KMapSearch.prototype.execute = function(latLng,keyWord) {   
+        if (latLng) {   
+            this.gLocalSearch.setCenterPoint(latLng);   
+        }   
+        this.gLocalSearch.execute(keyWord);   
+    }   
+})();
+   
+   
+var mapSearch = new KMapSearch(MapObject.map, {
+    container:"searchwell"
+});   
+   
+function doSearch() {
+    //        alert(1)
+    searchInside(); //先内部搜索
+    var query_key = document.getElementById("txt_googleseach").value
+     
+    mapSearch.clearAll();   
+    mapSearch.execute(MapObject.map.center,query_key); 
+}
+    
+//内部搜索，搜索place people 和活动 路线等。目前先做 place和peple
+function searchInside(){
+        
+}
+    
+     
+    
