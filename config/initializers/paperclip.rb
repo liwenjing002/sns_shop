@@ -1,8 +1,8 @@
 PAPERCLIP_PHOTO_OPTIONS = {
-#  :s3_credentials => "#{Rails.root}/config/s3.yml", :bucket => "51go2",
-#  :storage => :s3,
-#  :path          => "images/system/:rails_env/:class/:attachment/:id/:style/:fingerprint.:extension",
-  :path          => ":rails_root/public/system/:rails_env/:class/:attachment/:id/:style/:fingerprint.:extension",
+  :s3_credentials => "#{Rails.root}/config/s3.yml", :bucket => "51go2",
+  :storage => :s3,
+  :path          => "images/system/:rails_env/:class/:attachment/:id/:style/:fingerprint.:extension",
+#  :path          => ":rails_root/public/system/:rails_env/:class/:attachment/:id/:style/:fingerprint.:extension",
   :url           => "/system/:rails_env/:class/:attachment/:id/:style/:fingerprint.:extension",
   :styles        => {
     :tn          => '32x32#',
