@@ -71,7 +71,21 @@ class MarkersController < ApplicationController
   end
 
 
-  
+  def search
+    res =[]
+    peoples = Person.find(:all,:conditions=>["first_name like ?", "%#{params[:key]}%"])
+    places = Place.find(:all,:conditions=>["place_name like ? or place_description like ?", "%#{params[:key]}%","%#{params[:key]}%"])
+    
+    peoples.each { |people|
+    
+      res << {:html=>"#{people.name}:Ta家在：#{people.postition.home_address}",:lat=>people.postition.home_latitude,:lng=>people.postition.home_longitude}
+    }
+    places.each{|place|
+      res << {:html=>place.marker.marker_html,:lat=>place.marker.marker_latitude,:lng=>place.marker.marker_longitude}
+    
+    }
+     render :json => res
+  end
   
   
 end

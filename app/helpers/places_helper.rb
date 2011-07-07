@@ -4,8 +4,8 @@ module PlacesHelper
   	html << "#{render :partial => 'common/place_info',:locals => {:place=>place,:marker=>marker}}"
     html = html.gsub(/\'/, '"')
     html = html.gsub(/[\n\r]/,'')
-    marker.marker_html = html
+    marker.marker_html = html.html_safe
     marker.save
-    html
+    html.html_safe
   end
 end

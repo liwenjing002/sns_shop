@@ -5,7 +5,7 @@ MapObject.markers_array = [];
 if (MapObject.home_marker !=null){
 	MapObject.home_marker.setMap(null)
 }
-	
+
 <%if @my_home and @my_home.home_latitude and @my_home.home_longitude%>
   latLng = new google.maps.LatLng(<%=@my_home.home_latitude%>, <%= @my_home.home_longitude %>);
   MapObject.home_marker = new google.maps.Marker({
@@ -15,18 +15,34 @@ if (MapObject.home_marker !=null){
   animation: google.maps.Animation.DROP,
   position: latLng
   });
-  var fn = MapObject.markerClickFunction('<%= @my_home.home_address%>', MapObject.home_marker);
+  var fn = MapObject.markerClickFunction('我家在：<%= @my_home.home_address%>', MapObject.home_marker);
   google.maps.event.addListener(MapObject.home_marker, 'mouseover', fn);
   MapObject.map.setCenter(latLng)
-  
+
   //MapObject.markerClusterer.addMarker(marker,true);
+<%else%>
+  MapObject.re_geocodePosition('<%=@my_home.home_address%>',"/images/map/home.png",'我家在：<%= @my_home.home_address%>',<%=@my_home.id%>);
 <%end%>
-<%if @my_home and @my_home.home_address%>
-  MapObject.re_geocodePosition('<%=@my_home.home_address%>',"/images/map/home.png",'我家在：<%= @my_home.home_address%>',true);
+  
+<%if @ta_home %>
+  <%if @ta_home.home_latitude and @ta_home.home_longitude%>
+  latLng = new google.maps.LatLng(<%@ta_home.home_latitude%>, <%= @ta_home.home_longitude %>);
+  MapObject.home_marker = new google.maps.Marker({
+  map: MapObject.map,
+  draggable: false,
+  icon: "/images/map/home.png",
+  animation: google.maps.Animation.DROP,
+  position: latLng
+  });
+  var fn = MapObject.markerClickFunction('Ta家在：<%= @ta_home.home_address%>', MapObject.home_marker);
+  google.maps.event.addListener(MapObject.home_marker, 'mouseover', fn);
+  MapObject.map.setCenter(latLng)
+
+  //MapObject.markerClusterer.addMarker(marker,true);
+<%else%> 
+  MapObject.re_geocodePosition('<%=@ta_home.home_address%>',"/images/map/home.png",'Ta家在：<%= @ta_home.home_address%>',<%=@my_home.id%>);
 <%end%>
-<%if @ta_home and @ta_home.home_address%>
-  MapObject.re_geocodePosition('<%=@ta_home.home_address%>',"/images/map/home.png",'Ta家在：<%= @ta_home.home_address%>',true);
-<%end%>
+  <%end%>
 
 
 
@@ -34,7 +50,7 @@ if (MapObject.home_marker !=null){
 <%if @markers%>
   //alert('<%= @markers.to_json.html_safe%>')
   //marker_json = eval('(' + '<%= @markers.to_json%>'+ ')');
- // alert(obj2str(marker_json))
+  // alert(obj2str(marker_json))
 
   <%  @markers.each do|marker|%>
     latLng = new google.maps.LatLng(<%=marker.marker_latitude%>, <%= marker.marker_longitude %>);
@@ -45,8 +61,11 @@ if (MapObject.home_marker !=null){
     animation: google.maps.Animation.DROP,
     position: latLng
     });
-    //var fn = MapObject.markerClickFunction('<%= raw marker.marker_html %>', marker);
-     var fn = MapObject.markerClickFunction('<%= raw place_html(marker,marker.object) %>', marker);
+    <%if marker.marker_html and marker.marker_html !='' %>
+    var fn = MapObject.markerClickFunction('<%= raw marker.marker_html %>', marker);
+    <%else%>
+    var fn = MapObject.markerClickFunction('<%= place_html(marker,marker.object) %>', marker);
+    <%end%>
     //google.maps.event.addListener(marker, 'click', fn);
     google.maps.event.addListener(marker, 'mouseover', fn);
     MapObject.markers_array.push(marker);
@@ -57,34 +76,34 @@ if (MapObject.home_marker !=null){
 
 <%if @friends%>
 
-<% @friends.each do |friend| %>
-  <%if friend.postition.home_latitude and friend.postition.home_longitude%>
-    latLng = new google.maps.LatLng(<%friend.postition.home_latitude%>, <%= friend.postition.home_longitude %>); 
-	marker = new google.maps.Marker({
-    map: MapObject.map,
-    draggable: false,
-    animation: google.maps.Animation.DROP,
-    position: latLng
-    });
-	var fn = MapObject.markerClickFunction('<%=friend.name%>'+'Ta家在：<%= friend.postition.home_address%>', marker);
-    google.maps.event.addListener(marker, 'mouseover', fn);
-    MapObject.markers_array.push(marker);
-  <%else%>
-    MapObject.re_geocodePosition('<%=friend.postition.home_address%>',"/images/map/home.png",'<%=friend.name%>'+'Ta家在：<%= friend.postition.home_address%>',false);
+  <% @friends.each do |friend| %>
+    <%if friend.postition.home_latitude and friend.postition.home_longitude%>
+      latLng = new google.maps.LatLng(<%friend.postition.home_latitude%>, <%= friend.postition.home_longitude %>); 
+              marker = new google.maps.Marker({
+      map: MapObject.map,
+      draggable: false,
+      animation: google.maps.Animation.DROP,
+      position: latLng
+      });
+              var fn = MapObject.markerClickFunction('<%=friend.name%>'+'Ta家在：<%= friend.postition.home_address%>', marker);
+      google.maps.event.addListener(marker, 'click', fn);
+      MapObject.markers_array.push(marker);
+    <%else%>
+      MapObject.re_geocodePosition('<%=friend.postition.home_address%>',"/images/map/home.png",'<%=friend.name%>'+'Ta家在：<%= friend.postition.home_address%>',false);
+    <%end%>
   <%end%>
-<%end%>
 
 <%end%>
-    
-    
+
+
 
 
 
 <%if @plans%>
-<% @plans.each do |plan| %>
+  <% @plans.each do |plan| %>
     html = '<%= plan.day.to_s+plan.address%>' + '<%= link_to "查看计划",plan,:target=>"_blank"%>'
-  MapObject.re_geocodePosition('<%=plan.address%>',"/images/map/schedule.png",html);
-<%end%>
+    MapObject.re_geocodePosition('<%=plan.address%>',"/images/map/schedule.png",html);
+  <%end%>
 <%end%>
 
 if (MapObject.markerClusterer){

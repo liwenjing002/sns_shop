@@ -73,4 +73,10 @@ namespace :deploy do
   end
   after 'deploy:update_code', 'deploy:update_links_and_plugins'
 
+  
+      desc 'email send'
+    task :send_mail do
+      run "cd #{current_path} ; ar_sendmail_rails3 &"
+    end
+    after 'deploy:restart', 'deploy:send_mail'
 end

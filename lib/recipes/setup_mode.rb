@@ -19,10 +19,7 @@ namespace :deploy do
       puts run_and_return("cat #{current_path}/setup-secret")
     end
     
-    desc 'email send'
-    task :start,:roles=>webs do
-      run "cd #{current_path} && ar_sendmail_rails3 &"
-    end
+
 
   end
 

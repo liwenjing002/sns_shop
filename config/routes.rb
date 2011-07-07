@@ -1,4 +1,10 @@
 OneBody::Application.routes.draw do
+  
+  resources :postitions do
+    collection do
+      get :update_postition
+    end
+  end
   resources :addresses do
     collection do
       post :search_address
@@ -21,6 +27,7 @@ OneBody::Application.routes.draw do
   resources :markers do
     collection do
       post :follow
+      post :search
     end
   end
 

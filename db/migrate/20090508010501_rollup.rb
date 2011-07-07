@@ -77,37 +77,9 @@ class Rollup < ActiveRecord::Migration
       t.integer  "picture_id"
     end
 
-    create_table "families", :force => true do |t|
-      t.integer  "legacy_id"
-      t.string   "name"
-      t.string   "last_name"
-      t.string   "suffix",             :limit => 25
-      t.string   "address1"
-      t.string   "address2"
-      t.string   "city"
-      t.string   "state",              :limit => 10
-      t.string   "zip",                :limit => 10
-      t.string   "home_phone",         :limit => 25
-      t.string   "email"
-      t.float    "latitude"
-      t.float    "longitude"
-      t.boolean  "share_address",                    :default => true
-      t.boolean  "share_mobile_phone",               :default => false
-      t.boolean  "share_work_phone",                 :default => false
-      t.boolean  "share_fax",                        :default => false
-      t.boolean  "share_email",                      :default => false
-      t.boolean  "share_birthday",                   :default => true
-      t.boolean  "share_anniversary",                :default => true
-      t.datetime "updated_at"
-      t.boolean  "wall_enabled",                     :default => true
-      t.boolean  "visible",                          :default => true
-      t.boolean  "share_activity",                   :default => true
-      t.integer  "site_id"
-      t.boolean  "share_home_phone",                 :default => true
-      t.boolean  "deleted",                          :default => false
-    end
+    
 
-    add_index "families", ["last_name", "name"], :name => "index_family_names"
+    
 
     create_table "friendship_requests", :force => true do |t|
       t.integer  "person_id"
@@ -272,11 +244,9 @@ class Rollup < ActiveRecord::Migration
 
     create_table "people", :force => true do |t|
       t.integer  "legacy_id"
-      t.integer  "family_id"
       t.integer  "sequence"
       t.string   "gender",                       :limit => 6
       t.string   "first_name"
-      t.string   "last_name"
       t.string   "suffix",                       :limit => 25
       t.string   "mobile_phone",                 :limit => 25
       t.string   "work_phone",                   :limit => 25
