@@ -19,12 +19,11 @@
         this.gLocalSearch.setSearchCompleteCallback(this, function() {   
             if (this.gLocalSearch.results) {   
                 var savedResults = document.getElementById(this.opts.container);   
-                if (this.opts.autoClear) {   
-                    savedResults.innerHTML = "";   
-                }   
+  
                 for (var i = 0; i < this.gLocalSearch.results.length; i++) {   
                     savedResults.appendChild(this.getResult(this.gLocalSearch.results[i]));   
-                }   
+                } 
+                this.resetMarkerAll();
             }   
         });   
     }   
@@ -40,21 +39,32 @@
     KMapSearch.prototype.createMarker = function(latLng, content)   
     {   
         var marker = new google.maps.Marker({
-             map:MapObject.map,
+            map:MapObject.map,
             animation: google.maps.Animation.DROP,
             position: latLng
-            });   
-//            
+        });   
+        //            
         google.maps.event.addListener(marker, "mouseover", function() {   
-             MapObject.infoWindow.setContent(content);
-            //MapObject.infoWindow.setPosition(latlng);
+            MapObject.infoWindow.setContent(content);
             MapObject.infoWindow.open(MapObject.map,marker);
         });   
         MapObject.markers_array.push(marker);
     }   
-    KMapSearch.prototype.clearAll = function() {   
+    KMapSearch.prototype.resetMarkerAll = function() {   
        
-        MapObject.markers_array = [];
+        
+        if (MapObject.markerClusterer){
+            MapObject.markerClusterer.clearMarkers();
+            MapObject.markerClusterer.addMarkers(MapObject.markers_array);
+
+        }else{
+            var mcOptions = {
+                gridSize: 50, 
+                maxZoom: 15,
+                minZoom: 5
+            };
+            MapObject.markerClusterer = new MarkerClusterer(MapObject.map, MapObject.markers_array,mcOptions);
+        }
     }   
     KMapSearch.prototype.execute = function(latLng,keyWord) {   
         if (latLng) {   
@@ -70,16 +80,40 @@ var mapSearch = new KMapSearch(MapObject.map, {
 });   
    
 function doSearch() {
-    //        alert(1)
-    searchInside(); //先内部搜索
+    var savedResults = document.getElementById(mapSearch.opts.container);
+    if (mapSearch.opts.autoClear) {   
+        savedResults.innerHTML = "";   
+        MapObject.markers_array = [];
+    } 
     var query_key = document.getElementById("txt_googleseach").value
-     
-    mapSearch.clearAll();   
+    searchInside(query_key); //先内部搜索
     mapSearch.execute(MapObject.map.center,query_key); 
 }
     
 //内部搜索，搜索place people 和活动 路线等。目前先做 place和peple
-function searchInside(){
+function searchInside(query_key){
+  
+    $.ajax({                                                
+        type: "POST",                                    
+        url: "/markers/search",                                     
+        data: "key="+ query_key ,    
+        success: function(message){  
+            for (i =0;i<message.length;i++){
+//                alert(message[i].html)
+                html =   message[i].html              
+                var marker = new google.maps.Marker({
+                    map:MapObject.map,
+                    animation: google.maps.Animation.DROP,
+                    position: new google.maps.LatLng(message[i].lat, message[i].lng)
+                });   
+                var fn = MapObject.markerClickFunction(html+"", marker);     
+               google.maps.event.addListener(marker, 'mouseover', fn);  
+                MapObject.markers_array.push(marker);
+                mapSearch.resetMarkerAll();                
+                                
+            }
+        } 
+    });
         
 }
     

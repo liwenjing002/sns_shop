@@ -410,13 +410,13 @@ var MapObject =  {
 
 
     //地址解析方法
-    re_geocodePosition:function (address,icon,info_htm,is_home) {
+    re_geocodePosition:function (address,icon,info_htm,home_Position) {
         MapObject.geocoder.geocode({
             address: address
         }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 //alert(results[0].geometry.location)
-                MapObject.geocodePosition_marker(results[0].geometry.location,icon,info_htm,is_home)
+                MapObject.geocodePosition_marker(results[0].geometry.location,icon,info_htm,home_Position)
             } else {
         // alert("找不到这个地方");
         }
@@ -424,7 +424,7 @@ var MapObject =  {
     },
 
 
-    geocodePosition_marker:function(latLng,icon,info_htm,is_home){
+    geocodePosition_marker:function(latLng,icon,info_htm,home_Position){
         marker = new google.maps.Marker({
             map: MapObject.map,
             draggable: false,
@@ -435,15 +435,20 @@ var MapObject =  {
         //alert(info_htm)
         if (info_htm!= null){
             var fn = MapObject.markerClickFunction(info_htm, marker);
-            google.maps.event.addListener(marker, 'mouseover', fn);
+             if(home_Position){
+            google.maps.event.addListener(marker, 'click', fn);}
+        else{
+             google.maps.event.addListener(marker, 'mouseover', fn);
         }
-        if(is_home){
+        }
+        if(home_Position != false){
             MapObject.home_marker = marker;
             MapObject.map.setCenter(latLng)
             google.maps.event.addListener(marker, 'click', function(){
                 MapObject.map.setCenter(latLng)
                 MapObject.map.setZoom(8)
             });
+            MapObject.updataPosition(home_Position,latLng);
             return;
         }else{
             MapObject.markerClusterer.addMarker(marker,true);
@@ -452,6 +457,16 @@ var MapObject =  {
     //alert(results[0].geometry.location)
     },
 
+
+    updataPosition:function(home_Position_id,latLng){
+         $.ajax({                                                
+                        type: "get",                                    
+                        url: "/postitions/update_postition",                                     
+                        data: "id=" + home_Position_id  +"&postition[home_latitude]="+ latLng.lat()+"&postition[home_longitude]="+latLng.lng() ,    
+                        success: function(message){                 
+                        } 
+                    });
+    },
 
 
     //根据google返回的数据更新info_window
