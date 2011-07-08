@@ -14,7 +14,7 @@ ssh_options[:keys] = ["#{ENV['HOME']}/sns2.pem"]
 # if you have multiple servers, point these individually
 role :web, host
 #role :db,  db, :primary => true #北美
-#role :db,  'snsgo.ca95i8uzte4e.ap-northeast-1.rds.amazonaws.com', :primary => true #东京
+
 role :db,host,:primary=>true
 # point to your github fork if you have one
 set :repository, "git://github.com/0612800232/sns_shop.git"

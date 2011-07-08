@@ -1,9 +1,18 @@
+#production:
+#  adapter: mysql
+#  host: <%=db%>
+#  database: onebody
+#  username: root
+#  password: lee123
+#  
+#development:
+#  production
 production:
   adapter: mysql
-  host: <%=db%>
+  host: localhost
   database: onebody
-  username: root
-  password: lee123
+  username: onebody
+  password: <%= get_db_password %>
   
 development:
   production
