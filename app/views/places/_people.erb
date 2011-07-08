@@ -16,7 +16,7 @@
          <div>
           <%end%>
 
-          <% content_tag :a, :href => person_path(mm.map.person) do %>
+          <%= content_tag :a, :href => person_path(mm.map.person) do %>
             <%= render :partial => 'people/thumbnail', :locals => {:person => mm.map.person} %>
           <% end %>
              <%if i%4==0 %>

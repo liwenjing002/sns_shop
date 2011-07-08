@@ -1,9 +1,9 @@
 PAPERCLIP_PHOTO_OPTIONS = {
-#  :s3_credentials => "#{Rails.root}/config/s3.yml", :bucket => "51go2",
-#  :storage => :s3,
-#  :path          => "images/system/:rails_env/:class/:attachment/:id/:style/:fingerprint.:extension",
+  :s3_credentials => "#{Rails.root}/config/s3.yml", :bucket => "51go2",
+  :storage => :s3,
+  :path          => "images/system/:rails_env/:class/:attachment/:id/:style/:fingerprint.:extension",
   :url           => "/system/:rails_env/:class/:attachment/:id/:style/:fingerprint.:extension",
-  :path          => ":rails_root/public/system/:rails_env/:class/:attachment/:id/:style/:fingerprint.:extension",
+#  :path          => ":rails_root/public/system/:rails_env/:class/:attachment/:id/:style/:fingerprint.:extension",
   :styles        => {
     :tn          => '32x32#',
     :small       => '75x75>',
@@ -19,10 +19,10 @@ PAPERCLIP_PHOTO_MAX_SIZE = 5.megabytes
 PAPERCLIP_PHOTO_CONTENT_TYPES = ['image/jpeg', 'image/jpg', 'image/pjpeg', 'image/png', 'image/x-png']
 
 PAPERCLIP_FILE_OPTIONS = {
-#   :s3_credentials => "#{Rails.root}/config/s3.yml", :bucket => "51go2",
+   :s3_credentials => "#{Rails.root}/config/s3.yml", :bucket => "51go2",
 #  :storage => :s3,
   :path          => ":rails_root/public/system/:rails_env/:class/:attachment/:id/:fingerprint.:extension",
-# :path          => "images/system/:rails_env/:class/:attachment/:id/:style/:fingerprint.:extension",
+ :path          => "images/system/:rails_env/:class/:attachment/:id/:style/:fingerprint.:extension",
   :url           => "/system/:rails_env/:class/:attachment/:id/:fingerprint.:extension"
 }
 
