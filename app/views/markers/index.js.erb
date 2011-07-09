@@ -6,7 +6,7 @@ if (MapObject.home_marker !=null){
 	MapObject.home_marker.setMap(null)
 }
 
-<%if @my_home and @my_home.home_latitude and @my_home.home_longitude%>
+<%if @my_home and @my_home.home_latitude!= '' and @my_home.home_longitude != ''%>
   latLng = new google.maps.LatLng(<%=@my_home.home_latitude%>, <%= @my_home.home_longitude %>);
   MapObject.home_marker = new google.maps.Marker({
   map: MapObject.map,

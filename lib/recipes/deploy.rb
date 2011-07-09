@@ -43,9 +43,9 @@ namespace :deploy do
 
   task :create_database do
     unless ENV['SKIP_DB_SETUP']
-#      mysql_root_password = HighLine.new.ask('What is your CURRENT MySQL ROOT password: ') { |q| q.echo = false }
-#      p = mysql_root_password.empty? ? '' : "-p#{mysql_root_password}"
-#      run "mysql -uroot #{p} -e \"create database if not exists onebody; grant all on onebody.* to onebody@localhost identified by '#{get_db_password}';\""
+      mysql_root_password = HighLine.new.ask('What is your CURRENT MySQL ROOT password: ') { |q| q.echo = false }
+      p = mysql_root_password.empty? ? '' : "-p#{mysql_root_password}"
+     run "mysql -uroot #{p} -e \"create database if not exists onebody; grant all on onebody.* to onebody@localhost identified by '#{get_db_password}';\""
       yml = render_erb_template(File.dirname(__FILE__) + '/templates/database.yml')
       put yml, "#{shared_path}/config/database.yml"
     end
