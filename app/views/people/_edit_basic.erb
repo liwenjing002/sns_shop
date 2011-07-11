@@ -3,12 +3,10 @@
   
 
 
-    <%= form.hidden_field :family_id %>
 
     <%= form.label :first_name, t('people.name') %>
     <%= form.text_field :first_name, :size => 15 %>
-    <%#= form.text_field :last_name, :size => 15 %>
-    <%#= form.select :suffix, [nil]+Setting.get(:system, :suffixes) %>
+    <%= form.select :suffix, [nil]+Setting.get(:system, :suffixes) %>
    
     <br/>
 

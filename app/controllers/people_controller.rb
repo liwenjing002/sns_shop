@@ -1,6 +1,6 @@
 class PeopleController < ApplicationController
 	respond_to :html,:js
-  cache_sweeper :person_sweeper, :family_sweeper, :only => %w(create update destroy import batch)
+  cache_sweeper :person_sweeper,:only => %w(create update destroy import batch)
 
   def index
     respond_to do |format|

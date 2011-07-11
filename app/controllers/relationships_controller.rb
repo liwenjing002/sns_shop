@@ -62,19 +62,7 @@ class RelationshipsController < ApplicationController
     end
   end
 
-  def create_for_family
-    @family = Family.find(params[:family_id], :conditions => {:deleted => false})
-    params[:people].to_a.each do |person_id, relationships|
-      relationships.each do |related_id, relationship|
-        Relationship.create(
-          :person  => @family.people.find(person_id),
-          :related => @family.people.find(related_id),
-          :name    => relationship
-        )
-      end
-    end
-    redirect_to family_relationships_path(@family)
-  end
+
 
   def destroy
     @person = Person.find(params[:person_id], :conditions => {:deleted => false})

@@ -134,12 +134,11 @@ class Search
         @conditions.add_condition ["people.custom_type = ?", @type]
       end
     end
-    @count = Person.count :conditions => @conditions,:include => :address
+    @count = Person.count :conditions => @conditions
     @people = Person.paginate(
       :all,
       :page => page,
       :conditions => @conditions,
-      :include => :address,
       :order => (show_businesses ? 'people.business_name' : 'people.first_name')
     )
 #.select do |person| # additional checks that don't work well in raw sql

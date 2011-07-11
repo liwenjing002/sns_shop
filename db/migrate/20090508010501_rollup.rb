@@ -247,6 +247,7 @@ class Rollup < ActiveRecord::Migration
       t.integer  "sequence"
       t.string   "gender",                       :limit => 6
       t.string   "first_name"
+      t.string   "last_name"
       t.string   "suffix",                       :limit => 25
       t.string   "mobile_phone",                 :limit => 25
       t.string   "work_phone",                   :limit => 25
@@ -316,7 +317,6 @@ class Rollup < ActiveRecord::Migration
     end
 
     add_index "people", ["classes"], :name => "index_people_on_classes"
-    add_index "people", ["family_id"], :name => "index_people_on_family_id"
 
     create_table "people_verses", :id => false, :force => true do |t|
       t.integer "person_id"

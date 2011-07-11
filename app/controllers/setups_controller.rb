@@ -46,6 +46,9 @@ class SetupsController < ApplicationController
       @person.child = false
       @person.admin = Admin.create!(:super_admin => true)
       if @person.save
+         @person.map = Map.create({:person_id => @person.id})
+         @person.postition = Postition.create()
+         @peoson.save
         Setting.set_global('Contact', 'Bug Notification Email', @person.email)
         Setting.set_global('Contact', 'Tech Support Email', @person.email)
         flash[:notice] = t('setup.complete')
