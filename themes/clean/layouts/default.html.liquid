@@ -8,19 +8,15 @@
   {{ content_for_head }}
 </head>
 <body>
-  <div id="common" class="shadowed">
+
+  <div id="nav">
     <div class="inner">
-      <div id="search">
+     <div id="search">
         {{ search_form }}
       </div>
       <ul id="common-nav">
         {{ common_nav_links }}
       </ul>
-      <div class="clear"></div>
-    </div>
-  </div>
-  <div id="nav">
-    <div class="inner">
       <ul class="buttons">
         {{ nav_links }}
       </ul>
@@ -28,6 +24,7 @@
         <h1>{{ heading }}</h1>
         <div class="tagline">{{ subheading }}</div>
       </div>
+      
     </div>
   </div>
   {{ notice }}

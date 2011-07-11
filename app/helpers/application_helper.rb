@@ -99,6 +99,7 @@ module ApplicationHelper
       profile_link = people_path
     end
     html << "<li><div>#{tab_link t("nav.profile"), profile_link, params[:controller] == 'people' && me?, 'profile-tab'}</div></li>"
+    html << "<li>#{tab_link t("nav.places"), places_path, params[:controller]== 'places', 'place-tab'}</li>"
     if Setting.get(:features, :groups) and (Site.current.max_groups.nil? or Site.current.max_groups > 0)
       html << "<li>#{ tab_link t("nav.groups"), groups_path, params[:controller] == 'groups', 'group-tab'}</li>"
     end
@@ -108,7 +109,6 @@ module ApplicationHelper
 
   def common_nav_links
     html = ''
-    html << "<li class=\"platform\"><a href=\"http://beonebody.com\">OneBody v2</a></li>"
     if @logged_in
       html << "<li>#{link_to t("admin.admin"), admin_path}</li>" if @logged_in.admin?
       html << "<li>#{link_to t("session.sign_out"), session_path, :method => :delete}</li>"
@@ -117,7 +117,7 @@ module ApplicationHelper
   end
 
   def menu_content
-    render :partial => 'people/menus'
+    render :partial => 'common/menus'
   end
 
   def search_form
@@ -325,6 +325,11 @@ module ApplicationHelper
   def is_owner? marker
     marker.owner == @logged_in
   end
+  def render_cell_for(id, cell, action, options = nil, &block)
+  content_for id do
+    render_cell(cell, action, options, &block)
+  end
+end
 
   
   

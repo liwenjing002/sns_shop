@@ -1,6 +1,6 @@
 class AlbumsController < ApplicationController
 
-  cache_sweeper :person_sweeper, :family_sweeper, :only => %w(create update destroy)
+  cache_sweeper :person_sweeper,  :only => %w(create update destroy)
 
   def index
     if params[:person_id]
