@@ -1,4 +1,4 @@
-class ImpressionsController < ApplicationController
+class Location::ImpressionsController < ApplicationController
   # GET /impressions
   # GET /impressions.xml
   def index

@@ -1,0 +1,19 @@
+<% content_for :sidebar do %>
+
+  <%= render_cell :place,:search %>
+
+  <h3><%= t('places.browse_by_category') %></h3>
+  <%#*<p><%= select_tag 'category', options_for_select(@categories), :include_blank => true, :onchange => "location.href='?category='+this.value" %></p>%>
+
+  <h3><%= t('places.create_a_place') %></h3>
+  <p>
+    <%= t('places.if_cant_find_create_it') %>
+  </p>
+  <p>
+    <%= link_to t('places.create_a_place'), new_location_place_path, :class => 'add-icon' %>
+  </p>
+
+<% end %>
+
+
+<%= render_cell :place,:place_index %>

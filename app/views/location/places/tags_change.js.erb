@@ -1,12 +1,12 @@
 
 $("#add_tag").html("修改标签");
 $("#my_place_tags").html("")
-$("#my_place_tags").html("<%= escape_javascript(render :partial=>"tags/tags",:locals=>{:object=>@mm_new}) %>");
+$("#my_place_tags").html("<%= escape_javascript(render_cell :tag,:tags,:object=>@mm_new) %>");
 $("#place_all_tags").html("")
-$("#place_all_tags").html("<%= escape_javascript(render :partial=>"tags/tags",:locals=>{:object=>@place}) %>");
+$("#place_all_tags").html("<%= escape_javascript(render_cell :tag,:tags,:object=>@place) %>");
 $("#place_tags_input").attr("value","<%=@mm_new.tag_list.to_s%>");
 $("#my_all_tags").html("")
-$("#my_all_tags").html("<%= escape_javascript(render :partial=>"tags/tags",:locals=>{:object=>@logged_in}) %>");
+$("#my_all_tags").html("<%= escape_javascript(render_cell :tag,:tags,:object=>@logged_in) %>");
 
 $("#tags_cancel").trigger('click')
 $(".follow_link").attr("action",'cancer')

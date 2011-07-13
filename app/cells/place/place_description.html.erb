@@ -2,7 +2,7 @@
 <div id ="description_text"><p><%= @place.place_description.html_safe%></p></div>
 <div id ="description_textarea" style="display:none">
 
-  <%= form_for @place,:remote=>true do |form| %>
+  <%= form_for [:location,@place],:remote=>true do |form| %>
     <%= form.text_area :place_description, :rows => 2,:placeholder => "编辑对"+ @place.place_name + "的描述"  %><br/>
     <span id ="updata_button" style="display:none">
       <%= submit_tag t('share.share'),:class=>"submit_button",:id =>"description_update"  %>
@@ -17,7 +17,7 @@
 <h3>标签云：</h3>
 <div id = "place_tag" style="margin-bottom: 10px;margin-top: 10px;">
   
-  <span id = "place_all_tags"> <%= render :partial=>"tags/tags",:locals=>{:object=>@place} %></span>
+  <span id = "place_all_tags"> <%= render_cell :tag,:tags,:object=>@place %></span>
 </div>
 
 <script>

@@ -16,7 +16,7 @@
   <% end %>
   <% if grouped_items.any? and not grouped_items.include?(stream_item.id); grouped_items << stream_item.id; end %>
 
-  <%= render :partial => 'place_share_item', :locals => {:stream_item => stream_item,:is_hide=>nil}%>
+  <%= render_cell :place,:place_share_item,:stream_item => stream_item,:is_hide=>nil %>
 
   <% last_stream_item = stream_item %>
 <% end %>

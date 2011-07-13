@@ -1,4 +1,7 @@
-﻿$(".stream-items").prepend("<%= escape_javascript(render :partial=>"places/place_share_item",:locals=>{:stream_item =>@stream_item ,:is_hide=>true}) %>");
+$("#notice").html("<%=flash[:warning]%>")
+$("#notice").show()
+$('#notice').fadeOut(15000);
+﻿$(".stream-items").prepend("<%= escape_javascript(render_cell :place,:place_share_item,:stream_item =>@stream_item ,:is_hide=>true) %>");
 
 
 $(".stream-items :first-child").slideDown("slow");

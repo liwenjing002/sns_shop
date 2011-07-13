@@ -1,10 +1,12 @@
 class MapCell < Cell::Rails
-attr_reader :content_for_head 
+helper  ApplicationHelper
+
+
 
   def map
-    @map = @opts[:map]
-    @person = @opts[:person]
-    @logged_in = @opts[:logged_in]
+    @map = options[:map]
+    @person = options[:person]
+    @logged_in = options[:logged_in]
     render
   end
 

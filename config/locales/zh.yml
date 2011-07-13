@@ -1113,6 +1113,15 @@ zh:
     failure_heading: “我们很抱歉... 
     failure_message: “似乎已经产生了错误，而您的文件。 
 
+  places:
+    search_for_a_place: 寻找地点
+    search: 地点搜索
+    browse_by_category: 根据地点类型浏览
+    create_a_place:  新建一个地点
+    if_cant_find_create_it:  如果找不到想要的地点,就创建一个
+
+
+
   groups: 
     accept: 接受
     add_somebody: 添加人

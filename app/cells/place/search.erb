@@ -1,0 +1,7 @@
+<h3><%= t('places.search_for_a_place') %></h3>
+<%= form_tag(location_places_path, :method => 'get', :style => 'border:none;') do %>
+  <p>
+   <%= text_field_tag :name, params[:name], :style => 'width:120px;' %>
+    <%= submit_tag t('places.search') %>
+  </p>
+<% end %>

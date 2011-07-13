@@ -7,7 +7,7 @@
   </ul>
 
 
-  <%= form_for @place_share=PlaceShare.new, :url => { :action => "add_share" },:html => {:id => 'share-addvise', :class => 'share-type'},:remote=>true do |form| %>
+  <%= form_for [:location,@place_share=PlaceShare.new], :url => add_share_location_places_path,:html => {:id => 'share-addvise', :class => 'share-type'},:remote=>true do |form| %>
     <%= hidden_field_tag :album, @place.place_name %>
     <%= hidden_field_tag :place_id, @place.id %>
     <%= hidden_field_tag :type, 'addvise' %>
@@ -30,11 +30,11 @@
 
 
 
-<% cache(:fragment => 'place_share_items') do %>
+
   <div class="stream-items">
-    <%= render :partial => 'place_share_items' %>
+    <%= render_cell :place,:place_share_items,:place=>@place,:stream_items=>@stream_items %>
   </div>
-<% end %>
+
 
 <script>
   function fileChange(full_path){

@@ -19,7 +19,7 @@ class PlaceShare < ActiveRecord::Base
         :context         => context,
         :person_id       => person_id,
         :place_id        => album.place_id,
-        :streamable_type => 'PlaceShare',
+        :streamable_type => 'Location_PlaceShare',
         :streamable_id   => id,
         :created_at      => created_at,
         :shared          => album.place_id || person.share_activity? ? true : false

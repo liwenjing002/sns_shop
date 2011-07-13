@@ -1,4 +1,4 @@
-class PlacesController < ApplicationController
+class Location::PlacesController < ApplicationController
   respond_to :html,:js
   def index
     @places = Place.all
@@ -166,6 +166,8 @@ class PlacesController < ApplicationController
     @p_impression ? (render :json => {:success=>true}):(render :json => {:success=>false}) 
     
   end
+  
+  
   
 
 end
