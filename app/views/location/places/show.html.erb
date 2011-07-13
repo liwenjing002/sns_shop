@@ -1,0 +1,81 @@
+<% content_for  :head do %>
+  <%= stylesheet_link_tag 'global-0.52' %>
+ <%= javascript_include_tag "wmd/wmd" %>
+<%= javascript_include_tag "extend/jquery.simplemodal" %>
+  <%= stylesheet_link_tag  "osx" %>
+  <%= javascript_include_tag "extend/some_function" %>
+  <script>
+   
+
+    $("#owner_bar").live('click',function(){ $.ajax({                                                
+        type: "POST",                                    
+        url: "owner_manager",                                     
+        data: "marker_id="+ <%=@place.marker.id%> +"&owner="+ $("#owner_bar").attr("value"),    
+        success: function(message){  
+          if(message.success==true ){
+            if(message.owner ==false){
+              $("#owner_bar").html("申请地主");
+              $("#owner_bar").attr("value",true);
+              $("#owner_bar").attr("title","我要当地主");
+            }else{
+              $("#owner_bar").html("不当地主");
+              $("#owner_bar").attr("value",false);
+              $("#owner_bar").attr("title","辞去本地地主的职位");
+            }
+                          
+          } else{
+            alert("出错拉。。请重试")             
+          } 
+        } 
+      });  });
+
+
+  
+  
+
+  </script>
+<%end%>
+
+<div id ="place_body">
+  <div id = "place_left" class= "left" style = "float: left;width: 550px;height:auto">
+    <div id = "place_name">
+      <span style = "font-size:25px;"><%= @place.place_name%></span>
+      <span style = "margin-left:20px;"><%= @place.full_address%></span>
+    </div>
+    <div id = "palce_pic">
+      <% if !@place.picture and (!@pictures or @pictures.empty?) %>
+        <p><%= image_tag('missing_large.png', :alt => t('none')) %></p>
+      <%else%>
+        <%= image_tag(@place.picture.photo.url(:large), :alt => t('none')) %>
+      <% end %>
+    </div>
+    <div id ="share_bar" style="padding-bottom: 5px;padding-top: 5px;">
+     <%= render_cell :place,:share_bar,:place=>@place,:mm=>@mm,:logged_in=>@logged_in %>
+    </div> 
+    <div id = "place_leave_message">
+      <%= render_cell :place,:place_message,:place=>@place,:stream_items=>@stream_items %>
+    </div>
+   
+  </div>
+
+  <div id = "place_right" class= "right" style= "margin-left: 570px;">
+   
+    <div id = "place_description">
+     <%= render_cell :place, :place_description,:place=>@place %>
+    </div>
+    <div id= "place_people"><%= render_cell :place,:people,:place=>@place,:follow_peoples=>@follow_peoples  %></div>
+    <div id = "place_impression"><%= render_cell :place,:impression,:impressions=>@impressions,:place=>@place %></div>
+    <div id = "place_meet_people">meet people</div>
+    <div id = "place_tip_or_quesiton">tip question</div>
+    <div id = "place_something_arround">something arround </div>
+    <div id = "place_add">add</div>
+  </div>
+
+</div>
+<div class="clear"></div>
+<script>
+  $(function() {
+  $('textarea').wmd();
+});
+  </script>
+

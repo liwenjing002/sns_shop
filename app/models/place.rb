@@ -22,7 +22,7 @@ class Place < ActiveRecord::Base
     comment_people_ids = items.map { |s| s.context['comments'].to_a.map { |c| c['person_id'] } }.flatten
     comment_people = Person.all(
       :conditions => ["id in (?)", comment_people_ids],
-      :select => 'first_name, last_name, suffix, gender, id, family_id, updated_at, photo_file_name, photo_fingerprint' # only what's needed
+      :select => 'first_name, last_name, suffix, gender, id, updated_at, photo_file_name, photo_fingerprint' # only what's needed
     ).inject({}) { |h, p| h[p.id] = p; h } # as a hash with id as the key
     items.each do |stream_item|
       stream_item.context['comments'].to_a.each do |comment|

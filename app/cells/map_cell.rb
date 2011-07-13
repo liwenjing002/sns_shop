@@ -1,5 +1,7 @@
 class MapCell < Cell::Rails
-attr_reader :content_for_head 
+helper  ApplicationHelper
+
+
 
   def map
     @map = @opts[:map]

@@ -1,4 +1,4 @@
-class PlacesController < ApplicationController
+class Location::PlacesController < ApplicationController
   respond_to :html,:js
   def index
     @places = Place.all

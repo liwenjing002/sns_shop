@@ -1,27 +1,37 @@
 OneBody::Application.routes.draw do
   
-  resources :postitions do
-    collection do
-      get :update_postition
+  
+  namespace :location  do
+    match "/"  => "places#index"
+    resources :postitions do
+      collection do
+        get :update_postition
+      end
     end
-  end
+      resources :impressions
+      resources :place_shares
+      resources :places do
+        collection do
+          post :follow_place
+          post :add_share
+          post :tags_change
+          post :add_temp_pic
+          post :owner_manager
+          post :add_impression
+        end
+      end
+    end
+    
+
+  
+  
+
   resources :addresses do
     collection do
       post :search_address
     end
   end
-  resources :impressions
-  resources :place_shares
-  resources :places do
-    collection do
-      post :follow_place
-      post :add_share
-      post :tags_change
-      post :add_temp_pic
-      post :owner_manager
-      post :add_impression
-    end
-  end
+  
 
   resources :plans
   resources :markers do

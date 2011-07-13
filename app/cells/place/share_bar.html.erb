@@ -9,7 +9,7 @@
   <%end%>
 
 <span id ="add_tag" class="cursor" title="设置个性化标签"><%= (!@mm or (@mm and @mm.tags.length == 0)) ?"添加标签" : "修改标签"%> </span>
-<span id="my_place_tags"><%if @mm and @mm.tag_list.length != 0%><%= render :partial=>"tags/tags",:locals=>{:object=>@mm} %><%end%></span>
+<span id="my_place_tags"><%if @mm and @mm.tag_list.length != 0%><%= render_cell :tag,:tags,:object=>@mm %><%end%></span>
 
 <span class="cursor" title="分享到">分享到 </span>
 
@@ -26,8 +26,8 @@
   <div id="osx-modal-data"> 
     <div id = "place_tag" style="padding-bottom: 5px;padding-top: 10px;">
       <span>我的标签：</span>
-      <span id="my_all_tags"> <%= render :partial=>"tags/tags",:locals=>{:object=>@logged_in} %></span>
-      <%= form_for @place_new= Place.new, :url => { :action => "tags_change" },:remote=>true do |form| %>
+      <span id="my_all_tags"><%= render_cell :tag,:tags,:object=>@logged_in %></span>
+      <%= form_for [:location,@place_new= Place.new], :url => tags_change_location_places_path,:remote=>true do |form| %>
         <div>
           <%= form.text_field :tags, :placeholder => "添加标签,用逗号隔开",:value=>(@mm?@mm.tag_list.to_s : ""),:id=>"place_tags_input" %>
            <%= hidden_field_tag :place_id, @place.id %>
@@ -45,38 +45,5 @@
 
 
 
-<% content_for  :head do %>
-  <%= javascript_include_tag "extend/jquery.simplemodal" %>
-  <%= stylesheet_link_tag  "osx" %>
-  <%= javascript_include_tag "extend/some_function" %>
-  <script>
-   
-
-    $("#owner_bar").live('click',function(){ $.ajax({                                                
-        type: "POST",                                    
-        url: "owner_manager",                                     
-        data: "marker_id="+ <%=@place.marker.id%> +"&owner="+ $("#owner_bar").attr("value"),    
-        success: function(message){  
-          if(message.success==true ){
-            if(message.owner ==false){
-              $("#owner_bar").html("申请地主");
-              $("#owner_bar").attr("value",true);
-              $("#owner_bar").attr("title","我要当地主");
-            }else{
-              $("#owner_bar").html("不当地主");
-              $("#owner_bar").attr("value",false);
-              $("#owner_bar").attr("title","辞去本地地主的职位");
-            }
-                          
-          } else{
-            alert("出错拉。。请重试")             
-          } 
-        } 
-      });  });
-
 
   
-  
-
-  </script>
-<%end%>

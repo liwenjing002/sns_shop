@@ -1,5 +1,4 @@
 <%if @error_string%>
-//alert("<%=flash[:warning]%>")
 $("#notice").html("<%=@error_string%>")
 $("#notice").show()
 $('#notice').fadeOut(15000);

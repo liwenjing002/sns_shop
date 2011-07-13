@@ -1,6 +1,6 @@
 <span class ='comment2-icon add_place'>发布我的地点</span>
 <br/>
-<%= form_for Place.new, :remote=>true,:html => {:multipart => true,:id => 'new_place_form',:onsubmit=>''} do |form| %>  
+<%= form_for [:location,Place.new], :remote=>true,:html => {:multipart => true,:id => 'new_place_form',:onsubmit=>''} do |form| %>  
   <%= form.text_field :place_name, :placeholder => "给你的地点起个名字" %>
   <%= form.text_field :full_address, :type=>'hidden' %>
   <%= form.text_field :place_latitude, :type=>'hidden' %>

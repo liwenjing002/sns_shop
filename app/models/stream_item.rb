@@ -37,6 +37,9 @@ class StreamItem < ActiveRecord::Base
   end
   
   def streamable_obj
-    eval(streamable_type).find(streamable_id)
+
+    arr = streamable_type.split(/_/)
+    
+    eval(arr.length>1?arr[1]:arr[0]).find(streamable_id)
   end
 end

@@ -1,4 +1,4 @@
-class PostitionsController < ApplicationController
+class Location::PostitionsController < ApplicationController
  
   def update_postition
     postition = Postition.find(params[:id]) if params[:id]

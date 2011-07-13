@@ -44,6 +44,6 @@ class PlacesControllerTest < ActionController::TestCase
       delete :destroy, :id => @place.to_param
     end
 
-    assert_redirected_to places_path
+    assert_redirected_to location_places_path
   end
 end
