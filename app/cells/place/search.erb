@@ -7,30 +7,19 @@
   </p>
 <% end %>
   
-<script type="text/javascript"> 
-$().ready(function() {
-	$("#place_key").autocomplete("search_ajax",{
-		minChars: 0,
-		max: 5,
-		autoFill: true,
-		mustMatch: true,
-		matchContains: true,
-		scrollHeight: 220,
-		formatItem: function(data, i, total) {
-			return "<I>"+data[0]+"</I>";
-		},
-		formatMatch: function(data, i, total) {
-			return data[0];
-		},
-		formatResult: function(data) {
-			return data[0];
-		}
-	});
-});
-</script> 
-=======
-   <%= text_field_tag :name, params[:name], :style => 'width:120px;' %>
-    <%= submit_tag t('places.search') %>
-  </p>
-<% end %>
->>>>>>> e831780a74ce57ff9d2204cf67d45ecdc044e6a9
+<script type="text/javascript">
+       //ajax查询初始化
+       $(document).ready(function(){
+          new InputSuggest({
+					width: 300,
+					//opacity: 0.3,
+					input: document.getElementById('place_key'),
+                                        url: "places/search_ajax"
+
+                                    });
+       })
+       
+
+    
+</script>
+

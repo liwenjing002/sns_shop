@@ -209,6 +209,7 @@ jQuery(function ($) {
 function InputSuggest(opt){
 	this.win = null;
 	this.doc = null;
+        this.url = opt.url||"/addresses/search_address";
 	this.container = null;
 	this.items = null;
 	this.dataType = 'simple'; //查询类型，包括基本的省市信息查询和网站整体的marker查询
@@ -244,6 +245,13 @@ InputSuggest.prototype = {
 
 		});
                 
+             this.on(input,'focus',function(e){
+	
+				_this.onfocus(e);
+			
+
+		});
+                
                 
 		// blur会在click前发生，这里使用mousedown
 		this.on(input,'blur',function(e){
@@ -258,34 +266,7 @@ InputSuggest.prototype = {
 		return this.doc.createElement(tag);
 	},
 	getPos: function (el){
-//		var pos=[0,0], a=el;
-//		if(el.getBoundingClientRect){
-//			var box = el.getBoundingClientRect();
-//			pos=[box.left,box.top];
-//                        alert("a"+ box.left)
-//		}else{
-//			while(a ){
-//                            alert( a.offsetLeft)
-//				pos[0] += a.offsetLeft;
-//				pos[1] += a.offsetTop;
-//				a = a.offsetParent
-//			}
-//                        alert("b" + pos[0] +"b"+pos[1])
-//		}
-//
-//    var target = el;
-//    var pos = [target.offsetLeft, target.offsetTop];
-//    
-//    var target = target.offsetParent;
-//    while (target)
-//    {
-//        pos[0] += target.offsetLeft;
-//        pos[1] += target.offsetTop;
-//        
-//        target = target.offsetParent
-//    }
-//    
-//    return pos;
+
  var target = el;
     var pos = [target.offsetLeft, target.offsetTop];
     
@@ -348,14 +329,14 @@ InputSuggest.prototype = {
     un: function(el, type, fn){
     	el.removeEventListener ? el.removeEventListener(type, fn, false) : el.detachEvent('on' + type, fn);
     },
-	brow: function(ua){
+    brow: function(ua){
 		return {
 			ie: /msie/.test(ua) && !/opera/.test(ua),
 			opera: /opera/.test(ua),
 			firefox: /firefox/.test(ua)
 		};
 	}(navigator.userAgent.toLowerCase()),
-	onKeyup: function(e){
+   onKeyup: function(e){
                 // this.setPos();
 		var container = this.container, input = this.input, iCls = this.itemCls, aCls = this.activeCls;
 		if(this.visible){
@@ -421,6 +402,12 @@ InputSuggest.prototype = {
 		}
 	},
         
+        
+        onfocus: function(e){
+            this.items = [];
+            this.getDataFromService(this,this.input)
+        },
+        
 
 	//从后台获取省市搜索信息
 	getDataFromService: function(obj,input){
@@ -433,11 +420,15 @@ InputSuggest.prototype = {
             this.setPos();
 	        $.ajax({
             type: "POST",
-            url: "/addresses/search_address?type="+obj.dataType+"&key="+input.value,
+            url: obj.url +"?type="+obj.dataType+"&key="+input.value,
             success: function(message){
                 obj.data = message.data;
                 obj.container.innerHTML = '';
-			for(var i=0,len=obj.data.length;i<len;i++){
+                if ( obj ==null){
+                      this.ajaxing =false
+                      return 
+                }
+		for(var i=0,len=obj.data.length;i<len;i++){
 				var item = obj.$C('div');
 				obj.attr(item, 'class', obj.itemCls);
 				item.innerHTML =  obj.data[i];

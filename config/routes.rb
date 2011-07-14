@@ -12,6 +12,8 @@ OneBody::Application.routes.draw do
       resources :place_shares
       resources :places do
         collection do
+          post :search_ajax
+          post :search
           post :follow_place
           post :add_share
           post :tags_change

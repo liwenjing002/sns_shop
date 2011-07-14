@@ -168,8 +168,15 @@ class Location::PlacesController < ApplicationController
   end
   
   def search_ajax
-    @places = Place.find(:conditons=>["place_name like ?","%#{params[:place_key]}%"],:select=>"place_name")
+    @places = Place.find(:all,:conditions =>["place_name like ?","%#{params[:p]}%"],:select=>"place_name",:limit=>params[:limit]||10)
+    p_name = []
+    @places.each do |place|
+    p_name << place.place_name
+    end
+    
+    render :json=>{:data=>p_name}
   end
+  
   
   def search
     
