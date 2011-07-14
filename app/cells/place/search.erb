@@ -1,7 +1,29 @@
 <h3><%= t('places.search_for_a_place') %></h3>
 <%= form_tag(location_places_path, :method => 'get', :style => 'border:none;') do %>
   <p>
-   <%= text_field_tag :name, params[:name], :style => 'width:120px;' %>
+   <%= text_field_tag :place_key, params[:place_key], :style => 'width:120px;' %>
     <%= submit_tag t('places.search') %>
   </p>
 <% end %>
+  
+<script type="text/javascript"> 
+$().ready(function() {
+	$("#place_key").autocomplete("search_ajax",{
+		minChars: 0,
+		max: 5,
+		autoFill: true,
+		mustMatch: true,
+		matchContains: true,
+		scrollHeight: 220,
+		formatItem: function(data, i, total) {
+			return "<I>"+data[0]+"</I>";
+		},
+		formatMatch: function(data, i, total) {
+			return data[0];
+		},
+		formatResult: function(data) {
+			return data[0];
+		}
+	});
+});
+</script> 

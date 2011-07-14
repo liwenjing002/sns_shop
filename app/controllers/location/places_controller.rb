@@ -167,7 +167,13 @@ class Location::PlacesController < ApplicationController
     
   end
   
+  def search_ajax
+    @places = Place.find(:conditons=>["place_name like ?","%#{params[:place_key]}%"],:select=>"place_name")
+  end
   
+  def search
+    
+  end
   
 
 end
