@@ -30,11 +30,19 @@
 
 
 
+<<<<<<< HEAD
 
   <div class="stream-items">
     <%= render_cell :place,:place_share_items,:place=>@place,:stream_items=>@stream_items %>
   </div>
 
+=======
+<%# cache(:fragment => 'place_share_items') do %>
+  <div class="stream-items">
+    <%= render_cell :place,:place_share_items,:place=>@place,:stream_items=>@stream_items %>
+  </div>
+<%# end %>
+>>>>>>> e831780a74ce57ff9d2204cf67d45ecdc044e6a9
 
 <script>
   function fileChange(full_path){

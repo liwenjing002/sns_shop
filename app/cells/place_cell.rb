@@ -27,6 +27,7 @@ helper StreamsHelper
   end
 
   def place_message
+
     @place = options[:place]
     @stream_items = options[:stream_items]
     render
@@ -40,15 +41,19 @@ helper StreamsHelper
   end
 
   def place_share_items
+
     @place = options[:place]
     @stream_items = options[:stream_items]
+
     render
   end
 
   def share_bar
+
     @place = options[:place]
     @mm = options[:mm]
     @logged_in = options[:logged_in]
+
     render
   end
   
