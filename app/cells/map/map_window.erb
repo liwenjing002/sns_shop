@@ -14,7 +14,7 @@
         <script type="text/javascript">
           $(document).ready(function() {
             MapObject.map_share_html = $("#map_infowindow").html()
-            alert(MapObject.map_share_html)
+            <%#*alert(MapObject.map_share_html)%>
             <%#*$('#map_infowindow').remove()%>
 <% if @map.center_latitude %> MapObject.map_options.center_latitude = <%= @map.center_latitude%>;<%end%>
 <% if  @map.center_longitude %> MapObject.map_options.center_longitude = <%= @map.center_longitude%>;<%end%>
