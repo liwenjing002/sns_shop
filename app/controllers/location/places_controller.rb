@@ -1,7 +1,8 @@
 class Location::PlacesController < ApplicationController
   respond_to :html,:js
   def index
-    @places = Place.all
+    
+   
   end
 
   # GET /places/1
@@ -12,11 +13,13 @@ class Location::PlacesController < ApplicationController
     @albums = @place.albums
     @pictures = @albums[0].pictures.paginate(:order => 'id',:page=>1) if @albums.length >0
     @impressions = Impression.find_all_by_i_type 'Place'
-    @p_impression = PersonImpression.find_by_person_id_and_object_type_and_object_id(@logged_in.id,'Place',params[:id])
+    @p_impression = PersonImpression.find_all_by_person_id_and_object_type_and_object_id(@logged_in.id,'Place',params[:id])
     @follow_peoples = MarkerToMap.find_all_by_marker_id @place.marker_id
-#    unless  fragment_exist?(:controller => 'places', :action => 'show', :fragment => 'place_share_items')
-      @stream_items = @place.shared_stream_items
-#    end
+    @be_here_peoples = PersonImpression.find_all_by_impression_id_and_object_type_and_object_id(4,"Place",params[:id])
+    @love_to_peoples = PersonImpression.find_all_by_impression_id_and_object_type_and_object_id(3,"Place",params[:id])
+    #    unless  fragment_exist?(:controller => 'places', :action => 'show', :fragment => 'place_share_items')
+    @stream_items = @place.shared_stream_items
+    #    end
     
   end
 
@@ -86,6 +89,7 @@ class Location::PlacesController < ApplicationController
     @place_message = PlaceShare.create(
       :person=>@logged_in,
       :picture=>pic,
+      :share_type=>params[:type],
       :text=>params[:place_share][:text],
       :is_public=>true,
       :album=>@album)
@@ -156,22 +160,33 @@ class Location::PlacesController < ApplicationController
       end
       return
     end
-     render :json => {:success=>false}
+    render :json => {:success=>false}
   end
   
   #place 的印象
   def add_impression
     @p_impression = PersonImpression.find_or_create_by_person_id_and_impression_id_and_object_type_and_object_id(
       @logged_in.id,params[:id],'Place',params[:place_id])
+    
+    if params[:id] =="1" or  params[:id] =="3" 
+      d_impression = PersonImpression.find_by_person_id_and_impression_id_and_object_type_and_object_id(
+        @logged_in.id,params[:id].to_i+1,'Place',params[:place_id])
+      d_impression.destroy if d_impression
+    end
+    if params[:id] =="2" or params[:id] =="4" 
+      d_impression = PersonImpression.find_by_person_id_and_impression_id_and_object_type_and_object_id(
+        @logged_in.id,params[:id].to_i-1,'Place',params[:place_id])
+      d_impression.destroy if d_impression
+    end
     @p_impression ? (render :json => {:success=>true}):(render :json => {:success=>false}) 
     
   end
   
   def search_ajax
-    @places = Place.find(:all,:conditions =>["place_name like ?","%#{params[:p]}%"],:select=>"place_name",:limit=>params[:limit]||10)
+    @places = Place.find(:all,:conditions =>["place_name like ?","%#{params[:key]}%"],:select=>"place_name",:limit=>params[:limit]||10)
     p_name = []
     @places.each do |place|
-    p_name << place.place_name
+      p_name << place.place_name
     end
     
     render :json=>{:data=>p_name}
@@ -179,7 +194,12 @@ class Location::PlacesController < ApplicationController
   
   
   def search
-    
+     if params[:category] or params[:place_key]
+      conditions = []
+       conditions.add_condition ['category = ?', params[:category]] if params[:category]
+       conditions.add_condition ['place_name like ?', '%' + params[:place_key] + '%'] if params[:place_key]
+       @places = Place.find(:all, :conditions => conditions, :order => 'place_name')
+    end
   end
   
 

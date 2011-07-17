@@ -27,7 +27,7 @@
 
   <h2><%= t('people.edit.profile') %></h2>
 
-  <%= render :partial => 'pending_updates' %>
+  <%= render_cell :people,:pending_updates,:person=>@person,:logged_in =>@logged_in %>
 
   <% if Setting.get(:features, :updates_must_be_approved) %>
     <p><%= t('people.changes_must_be_reviewed_html') %></p>

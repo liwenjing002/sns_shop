@@ -112,14 +112,15 @@ var MapObject =  {
 
     //添加一个marker    
     add_marker:function (map,initialLocation){
-        //alert(1)
+        alert(initialLocation)
+        alert(this.temp_marker)
         this.temp_marker = new google.maps.Marker({
             map:map,
             draggable:true,
             animation: google.maps.Animation.DROP,
             position: initialLocation
         });
-        
+        alert(2)
         MapObject.geocoder.geocode({
             latLng: initialLocation
         }, function(responses){
@@ -134,7 +135,7 @@ var MapObject =  {
     //new marker请求地址解析的回调函数
     new_marker_Function:function (responses) {
         string = MapObject.split_responses_address(responses);
-        
+        alert(string)
         postition_html = "<div id='new_postition' style='min-height:200px;height:auto;'><div id ='postition_text'><span color: #5F9128>当前位置：</span>"+string +"</div>"
         MapObject.temp_infowindow.setContent(postition_html + MapObject.map_share_html+"</div>")
         MapObject.temp_infowindow.open(MapObject.map,MapObject.temp_marker);
@@ -461,7 +462,7 @@ var MapObject =  {
     updataPosition:function(home_Position_id,latLng){
          $.ajax({                                                
                         type: "get",                                    
-                        url: "/postitions/update_postition",                                     
+                        url: "/location/postitions/update_postition",                                     
                         data: "id=" + home_Position_id  +"&postition[home_latitude]="+ latLng.lat()+"&postition[home_longitude]="+latLng.lng() ,    
                         success: function(message){                 
                         } 

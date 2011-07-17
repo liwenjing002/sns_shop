@@ -13,7 +13,7 @@
   </p>
 <% end %>
 
-<%= render :partial => 'pending_updates' %>
+<%= render_cell :people,:pending_updates,:person=>@person,:logged_in =>@logged_in %>
 
 <%= form_for @person do |form| %>
   <%= error_messages_for(form) %>

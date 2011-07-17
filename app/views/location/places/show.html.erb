@@ -1,7 +1,7 @@
 <% content_for  :head do %>
   <%= stylesheet_link_tag 'global-0.52' %>
- <%= javascript_include_tag "wmd/wmd" %>
-<%= javascript_include_tag "extend/jquery.simplemodal" %>
+  <%= javascript_include_tag "wmd/wmd" %>
+  <%= javascript_include_tag "extend/jquery.simplemodal" %>
   <%= stylesheet_link_tag  "osx" %>
   <%= javascript_include_tag "extend/some_function" %>
   <script>
@@ -50,23 +50,26 @@
       <% end %>
     </div>
     <div id ="share_bar" style="padding-bottom: 5px;padding-top: 5px;">
-     <%= render_cell :place,:share_bar,:place=>@place,:mm=>@mm,:logged_in=>@logged_in %>
+      <%= render_cell :place,:share_bar,:place=>@place,:mm=>@mm,:logged_in=>@logged_in %>
     </div> 
     <div id = "place_leave_message">
       <% cache(:fragment => 'place_share_items') do %>
-      <%= render_cell :place,:place_message,:place=>@place,:stream_items=>@stream_items %>
-    <% end %>
+        <%= render_cell :place,:place_message,:place=>@place,:stream_items=>@stream_items %>
+      <% end %>
     </div>
-   
+
   </div>
 
   <div id = "place_right" class= "right" style= "margin-left: 570px;">
-   
+
     <div id = "place_description">
-     <%= render_cell :place, :place_description,:place=>@place %>
+      <%= render_cell :place, :place_description,:place=>@place %>
     </div>
-    <div id= "place_people"><%= render_cell :place,:people,:place=>@place,:follow_peoples=>@follow_peoples  %></div>
-    <div id = "place_impression"><%= render_cell :place,:impression,:impressions=>@impressions,:place=>@place %></div>
+    <div id= "place_people"><%= render_cell :place,:people,:place=>@place,:follow_peoples=>@follow_peoples,
+                :be_here_peoples=>@be_here_peoples,:love_to_peoples=>@love_to_peoples  %></div>
+    <div id = "place_impression">
+<%= render_cell :place,:impression,:impressions=>@impressions,
+                :place=>@place,:p_impression=>@p_impression %></div>
     <div id = "place_meet_people">meet people</div>
     <div id = "place_tip_or_quesiton">tip question</div>
     <div id = "place_something_arround">something arround </div>
@@ -77,7 +80,7 @@
 <div class="clear"></div>
 <script>
   $(function() {
-  $('textarea').wmd();
-});
-  </script>
+    $('textarea').wmd();
+  });
+</script>
 

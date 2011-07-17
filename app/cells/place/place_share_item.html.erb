@@ -10,14 +10,7 @@
       <% if @stream_item.person %>
         by <%= link_to @stream_item.person.name, @stream_item.person %>
       <% end %>
-      <% if @stream_item.wall %>
-        <%= t('to') %> <%= link_to @stream_item.wall.name, @stream_item.wall %>
-      <% end %>
-      <% if @group.nil? and @stream_item.group %>
-        <%= t('in') %> <%= link_to @stream_item.group.name, @stream_item.group %>
-      <% elsif original_url = @stream_item.context['original_url'] %>
-        <%= t('from') %> <%= link_to domain_name_from_url(original_url), original_url %>
-      <% end %>
+        <span style="color:red"><%= t("places."+@stream_item.streamable_obj.share_type) if @stream_item.streamable_obj.share_type%></span>
     </div>
     <% if @stream_item.title %>
       <%= stream_item_content @stream_item %>

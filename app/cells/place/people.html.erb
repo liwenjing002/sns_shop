@@ -10,43 +10,99 @@
     <div class="scrollable " id="scroller" style="width:390px">
       <div class="items" >
 
-          <% @follow_peoples.each do |mm| %>
-         <%i =0%>
+        <% @follow_peoples.each do |mm| %>
+          <%i =0%>
           <%if i%4==0 %>
-         <div>
-          <%end%>
+            <div>
+            <%end%>
 
-          <%= content_tag :a, :href => person_path(mm.map.person) do %>
-            <%= render_cell :people,:thumbnail,:person => mm.map.person %>
-          <% end %>
-             <%if i%4==0 %>
-         </div>
+            <%= content_tag :a, :href => person_path(mm.map.person) do %>
+              <%= render_cell :people,:thumbnail,:person => mm.map.person %>
+            <% end %>
+            <%if i%4==0 %>
+            </div>
           <%end%>
         <% end %>
 
       </div>
 
-        <%if @follow_peoples.length >6%>
+      <%if @follow_peoples.length >6%>
         <a class="prev browse left" ></a>
         <!-- "next page" action -->
         <a class="next browse right"></a>
-        <%end%>
- 
+      <%end%>
+
 
     </div>
   </div>
 
-    <div class="tab_pane">Second pane. You can open other tabs with normal <a href="#first">anchor links</a></div>
-    <div class="tab_pane">Third tab content</div>
-</div>
-<br></br>
-<script type="text/javascript">
+  <div class="tab_pane">
+    <div style="margin-top: 10px;" class="tab_pane">
+      <div class="scrollable " id="scroller" style="width:390px">
+        <div class="items" >
+          <%if @be_here_peoples%>
+            <% @be_here_peoples.each do |mm| %>
+              <%i =0%>
+              <%if i%4==0 %>
+                <div>
+                <%end%>
 
-  $(function() {
-    // setup ul.tabs to work as tabs for each div directly under div.panes
-    $("ul.tabs").tabs("div.panes > div.tab_pane");
-    $("#scroller").scrollable();
-  });
+                <%= content_tag :a, :href => person_path(mm.person) do %>
+                  <%= render_cell :people,:thumbnail,:person => mm.person %>
+                <% end %>
+                <%if i%4==0 %>
+                </div>
+              <%end%>
+            <% end %>
+          <%end%>
+        </div>
 
-</script>
+        <%if @be_here_peoples&&@be_here_peoples.length >6%>
+          <a class="prev browse left" ></a>
+          <!-- "next page" action -->
+          <a class="next browse right"></a>
+        <%end%>
+      </div>
+    </div>
+  </div>
+  <div class="tab_pane">
+    <div style="margin-top: 10px;" class="tab_pane">
+      <div class="scrollable " id="scroller" style="width:390px">
+        <div class="items" >
+          <%if @love_to_peoples%>
+            <% @love_to_peoples.each do |mm| %>
+              <%i =0%>
+              <%if i%4==0 %>
+                <div>
+                <%end%>
+
+                <%= content_tag :a, :href => person_path(mm.person) do %>
+                  <%= render_cell :people,:thumbnail,:person => mm.person %>
+                <% end %>
+                <%if i%4==0 %>
+                </div>
+              <%end%>
+            <% end %>
+          <%end%>
+        </div>
+
+        <%if @love_to_peoples&&@love_to_peoples.length >6%>
+          <a class="prev browse left" ></a>
+          <!-- "next page" action -->
+          <a class="next browse right"></a>
+        <%end%>
+      </div>
+
+    </div>
+  </div>
+  <br></br>
+  <script type="text/javascript">
+
+    $(function() {
+      // setup ul.tabs to work as tabs for each div directly under div.panes
+      $("ul.tabs").tabs("div.panes > div.tab_pane");
+      $("#scroller").scrollable();
+    });
+
+  </script>
 

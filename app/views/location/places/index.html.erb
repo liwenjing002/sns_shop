@@ -1,3 +1,8 @@
+<%= content_for  :head do %>
+  <%= stylesheet_link_tag 'global-0.52' %>
+  <%= stylesheet_link_tag  "osx" %>
+<% end %>
+
 <% content_for :sidebar do %>
 
   <%= render_cell :place,:search %>
@@ -10,10 +15,12 @@
     <%= t('places.if_cant_find_create_it') %>
   </p>
   <p>
-    <%= link_to t('places.create_a_place'), new_location_place_path, :class => 'add-icon' %>
+    <%= link_to t('places.create_a_place'), "", :class => 'add-icon',:id=>"new_place_in_window" %>
   </p>
 
 <% end %>
 
 
 <%= render_cell :place,:place_index %>
+<!--我想去窗口 -->
+<%= render_cell :map, :map_window,:logged_in=>@logged_in %>

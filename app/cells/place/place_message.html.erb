@@ -10,7 +10,7 @@
   <%= form_for [:location,@place_share=PlaceShare.new], :url => add_share_location_places_path,:html => {:id => 'share-addvise', :class => 'share-type'},:remote=>true do |form| %>
     <%= hidden_field_tag :album, @place.place_name %>
     <%= hidden_field_tag :place_id, @place.id %>
-    <%= hidden_field_tag :type, 'addvise' %>
+    <%= hidden_field_tag :type, 'advise' %>
     <%= text_field :picture,:id, :type=>'hidden' %>
     <%= form.text_area :text,:size => "50x2", :placeholder => "对于去"+@place.place_name+"的游客,您有什么建议"%><br/>
 

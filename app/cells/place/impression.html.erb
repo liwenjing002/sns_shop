@@ -2,7 +2,16 @@
 
 <div><ul class="buttons">
 <% @impressions.each do |impression| %>
-  <%if @p_impression==nil  or  (@p_impression and@p_impression.impression != impression)%>
+    <%i = false%>
+    <%@p_impression.each do |p|%>
+    <%if p.impression == impression %>
+    <%i = true%>
+    <%break%>
+    <%end%>
+    <%end%>
+    
+    
+  <%if !i%>
     <li><span class="button impression_bt" id="<%=impression.id%>" style=""><%= impression.name %></span></li>
 <%else%>
     <li><span class="button impression_bt" id="<%=impression.id%>" style="background: #91C35A;color: white;"><%= impression.name %></span></li>
@@ -18,7 +27,15 @@
             data: "id="+id+"&place_id=<%=@place.id%>",    
             url: "add_impression",                                      
             success: function(message){
-                $("#"+id).attr("style","background: #91C35A;color: white;")
+                if(id == "1" || id == "3"){
+                  $("#"+id).attr("style","background: #91C35A;color: white;")
+                  $("#"+(parseInt(id) +1)).attr("style","")
+                } else{
+                  $("#"+id).attr("style","background: #91C35A;color: white;")
+                  $("#"+(parseInt(id) -1)).attr("style","")
+                }
+               
+              
             } 
         });
     

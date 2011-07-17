@@ -9,5 +9,12 @@ helper  ApplicationHelper
     @logged_in = options[:logged_in]
     render
   end
+  
+  def map_window
+    
+    @logged_in = options[:logged_in]
+    @map = @logged_in.map
+    render
+  end
 
 end

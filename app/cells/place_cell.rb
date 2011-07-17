@@ -1,18 +1,22 @@
 
 class PlaceCell < Cell::Rails
 
-helper  ApplicationHelper
-helper  PlacesHelper
-helper StreamsHelper
+  helper  ApplicationHelper
+  helper  PlacesHelper
+  helper StreamsHelper
   def impression
     @impressions = options[:impressions]
+    @p_impression = options[:p_impression]
     @place = options[:place]
+
     render
   end
 
   def people
     @place = options[:place]
     @follow_peoples = options[:follow_peoples]
+    @love_to_peoples = options[:love_to_peoples]
+    @be_here_peoples = options[:be_here_peoples]
     render
   end
 
@@ -63,6 +67,11 @@ helper StreamsHelper
   
   def place_index
     render
+  end
+  
+  def select_place
+    @places= options[:places]
+     render
   end
 
 end

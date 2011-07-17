@@ -1,0 +1,25 @@
+
+
+
+<table class="spaced">
+  <% @places.each do |place| %>
+
+    <tr>
+      <td>
+        <%if !place.picture  %>
+          <%= link_to  image_tag('missing_tn.png', :alt =>place.place_name), [:location,place] %>
+        <%else%>
+          <%= link_to image_tag(place.picture.photo.url(:tn), :alt => place.place_name, :class => 'icon thumbnail'), [:location,place] %>
+        <% end %>
+
+      </td>
+      <td class="group">
+        <%= link_to place.place_name, [:location,place] %>
+        描述：<%= place.place_description %>
+        <br/>
+
+      </td>
+    </tr>
+  <% end %>
+
+</table>

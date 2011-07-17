@@ -49,12 +49,14 @@
       <ul class="tabs">
         <li class = "li_php"><a href="#"><%= t('people.php') %></a></li>
         <li class = "li_profile"><a href="#"><%= t('people.profile') %></a></li>
+         <li class = "li_profile"><a href="#">我的小组</a></li>
+          <li class = "li_profile"><a href="#">我的地点</a></li>
       </ul>
     </div>
     <br/>
     <div class="panes">
       <%= render :partial => 'show_php'%>
-      <%= render :partial => 'show_profile'%>
+      <%= render_cell :people,:profile,:person=>@person,:logged_in =>@logged_in,:verses=>@verses%>
     </div>
   </div>
 </div>

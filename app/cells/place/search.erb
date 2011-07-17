@@ -1,5 +1,5 @@
 <h3><%= t('places.search_for_a_place') %></h3>
-<%= form_tag(location_places_path, :method => 'get', :style => 'border:none;') do %>
+<%= form_tag(search_location_places_path, :method => 'post',:remote=>true , :style => 'border:none;') do %>
   <p>
 
    <%= text_field_tag :place_key, params[:place_key], :style => 'width:120px;' %>
