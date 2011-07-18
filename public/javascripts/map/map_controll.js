@@ -30,6 +30,7 @@ var MapObject =  {
     
     //初始化map
     initialize: function (id) {
+//        alert()
         var myOptions = {
             zoom: this.map_options.zoom,
             draggableCursor: "default",
@@ -40,14 +41,16 @@ var MapObject =  {
             document.getElementById(this.map_options.id), 
             myOptions);
         //加入搜索框
-
+        
         this.init_marker_from_data("my_home",id);
         this.initControl();
     // Initialize the local searcher
-     
+    google.maps.event.trigger(this.map, 'resize');
+
 
 
     },
+    
     
     //控件初始化
     initControl: function () { 
@@ -112,15 +115,15 @@ var MapObject =  {
 
     //添加一个marker    
     add_marker:function (map,initialLocation){
-        alert(initialLocation)
-        alert(this.temp_marker)
+//        alert(initialLocation)
+//        alert(this.temp_marker)
         this.temp_marker = new google.maps.Marker({
             map:map,
             draggable:true,
             animation: google.maps.Animation.DROP,
             position: initialLocation
         });
-        alert(2)
+//        alert(2)
         MapObject.geocoder.geocode({
             latLng: initialLocation
         }, function(responses){
@@ -135,7 +138,7 @@ var MapObject =  {
     //new marker请求地址解析的回调函数
     new_marker_Function:function (responses) {
         string = MapObject.split_responses_address(responses);
-        alert(string)
+//        alert(string)
         postition_html = "<div id='new_postition' style='min-height:200px;height:auto;'><div id ='postition_text'><span color: #5F9128>当前位置：</span>"+string +"</div>"
         MapObject.temp_infowindow.setContent(postition_html + MapObject.map_share_html+"</div>")
         MapObject.temp_infowindow.open(MapObject.map,MapObject.temp_marker);

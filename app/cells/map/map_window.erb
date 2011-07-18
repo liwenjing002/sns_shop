@@ -1,9 +1,3 @@
-<div id="osx-modal-content" style="display:none"> 
-  <div id="osx-modal-title">添加我的地点</div> 
-  <div class="close"><a href="#" class="simplemodal-close">x</a></div> 
-  <div id="osx-modal-data"> 
-    <div id = "place_tag" style="padding-bottom: 5px;padding-top: 10px;">
-      <div>
         <%= javascript_include_tag "extend/map" %>
         <%= javascript_include_tag "map/markercluster" %>
         <%= javascript_include_tag "extend/jquery.form" %>
@@ -14,15 +8,19 @@
         <script type="text/javascript">
           $(document).ready(function() {
             MapObject.map_share_html = $("#map_infowindow").html()
-            <%#*alert(MapObject.map_share_html)%>
-            <%#*$('#map_infowindow').remove()%>
 <% if @map.center_latitude %> MapObject.map_options.center_latitude = <%= @map.center_latitude%>;<%end%>
 <% if  @map.center_longitude %> MapObject.map_options.center_longitude = <%= @map.center_longitude%>;<%end%>
 <% if @map.zoom %>MapObject.map_options.zoom = <%= @map.zoom%>;<%end%>
     
-    MapObject.initialize(null) ;
   });
         </script>
+
+<div id="osx-modal-content" style="display:none"> 
+  <div id="osx-modal-title">添加我的地点</div> 
+  <div class="close"><a href="#" class="simplemodal-close">x</a></div> 
+  <div id="osx-modal-data"> 
+    <div id = "place_tag" style="padding-bottom: 5px;padding-top: 10px;">
+      <div>
         <div id ="map_infowindow" style="display: none" >
           <%= render_cell :common, :new_place %>
         </div>
@@ -33,6 +31,7 @@
           </ul>
         </div>
         <div id="mapCanvas" style="width: 100%; height: 385px;">map div</div> 
+        <div id="searchwell" style="display: none"></div> 
       </div>
     </div> 
   </div> 

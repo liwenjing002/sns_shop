@@ -30,6 +30,7 @@ function obj2str(o){
 
 var OSX = null
 var OSX2 = null
+var OSX3 = null
 jQuery(function ($) {
     
     //标签窗口
@@ -71,6 +72,7 @@ jQuery(function ($) {
                         }, 
                         200,
                         function () {
+                            alert(3)
                             $("div.close", self.container).show();
                             $("#osx-modal-data", self.container).show();
                             $('#plan_day').datepicker({
@@ -108,7 +110,7 @@ jQuery(function ($) {
             function () {
                 temp_my_all_tags= $("#my_all_tags").clone();
                 temp_place_tags_input = $("#place_tags_input").attr("value")
-                //                                        alert(temp_my_all_tags.html())
+                                       alert(temp_my_all_tags.html())
                 //                                        alert($("#place_tags_input").attr("value"))
                                         
                 self.close(); // or $.modal.close();
@@ -125,7 +127,7 @@ jQuery(function ($) {
         
         
         
-    //我想去 
+    //我的标签
     OSX2 = {
         container: null,
         init: function () {
@@ -141,8 +143,8 @@ jQuery(function ($) {
                     position: ["0",],
                     overlayClose: true,
                     autoResize:true,
-                    onOpen: OSX.open,
-                    onClose: OSX.close
+                    onOpen: OSX2.open,
+                    onClose: OSX2.close
                 });
             });
         },
@@ -199,13 +201,12 @@ jQuery(function ($) {
 
     OSX2.init();
     
-    
-    
-    //我想去 
-    OSX3 = {
+    //我的标签
+    OSX3= {
         container: null,
         init: function () {
             $("#new_place_in_window").click(function (e) {
+
                 e.preventDefault();	
 
                 $("#osx-modal-content").modal({
@@ -217,8 +218,8 @@ jQuery(function ($) {
                     position: ["0",],
                     overlayClose: true,
                     autoResize:true,
-                    onOpen: OSX.open,
-                    onClose: OSX.close
+                    onOpen: OSX3.open,
+                    onClose: OSX3.close
                 });
             });
         },
@@ -241,9 +242,11 @@ jQuery(function ($) {
                         }, 
                         200,
                         function () {
+
+                            
                             $("div.close", self.container).show();
                             $("#osx-modal-data", self.container).show();
-                          
+                            MapObject.initialize(null) ;
                         }
                         );
                     }, 300);
@@ -259,21 +262,16 @@ jQuery(function ($) {
             },
             500,
             function () {
-                temp_my_all_tags= $("#my_all_tags").clone();
-                temp_place_tags_input = $("#place_tags_input").attr("value")
-                //                                        alert(temp_my_all_tags.html())
-                //                                        alert($("#place_tags_input").attr("value"))
-                                        
-                self.close(); // or $.modal.close();
-                $("#my_all_tags").html(temp_my_all_tags.html())
-                $("#place_tags_input").attr("value",temp_place_tags_input)
-                                        
+//               alert();
+                           self.close(); // or $.modal.close();             
             }
             );
         }
     };
 
     OSX3.init();
+    
+    
 
 });
 

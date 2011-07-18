@@ -15,12 +15,12 @@
     <%= t('places.if_cant_find_create_it') %>
   </p>
   <p>
-    <%= link_to t('places.create_a_place'), "", :class => 'add-icon',:id=>"new_place_in_window" %>
+    <%= link_to t('places.create_a_place'), "#", :class => 'add-icon',:id=>"new_place_in_window" %>
   </p>
 
 <% end %>
 
 
 <%= render_cell :place,:place_index %>
-<!--我想去窗口 -->
+
 <%= render_cell :map, :map_window,:logged_in=>@logged_in %>

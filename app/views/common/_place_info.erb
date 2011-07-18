@@ -1,5 +1,5 @@
 
-  <div id="place_title"><span  style=" font-size:25px;"><%= link_to place.place_name,place,:target=>"_blank" %></span>
+  <div id="place_title"><span  style=" font-size:25px;"><%= link_to place.place_name,[:location,place],:target=>"_blank" %></span>
  <%if marker_follow?(marker.id)%>
     <span style="margin-left:20px;"><%= link_to "取消关注","#",:class=>"follow_link",:action=>"cancer",:marker_id=>marker.id, :confirm=>"真的要取消关注"%></span>
 <%else%>
