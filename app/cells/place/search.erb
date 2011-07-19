@@ -2,7 +2,7 @@
 <%= form_tag(search_location_places_path, :method => 'post',:remote=>true , :style => 'border:none;') do %>
   <p>
 
-   <%= text_field_tag :place_key, params[:place_key], :style => 'width:120px;' %>
+   <%= text_field_tag :place_key, params[:place_key], :style => 'width:120px;',:placeholder=>"根据地点名称或描述" %>
     <%= submit_tag t('places.search') %>
   </p>
 <% end %>

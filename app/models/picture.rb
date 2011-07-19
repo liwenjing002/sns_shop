@@ -45,8 +45,8 @@ class Picture < ActiveRecord::Base
 
   def create_as_stream_item
     return unless self.type != 'mix' and person
-    if last_stream_item = StreamItem.last(:conditions => ["person_id = ? and created_at <= ?", person_id, created_at], :order => 'created_at') \
-      and last_stream_item.streamable == album
+    last_stream_item = StreamItem.last(:conditions => ["person_id = ? and created_at <= ?", person_id, created_at], :order => 'created_at') 
+    if last_stream_item and last_stream_item.streamable == album
       last_stream_item.context['picture_ids'] << [id, photo.fingerprint, photo_extension]
       last_stream_item.created_at = created_at
       last_stream_item.save!

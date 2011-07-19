@@ -2,7 +2,11 @@ module StreamsHelper
   include MessagesHelper
 
   def stream_item_path(stream_item)
+    if stream_item.streamable_type == 'Place' or stream_item.streamable_type == 'PlaceShare'
+    send("location_" +stream_item.streamable_type.underscore + '_path', stream_item.streamable_id)
+    else
     send(stream_item.streamable_type.underscore + '_path', stream_item.streamable_id)
+    end
   end
 
   def stream_item_url(stream_item)

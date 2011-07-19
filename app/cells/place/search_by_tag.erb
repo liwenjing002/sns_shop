@@ -1,0 +1,6 @@
+<div id="div1">
+  <%@tags.each do |tag|%>
+   <%= link_to tag.tag.name, search_location_places_path({:tag=>tag.tag.name}),:class=>"red",:remote => true %>
+<div id="preview"></div>
+  <%end%>
+</div>

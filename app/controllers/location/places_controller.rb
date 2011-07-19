@@ -194,9 +194,9 @@ class Location::PlacesController < ApplicationController
   
   
   def search
-     if params[:category] or params[:place_key]
+     if params[:tag] or params[:place_key]
       conditions = []
-       conditions.add_condition ['category = ?', params[:category]] if params[:category]
+       conditions.add_condition ['tag = ?', params[:tag]] if params[:tag]
        conditions.add_condition ['place_name like ?', '%' + params[:place_key] + '%'] if params[:place_key]
        @places = Place.find(:all, :conditions => conditions, :order => 'place_name')
     end

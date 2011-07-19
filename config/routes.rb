@@ -14,6 +14,7 @@ OneBody::Application.routes.draw do
         collection do
           post :search_ajax
           post :search
+          get :search
           post :follow_place
           post :add_share
           post :tags_change

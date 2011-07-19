@@ -7,14 +7,14 @@
     <tr>
       <td>
         <%if !place.picture  %>
-          <%= link_to  image_tag('missing_tn.png', :alt =>place.place_name), [:location,place] %>
+          <%= link_to  image_tag('missing_tn.png', :alt =>place.place_name), [:location,place],:target=>"_blank" %>
         <%else%>
-          <%= link_to image_tag(place.picture.photo.url(:tn), :alt => place.place_name, :class => 'icon thumbnail'), [:location,place] %>
+          <%= link_to image_tag(place.picture.photo.url(:tn), :alt => place.place_name, :class => 'icon thumbnail'), [:location,place],:target=>"_blank" %>
         <% end %>
 
       </td>
       <td class="group">
-        <%= link_to place.place_name, [:location,place] %>
+        <%= link_to place.place_name, [:location,place],:target=>"_blank" %>
         描述：<%= place.place_description %>
         <br/>
 

@@ -73,5 +73,10 @@ class PlaceCell < Cell::Rails
     @places= options[:places]
      render
   end
+  
+  def search_by_tag
+    @tags = Tagging.find_all_by_taggable_type 'Place'
+    render
+  end
 
 end
