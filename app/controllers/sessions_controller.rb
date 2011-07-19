@@ -45,15 +45,11 @@ class SessionsController < ApplicationController
         redirect_to person
       end
     elsif person == nil
-      if family = Family.find_by_email(params[:email])
-        flash[:warning] = t('session.email_found')
-        redirect_to new_account_path(:email => params[:email])
-      else
+
         flash[:warning] = t('session.email_not_found_try_another')
         generate_encryption_key
         render :action => 'new'
         flash.clear
-      end
     else
       if p = Person.find_by_email(params[:email]) and p.encrypted_password.nil?
         flash[:warning] = t('session.account_not_activated_html')
