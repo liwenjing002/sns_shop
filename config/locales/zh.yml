@@ -1118,7 +1118,7 @@ zh:
     question: 问题
     search_for_a_place: 寻找地点
     search: 地点搜索
-    browse_by_category: 根据地点类型浏览
+    browse_by_tag: 根据地点标签查找
     create_a_place:  新建一个地点
     if_cant_find_create_it:  如果找不到想要的地点,就创建一个
 
