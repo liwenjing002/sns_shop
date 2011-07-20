@@ -72,7 +72,7 @@ jQuery(function ($) {
                         }, 
                         200,
                         function () {
-                            alert(3)
+//                            alert(3)
                             $("div.close", self.container).show();
                             $("#osx-modal-data", self.container).show();
                             $('#plan_day').datepicker({
@@ -110,7 +110,7 @@ jQuery(function ($) {
             function () {
                 temp_my_all_tags= $("#my_all_tags").clone();
                 temp_place_tags_input = $("#place_tags_input").attr("value")
-                                       alert(temp_my_all_tags.html())
+//                                       alert(temp_my_all_tags.html())
                 //                                        alert($("#place_tags_input").attr("value"))
                                         
                 self.close(); // or $.modal.close();
