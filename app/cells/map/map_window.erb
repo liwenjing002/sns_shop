@@ -8,22 +8,22 @@
         <script type="text/javascript">
           $(document).ready(function() {
             MapObject.map_share_html = $("#map_infowindow").html()
+            $('#map_infowindow').remove()
 <% if @map.center_latitude %> MapObject.map_options.center_latitude = <%= @map.center_latitude%>;<%end%>
 <% if  @map.center_longitude %> MapObject.map_options.center_longitude = <%= @map.center_longitude%>;<%end%>
 <% if @map.zoom %>MapObject.map_options.zoom = <%= @map.zoom%>;<%end%>
     
   });
         </script>
-
+        <div id ="map_infowindow" style="display: none" >
+          <%= render_cell :common, :new_place %>
+        </div>
 <div id="osx-modal-content" style="display:none"> 
   <div id="osx-modal-title">添加我的地点</div> 
   <div class="close"><a href="#" class="simplemodal-close">x</a></div> 
   <div id="osx-modal-data"> 
     <div id = "place_tag" style="padding-bottom: 5px;padding-top: 10px;">
       <div>
-        <div id ="map_infowindow" style="display: none" >
-          <%= render_cell :common, :new_place %>
-        </div>
         <div id="map_controll">
           <ul class="buttons">
             <li><span class="button" id="new-marker-tab" onclick="MapObject.add_marker_listen();">发布地点</span></li>

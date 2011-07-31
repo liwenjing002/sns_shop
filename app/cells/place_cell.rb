@@ -78,5 +78,10 @@ class PlaceCell < Cell::Rails
     @tags = Tagging.find_all_by_taggable_type 'Place'
     render
   end
+  
+  def hot
+    @place =Place.find(1)
+    render
+  end
 
 end

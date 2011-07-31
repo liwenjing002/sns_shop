@@ -194,13 +194,18 @@ class Location::PlacesController < ApplicationController
   
   
   def search
-     if params[:tag] or params[:place_key]
-      conditions = []
-       conditions.add_condition ['tag_id = ?', params[:tag]] if params[:tag]
+     if  params[:place_key]
+        conditions = []
+       conditions.add_condition ['place_name like ?', '%' + params[:place_key] + '%']
+       @places = Place.find(:all, :conditions => conditions, :order => 'place_name')
+    end
+    if params[:tag] 
+        conditions = []
+       conditions.add_condition ['tag_id = ?', params[:tag]] 
        conditions.add_condition ['taggable_type = ?', 'Place'] 
-       conditions.add_condition ['place_name like ?', '%' + params[:place_key] + '%'] if params[:place_key]
        @places = Place.find(:all,:joins=>["INNER JOIN taggings on taggings.taggable_id = places.id"], :conditions => conditions, :order => 'place_name')
     end
+    
   end
   
 

@@ -802,7 +802,7 @@ ul, ol {
     font-size: smaller;
 }
 }
-.stream-pic {
+.stream-pic{
     @include picture;
 }
 &:hover .new-comment {
@@ -1397,3 +1397,15 @@ a.ps_close:hover{
 .suggest-active {background:#33CCFF;color:white;padding:3px 2px;}
 
 /** google 搜索返回的样式控制，隐藏一些东西 */
+
+
+.pic-show {
+    @include picture;
+}
+
+/** 分割div */
+.split{
+    border-bottom: 1px solid #DADADA;
+    padding-bottom: 5px;
+    margin: 5px 0 5px 0;
+}

@@ -31,12 +31,12 @@
   function ajaxFileUpload(){
     loading();//动态加载小图标
     $.ajaxFileUpload({
-      url:'/location//places/add_temp_pic',
+      url:'/location/places/add_temp_pic',
       secureuri:false,
       dataType: 'json',
       fileElementId:'fileToUpload',
       success: function (data,status){
-        if(data.success=="true"){
+        if(data && data.success=="true"){
           $("#picture_id").attr("value",data.pic_id)
           $("#temp_pic").attr("src",data.pic_url);
           $("#temp_pic").attr("style","display:");
@@ -45,7 +45,7 @@
         }
       },
       error: function (data, status, e){
-        alert(e)
+        alert("文件保存失败")
       }
     })
     return false;

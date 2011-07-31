@@ -5,24 +5,145 @@
   <%= javascript_include_tag  "tag_cloude/miaov" %>
 <% end %>
 
-<% content_for :sidebar do %>
 
-  <%= render_cell :place,:search %>
+<div class="first_div" style="height: 381px;">
+  <div class="left" style="float: left;width: 285px;margin: 0 40px 00px 0;padding: 0 25px 25px 0;background-color: white;">
+    <%= render_cell :place,:search %>
+    <%= render_cell :place,:search_by_tag %>
+  </div>
+  <div class="right" style="margin-left: 310px;width: 650px;">
+    <%= render_cell :place,:hot%>
+  </div>
+</div>
 
-  <h3><%= t('places.browse_by_tag') %></h3>
+<div class="split"></div>
 
-  <%= render_cell :place,:search_by_tag %>
+<div class="second_div">
+  <div id="link_tag" style="margin-bottom:10px;">
+    <%= link_to "视界","#" %>
+    <span style="float: right;margin-right: 60px;">
+      <%= link_to "情侣","#" %>
+      <%= link_to "风景","#" %>
+      <%= link_to "美女","#" %>
+      <%= link_to "童真","#" %>
+      <%= link_to "家庭","#" %>
+    </span>
+  </div>
+  <div id="window_content">
+    <div style="" class="qiji"> 
+      <%= link_to  image_tag('missing_small.png',:class=>'pic-show',:alt =>"奇妙之旅"), "#",:target=>"_blank" %>
+      <%for i in 0..5 %>
+        <%= link_to  image_tag('clean/manoutline.png',:class=>'pic-show',:alt =>"图片",:height=>"75px"), "#",:target=>"_blank" %>
+      <%end%>
+    </div>
+  </div>
+  <div id="window_content">
+    <div style="" class="fengguan"> 
+      <%= link_to  image_tag('missing_small.png',:class=>'pic-show',:alt =>"风光无限"), "#",:target=>"_blank" %>
+      <%for i in 0..5 %>
+        <%= link_to  image_tag('clean/manoutline.png',:class=>'pic-show',:alt =>"图片",:height=>"75px"), "#",:target=>"_blank" %>
+      <%end%>
+    </div>
+  </div>
+  <div id="window_content">
+    <div style="" class="wanjia"> 
+      <%= link_to  image_tag('missing_small.png',:class=>'pic-show',:alt =>"玩家上传"), "#",:target=>"_blank" %>
+      <%for i in 0..5 %>
+        <%= link_to  image_tag('clean/manoutline.png',:class=>'pic-show',:alt =>"玩家上传",:height=>"75px"), "#",:target=>"_blank" %>
+      <%end%>
+    </div>
+  </div>
+</div>
 
-  <h3><%= t('places.create_a_place') %></h3>
-  <p>
-    <%= t('places.if_cant_find_create_it') %>
-  </p>
-  <p>
-    <%= link_to t('places.create_a_place'), "#", :class => 'add-icon',:id=>"new_place_in_window" %>
-  </p>
 
-<% end %>
 
-<%= render_cell :place,:place_index %>
+<div class="third_div" style="height:800px;">
+  <div class="left" style="float: left;width: 550px;margin: 0 40px 00px 0;padding: 0 25px 25px 0;background-color: white;">
+    <div id="meitu" style="height:250px;">
+      <div style="float:left">
+        <%= image_tag('missing_original.png',:alt =>"人物出行美图",:width=>"250px")%>
+      </div>
+      <div style="float:left">
+        更多
+      </div>
+    </div>
+    <br>
+    <div id="shiping" style="height:300px;">
+      <div style="float:left">
+        <%= image_tag('missing_original.png',:alt =>"人物出行美图",:width=>"250px")%>
+      </div>
+      <div style="float:left">
+        <span><p>视频标题</p></span>
+        <span><p>视频标题</p></span>
+        <span><p>视频标题</p></span>
+        <span><p>视频标题</p></span>
+        <span><p>视频标题</p></span>
+        <span><p>视频标题</p></span>
+      </div>
+    </div>
+    <div id="rizhi">
+      <h1>精彩日志</h1>
+      <div id="rizhi_ceng">
+        <table>
+          <%for i in 1..5%>
+          <tr>
+            <th style="width:225px">日志标题<%=i%></th>
+            <th style="width:225px">日志标题<%=i+1%></th>
+          <%end%>  
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="right" style="margin-left: 600px;width: 650px;">
+    <table style="height:250px;">
+      <tr>
+        <th style="font-size:20px" colspan=3>地方推荐排行</th>
+      </tr>
+      <%for i in 1..10%>
+        <tr>
+          <th><%=i%></th>
+          <th>丽江</th>
+          <th>推荐指数</th>
+        </tr>
+      <%end%>
+    </table>
+    <br>
+    <table style="">
+      <tr>
+        <th style="font-size:20px" colspan=2>出行活动推荐</th>
+      </tr>
+      <%for i in 1..5%>
+        <tr>
+          <th><%= image_tag('missing_small.png',:alt =>"人物出行美图",:width=>"50px")%></th>
+          <th>活动标题</th>
+        </tr>
+      <%end%>
+    </table>
+    <br>
+    <div id="weibo" style="height:150px">微波</div>
+    <div id="guanggao" style="height:150px;">广告</div>
+  </div>
+</div>
 
-<%= render_cell :map, :map_window,:logged_in=>@logged_in %>
+<div class="split"></div>
+<div id="forth_div">
+  <h1>活动分享图片</h1>
+   <%for i in 1..7%>
+        <%= link_to  image_tag('clean/manoutline.png',:class=>'pic-show',:alt =>"玩家上传",:height=>"75px"), "#",:target=>"_blank" %>
+   <%end%>
+     <%for i in 1..7%>
+        <%= link_to  image_tag('clean/manoutline.png',:class=>'pic-show',:alt =>"玩家上传",:height=>"75px"), "#",:target=>"_blank" %>
+   <%end%>
+</div>
+
+<br>
+
+<%#= render_cell :map, :map_window,:logged_in=>@logged_in %>
+<%#*<h3><%= t('places.create_a_place')</h3>%>
+<%#*<p>%>
+<%#= t('places.if_cant_find_create_it') %>
+<%#*</p>%>
+<%#*<p>%>
+<%#= link_to t('places.create_a_place'), "#", :class => 'add-icon',:id=>"new_place_in_window" %>
+<%#*</p>%>
