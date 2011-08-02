@@ -11,12 +11,12 @@ Dir[File.dirname(__FILE__) + '/../plugins/**/lib/*'].each do |plugin|
 end
 
 module OneBody
-  class Application < Rails::Application
+  class Application < Rails::Application 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths << "#{config.root}/app/sweepers"
 
     # Cache store location
-#    config.action_controller.cache_store = [:file_store, "#{config.root}/cache"]
+    config.action_controller.cache_store = [:file_store, "#{config.root}/cache"]
 
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
