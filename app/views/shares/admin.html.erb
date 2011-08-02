@@ -1,0 +1,44 @@
+<% content_for :sidebar do %>
+  <h2><%= t('admin.shares.settings') %></h2>
+  
+  <ul class="list">
+    <li><%= link_to t('admin.shares.season_hot'),admin_shares_path  %></li>
+   
+  </ul>
+
+  <% if @logged_in.super_admin? %>
+    <p class="small discreet double-margin-top"><%= link_to t('admin.settings.reload'), reload_administration_settings_path, :method => 'put', :title => t('admin.settings.reload_message') %></p>
+  <% end %>
+<% end %>
+
+<h2><%=t('admin.shares.season_hot')%></h2>
+
+<table>
+  <tr>
+    <th>分享类别 |</th>
+    <th>分享 ID |</th>
+    <th>分享 顺序 |</th>
+    <th>是否为外部链接 |</th>
+    <th>外部链接 |</th>
+    <th>外部图片 |</th>
+    <th></th>
+  </tr>
+
+<% @shares.each do |share| %>
+  <tr>
+    <td><%= share.shareable_type %></td>
+    <td><%= share.shareable_id %></td>
+    <td><%= share.share_order %></td>
+    <td><%= share.is_out %></td>
+    <td><%= share.out_url %></td>
+    <td><%= share.out_img %></td>
+    <td><%= link_to 'Show', share %></td>
+    <td><%= link_to 'Edit', edit_share_path(share) %></td>
+    <td><%= link_to 'Destroy', share, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Share', new_share_path %>

@@ -1,0 +1,30 @@
+<%= form_for(@share) do |f| %>
+  <div class="field">
+    <%= f.label :shareable_type,"分享类型" %><br />
+    <%= f.select :shareable_type,{"地点"=>"Place","图片"=>"Picture"}%> 
+  </div>
+<br />
+  <div class="field">
+    <%= f.label :shareable_id,"分享ID" %><br />
+    <%= f.text_field :shareable_id %>
+  </div>
+  <div class="field">
+    <%= f.label :share_order,"分享顺序" %><br />
+    <%= f.text_field :share_order %>
+  </div>
+  <div class="field">
+    <%= f.label :is_out,"是否为外部链接" %><br />
+    <%= f.check_box :is_out %>
+  </div>
+  <div class="field">
+    <%= f.label :out_url,"外部链接url" %><br />
+    <%= f.text_field :out_url %>
+  </div>
+  <div class="field">
+    <%= f.label :out_img,"外部图片" %><br />
+    <%= f.text_field :out_img %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

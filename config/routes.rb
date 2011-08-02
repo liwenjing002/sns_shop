@@ -1,8 +1,14 @@
 OneBody::Application.routes.draw do
   
   
+  resources :shares do
+    collection do
+     get :admin
+    end
+  end
+
   namespace :location  do
-    match "/"  => "places#index"
+   
     resources :postitions do
       collection do
         get :update_postition

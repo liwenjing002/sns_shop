@@ -1,0 +1,18 @@
+<% content_for :sidebar do %>
+  <h2><%= t('admin.shares.settings') %></h2>
+  
+  <ul class="list">
+    <li><%= link_to t('admin.shares.season_hot'),""  %></li>
+   
+  </ul>
+
+  <% if @logged_in.super_admin? %>
+    <p class="small discreet double-margin-top"><%= link_to t('admin.settings.reload'), reload_administration_settings_path, :method => 'put', :title => t('admin.settings.reload_message') %></p>
+  <% end %>
+<% end %>
+
+<h1><%= t("admin.shares.new") %></h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', shares_path %>  

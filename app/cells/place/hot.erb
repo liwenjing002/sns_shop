@@ -1,9 +1,9 @@
 <h3>当季热点</h3>
 <div style="height: 120px;">
-<%for i in 0..4 %>
+<%@hot_places.each do |place| %>
 <div style="margin-right: 20px;float: left">
- <%= link_to  image_tag('missing_small.png',:class=>'pic-show',:alt =>@place.place_name), [:location,@place],:target=>"_blank" %>
-  <p style="margin-left: 30px;"><%= link_to @place.place_name,[:location,@place]%></p>
+ <%= link_to  image_tag('missing_small.png',:class=>'pic-show',:alt =>place.shareable.place_name), [:location,place.shareable],:target=>"_blank" %>
+  <p style="margin-left: 30px;width:30px;"><%= link_to place.shareable.place_name,[:location,place.shareable]%></p>
 </div>
 <%end%>
 </div>

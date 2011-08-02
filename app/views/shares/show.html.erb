@@ -1,0 +1,31 @@
+
+<p>
+  <b>分享类型:</b>
+  <%= @share.shareable_type %>
+</p>
+
+<p>
+  <b>分享ID:</b>
+  <%= @share.shareable_id %>
+</p>
+<p>
+  <b>分享顺序</b>
+  <%= @share.share_order %>
+</p>
+<p>
+  <b>是否为外部链接:</b>
+  <%= @share.is_out %>
+</p>
+<p>
+  <b>外部链接url:</b>
+  <%= @share.out_url %>
+</p>
+<p>
+  <b>外部图片</b>
+  <%= @share.out_img %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_share_path(@share) %> |
+<%= link_to 'Back', shares_path %>

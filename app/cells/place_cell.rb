@@ -80,7 +80,12 @@ class PlaceCell < Cell::Rails
   end
   
   def hot
-    @place =Place.find(1)
+    @hot_places =Share.find(:all,:conditions=>['shareable_type=?','Place'], :order => "share_order", :limit =>5)
+    render
+  end
+  
+  def order
+  @Rorder_place = place
     render
   end
 

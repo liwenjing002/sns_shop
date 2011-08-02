@@ -344,6 +344,11 @@ zh:
               too_long: 这一段太长。尝试指定一个较短的通道。
 
   admin: 
+    shares:
+      name: 分享
+      season_hot: 当季热点
+      settings: 分享设置
+      new: 新增一个后台share
     active: 主动
     admin: 管理员
     admin_added: %{name}的补充。 
@@ -704,7 +709,7 @@ zh:
           description: 启用方共享。
         Service: 
           name: 服务
-          description: 如果启用，管理员可以跟踪用户在社会领域善于学习的服务。
+          description: 如果启用，管理员可以跟踪用户在社会领域善于学习的服务。   
       Privacy: 
         Hide Contact Details in Messages: 
           name: 隐藏邮件中的联系方式
@@ -1365,7 +1370,7 @@ zh:
     directory: 目录
     groups: 团体
     home: 首页
-    places: 地点
+    shares: 分享
     profile: 个人主页
 
   news: 
