@@ -1,1 +1,8 @@
-$('#place_results').html('<%= escape_javascript render_cell(:place,:select_place,:places=>@places) %>');
+
+$('#place_results').html('<%= escape_javascript render_cell(:place,:select_place,:places=>@places) %>'+' <span id ="return_share" class="left-icon" style="border-bottom:#666666  solid 1px;cursor: pointer">返回</span>');
+$('#share_hot').hide()
+$('#place_results').show()
+$('#return_share').click(function(){
+$('#share_hot').show()
+$('#place_results').hide()
+})

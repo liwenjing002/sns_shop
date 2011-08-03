@@ -52,12 +52,12 @@ class MarkersController < ApplicationController
   def follow
     mm = nil
     if params[:do]=='add'
-      mm =  MarkerToMap.find_or_create_by_marker_id_and_map_id(params[:marker_id],@logged_in.map.id)
+      mm =  MarkerToMap.find_or_create_by_marker_id_and_map_id_and_marker_type(params[:marker_id],@logged_in.map.id,param[:marker_type])
       render :json => {:success=>true}
       return
     end
     if params[:do] =='cancer'
-      mm =MarkerToMap.find_by_marker_id_and_map_id(params[:marker_id],@logged_in.map.id)
+      mm =MarkerToMap.find_by_marker_id_and_map_id_and_marker_type(params[:marker_id],@logged_in.map.id,param[:marker_type])
       if mm
         mm.destroy
         render :json => {:success=>true}

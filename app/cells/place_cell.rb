@@ -79,14 +79,5 @@ class PlaceCell < Cell::Rails
     render
   end
   
-  def hot
-    @hot_places =Share.find(:all,:conditions=>['shareable_type=?','Place'], :order => "share_order", :limit =>5)
-    render
-  end
-  
-  def order
-  @Rorder_place = place
-    render
-  end
 
 end

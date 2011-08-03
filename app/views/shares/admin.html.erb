@@ -16,12 +16,15 @@
 <table>
   <tr>
     <th>分享类别 |</th>
-    <th>分享 ID |</th>
-    <th>分享 顺序 |</th>
-    <th>是否为外部链接 |</th>
-    <th>外部链接 |</th>
-    <th>外部图片 |</th>
+    <th>分享ID |</th>
+    <th>顺序 |</th>
+    <th>是否外链 |</th>
+    
+     <th>外图|</th>
+     <th >外链 |</th>
     <th></th>
+     <th></th>
+      <th></th>
   </tr>
 
 <% @shares.each do |share| %>
@@ -30,8 +33,9 @@
     <td><%= share.shareable_id %></td>
     <td><%= share.share_order %></td>
     <td><%= share.is_out %></td>
-    <td><%= share.out_url %></td>
-    <td><%= share.out_img %></td>
+   
+     <td><%if share.out_img%><%= image_tag(share.out_img,:class=>"out_img",:width=>"100px") %><%end%></td>
+       <td style="word-break: break-all;" width="100px"><%= share.out_url %></td>
     <td><%= link_to 'Show', share %></td>
     <td><%= link_to 'Edit', edit_share_path(share) %></td>
     <td><%= link_to 'Destroy', share, :confirm => 'Are you sure?', :method => :delete %></td>

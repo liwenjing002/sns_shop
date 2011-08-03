@@ -1,0 +1,42 @@
+  <div id="link_tag" style="margin-bottom:10px;">
+    <%= link_to "视界","#" %>
+    <span style="float: right;margin-right: 60px;">
+      <%= link_to "情侣","#" %>
+      <%= link_to "风景","#" %>
+      <%= link_to "美女","#" %>
+      <%= link_to "童真","#" %>
+      <%= link_to "家庭","#" %>
+    </span>
+  </div>
+  <div id="window_content">
+    <div style="" class="travel"> 
+      <%= link_to  image_tag('missing_small.png',:class=>'pic-show',:alt =>"奇妙之旅"), "#",:target=>"_blank" %>
+     <%@travel.each do |scene|%>
+        <%if scene.out_img%>
+        <%= link_to  image_tag(scene.out_img,:class=>'pic-show',:alt =>"图片",:height=>"75px"), scene.out_url,:target=>"_blank" %>
+    <%else%>
+      <%= link_to  image_tag("clean/manoutline.png",:class=>'pic-show',:alt =>"图片",:height=>"75px"), scene.out_url,:target=>"_blank" %>
+    <%end%>
+      <%end%>
+    </div>
+  </div>
+  <div id="window_content">
+    <div style="" class="fengguan"> 
+      <%= link_to  image_tag('missing_small.png',:class=>'pic-show',:alt =>"风光无限"), "#",:target=>"_blank" %>
+      <%@scene.each do |scene|%>
+        <%if scene.out_img%>
+        <%= link_to  image_tag(scene.out_img,:class=>'pic-show',:alt =>"图片",:height=>"75px"), scene.out_url,:target=>"_blank" %>
+    <%else%>
+      <%= link_to  image_tag("clean/manoutline.png",:class=>'pic-show',:alt =>"图片",:height=>"75px"), scene.out_url,:target=>"_blank" %>
+    <%end%>
+      <%end%>
+    </div>
+  </div>
+  <div id="window_content">
+    <div style="" class="wanjia"> 
+      <%= link_to  image_tag('missing_small.png',:class=>'pic-show',:alt =>"玩家上传"), "#",:target=>"_blank" %>
+      <%for i in 0..5 %>
+        <%= link_to  image_tag('clean/manoutline.png',:class=>'pic-show',:alt =>"玩家上传",:height=>"75px"), "#",:target=>"_blank" %>
+      <%end%>
+    </div>
+  </div>

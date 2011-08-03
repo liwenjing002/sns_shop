@@ -1,0 +1,27 @@
+ <table style="height:250px;">
+      <tr>
+        <th style="font-size:20px" colspan=3>地方推荐排行</th>
+      </tr>
+      <%i=1%>
+      <%@order_place.each do |place|%>
+        <tr>
+          <th><%=i%></th>
+          <th><%= link_to place.marker.object.place_name,[:location,place.marker.object],:target=>"_blank"%></th>
+          <th>推荐指数</th>
+        </tr>
+        <%i+=1%>
+      <%end%>
+    </table>
+    <br>
+    <table style="">
+      <tr>
+        <th style="font-size:20px" colspan=2>出行活动推荐</th>
+      </tr>
+      <%for i in 1..5%>
+        <tr>
+          <th><%= image_tag('missing_small.png',:alt =>"人物出行美图",:width=>"50px")%></th>
+          <th>活动标题</th>
+        </tr>
+      <%end%>
+    </table>
+    <br>

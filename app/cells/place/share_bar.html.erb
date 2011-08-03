@@ -3,9 +3,9 @@
 </span>
 
  <%if marker_follow?(@place.marker.id)%>
-   <%= link_to "取消关注","#",:class=>"follow_link",:action=>"cancer",:marker_id=>@place.marker.id, :confirm=>"真的要取消关注"%>
+   <%= link_to "取消关注","#",:class=>"follow_link",:action=>"cancer",:marker_id=>@place.marker.id,:marker_type=>"Place",, :confirm=>"真的要取消关注"%>
 <%else%>
- <%= link_to "添加关注","#",:class=>"follow_link",:action=>"add",:marker_id=>@place.marker.id%>
+ <%= link_to "添加关注","#",:class=>"follow_link",:action=>"add",:marker_id=>@place.marker.id ,:marker_type=>"Place",%>
   <%end%>
 
 <span id ="add_tag" class="cursor" title="设置个性化标签"><%= (!@mm or (@mm and @mm.tags.length == 0)) ?"添加标签" : "修改标签"%> </span>
