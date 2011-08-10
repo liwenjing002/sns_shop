@@ -41,6 +41,8 @@
 
 <div id="triggers">
   <%= image_tag(@picture.photo.url(:large), :alt => t('pictures.click_to_see_original'),:rel=>"#mies") %>
+  <br>
+  <%=@picture.photo_text%>
 </div>
 <% if Setting.get(:privacy, :allow_picture_comments) %>
   <h3><%= t('Comments') %></h3>
@@ -52,7 +54,7 @@
 <div class="simple_overlay" id="mies">
   <%= image_tag(@picture.photo.url(:original), :alt => t('pictures.click_to_see_original')) %>
   <div class="details">
-    <p>照片描述：</p>
+    <p>照片描述：   <%=@picture.photo_text%></p>
     <p>上传时间：<%=@picture.created_at.strftime("%y-%m-%d")%></p>
     <p>地理位置：</p>
   </div>

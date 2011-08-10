@@ -1,5 +1,5 @@
 class NotesController < ApplicationController
-		respond_to :js
+  respond_to :html,:js
   def index
     if params[:person_id]
       @person = Person.find(params[:person_id])
@@ -34,35 +34,39 @@ class NotesController < ApplicationController
   end
 
   def create
+    @person = @logged_in
     @note = Note.new(params[:note])
     @note.group_id = params[:note][:group_id] if params[:note] and params[:note][:group_id]
     if @note.group 
       raise 'error' unless @note.group.blog? and @note.group.can_post?(@logged_in)
     end
     @note.person = @logged_in
-    
-    
-    if params[:ajax] #地图上添加note
-      @marker = Marker.new(params[:marker])
-      @marker.marker_type = "1"
-      #@marker.marker_html = "<p>#{params[:note][:body]}</p>"
-      @marker.object_type = "Note"
-      @marker.map_id =  Map.find_by_people_id(@logged_in.id).id
-      if @note.save
-        @marker.object_id = @note.id
-        @marker.save
-        flash[:notice] = t('notes.saved')
-#        render :json => {:msg =>  @marker.marker_html,:success=>true,:id=>@marker.id}
-      else
-        render :json => {:success=>false}
+    unless params[:note][:location]==''
+      @marker_at = Marker.new(params[:marker])
+      @marker_at.object_type = "Note"
+      @marker_at.geocode_position = params[:note][:location]
+      @marker_at.owner = @logged_in
+      @marker_at.object_id = @note.id
+      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker_at})
+    end
+    if params[:note][:destination]!=''
+      @marker_to = Marker.new(params[:marker])
+      @marker_to.object_type = "Note"
+      @marker_to.geocode_position = params[:note][:destination]
+      @marker_to.owner = @logged_in
+      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker_to})
+    end
+    if @note.save
+      if @marker_at
+        @marker_at.object_id = @note.id 
+        @marker_at.save
       end
-    else
-      if @note.save
-        flash[:notice] = t('notes.saved')
-        redirect_to params[:redirect_to] || @note 
-      else
-        render :action => 'new' 
+      if @marker_to
+        @marker_to.object_id = @note.id
+        @marker_to.save
       end
+      @stream_item = @note.stream_item
+      flash[:notice] = t('notes.saved')
     end
   end
 

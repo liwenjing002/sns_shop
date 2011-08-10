@@ -17,7 +17,7 @@ if (MapObject.home_marker !=null){
   });
   var fn = MapObject.markerClickFunction('我家在：<%= @my_home.home_address%>', MapObject.home_marker);
   google.maps.event.addListener(MapObject.home_marker, 'mouseover', fn);
-  MapObject.map.setCenter(latLng)
+  //MapObject.map.setCenter(latLng)
 
   //MapObject.markerClusterer.addMarker(marker,true);
 <%else%>
@@ -64,7 +64,8 @@ if (MapObject.home_marker !=null){
     <%if marker.marker_html and marker.marker_html !='' %>
     var fn = MapObject.markerClickFunction('<%= raw marker.marker_html %>', marker);
     <%else%>
-    var fn = MapObject.markerClickFunction('<%= place_html(marker,marker.object) %>', marker);
+    html ='<%= mark_html(marker,marker.object) %>'
+    var fn = MapObject.markerClickFunction(html, marker);
     <%end%>
     //google.maps.event.addListener(marker, 'click', fn);
     google.maps.event.addListener(marker, 'mouseover', fn);

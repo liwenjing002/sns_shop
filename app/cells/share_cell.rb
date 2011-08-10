@@ -16,5 +16,10 @@ class ShareCell < Cell::Rails
   @scene =Share.find(:all,:conditions=>['shareable_type=?','Scene'], :order => "share_order", :limit =>6)
     render
   end
+  
+  def video
+     @videos=Share.find(:all,:conditions=>['shareable_type=?','Video'], :order => "share_order", :limit =>6)
+    render
+  end
 
 end

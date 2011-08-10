@@ -1,0 +1,27 @@
+<div style="float:left">
+  <%if is_blank @videos[0].out_img%>
+    <%= image_tag(@videos[0].out_img,:alt =>"分享视频",:width=>"250px",:id=>"video_pic")%>
+  <%else%>
+    <%= image_tag('missing_original.png',:alt =>"分享视频",:width=>"250px",:id=>"video_pic")%>
+  <%end%>
+</div>
+<div style="float:left">
+  <%@videos.each do |video|%>
+    <%if is_blank video.out_img%>
+      <%= link_to  video.title, video.out_url,:target=>"_blank",:class=>"video_link",:img=>video.out_img %>
+    <%else%>
+      <%= link_to  video.title, video.out_url,:target=>"_blank",:class=>"video_link",:img=>"/images/missing_original.png" %>
+    <%end%>
+  <br>
+  <%end%>
+
+</div>
+
+<script>
+  $(document).ready(function() {
+    $(".video_link").mouseover(function(){
+      $("#video_pic").attr("src", $(this).attr("img"))
+    })
+  });
+</script>
+

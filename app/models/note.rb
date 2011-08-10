@@ -2,6 +2,7 @@ class Note < ActiveRecord::Base
   belongs_to :person
   belongs_to :group
   has_many :comments, :dependent => :destroy
+  belongs_to :stream_item
   belongs_to :site
 
   scope_by_site_id
@@ -11,6 +12,8 @@ class Note < ActiveRecord::Base
   acts_as_logger LogItem
 
   validates_presence_of :body
+  after_create :create_as_stream_item
+  after_update :update_stream_items
 
   def name; title; end
 
@@ -26,14 +29,13 @@ class Note < ActiveRecord::Base
     end
   end
 
-  after_create :create_as_stream_item
+  
 
   def create_as_stream_item
     return unless person
-    StreamItem.create!(
+     item = StreamItem.create!(
       :title           => title,
       :body            => body,
-      :context         => original_url.to_s.any? ? {'original_url' => original_url} : {},
       :person_id       => person_id,
       :group_id        => group_id,
       :streamable_type => 'Note',
@@ -41,9 +43,11 @@ class Note < ActiveRecord::Base
       :created_at      => created_at,
       :shared          => group_id || person.share_activity? ? true : false
     )
+    self.stream_item_id = item.id
+      self.save
   end
 
-  after_update :update_stream_items
+
 
   def update_stream_items
     StreamItem.find_all_by_streamable_type_and_streamable_id('Note', id).each do |stream_item|

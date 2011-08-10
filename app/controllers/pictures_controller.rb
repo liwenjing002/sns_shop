@@ -46,7 +46,8 @@ class PicturesController < ApplicationController
     Array(params[:pictures]).each do |pic|
       picture = @album.pictures.create(
         :person => (params[:remove_owner] ? nil : @logged_in),
-        :photo  => pic
+        :photo  => pic,
+        :photo_text  => params[:photo_text]
       )
       if picture.errors.any?
         errors += picture.errors.full_messages

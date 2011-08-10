@@ -3,7 +3,7 @@
  <%if marker_follow?(marker.id)%>
     <span style="margin-left:20px;"><%= link_to "取消关注","#",:class=>"follow_link",:action=>"cancer",:marker_id=>marker.id,:marker_type=>"Place", :confirm=>"真的要取消关注"%></span>
 <%else%>
-  <span style="margin-left:20px;"><%= link_to "添加关注","#",:class=>"follow_link",:action=>"add",:marker_id=>marker.id,:marker_type=>"Place",%></span>
+  <span style="margin-left:20px;"><%= link_to "添加关注","#",:class=>"follow_link",:action=>"add",:marker_id=>marker.id,:marker_type=>"Place"%></span>
   <%end%>
   </div>
 

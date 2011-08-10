@@ -1,19 +1,55 @@
-latLng = new google.maps.LatLng(<%=@marker.marker_latitude%>, <%= @marker.marker_longitude %>);
+if(MapObject){
+<%if @marker_at %>
+  <%if @marker_at.marker_latitude and @marker_at.marker_longitude%>
+alert()
+  latLng = new google.maps.LatLng(<%@marker_at.marker_latitude%>, <%= @marker_at.marker_longitude %>);
+  marker = new google.maps.Marker({
+  map: MapObject.map,
+  draggable: false,
+  icon: "/images/map/home.png",
+  animation: google.maps.Animation.DROP,
+  position: latLng
+  });
+  var fn = MapObject.markerClickFunction('<%= raw mark_html(@marker_at,nil) %>', marker);
+  google.maps.event.addListener(MapObject.home_marker, 'mouseover', fn);
+  MapObject.map.setCenter(latLng)
 
-fn = MapObject.markerClickFunction('<%= raw mark_html(@marker) %>', latLng);
+  //MapObject.markerClusterer.addMarker(marker,true);
+<%else%> 
+  alert()
+  MapObject.re_geocodePosition('<%=  @marker_at.geocode_position%>',"/images/map/home.png",'123',<%@marker_at.id%>);
+<%end%>
+<%end%>
+  
+<%if @marker_to%>
+latLng = new google.maps.LatLng(<%=@marker_to.marker_latitude%>, <%= @marker_to.marker_longitude %>);
+
+fn = MapObject.markerClickFunction('<%= raw mark_html(@marker_to) %>', latLng);
 marker = null;
-if(MapObject.markers.get(<%=@marker.id%>)){
-  marker = MapObject.markers.get(<%=@marker.id%>)
+if(MapObject.markers.get(<%@marker_to.id%>)){
+  marker = MapObject.markers.get(<%@marker_to.id%>)
 
 }else{
 	marker = MapObject.temp_marker
 	MapObject.markers_array.push(MapObject.temp_marker);
-	MapObject.markers.put(<%=@marker.id%>,marker);
+	MapObject.markers.put(<%@marker_to.id%>,marker);
 	MapObject.markerClusterer.addMarker(marker,true)
 	MapObject.markerClusterer.redraw();
 }
 
 google.maps.event.addListener(marker, 'click', fn);
 MapObject.temp_infowindow.close();
+<%end%>
+}
 
+$(".stream-items").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :object => @stream_item ) %>");
+$(".stream-item").first().hide();
+$(".stream-items :first-child").slideDown("slow");
+
+<%if flash[:notice]%>
+$("#notice").html("<%=flash[:notice]%>")
+$("#notice").show()
+$('#notice').fadeOut(15000);
+<%end%>
+$("#share-note").resetForm()
 

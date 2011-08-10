@@ -2,7 +2,8 @@
   <link rel="alternate" type="application/atom+xml" title='<%= t("stream.feed") %>' href="<%= url_for stream_path(:format => 'xml', :code => @logged_in.feed_code) %>"/>
   <%= javascript_include_tag "extend/jquery.tools.min" %>
 <%= javascript_include_tag "extend/pic_effects" %>
-<% end %>
+<%end%>
+
 
 
 <% cache(:fragment => 'friendship_requests', :for => @logged_in.id) do %>
@@ -20,7 +21,7 @@
     <h3 class="double-margin-top"><%= t('stream.share_heading') %></h3>
     <p><%= t('stream.share_something_about') %></p>
     
-    <%= render :partial=>"common/share" %>
+   <%=render_cell :common,:share%>
      <%= javascript_include_tag "extend/ui" %>
     <script type="text/javascript">
       $('#album').autocomplete({source: <%= raw @album_names.inspect %>});

@@ -1,7 +1,3 @@
-<% content_for  :head do %>
-  <%= javascript_include_tag "extend/jquery.tools.min" %>
-<%= javascript_include_tag "extend/pic_effects" %>
-<%end%>
 <div class="stream-item <%= stream_item.streamable_type.underscore.dasherize %> stream_<%= stream_item.streamable_type.underscore %> <% if stream_item.person == @person %>stream_mine<% end %>">
   <div class="stream-item-meta">
     <%= render :partial => 'streams/person_thumbnail', :locals => {:stream_item => stream_item} %>

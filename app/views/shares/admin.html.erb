@@ -21,7 +21,6 @@
     <th>是否外链 |</th>
     
      <th>外图|</th>
-     <th >外链 |</th>
     <th></th>
      <th></th>
       <th></th>
@@ -35,7 +34,6 @@
     <td><%= share.is_out %></td>
    
      <td><%if share.out_img%><%= image_tag(share.out_img,:class=>"out_img",:width=>"100px") %><%end%></td>
-       <td style="word-break: break-all;" width="100px"><%= share.out_url %></td>
     <td><%= link_to 'Show', share %></td>
     <td><%= link_to 'Edit', edit_share_path(share) %></td>
     <td><%= link_to 'Destroy', share, :confirm => 'Are you sure?', :method => :delete %></td>

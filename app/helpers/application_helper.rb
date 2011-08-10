@@ -333,6 +333,16 @@ module ApplicationHelper
 end
 
   
+  def is_blank string
+    if string and string != ""
+      true
+    else
+      false
+    end
+    
+  end
+
+  
   
 
   class << self

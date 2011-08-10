@@ -39,17 +39,8 @@
     </div>
     <br>
     <div id="shiping" style="height:300px;">
-      <div style="float:left">
-        <%= image_tag('missing_original.png',:alt =>"人物出行美图",:width=>"250px")%>
-      </div>
-      <div style="float:left">
-        <span><p>视频标题</p></span>
-        <span><p>视频标题</p></span>
-        <span><p>视频标题</p></span>
-        <span><p>视频标题</p></span>
-        <span><p>视频标题</p></span>
-        <span><p>视频标题</p></span>
-      </div>
+      <%=render_cell :share,:video%>
+    
     </div>
     <div id="rizhi">
       <h1>精彩日志</h1>

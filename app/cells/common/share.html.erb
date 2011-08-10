@@ -1,7 +1,69 @@
-<h1>
-  Common#share
-</h1>
+<div class="share">
+      <%= text_field_tag 'share-starter', '', :placeholder => t('share.profile') %>
+      <ul class="share-details share-selector" style="display:none;">
+        <% if Setting.get(:features, :notes) %>
+          <li><%= link_to_function t('share.note'), "selectShare('share-note')", :class => 'comment2-icon', :id => 'share-note-icon' %></li>
+        <% end %>
+        <% if Setting.get(:features, :pictures) %>
+          <li><%= link_to_function t('share.picture'), "selectShare('share-picture')", :class => 'picture-icon', :id => 'share-picture-icon' %></li>
+        <% end %>
+        <li class="cancel-link"><%= link_to_function '', 'hideShare()', :class =>  'delete-icon' %></li>
+      </ul>
+      <% if Setting.get(:features, :notes) %>
+        <%= form_for Note.new, :html => {:id => 'share-note', :class => 'share-type'},:remote=>true  do |form| %>
+          <%= hidden_field_tag :redirect_to, stream_path %>
+          <span class="small"><%= t('share.note_label') %></span><br/>
+          <%= form.text_area :body, :rows => 2 ,:class=>"share_text",:placeholder => "用@标注你所在位置，用go2 标注出你要去的地方"%><br/>
+           <%= form.text_field :location, :type=>'hidden' %>
+           <%= form.text_field :destination, :type=>'hidden' %>
+          <%= form.text_field :l_coordinate, :type=>'hidden' %>
+           <%= form.text_field :d_coordinate, :type=>'hidden' %>
+          <%= submit_tag t('share.share') %>
+        <% end %>
+      <% end %>
+      <% if Setting.get(:features, :pictures) %>
+        <%= form_for Picture.new, :html => {:multipart => true, :id => 'share-picture', :class => 'share-type'} do |form| %>
+          <%= file_field_tag 'pictures[]', :multiple => true %><br/>
+          <%= text_field_tag 'album', '', :size => 10, :placeholder => t('share.default_album_name') %><br/>
+          <%= text_area_tag "photo_text",'',:class=>"share_text",:size => "40x2", :placeholder => "用@标注你所在位置，用go2 标注出你要去的地方" %><br/>
+           <%= form.text_field 'location', :type=>'hidden' %>
+           <%= form.text_field 'destination', :type=>'hidden' %>
+          <%= form.text_field 'l_coordinate', :type=>'hidden' %>
+           <%= form.text_field 'd_coordinate', :type=>'hidden' %>
+          <%= submit_tag t('share.share') %>
+        <% end %>
+      <% end %>
+</div>
 
-<p>
-  Find me in app/cells/common/share.html.erb
-</p>
+<script>
+  $(document).ready(function(){
+    $("#note_body").change(function(){
+      at = $(this).val().match(/.*@(.*)@.*/)[1]
+      if(at!= null&&at!=''){
+        $("#note_location").attr("value", at);
+      }
+      to = $(this).val().match(/.*go(.*)2.*/)[1]
+     if(to!= null&&to!=''){
+        $("#note_destination").attr("value", to);
+      }
+      
+    })
+  })
+  
+   $("#share-note").submit(function(){  
+            var options = {   
+                    url:$(this).attr("action"), //提交给哪个执行  
+                    type:'POST',
+                    beforeSubmit:function(){
+                      if( $("#note_location").attr("value")==""){
+                        
+                      }
+                    }
+                    };
+                    $('#share-note').ajaxSubmit(options);   
+                    return false; //为了不刷新页面,返回false，反正都已经在后台执行完了，没事！  
+        }
+        );
+  
+</script>
+ <%= javascript_include_tag "extend/ui" %>

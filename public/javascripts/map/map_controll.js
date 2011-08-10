@@ -4,6 +4,7 @@ var MapObject =  {
     home_marker:null,
     markerClusterer: null,
     markers_array: [],
+    myLocation:null,
     infoWindow: new google.maps.InfoWindow(),
     geocoder: new google.maps.Geocoder(),//地址解析对象
     map_share_html:null,	//新增一个marker的初始化html
@@ -30,22 +31,24 @@ var MapObject =  {
     
     //初始化map
     initialize: function (id) {
-//        alert()
+        //        alert()
         var myOptions = {
             zoom: this.map_options.zoom,
             draggableCursor: "default",
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             center: new google.maps.LatLng(this.map_options.center_latitude, this.map_options.center_longitude)
         };
+
         this.map = new google.maps.Map(
             document.getElementById(this.map_options.id), 
             myOptions);
-        //加入搜索框
-        
+                    
+        this.initialLocation();
+        //加入搜索框    
         this.init_marker_from_data("my_home",id);
         this.initControl();
-    // Initialize the local searcher
-    google.maps.event.trigger(this.map, 'resize');
+        // Initialize the local searcher
+        google.maps.event.trigger(this.map, 'resize');
 
 
 
@@ -115,15 +118,15 @@ var MapObject =  {
 
     //添加一个marker    
     add_marker:function (map,initialLocation){
-//        alert(initialLocation)
-//        alert(this.temp_marker)
+        //        alert(initialLocation)
+        //        alert(this.temp_marker)
         this.temp_marker = new google.maps.Marker({
             map:map,
             draggable:true,
             animation: google.maps.Animation.DROP,
             position: initialLocation
         });
-//        alert(2)
+        //        alert(2)
         MapObject.geocoder.geocode({
             latLng: initialLocation
         }, function(responses){
@@ -138,7 +141,7 @@ var MapObject =  {
     //new marker请求地址解析的回调函数
     new_marker_Function:function (responses) {
         string = MapObject.split_responses_address(responses);
-//        alert(string)
+        //        alert(string)
         postition_html = "<div id='new_postition' style='min-height:200px;height:auto;'><div id ='postition_text'><span color: #5F9128>当前位置：</span>"+string +"</div>"
         MapObject.temp_infowindow.setContent(postition_html + MapObject.map_share_html+"</div>")
         MapObject.temp_infowindow.open(MapObject.map,MapObject.temp_marker);
@@ -264,19 +267,6 @@ var MapObject =  {
                 }
 
                 if(type == 'place'){
-                    //                    $.ajax({                                                
-                    //                        type: "POST",                                    
-                    //                        url: "/places",                                     
-                    //                        data: "marker[geocode_position]="+ $("#place_full_address") .attr("value")+ 
-                    //                               "&marker[marker_latitude]=" + $("#place_place_latitude").attr("value")+ 
-                    //                               "&marker[marker_longitude]=" + $("#place_place_longitude").attr("value")+
-                    //                                "&place[place_name]="+ $("#place_place_name").val()+ 
-                    //                                "&place[full_address]="+ $("#place_full_address").val()+ 
-                    //                                "&place[place_description]="+ $("#place_place_description").val()+"&ajax=true",    
-                    //                        success: function(message){                 
-                    //                        } 
-                    //                    });  
-                                    
                     $("#place_full_address").attr("value",string)
                     $("#place_place_latitude").attr("value",markerLatLng.lat())
                     $("#place_place_longitude").attr("value",markerLatLng.lng())
@@ -439,11 +429,12 @@ var MapObject =  {
         //alert(info_htm)
         if (info_htm!= null){
             var fn = MapObject.markerClickFunction(info_htm, marker);
-             if(home_Position){
-            google.maps.event.addListener(marker, 'click', fn);}
-        else{
-             google.maps.event.addListener(marker, 'mouseover', fn);
-        }
+            if(home_Position){
+                google.maps.event.addListener(marker, 'click', fn);
+            }
+            else{
+                google.maps.event.addListener(marker, 'mouseover', fn);
+            }
         }
         if(home_Position != false){
             MapObject.home_marker = marker;
@@ -463,13 +454,13 @@ var MapObject =  {
 
 
     updataPosition:function(home_Position_id,latLng){
-         $.ajax({                                                
-                        type: "get",                                    
-                        url: "/location/postitions/update_postition",                                     
-                        data: "id=" + home_Position_id  +"&postition[home_latitude]="+ latLng.lat()+"&postition[home_longitude]="+latLng.lng() ,    
-                        success: function(message){                 
-                        } 
-                    });
+        $.ajax({                                                
+            type: "get",                                    
+            url: "/location/postitions/update_postition",                                     
+            data: "id=" + home_Position_id  +"&postition[home_latitude]="+ latLng.lat()+"&postition[home_longitude]="+latLng.lng() ,    
+            success: function(message){                 
+            } 
+        });
     },
 
 
@@ -511,6 +502,27 @@ var MapObject =  {
             MapObject.infoWindow.close();
 
         };
+    },
+    initialLocation:function(){
+        if(navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                MapObject.myLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                MapObject.map.setCenter(MapObject.myLocation);
+                MapObject.map.setZoom(10);
+               // alert(MapObject.myLocation)
+        }, function() {
+               
+            });
+        } else if (google.gears) {
+            var geo = google.gears.factory.create('beta.geolocation');
+            geo.getCurrentPosition(function(position) {
+                MapObject.myLocation = new google.maps.LatLng(position.latitude,position.longitude);
+                MapObject.map.setCenter(MapObject.myLocation); 
+                MapObject.map.setZoom(10);
+        }, function() {
+                
+            });
+        } 
     }
        
     
