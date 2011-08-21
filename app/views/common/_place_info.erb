@@ -19,7 +19,10 @@
   <div class = 'marker_address'>
     <%= get_address_href(place.full_address)%>
   </div>
-
+<div class ='marker_common' >
+ 	<span><a href='#' onclick='MapObject.marker_del(<%=marker.id%>)'>delete</a></span> 
+ 	<span><a href='#' onclick='MapObject.marker_move(<%=marker.id%>)'>move</a></span>
+</div>
   
 
 

@@ -67,6 +67,7 @@ OneBody::Application.routes.draw do
   resources :people do
     collection do
       get  :schema
+      get :test
       get  :import
       post :import
       post :hashify

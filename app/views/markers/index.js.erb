@@ -53,7 +53,7 @@ if (MapObject.home_marker !=null){
   // alert(obj2str(marker_json))
 
   <%  @markers.each do|marker|%>
-    latLng = new google.maps.LatLng(<%=marker.marker_latitude%>, <%= marker.marker_longitude %>);
+    latLng = new google.maps.LatLng('<%=marker.marker_latitude%>', '<%= marker.marker_longitude %>');
 
     marker = new google.maps.Marker({
     map: MapObject.map,

@@ -1,44 +1,62 @@
+
 if(MapObject){
+
 <%if @marker_at %>
   <%if @marker_at.marker_latitude and @marker_at.marker_longitude%>
-alert()
-  latLng = new google.maps.LatLng(<%@marker_at.marker_latitude%>, <%= @marker_at.marker_longitude %>);
-  marker = new google.maps.Marker({
-  map: MapObject.map,
-  draggable: false,
-  icon: "/images/map/home.png",
-  animation: google.maps.Animation.DROP,
-  position: latLng
-  });
-  var fn = MapObject.markerClickFunction('<%= raw mark_html(@marker_at,nil) %>', marker);
-  google.maps.event.addListener(MapObject.home_marker, 'mouseover', fn);
-  MapObject.map.setCenter(latLng)
-
-  //MapObject.markerClusterer.addMarker(marker,true);
-<%else%> 
-  alert()
-  MapObject.re_geocodePosition('<%=  @marker_at.geocode_position%>',"/images/map/home.png",'123',<%@marker_at.id%>);
-<%end%>
-<%end%>
   
-<%if @marker_to%>
-latLng = new google.maps.LatLng(<%=@marker_to.marker_latitude%>, <%= @marker_to.marker_longitude %>);
+    latLng = new google.maps.LatLng('<%=@marker_at.marker_latitude%>', '<%= @marker_at.marker_longitude %>');
+    marker = new google.maps.Marker({
+    map: MapObject.map,
+    draggable: false,
+    <%#*icon: "/images/map/home.png",%>
+    animation: google.maps.Animation.DROP,
+    position: latLng
+    });
 
-fn = MapObject.markerClickFunction('<%= raw mark_html(@marker_to) %>', latLng);
-marker = null;
-if(MapObject.markers.get(<%@marker_to.id%>)){
+    MapObject.geocoder.geocode({
+    latLng: latLng
+    }, function(responses){
+    string = MapObject.split_responses_address(responses);
+    html = "<div id='location_now'>"+"<span color: #5F9128>当前位置：</span>"+string +"</div>"
+    alert(html)
+    var fn = MapObject.markerClickFunction('<%= raw mark_html(@marker_at,nil) %>'+html, marker);
+    google.maps.event.addListener(marker, 'mouseover', fn);
+    google.maps.event.addListener(marker, 'mouseout', MapObject.markerCloseFunction);
+    MapObject.markers_array.push(marker);
+    MapObject.markers.put(<%=@marker_at.id%>,marker);
+    MapObject.map.setCenter(latLng)
+    data = "marker[id]="+<%=@marker_at.id%>+ "&marker[geocode_position]="+ string +"&marker[marker_latitude]=" +latLng.lat()+ "&marker[marker_longitude]=" +latLng.lng(),  
+    MapObject.updata_data_marker(data,<%=@marker_at.id%>)
+    });
+
+
+
+
+    //MapObject.markerClusterer.addMarker(marker,true);
+  <%else%> 
+    alert()
+    MapObject.re_geocodePosition('<%=  @marker_at.geocode_position%>',"/images/map/home.png",'123',<%@marker_at.id%>);
+  <%end%>
+<%end%>
+
+<%if @marker_to%>
+  latLng = new google.maps.LatLng(<%=@marker_to.marker_latitude%>, <%= @marker_to.marker_longitude %>);
+
+  fn = MapObject.markerClickFunction('<%= raw mark_html(@marker_to) %>', latLng);
+  marker = null;
+  if(MapObject.markers.get(<%@marker_to.id%>)){
   marker = MapObject.markers.get(<%@marker_to.id%>)
 
-}else{
-	marker = MapObject.temp_marker
-	MapObject.markers_array.push(MapObject.temp_marker);
-	MapObject.markers.put(<%@marker_to.id%>,marker);
-	MapObject.markerClusterer.addMarker(marker,true)
-	MapObject.markerClusterer.redraw();
-}
+  }else{
+          marker = MapObject.temp_marker
+          MapObject.markers_array.push(MapObject.temp_marker);
+          MapObject.markers.put(<%@marker_to.id%>,marker);
+          MapObject.markerClusterer.addMarker(marker,true)
+          MapObject.markerClusterer.redraw();
+  }
 
-google.maps.event.addListener(marker, 'click', fn);
-MapObject.temp_infowindow.close();
+  google.maps.event.addListener(marker, 'click', fn);
+  MapObject.temp_infowindow.close();
 <%end%>
 }
 
@@ -47,9 +65,9 @@ $(".stream-item").first().hide();
 $(".stream-items :first-child").slideDown("slow");
 
 <%if flash[:notice]%>
-$("#notice").html("<%=flash[:notice]%>")
-$("#notice").show()
-$('#notice').fadeOut(15000);
+  $("#notice").html("<%=flash[:notice]%>")
+  $("#notice").show()
+  $('#notice').fadeOut(15000);
 <%end%>
 $("#share-note").resetForm()
 

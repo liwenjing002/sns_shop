@@ -27,6 +27,8 @@ class MarkersController < ApplicationController
       @marker = Marker.find(params[:marker][:id])
       if @marker.update_attributes(params[:marker])
         if @marker.object_type == 'Note'
+          @stream_item = @marker.object.stream_item
+          @marker.marker_html = "#{@marker.marker_html}<div id='location_now'><span color: #5F9128>当前位置：</span>#{@marker.geocode_position}</div>"
           render(:template => "notes/create") 
         end
       else
@@ -86,6 +88,8 @@ class MarkersController < ApplicationController
     }
      render :json => res
   end
+  def test
+end
   
   
 end

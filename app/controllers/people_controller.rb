@@ -257,6 +257,7 @@ class PeopleController < ApplicationController
     end
   end
 
-  
+def test
+end  
 
 end

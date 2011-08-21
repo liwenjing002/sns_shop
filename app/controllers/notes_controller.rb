@@ -41,10 +41,12 @@ class NotesController < ApplicationController
       raise 'error' unless @note.group.blog? and @note.group.can_post?(@logged_in)
     end
     @note.person = @logged_in
-    unless params[:note][:location]==''
+    unless params[:note][:location]=='' and params[:note][:l_coordinate]=="" and params[:note][:d_coordinate]
       @marker_at = Marker.new(params[:marker])
       @marker_at.object_type = "Note"
-      @marker_at.geocode_position = params[:note][:location]
+      @marker_at.geocode_position = params[:note][:location] if params[:note][:location]
+      @marker_at.marker_latitude = params[:note][:l_coordinate] if params[:note][:l_coordinate]
+      @marker_at.marker_longitude = params[:note][:d_coordinate] if params[:note][:d_coordinate]
       @marker_at.owner = @logged_in
       @marker_at.object_id = @note.id
       MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker_at})
