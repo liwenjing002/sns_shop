@@ -47,6 +47,7 @@ OneBody::Application.routes.draw do
     collection do
       post :follow
       post :search
+      get :locus
     end
   end
 

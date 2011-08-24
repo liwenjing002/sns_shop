@@ -8,7 +8,7 @@
 	<%=link_to t('comments.view') + '...', marker.object, :class => 'small' ,:target=>'_blank'%> 
 	</div>
 	<div class='nowrap stream-item-timestamp'>
-	 <%= time_ago_in_words marker.object.created_at %> <%= t('comments.ago') %>
+	 <%=  marker.object.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
 	<%= link_to marker.object.person.name, marker.object.person,:target=>'_blank' %> 
 	</div>
 
@@ -18,6 +18,7 @@
 	<div class ='marker_common' >
  	<span><a href='#' onclick='MapObject.marker_del(<%=marker.id%>)'>delete</a></span> 
  	<span><a href='#' onclick='MapObject.marker_move(<%=marker.id%>)'>move</a></span>
+        <span><a href='#' onclick='MapObject.marker_locus(<%=marker.id%>)'>Locus</a></span>
 	</div>
 </div>
     

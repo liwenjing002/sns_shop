@@ -28,9 +28,14 @@ module MarkersHelper
     html << "#{render :partial => 'common/marker_info',:locals => {:marker=> marker}}"
     html = html.gsub(/\'/, '"')
     html = html.gsub(/[\n\r]/,'')
-    marker.marker_html = html.html_safe
+    
+    if marker.marker_html
+    marker.marker_html = (marker.marker_html+ html.html_safe) 
+    else
+    marker.marker_html = html.html_safe 
+    end
     marker.save
-    html
+    marker.marker_html
   end
   
 end

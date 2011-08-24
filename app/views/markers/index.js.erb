@@ -61,7 +61,7 @@ if (MapObject.home_marker !=null){
     animation: google.maps.Animation.DROP,
     position: latLng
     });
-    <%if marker.marker_html and marker.marker_html !='' %>
+    <%if is_blank(marker.marker_html) %>
     var fn = MapObject.markerClickFunction('<%= raw marker.marker_html %>', marker);
     <%else%>
     html ='<%= mark_html(marker,marker.object) %>'

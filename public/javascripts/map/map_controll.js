@@ -4,7 +4,8 @@ var MapObject =  {
     home_marker:null,
     markerClusterer: null,
     markers_array: [],
-    myLocation:null,
+    myLocation:null,//坐标
+    myLocation_address:null,//文字描述
     infoWindow: new google.maps.InfoWindow(),
     geocoder: new google.maps.Geocoder(),//地址解析对象
     map_share_html:null,	//新增一个marker的初始化html
@@ -118,15 +119,12 @@ var MapObject =  {
 
     //添加一个marker    
     add_marker:function (map,initialLocation){
-        //        alert(initialLocation)
-        //        alert(this.temp_marker)
         this.temp_marker = new google.maps.Marker({
             map:map,
             draggable:true,
             animation: google.maps.Animation.DROP,
             position: initialLocation
         });
-        //        alert(2)
         MapObject.geocoder.geocode({
             latLng: initialLocation
         }, function(responses){
@@ -196,14 +194,17 @@ var MapObject =  {
 
 
     //定位
-    set_current_position: function (){
+    initialLocation: function (){
         // Try W3C Geolocation (Preferred)
         if(navigator.geolocation) {
             browserSupportFlag = true;
             navigator.geolocation.getCurrentPosition(function(position) {
                 initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-                map.setCenter(initialLocation);
-                add_marker(initialLocation)
+                
+                MapObject.myLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                //                alert(MapObject.myLocation)
+                MapObject.map.setCenter(initialLocation);
+                MapObject.map.setZoom(10);
             }, function() {
                 handleNoGeolocation(browserSupportFlag);
             },{
@@ -217,8 +218,9 @@ var MapObject =  {
             var geo = google.gears.factory.create('beta.geolocation');
             geo.getCurrentPosition(function(position) {
                 initialLocation = new google.maps.LatLng(position.latitude,position.longitude);
-                map.setCenter(initialLocation);
-                add_marker(initialLocation)
+                MapObject.myLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                MapObject.map.setCenter(initialLocation);
+                MapObject.map.setZoom(10);
             }, function() {
                 handleNoGeoLocation(browserSupportFlag);
             });
@@ -342,7 +344,7 @@ var MapObject =  {
                 success: function(message){
                     if(message.success){
                         MapObject.infoWindow.close();
-                        MapObject.markerClusterer.removeMarker(MapObject.markers.get(marker_id));
+                        MapObject.markerClusterer.removeMarker(MapObject.markers.get(marker_id),true);
                     }else{
                         alert("网络延迟，请重试")
                     }
@@ -379,6 +381,16 @@ var MapObject =  {
             } 
         });
     },
+    
+    marker_locus:function(marker_id){
+       $.ajax({                                                
+            type: "GET",    
+            url: "/markers/locus?marker_id="+marker_id,                                      
+            success: function(message){
+
+            } 
+        });  
+    },
 
     //反向地址解析方法
     geocodePosition:function (marker_id,markerLatLng) {
@@ -394,7 +406,9 @@ var MapObject =  {
                 }
                 //alert("1 "+ string)
                 data = "marker[id]="+marker_id+ "&marker[geocode_position]="+ string +"&marker[marker_latitude]=" +markerLatLng.lat()+ "&marker[marker_longitude]=" +markerLatLng.lng(),  
-				
+//                alert($("#location_now").html())
+                $("#location_now").html("<span color: #5F9128>当前位置：</span>"+string );
+             		
                 MapObject.updata_data_marker(data,marker_id)
             } else {
                 alert("none")
@@ -419,26 +433,36 @@ var MapObject =  {
 
 
     geocodePosition_marker:function(latLng,icon,info_htm,home_Position){
-        marker = new google.maps.Marker({
-            map: MapObject.map,
-            draggable: false,
-            animation: google.maps.Animation.DROP,
-            icon: icon,
-            position: latLng
-        });
+        if(icon!= null){
+            marker = new google.maps.Marker({
+                map: MapObject.map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                icon: icon,
+                position: latLng
+            });
+        }else{
+            marker = new google.maps.Marker({
+                map: MapObject.map,
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                position: latLng
+            });
+        }
+
         //alert(info_htm)
         if (info_htm!= null){
             var fn = MapObject.markerClickFunction(info_htm, marker);
-            if(home_Position){
+            if(home_Position==true){
                 google.maps.event.addListener(marker, 'click', fn);
             }
             else{
                 google.maps.event.addListener(marker, 'mouseover', fn);
             }
         }
-        if(home_Position != false){
+         MapObject.map.setCenter(latLng)
+        if(home_Position ==true){
             MapObject.home_marker = marker;
-            MapObject.map.setCenter(latLng)
             google.maps.event.addListener(marker, 'click', function(){
                 MapObject.map.setCenter(latLng)
                 MapObject.map.setZoom(8)
@@ -447,6 +471,10 @@ var MapObject =  {
             return;
         }else{
             MapObject.markerClusterer.addMarker(marker,true);
+            MapObject.markers_array.push(marker);
+            MapObject.markers.put(home_Position,marker);
+             data = "marker[id]="+home_Position+ "&marker[marker_latitude]=" +latLng.lat()+ "&marker[marker_longitude]=" +latLng.lng(),  
+            MapObject.updata_data_marker(data,home_Position)
         }
       
     //alert(results[0].geometry.location)
@@ -502,28 +530,8 @@ var MapObject =  {
             MapObject.infoWindow.close();
 
         };
-    },
-    initialLocation:function(){
-        if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                MapObject.myLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-                MapObject.map.setCenter(MapObject.myLocation);
-                MapObject.map.setZoom(10);
-               // alert(MapObject.myLocation)
-        }, function() {
-               
-            });
-        } else if (google.gears) {
-            var geo = google.gears.factory.create('beta.geolocation');
-            geo.getCurrentPosition(function(position) {
-                MapObject.myLocation = new google.maps.LatLng(position.latitude,position.longitude);
-                MapObject.map.setCenter(MapObject.myLocation); 
-                MapObject.map.setZoom(10);
-        }, function() {
-                
-            });
-        } 
     }
+    
        
     
   

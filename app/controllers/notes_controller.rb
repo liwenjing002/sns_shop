@@ -42,22 +42,35 @@ class NotesController < ApplicationController
     end
     @note.person = @logged_in
     unless params[:note][:location]=='' and params[:note][:l_coordinate]=="" and params[:note][:d_coordinate]
+      marker_last = Marker.find_by_marker_latitude_and_marker_longitude(params[:note][:l_coordinate],params[:note][:d_coordinate]) if params[:note][:l_coordinate] and params[:note][:d_coordinate]
+      marker_last = Marker.find_by_geocode_position(params[:note][:location] ) if marker_last ==nil and params[:note][:location] 
+      if marker_last 
+        @marker_at = marker_last
+      else
       @marker_at = Marker.new(params[:marker])
       @marker_at.object_type = "Note"
       @marker_at.geocode_position = params[:note][:location] if params[:note][:location]
       @marker_at.marker_latitude = params[:note][:l_coordinate] if params[:note][:l_coordinate]
-      @marker_at.marker_longitude = params[:note][:d_coordinate] if params[:note][:d_coordinate]
+      @marker_at.marker_longitude = params[:note][:d_coordinate] if params[:note][:location]
       @marker_at.owner = @logged_in
       @marker_at.object_id = @note.id
       MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker_at})
+      end
     end
     if params[:note][:destination]!=''
+      marker_last = Marker.find_all_by_geocode_position params[:note][:location] if params[:note][:location]
+      if marker_last 
+        @marker_at = marker_last
+      else
       @marker_to = Marker.new(params[:marker])
       @marker_to.object_type = "Note"
       @marker_to.geocode_position = params[:note][:destination]
       @marker_to.owner = @logged_in
       MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker_to})
+      end
     end
+    @note.marker_at_id = @marker_at.id if @marker_at
+    @note.marker_to_id = @marker_to.id if @marker_to
     if @note.save
       if @marker_at
         @marker_at.object_id = @note.id 

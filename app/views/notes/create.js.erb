@@ -2,7 +2,10 @@
 if(MapObject){
 
 <%if @marker_at %>
-  <%if @marker_at.marker_latitude and @marker_at.marker_longitude%>
+MapObject.infoWindow.close();
+MapObject.markerClusterer.removeMarker(MapObject.markers.get('<%=@marker_at.id%>'),false);
+MapObject.markers.remove('<%=@marker_at.id%>')
+  <%if is_blank(@marker_at.marker_latitude) and is_blank(@marker_at.marker_longitude) %>
   
     latLng = new google.maps.LatLng('<%=@marker_at.marker_latitude%>', '<%= @marker_at.marker_longitude %>');
     marker = new google.maps.Marker({
@@ -17,7 +20,7 @@ if(MapObject){
     latLng: latLng
     }, function(responses){
     string = MapObject.split_responses_address(responses);
-    html = "<div id='location_now'>"+"<span color: #5F9128>当前位置：</span>"+string +"</div>"
+    html = "<div id='location_now'>"+"<span color: #5F9128>当前位置：</span>"+string 
     alert(html)
     var fn = MapObject.markerClickFunction('<%= raw mark_html(@marker_at,nil) %>'+html, marker);
     google.maps.event.addListener(marker, 'mouseover', fn);
@@ -34,8 +37,8 @@ if(MapObject){
 
     //MapObject.markerClusterer.addMarker(marker,true);
   <%else%> 
-    alert()
-    MapObject.re_geocodePosition('<%=  @marker_at.geocode_position%>',"/images/map/home.png",'123',<%@marker_at.id%>);
+    //alert()
+    MapObject.re_geocodePosition('<%=  @marker_at.geocode_position%>',null,'<%= raw mark_html(@marker_at,nil) %>','<%=@marker_at.id%>');
   <%end%>
 <%end%>
 

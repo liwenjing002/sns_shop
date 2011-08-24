@@ -71,11 +71,12 @@
         beforeSubmit:function(formData, jqForm, options){
           if($(".is_location").attr("checked")==true){
             if( $("#note_location").attr("value")==""){
-              alert(67)
+              alert(1)
                     formData.push({name:"note[l_coordinate]",value:MapObject.myLocation.lat() }); 
                     formData.push({name:"note[d_coordinate]",value:MapObject.myLocation.lng() }); 
           }
           }
+          
 
         }
       };

@@ -7,7 +7,7 @@ class MarkersController < ApplicationController
     case params[:type]
     when "own"
       map = user.map
-      @markers = Marker.find_all_by_owner_id map.id
+      @markers = Marker.find_my_marker map.id
     when "follow"
       map = user.map
       @markers = map.markers
@@ -28,7 +28,12 @@ class MarkersController < ApplicationController
       if @marker.update_attributes(params[:marker])
         if @marker.object_type == 'Note'
           @stream_item = @marker.object.stream_item
-          @marker.marker_html = "#{@marker.marker_html}<div id='location_now'><span color: #5F9128>当前位置：</span>#{@marker.geocode_position}</div>"
+          
+          html = "#{@marker.marker_html}<div id='location_now'><span color: #5F9128>当前位置：</span>#{@marker.geocode_position}</div>".html_safe
+          html = html.gsub(/\'/, '"')
+          html = html.gsub(/[\n\r]/,'')
+          @marker.marker_html = html.html_safe
+          @marker.save
           render(:template => "notes/create") 
         end
       else
@@ -69,7 +74,7 @@ class MarkersController < ApplicationController
         return
       end
     end
-     render :json => {:success=>false}
+    render :json => {:success=>false}
   end
 
 
@@ -86,10 +91,17 @@ class MarkersController < ApplicationController
       res << {:html=>place.marker.marker_html,:lat=>place.marker.marker_latitude,:lng=>place.marker.marker_longitude}
     
     }
-     render :json => res
+    render :json => res
   end
   def test
-end
+  end
+  
+  def locus
+    marker = Marker.find(params[:marker_id])
+    @markers = Marker.find(:all,:conditions=["DATE_FORMAT(created_at,'%y%m%d') = ? and object_type != 'Place'",marker.created_at.strftime("%y%m%d")])
+    @markers
+  end
+  
   
   
 end
