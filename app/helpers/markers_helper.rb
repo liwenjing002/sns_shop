@@ -18,24 +18,21 @@ module MarkersHelper
   	html << "#{render :partial => 'common/place_info',:locals => {:place=>object,:marker=>marker}}"
     html = html.gsub(/\'/, '"')
     html = html.gsub(/[\n\r]/,'')
-    marker.marker_html = html.html_safe
-    marker.save
-    html
   end
   
-  def note_html(marker,object)
+  def streamitem_html(marker,object)
     html =''
     html << "#{render :partial => 'common/marker_info',:locals => {:marker=> marker}}"
     html = html.gsub(/\'/, '"')
     html = html.gsub(/[\n\r]/,'')
-    
-    if marker.marker_html
-    marker.marker_html = (marker.marker_html+ html.html_safe) 
-    else
-    marker.marker_html = html.html_safe 
-    end
-    marker.save
-    marker.marker_html
+#    
+#    if marker.marker_html
+#    marker.marker_html = (marker.marker_html+ html.html_safe) 
+#    else
+#    marker.marker_html = html.html_safe 
+#    end
+#    marker.save
+#    marker.marker_html
   end
   
 end

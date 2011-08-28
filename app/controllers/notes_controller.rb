@@ -35,27 +35,26 @@ class NotesController < ApplicationController
 
   def create
     @person = @logged_in
-    @note = Note.new(params[:note])
+    params[:note][:person_id] =  @logged_in.id
+    @note = Note.create(params[:note])
     @note.group_id = params[:note][:group_id] if params[:note] and params[:note][:group_id]
     if @note.group 
       raise 'error' unless @note.group.blog? and @note.group.can_post?(@logged_in)
     end
     @note.person = @logged_in
     unless params[:note][:location]=='' and params[:note][:l_coordinate]=="" and params[:note][:d_coordinate]
-      marker_last = Marker.find_by_marker_latitude_and_marker_longitude(params[:note][:l_coordinate],params[:note][:d_coordinate]) if params[:note][:l_coordinate] and params[:note][:d_coordinate]
-      marker_last = Marker.find_by_geocode_position(params[:note][:location] ) if marker_last ==nil and params[:note][:location] 
-      if marker_last 
-        @marker_at = marker_last
-      else
+      @marker_last = Marker.find(:all,:conditions=>["marker_latitude =? and marker_longitude = ? and owner_id =?",params[:note][:l_coordinate],params[:note][:d_coordinate],@logged_in.id],:order=>"id desc",:limit=>1)if params[:note][:l_coordinate] and params[:note][:d_coordinate]
+      @marker_last = Marker.find(:conditions=>["geocode_position=? and owner_id =?",params[:note][:location],@logged_in.id],:order=>"id desc" ,:limit=>1) if @marker_last ==nil and params[:note][:location] 
       @marker_at = Marker.new(params[:marker])
-      @marker_at.object_type = "Note"
+     
       @marker_at.geocode_position = params[:note][:location] if params[:note][:location]
       @marker_at.marker_latitude = params[:note][:l_coordinate] if params[:note][:l_coordinate]
       @marker_at.marker_longitude = params[:note][:d_coordinate] if params[:note][:location]
       @marker_at.owner = @logged_in
-      @marker_at.object_id = @note.id
       MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker_at})
-      end
+
+      @marker_at.object_type = "StreamItem"
+      @marker_at.object_id = @note.stream_item_id
     end
     if params[:note][:destination]!=''
       marker_last = Marker.find_all_by_geocode_position params[:note][:location] if params[:note][:location]

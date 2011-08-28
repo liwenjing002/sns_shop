@@ -2,9 +2,11 @@
 if(MapObject){
 
 <%if @marker_at %>
+<%if @marker_last%>
 MapObject.infoWindow.close();
-MapObject.markerClusterer.removeMarker(MapObject.markers.get('<%=@marker_at.id%>'),false);
-MapObject.markers.remove('<%=@marker_at.id%>')
+MapObject.markerClusterer.removeMarker(MapObject.markers.get('<%@marker_last[0].id%>'),false);
+MapObject.markers.remove('<%@marker_last[0].id%>')
+<%end%>
   <%if is_blank(@marker_at.marker_latitude) and is_blank(@marker_at.marker_longitude) %>
   
     latLng = new google.maps.LatLng('<%=@marker_at.marker_latitude%>', '<%= @marker_at.marker_longitude %>');
@@ -21,7 +23,6 @@ MapObject.markers.remove('<%=@marker_at.id%>')
     }, function(responses){
     string = MapObject.split_responses_address(responses);
     html = "<div id='location_now'>"+"<span color: #5F9128>当前位置：</span>"+string 
-    alert(html)
     var fn = MapObject.markerClickFunction('<%= raw mark_html(@marker_at,nil) %>'+html, marker);
     google.maps.event.addListener(marker, 'mouseover', fn);
     google.maps.event.addListener(marker, 'mouseout', MapObject.markerCloseFunction);

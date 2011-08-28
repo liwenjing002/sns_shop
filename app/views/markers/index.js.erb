@@ -61,12 +61,9 @@ if (MapObject.home_marker !=null){
     animation: google.maps.Animation.DROP,
     position: latLng
     });
-    <%if is_blank(marker.marker_html) %>
-    var fn = MapObject.markerClickFunction('<%= raw marker.marker_html %>', marker);
-    <%else%>
-    html ='<%= mark_html(marker,marker.object) %>'
+    html ='<%= raw mark_html(marker,marker.object) %>'
     var fn = MapObject.markerClickFunction(html, marker);
-    <%end%>
+
     //google.maps.event.addListener(marker, 'click', fn);
     google.maps.event.addListener(marker, 'mouseover', fn);
     MapObject.markers_array.push(marker);
