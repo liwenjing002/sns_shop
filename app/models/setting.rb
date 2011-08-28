@@ -89,8 +89,8 @@ class Setting < ActiveRecord::Base
     end
 
     def get_hash_of_settings_in_db(site_id=nil)
-      Setting.connection.execute("set group_concat_max_len = 2048")
-      Setting.connection.select_all("select md5(lower(group_concat(section, name order by lower(section), lower(name)))) as hash from settings where #{site_id ? ('site_id = ' + site_id.to_s) : 'global = 1'}").first['hash']
+#      Setting.connection.execute("set group_concat_max_len = 2048")
+#      Setting.connection.select_all("select md5(lower(group_concat(section, name order by lower(section), lower(name)))) as hash from settings where #{site_id ? ('site_id = ' + site_id.to_s) : 'global = 1'}").first['hash']
     end
 
     def get_hash_of_settings_in_yaml(settings, global=false)
