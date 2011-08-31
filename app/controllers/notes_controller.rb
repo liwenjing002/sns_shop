@@ -46,42 +46,33 @@ class NotesController < ApplicationController
       @marker_last = Marker.find(:all,:conditions=>["marker_latitude =? and marker_longitude = ? and owner_id =?",params[:note][:l_coordinate],params[:note][:d_coordinate],@logged_in.id],:order=>"id desc",:limit=>1)if params[:note][:l_coordinate] and params[:note][:d_coordinate]
       @marker_last = Marker.find(:conditions=>["geocode_position=? and owner_id =?",params[:note][:location],@logged_in.id],:order=>"id desc" ,:limit=>1) if @marker_last ==nil and params[:note][:location] 
       @marker_at = Marker.new(params[:marker])
-     
       @marker_at.geocode_position = params[:note][:location] if params[:note][:location]
       @marker_at.marker_latitude = params[:note][:l_coordinate] if params[:note][:l_coordinate]
       @marker_at.marker_longitude = params[:note][:d_coordinate] if params[:note][:location]
       @marker_at.owner = @logged_in
       MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker_at})
-
       @marker_at.object_type = "StreamItem"
       @marker_at.object_id = @note.stream_item_id
+      @marker_at.save
+      
+      @last_destination = @marker_at.get_last_destination(nil)
+      
+      
     end
     if params[:note][:destination]!=''
-      marker_last = Marker.find_all_by_geocode_position params[:note][:location] if params[:note][:location]
-      if marker_last 
-        @marker_at = marker_last
-      else
       @marker_to = Marker.new(params[:marker])
-      @marker_to.object_type = "Note"
+      @marker_to.object_type = "Destination"
+      @marker_to.object_id = @note.stream_item_id
       @marker_to.geocode_position = params[:note][:destination]
       @marker_to.owner = @logged_in
+      @marker_to.save
       MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker_to})
-      end
     end
     @note.marker_at_id = @marker_at.id if @marker_at
     @note.marker_to_id = @marker_to.id if @marker_to
-    if @note.save
-      if @marker_at
-        @marker_at.object_id = @note.id 
-        @marker_at.save
-      end
-      if @marker_to
-        @marker_to.object_id = @note.id
-        @marker_to.save
-      end
+    @note.save
       @stream_item = @note.stream_item
       flash[:notice] = t('notes.saved')
-    end
   end
 
   def edit

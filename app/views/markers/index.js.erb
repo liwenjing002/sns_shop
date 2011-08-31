@@ -46,22 +46,23 @@ if (MapObject.home_marker !=null){
 
 
 
-
+//初始化marker 包括place 和 状态
 <%if @markers%>
   //alert('<%= @markers.to_json.html_safe%>')
   //marker_json = eval('(' + '<%= @markers.to_json%>'+ ')');
   // alert(obj2str(marker_json))
-
+   var waypoints = [];
   <%  @markers.each do|marker|%>
+   
     latLng = new google.maps.LatLng('<%=marker.marker_latitude%>', '<%= marker.marker_longitude %>');
-
+     waypoints.push({ location: latLng, stopover: true });
     marker = new google.maps.Marker({
     map: MapObject.map,
     draggable: false,
     animation: google.maps.Animation.DROP,
     position: latLng
     });
-    html ='<%= raw mark_html(marker,marker.object) %>'
+    html ='<%= raw mark_html(marker) %>'
     var fn = MapObject.markerClickFunction(html, marker);
 
     //google.maps.event.addListener(marker, 'click', fn);
@@ -71,6 +72,15 @@ if (MapObject.home_marker !=null){
   <%end%>
 
 <%end%>
+    
+    //为地理位置的marker需要构建页面路线,有两个marker以上才开始构建路线
+    <%if @markers and @markers[0].object_type != 'Place' and @markers.length >1%>
+    start =  new google.maps.LatLng('<%=@markers[0].marker_latitude%>', '<%= @markers[0].marker_longitude %>');
+    end =  new google.maps.LatLng('<%=@markers[@markers.length-1].marker_latitude%>', '<%= @markers[@markers.length-1].marker_longitude %>');
+    MapObject.calcRoute_waypoints(start,end,waypoints)
+    <%end%>
+ 
+    
 
 <%if @friends%>
 

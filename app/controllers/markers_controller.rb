@@ -17,8 +17,12 @@ class MarkersController < ApplicationController
       @friends = user.friends
     when 'schedule'
       @plans = user.plans
-      # render :json => @my_home.to_json
+    when 'location'
+       @markers = Marker.find_my_location 
+    when 'locus'
+      @markers = Marker.find_my_locus 
     end
+    
     #render :json => Marker.find_all_by_map_id(map_id).to_json
   end
 
@@ -26,21 +30,24 @@ class MarkersController < ApplicationController
     if params[:marker][:id]
       @marker = Marker.find(params[:marker][:id])
       if @marker.update_attributes(params[:marker])
-        if @marker.object_type == 'Note'
-          @stream_item = @marker.object.stream_item
+        if @marker.object_type == 'StreamItem'
+          @stream_item = @marker.object
           
           html = "#{@marker.marker_html}<div id='location_now'><span color: #5F9128>当前位置：</span>#{@marker.geocode_position}</div>".html_safe
           html = html.gsub(/\'/, '"')
           html = html.gsub(/[\n\r]/,'')
           @marker.marker_html = html.html_safe
           @marker.save
-          render(:template => "notes/create") 
+          render :json => {:success=>false} 
+        else
+            render :json => {:success=>false} 
         end
       else
         render :json => {:success=>false} 
       end
-	 
-    end
+  else
+     render :json => {:success=>false} 
+  end
   end
 
   def destroy

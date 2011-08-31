@@ -39,6 +39,8 @@
       <li><span style= "cursor:pointer" title="<%= t('people.marker_i_or_hei_own',:iorhei=>(@person==@logged_in? '我':'Ta')) %>" class ='lock-icon' onclick="MapObject.init_marker_from_data('own','<%=((!@person or @person==@logged_in)? "":@person.id)%>')">
         <%= t('people.i_or_hei_own',:iorhei=>(@person==@logged_in? '我':'Ta')) %></span></li>
       <li><span style= "cursor:pointer" title="<%= t('people.marker_rander_to') %>" class ='email-icon'onclick="MapObject.init_marker_from_data('rander')" ><%= t('people.marker_rander') %></span></li>
+      <li><span style= "cursor:pointer" title="我的位置" class ='email-icon'onclick="MapObject.init_marker_from_data('location')" >我的位置</span></li>
+      <li><span style= "cursor:pointer" title="我的足迹" class ='email-icon'onclick="MapObject.init_marker_from_data('locus')" >我的足迹</span></li>
     </ul>
   </div>
 

@@ -29,6 +29,8 @@ var MapObject =  {
     polygons: [], 						  //contains raw data, array of arrays (first element could be a hash containing options)
     polylines: [], 						  //contains raw data, array of arrays (first element could be a hash containing options)
     circles: [], 
+    directionsService: new google.maps.DirectionsService(),
+    directionsDisplay: new google.maps.DirectionsRenderer({suppressMarkers:true}),
     
     //初始化map
     initialize: function (id) {
@@ -50,6 +52,8 @@ var MapObject =  {
         this.initControl();
         // Initialize the local searcher
         google.maps.event.trigger(this.map, 'resize');
+        
+        MapObject.directionsDisplay.setMap(this.map);
 
 
 
@@ -530,8 +534,35 @@ var MapObject =  {
             MapObject.infoWindow.close();
 
         };
-    }
+    },
+    calcRoute:function(start,end){
     
+    var request = {
+        origin:start, 
+        destination:end,
+        travelMode: google.maps.DirectionsTravelMode.WALKING
+    };
+    alert(start)
+    MapObject.directionsService.route(request, function(response, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
+        MapObject.directionsDisplay.setDirections(response);
+      }
+    })},
+
+    
+        calcRoute_waypoints:function(start,end,waypoints){
+    alert(waypoints.length)
+    var request = {
+        origin:start, 
+        destination:end,
+        waypoints: waypoints,
+        travelMode: google.maps.DirectionsTravelMode.WALKING
+    };
+    MapObject.directionsService.route(request, function(response, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
+        MapObject.directionsDisplay.setDirections(response);
+      }
+    })}
        
     
   

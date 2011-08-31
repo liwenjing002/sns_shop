@@ -17,7 +17,7 @@ if(MapObject.markers.get(<%=@marker.id%>)){
 	MapObject.markerClusterer.redraw();
 }
 
-fn = MapObject.markerClickFunction('<%= raw place_html(@marker,@place) %>', marker);
+fn = MapObject.markerClickFunction('<%= raw place_html(@marker) %>', marker);
 
 google.maps.event.addListener(marker, 'click', fn);
 google.maps.event.addListener(marker, 'mouseover', fn);
