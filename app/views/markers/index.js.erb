@@ -1,7 +1,6 @@
 
 MapObject.markers_array = [];
-
-
+<%#*MapObject.directionsDisplay.setMap(null);%>
 if (MapObject.home_marker !=null){
 	MapObject.home_marker.setMap(null)
 }
@@ -74,7 +73,7 @@ if (MapObject.home_marker !=null){
 <%end%>
     
     //为地理位置的marker需要构建页面路线,有两个marker以上才开始构建路线
-    <%if @markers and @markers[0].object_type != 'Place' and @markers.length >1%>
+    <%if @markers and @markers.length >1 and @markers[0].object_type != 'Place' %>
     start =  new google.maps.LatLng('<%=@markers[0].marker_latitude%>', '<%= @markers[0].marker_longitude %>');
     end =  new google.maps.LatLng('<%=@markers[@markers.length-1].marker_latitude%>', '<%= @markers[@markers.length-1].marker_longitude %>');
     MapObject.calcRoute_waypoints(start,end,waypoints)
@@ -119,7 +118,7 @@ MapObject.markerClusterer.clearMarkers();
 MapObject.markerClusterer.addMarkers(MapObject.markers_array);
 
 }else{
-var mcOptions = {gridSize: 50, maxZoom: 15,minZoom: 5};
+var mcOptions = {gridSize: 50, maxZoom: 10,minZoom: 5};
 MapObject.markerClusterer = new MarkerClusterer(MapObject.map, MapObject.markers_array,mcOptions);
 }
 

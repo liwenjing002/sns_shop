@@ -1,4 +1,3 @@
-
 if(MapObject){
 
 <%if @marker_at %>
@@ -14,7 +13,7 @@ MapObject.markers.remove('<%=  @marker_last[0].id%>')
     map: MapObject.map,
     draggable: false,
     <%#*icon: "/images/map/home.png",%>
-    animation: google.maps.Animation.DROP,
+    animation: google.maps.Animation.BOUNCE,
     position: latLng
     });
 
@@ -22,7 +21,7 @@ MapObject.markers.remove('<%=  @marker_last[0].id%>')
     latLng: latLng
     }, function(responses){
     string = MapObject.split_responses_address(responses);
-    html = "<div id='location_now'>"+"<span color: #5F9128>当前位置：</span>"+string 
+    html = '<div id="location_now">'+'<span color: #5F9128>当前位置：</span>'+string 
     var fn = MapObject.markerClickFunction('<%= raw mark_html(@marker_at) %>'+html, marker);
     google.maps.event.addListener(marker, 'mouseover', fn);
     google.maps.event.addListener(marker, 'mouseout', MapObject.markerCloseFunction);
@@ -40,6 +39,9 @@ MapObject.markers.remove('<%=  @marker_last[0].id%>')
   <%else%> 
     MapObject.re_geocodePosition('<%=  @marker_at.geocode_position%>',null,'<%= raw mark_html(@marker_at) %>','<%=@marker_at.id%>');
   <%end%>
+   
+
+    
 <%end%>
 
 <%if @marker_to%>
@@ -50,7 +52,7 @@ MapObject.markers.remove('<%=  @marker_last[0].id%>')
     map: MapObject.map,
     draggable: false,
     <%#*icon: "/images/map/home.png",%>
-    animation: google.maps.Animation.DROP,
+    animation: google.maps.Animation.BOUNCE,
     position: latLng
     });
 

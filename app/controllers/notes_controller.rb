@@ -55,7 +55,7 @@ class NotesController < ApplicationController
       @marker_at.object_id = @note.stream_item_id
       @marker_at.save
       
-      @last_destination = @marker_at.get_last_destination(nil)
+      @last_destination = @marker_at.get_last_destination(Time.new)
       
       
     end

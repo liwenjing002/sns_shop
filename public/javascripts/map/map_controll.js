@@ -30,7 +30,9 @@ var MapObject =  {
     polylines: [], 						  //contains raw data, array of arrays (first element could be a hash containing options)
     circles: [], 
     directionsService: new google.maps.DirectionsService(),
-    directionsDisplay: new google.maps.DirectionsRenderer({suppressMarkers:true}),
+    directionsDisplay: new google.maps.DirectionsRenderer({
+        suppressMarkers:true
+    }),
     
     //初始化map
     initialize: function (id) {
@@ -387,7 +389,7 @@ var MapObject =  {
     },
     
     marker_locus:function(marker_id){
-       $.ajax({                                                
+        $.ajax({                                                
             type: "GET",    
             url: "/markers/locus?marker_id="+marker_id,                                      
             success: function(message){
@@ -410,7 +412,7 @@ var MapObject =  {
                 }
                 //alert("1 "+ string)
                 data = "marker[id]="+marker_id+ "&marker[geocode_position]="+ string +"&marker[marker_latitude]=" +markerLatLng.lat()+ "&marker[marker_longitude]=" +markerLatLng.lng(),  
-//                alert($("#location_now").html())
+                //                alert($("#location_now").html())
                 $("#location_now").html("<span color: #5F9128>当前位置：</span>"+string );
              		
                 MapObject.updata_data_marker(data,marker_id)
@@ -449,7 +451,7 @@ var MapObject =  {
             marker = new google.maps.Marker({
                 map: MapObject.map,
                 draggable: false,
-                animation: google.maps.Animation.DROP,
+                animation: google.maps.Animation.BOUNCE,
                 position: latLng
             });
         }
@@ -464,7 +466,7 @@ var MapObject =  {
                 google.maps.event.addListener(marker, 'mouseover', fn);
             }
         }
-         MapObject.map.setCenter(latLng)
+        MapObject.map.setCenter(latLng)
         if(home_Position ==true){
             MapObject.home_marker = marker;
             google.maps.event.addListener(marker, 'click', function(){
@@ -477,7 +479,7 @@ var MapObject =  {
             MapObject.markerClusterer.addMarker(marker,true);
             MapObject.markers_array.push(marker);
             MapObject.markers.put(home_Position,marker);
-             data = "marker[id]="+home_Position+ "&marker[marker_latitude]=" +latLng.lat()+ "&marker[marker_longitude]=" +latLng.lng(),  
+            data = "marker[id]="+home_Position+ "&marker[marker_latitude]=" +latLng.lat()+ "&marker[marker_longitude]=" +latLng.lng(),  
             MapObject.updata_data_marker(data,home_Position)
         }
       
@@ -516,6 +518,8 @@ var MapObject =  {
                 e.preventDefault();
             }
             //alert(marker)
+//            alert(html)
+            MapObject.infoWindow.close()
             MapObject.infoWindow.setContent(html);
             //MapObject.infoWindow.setPosition(latlng);
             MapObject.infoWindow.open(MapObject.map,marker);
@@ -537,32 +541,34 @@ var MapObject =  {
     },
     calcRoute:function(start,end){
     
-    var request = {
-        origin:start, 
-        destination:end,
-        travelMode: google.maps.DirectionsTravelMode.WALKING
-    };
-    alert(start)
-    MapObject.directionsService.route(request, function(response, status) {
-      if (status == google.maps.DirectionsStatus.OK) {
-        MapObject.directionsDisplay.setDirections(response);
-      }
-    })},
+        var request = {
+            origin:start, 
+            destination:end,
+            travelMode: google.maps.DirectionsTravelMode.WALKING
+        };
+        alert(start)
+        MapObject.directionsService.route(request, function(response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                MapObject.directionsDisplay.setDirections(response);
+            }
+        })
+        },
 
     
-        calcRoute_waypoints:function(start,end,waypoints){
-    alert(waypoints.length)
-    var request = {
-        origin:start, 
-        destination:end,
-        waypoints: waypoints,
-        travelMode: google.maps.DirectionsTravelMode.WALKING
-    };
-    MapObject.directionsService.route(request, function(response, status) {
-      if (status == google.maps.DirectionsStatus.OK) {
-        MapObject.directionsDisplay.setDirections(response);
-      }
-    })}
+    calcRoute_waypoints:function(start,end,waypoints){
+        var request = {
+            origin:start, 
+            destination:end,
+            waypoints: waypoints,
+            travelMode: google.maps.DirectionsTravelMode.WALKING
+        };
+        MapObject.directionsService.route(request, function(response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                MapObject.directionsDisplay.setDirections(response);
+                MapObject.directionsDisplay.setMap(MapObject.map);
+            }
+        })
+        }
        
     
   

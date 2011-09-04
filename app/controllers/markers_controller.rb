@@ -20,7 +20,7 @@ class MarkersController < ApplicationController
     when 'location'
        @markers = Marker.find_my_location 
     when 'locus'
-      @markers = Marker.find_my_locus 
+      @markers = Marker.find_my_locus Time.new
     end
     
     #render :json => Marker.find_all_by_map_id(map_id).to_json
