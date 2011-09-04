@@ -568,9 +568,23 @@ var MapObject =  {
                 MapObject.directionsDisplay.setMap(MapObject.map);
             }
         })
-        }
+        },
        
-    
+   
+    marker_last_next:function(marker_id,key){
+        if(key ==1){
+            key = 'last'
+        }else{
+            key = 'next'
+        }
+                        $.ajax({                                                
+            type: "get",                                    
+            url: "/markers/marker_l_n",                                     
+            data: "id=" + marker_id  +"&key="+ key,    
+            success: function(message){                 
+            } 
+        });
+    }
   
 }
 

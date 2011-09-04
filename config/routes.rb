@@ -45,6 +45,7 @@ OneBody::Application.routes.draw do
   resources :plans
   resources :markers do
     collection do
+      get :marker_l_n
       post :follow
       post :search
       get :locus

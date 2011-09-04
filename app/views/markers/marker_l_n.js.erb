@@ -1,0 +1,27 @@
+<%if @marker%>
+
+  marker = null;
+  if(MapObject.markers.get(<%=@marker.id%>)){
+
+  marker = MapObject.markers.get(<%=@marker.id%>)
+
+  }else{
+
+          marker = MapObject.temp_marker
+          MapObject.markers_array.push(MapObject.temp_marker);
+          MapObject.markers.put(<%=@marker.id%>,marker);
+          MapObject.markerClusterer.addMarker(marker,true)
+          MapObject.markerClusterer.redraw();
+  fn = MapObject.markerClickFunction('<%= raw mark_html(@marker) %>', marker);
+  google.maps.event.addListener(marker, 'click', fn);
+  google.maps.event.addListener(marker, 'mouseover', fn);
+  google.maps.event.addListener(marker, 'mouseout', MapObject.markerCloseFunction);
+  }
+  google.maps.event.trigger(marker, 'mouseover',1);
+  MapObject.map.setCenter(marker.getPosition());
+
+
+<%end%>
+
+
+

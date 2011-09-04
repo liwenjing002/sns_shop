@@ -21,6 +21,7 @@ class MarkersController < ApplicationController
        @markers = Marker.find_my_location 
     when 'locus'
       @markers = Marker.find_my_locus Time.new
+      
     end
     
     #render :json => Marker.find_all_by_map_id(map_id).to_json
@@ -109,6 +110,10 @@ class MarkersController < ApplicationController
     @markers
   end
   
+  #上一个marker 和下一个marker,地理位置的状态
+  def marker_l_n
+    @marker = Marker.marker_last_next(params[:id], params[:key])
+  end
   
   
 end
