@@ -50,14 +50,16 @@
       <ul class="tabs">
         <li class = "li_php"><a href="#"><%= t('people.php') %></a></li>
         <li class = "li_profile"><a href="#"><%= t('people.profile') %></a></li>
-         <li class = "li_profile"><a href="#">我的小组</a></li>
-          <li class = "li_profile"><a href="#">我的地点</a></li>
+         <li class = "li_group"><a href="#">我的小组</a></li>
+         <li class = "li_profile"><a href="#">我的地点</a></li>
       </ul>
     </div>
     <br/>
     <div class="panes">
       <%= render :partial => 'show_php'%>
       <%= render_cell :people,:profile,:person=>@person,:logged_in =>@logged_in,:verses=>@verses%>
+      <%= render_cell :people,:group,:person=>@person,:logged_in =>@logged_in%>
+      <%= render_cell :people,:place,:person=>@person,:logged_in =>@logged_in%>
     </div>
   </div>
 </div>

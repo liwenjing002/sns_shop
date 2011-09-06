@@ -36,6 +36,8 @@ class NotesController < ApplicationController
   def create
     @person = @logged_in
     params[:note][:person_id] =  @logged_in.id
+    travel_type = params[:note][:travel_type] if params[:note][:travel_type]
+    params[:note].delete(:travel_type) if params[:note][:travel_type]
     @note = Note.create(params[:note])
     @note.group_id = params[:note][:group_id] if params[:note] and params[:note][:group_id]
     if @note.group 
@@ -64,6 +66,7 @@ class NotesController < ApplicationController
       @marker_to.object_type = "Destination"
       @marker_to.object_id = @note.stream_item_id
       @marker_to.geocode_position = params[:note][:destination]
+      @marker_to.travel_type = travel_type 
       @marker_to.owner = @logged_in
       @marker_to.save
       MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker_to})

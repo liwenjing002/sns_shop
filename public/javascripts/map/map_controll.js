@@ -211,6 +211,7 @@ var MapObject =  {
                 //                alert(MapObject.myLocation)
                 MapObject.map.setCenter(initialLocation);
                 MapObject.map.setZoom(10);
+                MapObject.geocodePosition_my_location(initialLocation)
             }, function() {
                 handleNoGeolocation(browserSupportFlag);
             },{
@@ -227,6 +228,7 @@ var MapObject =  {
                 MapObject.myLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
                 MapObject.map.setCenter(initialLocation);
                 MapObject.map.setZoom(10);
+                MapObject.geocodePosition_my_location(initialLocation)
             }, function() {
                 handleNoGeoLocation(browserSupportFlag);
             });
@@ -416,6 +418,25 @@ var MapObject =  {
                 $("#location_now").html("<span color: #5F9128>当前位置：</span>"+string );
              		
                 MapObject.updata_data_marker(data,marker_id)
+            } else {
+                alert("none")
+            }
+        });
+    },
+    
+    //反向地址解析 当前位置
+    geocodePosition_my_location:function(latLng){
+        MapObject.geocoder.geocode({
+            latLng: latLng
+        }, function(responses) {
+            if (responses && responses.length > 0) {
+
+                //MapObject.updateMarkerAddress(marker_id,responses);
+                string = '';
+                for(i = responses[0].address_components.length-1;i>=0;i--){
+                    string += (responses[0].address_components[i].long_name)
+                }
+                MapObject.myLocation_address = string
             } else {
                 alert("none")
             }

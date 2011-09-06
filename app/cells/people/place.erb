@@ -1,0 +1,11 @@
+<div class="object">
+<% @places.each do |place| %>
+  <div class="place_itme">
+    <%= link_to image_tag(
+      place.picture!=nil ? place.picture.photo.url(:tn) : 'clean/group.tn.png',
+      :alt   => place.place_name,
+      :class => 'icon',:size=>"32x32"), [:location,place],:target=>"_blank" %>
+<%= place.place_name %>
+  </div>
+<%end%>
+</div>

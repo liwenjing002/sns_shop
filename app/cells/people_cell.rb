@@ -21,6 +21,21 @@ class PeopleCell < Cell::Rails
     render
   end
   
+    def group
+    @flash = parent_controller.flash
+    @logged_in = options[:logged_in]
+    @person= options[:person]
+    render
+  end
+  
+   def place
+    @flash = parent_controller.flash
+    @logged_in = options[:logged_in]
+    @person= options[:person]
+    @places = @person.places
+    render
+  end
+  
   
   def pending_updates
     @person= options[:person]

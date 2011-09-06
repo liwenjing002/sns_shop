@@ -22,26 +22,26 @@ if (MapObject.home_marker !=null){
 <%else%>
   MapObject.re_geocodePosition('<%=@my_home.home_address%>',"/images/map/home.png",'我家在：<%= @my_home.home_address%>',<%=@my_home.id%>);
 <%end%>
-  
+
 <%if @ta_home %>
   <%if @ta_home.home_latitude and @ta_home.home_longitude%>
-  latLng = new google.maps.LatLng(<%@ta_home.home_latitude%>, <%= @ta_home.home_longitude %>);
-  MapObject.home_marker = new google.maps.Marker({
-  map: MapObject.map,
-  draggable: false,
-  icon: "/images/map/home.png",
-  animation: google.maps.Animation.DROP,
-  position: latLng
-  });
-  var fn = MapObject.markerClickFunction('Ta家在：<%= @ta_home.home_address%>', MapObject.home_marker);
-  google.maps.event.addListener(MapObject.home_marker, 'mouseover', fn);
-  MapObject.map.setCenter(latLng)
+    latLng = new google.maps.LatLng(<%@ta_home.home_latitude%>, <%= @ta_home.home_longitude %>);
+    MapObject.home_marker = new google.maps.Marker({
+    map: MapObject.map,
+    draggable: false,
+    icon: "/images/map/home.png",
+    animation: google.maps.Animation.DROP,
+    position: latLng
+    });
+    var fn = MapObject.markerClickFunction('Ta家在：<%= @ta_home.home_address%>', MapObject.home_marker);
+    google.maps.event.addListener(MapObject.home_marker, 'mouseover', fn);
+    MapObject.map.setCenter(latLng)
 
-  //MapObject.markerClusterer.addMarker(marker,true);
-<%else%> 
-  MapObject.re_geocodePosition('<%=@ta_home.home_address%>',"/images/map/home.png",'Ta家在：<%= @ta_home.home_address%>',<%=@my_home.id%>);
-<%end%>
+    //MapObject.markerClusterer.addMarker(marker,true);
+  <%else%> 
+    MapObject.re_geocodePosition('<%=@ta_home.home_address%>',"/images/map/home.png",'Ta家在：<%= @ta_home.home_address%>',<%=@my_home.id%>);
   <%end%>
+<%end%>
 
 
 
@@ -50,11 +50,17 @@ if (MapObject.home_marker !=null){
   //alert('<%= @markers.to_json.html_safe%>')
   //marker_json = eval('(' + '<%= @markers.to_json%>'+ ')');
   // alert(obj2str(marker_json))
-   var waypoints = [];
+  var waypoints = [];
   <%  @markers.each do|marker|%>
-   
+
     latLng = new google.maps.LatLng('<%=marker.marker_latitude%>', '<%= marker.marker_longitude %>');
-     waypoints.push({ location: latLng, stopover: true });
+    <%if marker.object_type =="Destination"%>
+      <%if marker!= @markers[0]%>
+        waypoints.push({ location: latLng, stopover: false });
+      <%else%>
+        waypoints.push({ location: latLng, stopover: true });
+      <%end%>
+    <%end%>
     marker = new google.maps.Marker({
     map: MapObject.map,
     draggable: false,
@@ -71,28 +77,28 @@ if (MapObject.home_marker !=null){
   <%end%>
 
 <%end%>
-    
-    //为地理位置的marker需要构建页面路线,有两个marker以上才开始构建路线
-    <%if @markers and @markers.length >1 and @markers[0].object_type != 'Place' %>
-    start =  new google.maps.LatLng('<%=@markers[0].marker_latitude%>', '<%= @markers[0].marker_longitude %>');
-    end =  new google.maps.LatLng('<%=@markers[@markers.length-1].marker_latitude%>', '<%= @markers[@markers.length-1].marker_longitude %>');
-    MapObject.calcRoute_waypoints(start,end,waypoints)
-    <%end%>
- 
-    
+
+//为地理位置的marker需要构建页面路线,有两个marker以上才开始构建路线
+<%if @markers and @markers.length >1 and @markers[0].object_type != 'Place' %>
+  start =  new google.maps.LatLng('<%=@markers[0].marker_latitude%>', '<%= @markers[0].marker_longitude %>');
+  end =  new google.maps.LatLng('<%=@markers[@markers.length-1].marker_latitude%>', '<%= @markers[@markers.length-1].marker_longitude %>');
+  MapObject.calcRoute_waypoints(start,end,waypoints)
+<%end%>
+
+
 
 <%if @friends%>
 
   <% @friends.each do |friend| %>
     <%if friend.postition.home_latitude and friend.postition.home_longitude%>
       latLng = new google.maps.LatLng(<%friend.postition.home_latitude%>, <%= friend.postition.home_longitude %>); 
-              marker = new google.maps.Marker({
+      marker = new google.maps.Marker({
       map: MapObject.map,
       draggable: false,
       animation: google.maps.Animation.DROP,
       position: latLng
       });
-              var fn = MapObject.markerClickFunction('<%=friend.name%>'+'Ta家在：<%= friend.postition.home_address%>', marker);
+      var fn = MapObject.markerClickFunction('<%=friend.name%>'+'Ta家在：<%= friend.postition.home_address%>', marker);
       google.maps.event.addListener(marker, 'click', fn);
       MapObject.markers_array.push(marker);
     <%else%>
