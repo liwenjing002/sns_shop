@@ -44,10 +44,9 @@ MapObject.markers.remove('<%=  @marker_last[0].id%>')
     
 <%end%>
 
-<%if @marker_to%>
-<%if is_blank(@marker_to.marker_latitude) and is_blank(@marker_to.marker_longitude) %>
+<%if is_blank(@marker_at.destin_latitude) and is_blank(@marker_at.destin_longitude) %>
   
-    latLng = new google.maps.LatLng('<%=  @marker_to.marker_latitude%>', '<%= @marker_to.marker_longitude %>');
+    latLng = new google.maps.LatLng('<%=  @marker_at.destin_latitude%>', '<%= @marker_at.destin_longitude %>');
     marker = new google.maps.Marker({
     map: MapObject.map,
     draggable: false,
@@ -63,12 +62,12 @@ MapObject.markers.remove('<%=  @marker_last[0].id%>')
     html = "<div id='location_now'>"+"<span color: #5F9128>想去的位置：</span>"+string 
     var fn = MapObject.markerClickFunction(html, marker);
     google.maps.event.addListener(marker, 'mouseover', fn);
-    google.maps.event.addListener(marker, 'mouseout', MapObject.markerCloseFunction);
+    //google.maps.event.addListener(marker, 'mouseout', MapObject.markerCloseFunction);
     MapObject.markers_array.push(marker);
-    MapObject.markers.put(<%=  @marker_to.id%>,marker);
+    MapObject.markers.put(<%=  @marker_at.id%>,marker);
     MapObject.map.setCenter(latLng)
-    data = "marker[id]="+<%=  @marker_to.id%>+ "&marker[geocode_position]="+ string +"&marker[marker_latitude]=" +latLng.lat()+ "&marker[marker_longitude]=" +latLng.lng(),  
-    MapObject.updata_data_marker(data,<%=  @marker_to.id%>)
+    data = "marker[id]="+<%=  @marker_at.id%>+ "&marker[geocode_position]="+ string +"&marker[marker_latitude]=" +latLng.lat()+ "&marker[marker_longitude]=" +latLng.lng(),  
+    MapObject.updata_data_marker(data,<%=  @marker_at.id%>)
     });
 
 
@@ -77,12 +76,11 @@ MapObject.markers.remove('<%=  @marker_last[0].id%>')
     //MapObject.markerClusterer.addMarker(marker,true);
   <%else%> 
     alert()
-    MapObject.re_geocodePosition('<%=  @marker_to.geocode_position%>',null,'<%= raw mark_html(@marker_to) %>','<%=  @marker_to.id%>');
+    MapObject.re_geocodePosition('<%=  @marker_at.destin_position%>',null,'我要去<%=  @marker_at.destin_position%>','<%=  @marker_at.id%>d');
   <%end%>
-<%end%>
 }
 
-$(".stream-items").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :object => @stream_item ) %>");
+$(".stream-items").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :object => @marker_at.object ) %>");
 $(".stream-item").first().hide();
 $(".stream-items :first-child").slideDown("slow");
 

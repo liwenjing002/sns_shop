@@ -33,12 +33,13 @@ class MarkersController < ApplicationController
       if @marker.update_attributes(params[:marker])
         if @marker.object_type == 'StreamItem'
           @stream_item = @marker.object
-          
-          html = "#{@marker.marker_html}<div id='location_now'><span color: #5F9128>当前位置：</span>#{@marker.geocode_position}</div>".html_safe
-          html = html.gsub(/\'/, '"')
-          html = html.gsub(/[\n\r]/,'')
-          @marker.marker_html = html.html_safe
-          @marker.save
+          @stream_item.streamable.body += "<div id='location_now'><span color: #5F9128>当前位置：</span>#{@marker.geocode_position}</div>".html_safe
+          @stream_item.save
+#          html = "#{@marker.marker_html}<div id='location_now'><span color: #5F9128>当前位置：</span>#{@marker.geocode_position}</div>".html_safe
+#          html = html.gsub(/\'/, '"')
+#          html = html.gsub(/[\n\r]/,'')
+#          @marker.marker_html = html.html_safe
+#          @marker.save
           render :json => {:success=>false} 
         else
             render :json => {:success=>false} 
@@ -105,14 +106,31 @@ class MarkersController < ApplicationController
   end
   
   def locus
+    if params[:marker_id]
     marker = Marker.find(params[:marker_id])
     @markers = Marker.find(:all,:conditions=["DATE_FORMAT(created_at,'%y%m%d') = ? and object_type != 'Place'",marker.created_at.strftime("%y%m%d")])
     @markers
+    end
+    if params[:marker][:day]
+    @day = params[:marker][:day]
+    end
   end
   
   #上一个marker 和下一个marker,地理位置的状态
   def marker_l_n
     @marker = Marker.marker_last_next(params[:id], params[:key])
+  end
+  
+  
+  #一天轨迹的主页，参考 note show 页面修改
+  #根据某一个streamable 判断出当天的一条轨迹 
+  # 目前先实现note 轨迹。图片先不考虑
+  def locus_index
+    streamitem = StreamItem.find(params[:id])
+    if streamitem
+     @markers =  Marker.find_my_locus streamitem.created_at.strftime("%Y/%m/%d")
+     @person = streamitem.person
+    end
   end
   
   

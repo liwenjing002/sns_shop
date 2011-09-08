@@ -42,4 +42,8 @@ class StreamItem < ActiveRecord::Base
     
     eval(arr.length>1?arr[1]:arr[0]).find(streamable_id)
   end
+  
+      def is_marker
+    return  Marker.find_by_object_type_and_object_id("StreamItem",id)!=nil ? true:false
+  end
 end

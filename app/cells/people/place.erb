@@ -1,11 +1,18 @@
 <div class="object">
 <% @places.each do |place| %>
   <div class="place_itme">
+    <%=PersonImpression.get_desc("Place",place.id,@person.id)%>
     <%= link_to image_tag(
       place.picture!=nil ? place.picture.photo.url(:tn) : 'clean/group.tn.png',
       :alt   => place.place_name,
       :class => 'icon',:size=>"32x32"), [:location,place],:target=>"_blank" %>
-<%= place.place_name %>
+     <%= link_to place.place_name, [:location,place] %>
+    关注人数：<%= MarkerToMap.count(:conditions=>["marker_id =? and map_id =?",place.marker_id,@logged_in.map.id]) %>|
+    喜欢人数：<%= PersonImpression.count_impress_num("Place",place.id,"喜欢") %>|
+    不喜欢人数：<%= PersonImpression.count_impress_num("Place",place.id,"不喜欢") %>|
+    想去：<%= PersonImpression.count_impress_num("Place",place.id,"想去") %>|
+    去过：<%= PersonImpression.count_impress_num("Place",place.id,"去过") %>
+    
   </div>
 <%end%>
 </div>

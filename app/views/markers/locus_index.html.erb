@@ -1,0 +1,30 @@
+<% content_for :sidebar do %>
+  <%= render :partial => 'people/person_photo' %>
+  <p>
+    最后修改： <%= @markers[0].created_at.to_time.to_s %>
+    <%= t('notes.by') %> <%= link_to  @markers[0].owner.name, person_url(:id =>  @markers[0].owner) %>
+  </p>
+
+<% end %>
+
+<%@markers.each do |marker|%>    
+    
+<h1><%= marker.object.streamable.title %></h1>
+
+<div <% if marker.object.streamable.title.to_s.empty? and marker.object.streamable.body.length <= 200 %>class="note-content-big"<% end %>>
+  <%= sanitize_html auto_link(marker.object.streamable.body) %>
+  <br>
+  我在： <%=marker.geocode_position%>
+  <br>
+  我要去： <%=marker.destin_position%>
+</div>
+
+<% if marker.object.streamable.original_url %>
+  <p class="small"><%= t('notes.note_imported_from') %> <%= link_to domain_name_from_url(marker.object.streamable.original_url), marker.object.streamable.original_url %>.</p>
+<% end %>
+
+<h2><%= t('Comments') %></h2>
+<%= render :partial => 'comments/comments', :locals => {:object => marker.object.streamable, :intro => t('notes.about_this_note') + '.'} %>
+-------------------------------------------------------------------------------------
+<br>
+<%end%>

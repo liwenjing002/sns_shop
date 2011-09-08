@@ -63,4 +63,6 @@ class Note < ActiveRecord::Base
     StreamItem.destroy_all(:streamable_type => 'Note', :streamable_id => id)
   end
 
+
+
 end

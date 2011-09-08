@@ -1,0 +1,3 @@
+$("#my_locus").html("<%= escape_javascript( render_cell :people,:locus,:person=>@person,:logged_in =>@logged_in,:day=>@day) %>");
+$(".position").first().hide();
+$(".position :first-child").slideDown("slow");

@@ -54,13 +54,7 @@ if (MapObject.home_marker !=null){
   <%  @markers.each do|marker|%>
 
     latLng = new google.maps.LatLng('<%=marker.marker_latitude%>', '<%= marker.marker_longitude %>');
-    <%if marker.object_type =="Destination"%>
-      <%if marker!= @markers[0]%>
-        waypoints.push({ location: latLng, stopover: false });
-      <%else%>
-        waypoints.push({ location: latLng, stopover: true });
-      <%end%>
-    <%end%>
+    waypoints.push({ location: latLng, stopover: true });
     marker = new google.maps.Marker({
     map: MapObject.map,
     draggable: false,
@@ -69,11 +63,28 @@ if (MapObject.home_marker !=null){
     });
     html ='<%= raw mark_html(marker) %>'
     var fn = MapObject.markerClickFunction(html, marker);
-
-    //google.maps.event.addListener(marker, 'click', fn);
     google.maps.event.addListener(marker, 'mouseover', fn);
+    <%#*google.maps.event.addListener(marker, 'mouseout', MapObject.markerCloseFunction());%>
     MapObject.markers_array.push(marker);
     MapObject.markers.put(<%=marker.id%>,marker);
+
+    <%if marker.destin_latitude != '' and marker.destin_longitude != ''%>
+      latLng = new google.maps.LatLng('<%=marker.destin_latitude%>', '<%= marker.destin_longitude %>');
+      waypoints.push({ location: latLng, stopover: true });
+      marker = new google.maps.Marker({
+      map: MapObject.map,
+      draggable: false,
+      animation: google.maps.Animation.DROP,
+      position: latLng
+      });
+      html ='我要去：<%= marker.geocode_position %>'
+      var fn = MapObject.markerClickFunction(html, marker);
+      google.maps.event.addListener(marker, 'mouseover', fn);
+      google.maps.event.addListener(marker, 'mouseout', MapObject.markerCloseFunction);
+      MapObject.markers_array.push(marker);
+      MapObject.markers.put(<%=marker.id%>,marker);
+    <%end%>
+
   <%end%>
 
 <%end%>

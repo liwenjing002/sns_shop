@@ -21,13 +21,13 @@
     <% end %>
   </table>
 <% else %>
-  <p><em><%= t('comments.none_yet') %></em></p>
+  <p><em>无回复</em></p>
 <% end %>
 
 <p>
-  <%= link_to_function t('comments.add_a_comment'), "$('#new_comment').show(); $('#new_comment_textarea')[0].focus();", :id => 'new_comment_link', :style => 'display:none;', :class => 'add-icon' %>
+  <%= link_to_function t('comments.add_a_comment'), "$('#new_comment#{object.id}').show(); $('#new_comment_textarea')[0].focus();", :id => 'new_comment_link'+object.id.to_s, :style => 'display:none;', :class => 'add-icon' %>
   <%= intro %>
-  <div id="new_comment">
+<div id="new_comment<%=object.id%>">
     <%= form_for Comment.new, :html => {:style => 'border:none;'} do |form| %>
       <%= hidden_field_tag object.class.name.downcase + '_id', object.id %>
       <%= hidden_field_tag :return_to, request.fullpath %>
@@ -35,5 +35,5 @@
       <%= form.submit t('comments.save') %>
     <% end %>
   </div>
-  <script type="text/javascript">$('#new_comment').hide(); $('#new_comment_link').show();</script>
+  <script type="text/javascript">$('#new_comment<%=object.id%>').hide(); $('#new_comment_link<%=object.id%>').show();</script>
 </p>

@@ -555,8 +555,7 @@ var MapObject =  {
                 e.stopPropagation();
                 e.preventDefault();
             }
-            //alert(marker)
-            MapObject.infoWindow.close();
+            MapObject.infoWindow.close()
 
         };
     },

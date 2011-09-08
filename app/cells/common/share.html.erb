@@ -15,18 +15,18 @@
       <span class="small"><%= t('share.note_label') %></span><br/>
       <%= form.text_area :body, :rows => 2 ,:class=>"share_text",:placeholder => "用@标注你所在位置，用go2 标注出你要去的地方"%><br/>
       <div id="location_info" style="display:none">
-        <%= form.text_field 'location', :placeholder=>"我的位置" %><br>
-        <%= form.text_field 'destination',:placeholder=>"我目的地"%><br>
+        <%= text_field 'marker','geocode_position', :placeholder=>"我的位置" %><br>
+        <%= text_field 'marker','destin_position',:placeholder=>"我目的地"%><br>
         </div>
         <div id ="travel_type" style="display:none">
-          <%= select :note,:travel_type,
+          <%= select 'marker','travel_type',
             {"步行"=>"WALKING",
             "公交"=>"BUS",
             "行车"=>"DRIVING"
           }%> 
         </div>
-        <%= form.text_field :l_coordinate, :type=>'hidden' %>
-        <%= form.text_field :d_coordinate, :type=>'hidden' %>
+        <%= text_field 'marker','marker_latitude', :type=>'hidden' %>
+        <%= text_field 'marker','marker_longitude', :type=>'hidden' %>
         <%= submit_tag t('share.share') %>
         <input class="is_location" title="是否带地理位置，默认为当前位置" type="checkbox" value="1">地理位置
       <% end %>
@@ -53,18 +53,18 @@
           boo = false
           at = $(this).val().match(/.*@(.*)@.*/)
           if(at!= null&&at!=''){
-            $("#note_location").attr("value", at[1]);
+            $("#marker_geocode_position").attr("value", at[1]);
             boo = true
           }
           to = $(this).val().match(/.*go(.*)2.*/)
           if(to!= null&&to!=''){
-            $("#note_destination").attr("value", to[1]);
+            $("#marker_destin_position").attr("value", to[1]);
             boo = true
           }
           if(!boo){
             $(".is_location").attr("checked",false)
-            $("#note_location").attr("value", '');
-            $("#note_destination").attr("value", '');
+            $("#marker_geocode_position").attr("value", '');
+            $("#marker_destin_position").attr("value", '');
           }else{
             $(".is_location").attr("checked",true)
             $("#location_info").show();
@@ -75,14 +75,14 @@
       $(".is_location").change(function(){
         if($(".is_location").attr("checked")==true){
           $("#location_info").show();
-          $("#note_location").attr("value",  MapObject.myLocation_address);
+          $("#marker_geocode_position").attr("value",  MapObject.myLocation_address);
           $("#note_l_coordinate").attr("value",  MapObject.myLocation.lat() );
           $("#note_d_coordinate").attr("value",  MapObject.myLocation.lng());
         }else{
           $("#location_info").hide();
            $("#travel_type").hide();
-          $("#note_location").attr("value", '');
-          $("#note_destination").attr("value", '');
+          $("#marker_geocode_position").attr("value", '');
+          $("#marker_destin_position").attr("value", '');
           $("#note_l_coordinate").attr("value",  "");
           $("#note_d_coordinate").attr("value",  "");
         }
@@ -91,15 +91,15 @@
       
   $("#note_location").keyup(function(){
         if($(this).attr("value")!=MapObject.myLocation_address){
-          $("#note_l_coordinate").attr("value",  "");
-          $("#note_d_coordinate").attr("value",  "");
+          $("#marker_marker_latitude").attr("value",  "");
+          $("#marker_marker_longitude").attr("value",  "");
         }else{
-          $("#note_l_coordinate").attr("value",  MapObject.myLocation.lat() );
-          $("#note_d_coordinate").attr("value",  MapObject.myLocation.lng());
+          $("#marker_marker_latitude").attr("value",  MapObject.myLocation.lat() );
+          $("#marker_marker_longitude").attr("value",  MapObject.myLocation.lng());
         }
       })
       
-            $("#note_destination").keyup(function(){           
+            $("#marker_destin_position").keyup(function(){           
         if($(this).attr("value")!=""){
           $("#travel_type").show();
           

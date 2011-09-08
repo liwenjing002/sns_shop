@@ -1,0 +1,34 @@
+<div class="object">
+
+  <div id ="my_locus">
+    <%= form_for Marker.new, :url => locus_markers_path, :method => 'post',:remote => true do |form| %>
+      <%= form.date_field :day %>
+      <%= submit_tag '查找' %>
+    <%end%>
+
+    <script type="text/javascript">
+      // $('#marker_day').datepicker({changeYear:true, yearRange:'1900:2025', dateFormat:'<%= datepicker_format %>'});
+      $('#marker_day').datepicker({changeYear:true, yearRange:'1900:2025', dateFormat:'yy/mm/dd'});
+      $('#marker_day').bind('keyup', function(){
+        var val = $(this).val();
+        if(val == '' || val.match(/1900/)) {
+          $('#child-selection').show();
+        } else {
+          $('#child-selection select').val('');
+          $('#child-selection').hide();
+        }
+      }).trigger('keyup');  
+    </script>
+    <%@markers.each do |marker|%>
+      <%if marker.destin_position !=''%>
+        <div class="position"> 
+          我要去： <%= marker.destin_position %>
+        </div>
+        <br>
+      <%end%>
+      <div class="position"> 
+        <%= render :partial => '../views/streams/stream_item', :object => marker.object %>
+      </div>
+    <%end%>
+  </div>
+</div>

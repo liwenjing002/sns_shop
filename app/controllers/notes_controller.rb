@@ -23,7 +23,12 @@ class NotesController < ApplicationController
   def show
     @note = Note.find(params[:id])
     if @logged_in.can_see?(@note)
-      @person = @note.person
+      if @note.stream_item.is_marker #note 带地理标记，定向到轨迹页面
+         redirect_to(locus_index_markers_path({:id=>@note.stream_item_id}))
+      else
+        @person = @note.person
+      end
+      
     else
       render :text => t('not_authorized'), :layout => true, :status => 401
     end
@@ -34,48 +39,24 @@ class NotesController < ApplicationController
   end
 
   def create
-    @person = @logged_in
     params[:note][:person_id] =  @logged_in.id
-    travel_type = params[:note][:travel_type] if params[:note][:travel_type]
+    params[:marker][:owner_id] =  @logged_in.id
     params[:note].delete(:travel_type) if params[:note][:travel_type]
     @note = Note.create(params[:note])
-    @note.group_id = params[:note][:group_id] if params[:note] and params[:note][:group_id]
-    if @note.group 
-      raise 'error' unless @note.group.blog? and @note.group.can_post?(@logged_in)
-    end
-    @note.person = @logged_in
     unless params[:note][:location]=='' and params[:note][:l_coordinate]=="" and params[:note][:d_coordinate]
       @marker_last = Marker.find(:all,:conditions=>["marker_latitude =? and marker_longitude = ? and owner_id =?",params[:note][:l_coordinate],params[:note][:d_coordinate],@logged_in.id],:order=>"id desc",:limit=>1)if params[:note][:l_coordinate] and params[:note][:d_coordinate]
       @marker_last = Marker.find(:conditions=>["geocode_position=? and owner_id =?",params[:note][:location],@logged_in.id],:order=>"id desc" ,:limit=>1) if @marker_last ==nil and params[:note][:location] 
       @marker_at = Marker.new(params[:marker])
-      @marker_at.geocode_position = params[:note][:location] if params[:note][:location]
-      @marker_at.marker_latitude = params[:note][:l_coordinate] if params[:note][:l_coordinate]
-      @marker_at.marker_longitude = params[:note][:d_coordinate] if params[:note][:location]
-      @marker_at.owner = @logged_in
+      @note.stream_item.body += "<div id='location_now'><span color: #5F9128>当前位置：</span>#{params[:marker][:geocode_position]}</div>".html_safe if params[:marker][:geocode_position] !=''
+      @note.stream_item.body += "<div id='next_destin'><span color: #5F9128>下一站：</span>#{params[:marker][:destin_position]}</div>".html_safe if params[:marker][:destin_position] !=''
+      @note.stream_item.save
+      end
       MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker_at})
       @marker_at.object_type = "StreamItem"
       @marker_at.object_id = @note.stream_item_id
       @marker_at.save
-      
       @last_destination = @marker_at.get_last_destination(Time.new)
-      
-      
-    end
-    if params[:note][:destination]!=''
-      @marker_to = Marker.new(params[:marker])
-      @marker_to.object_type = "Destination"
-      @marker_to.object_id = @note.stream_item_id
-      @marker_to.geocode_position = params[:note][:destination]
-      @marker_to.travel_type = travel_type 
-      @marker_to.owner = @logged_in
-      @marker_to.save
-      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker_to})
-    end
-    @note.marker_at_id = @marker_at.id if @marker_at
-    @note.marker_to_id = @marker_to.id if @marker_to
-    @note.save
-      @stream_item = @note.stream_item
-      flash[:notice] = t('notes.saved')
+    flash[:notice] = t('notes.saved')
   end
 
   def edit

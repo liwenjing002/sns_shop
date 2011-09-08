@@ -16,8 +16,9 @@ class Marker < ActiveRecord::Base
   end
   
   #我的一天轨迹
+  # date 格式 %y/%m/%d
   def self.find_my_locus date
-    Marker.find(:all,:conditions=>["DATE_FORMAT(created_at,'%y%m%d') = ? and (object_type = 'StreamItem' or object_type = 'Destination')",date.strftime("%y%m%d")],
+    Marker.find(:all,:conditions=>["DATE_FORMAT(created_at,'%Y/%m/%d') = ? and (object_type = 'StreamItem' )",date],
       :order=>"created_at desc")                      
   end
   
@@ -30,7 +31,7 @@ class Marker < ActiveRecord::Base
                          and DATE_FORMAT(created_at,'%y%m%d') = #{date.strftime("%y%m%d")} 
                         ORDER BY updated_at DESC) b GROUP BY DATE_FORMAT(updated_at,'%y%m%d') ORDER BY created_at DESC ")
     #当前最新目的地
-    marker_to = Marker.find(:all,:conditions=>["DATE_FORMAT(created_at,'%y%m%d') = ? and object_type = 'Destination'",date.strftime("%y%m%d")],
+    marker_to = Marker.find(:all,:conditions=>["DATE_FORMAT(created_at,'%y%m%d') = ? and object_type = 'StreamItem' and is_destin = true",date.strftime("%y%m%d")],
       :order=>"created_at desc",:limit=>1)
     markers += marker_at if marker_at != nil and marker_at.length>0
     markers += marker_to if marker_to != nil and marker_to.length>0
@@ -53,7 +54,7 @@ class Marker < ActiveRecord::Base
   
   #h获取上一个目的地
   def get_last_destination date 
-    Marker.find(:all,:conditions=>["DATE_FORMAT(created_at,'%y%m%d') = ? and object_type = 'Destination'",date.strftime("%y%m%d")],
+    Marker.find(:all,:conditions=>["DATE_FORMAT(created_at,'%y%m%d') = ? and object_type = 'StreamItem' and destin_position  != ''",date.strftime("%y%m%d")],
       :order=>"created_at desc",:limit=>1)
   end
   

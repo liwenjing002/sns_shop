@@ -49,6 +49,8 @@ OneBody::Application.routes.draw do
       post :follow
       post :search
       get :locus
+      get :locus_index
+      post :locus
     end
   end
 

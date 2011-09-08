@@ -48,6 +48,14 @@ class PeopleCell < Cell::Rails
     @logged_in = options[:logged_in]
      render
   end
+  
+  def locus
+    @person= options[:person]
+    @logged_in = options[:logged_in]
+    time = options[:day] 
+    @markers =  Marker.find_my_locus time
+    render
+  end
 
 
 end
