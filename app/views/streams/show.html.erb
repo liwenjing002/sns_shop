@@ -15,18 +15,24 @@
 <% end %>
 
 <% content_for :sidebar do %>
-  <h2><%= t('stream.about_heading') %></h2>
-  <p><%= t('stream.about_html') %></p>
+
   <% if Setting.get(:features, :notes) or Setting.get(:features, :pictures) or Setting.get(:features, :verses) %>
     <h3 class="double-margin-top"><%= t('stream.share_heading') %></h3>
     <p><%= t('stream.share_something_about') %></p>
-    
    <%=render_cell :common,:share%>
      <%= javascript_include_tag "extend/ui" %>
     <script type="text/javascript">
       $('#album').autocomplete({source: <%= raw @album_names.inspect %>});
     </script>
   <% end %>
+    
+    <div id ="people_pic_wall" width="100%" height="200px">
+      头像墙
+    </div>
+    <div id ="place_pic_wall" width="100%" height="200px">
+      地点墙
+    </div>
+    
   <% if Setting.get(:features, :prayer_event) %>
     <h3><%= t('prayer_signups.home_page_heading') %></h3>
     <div id="taken_slots"></div>

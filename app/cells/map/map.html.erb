@@ -17,7 +17,7 @@
   <% if @map.zoom %>MapObject.map_options.zoom = <%= @map.zoom%>;<%end%>
     
   <%if @person == @logged_in%>
-      MapObject.initialize(null) ;
+      MapObject.initialize(null,true) ;
   <%else%>
       MapObject.initialize('<%=@person.id%>') ;
   <%end%>

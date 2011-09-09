@@ -74,13 +74,8 @@ class Location::PlacesController < ApplicationController
   end
   
   def add_share
-    @album =  Album.find_or_create_by_name(
-      if params[:album].to_s.any? and params[:album] != t('share.default_album_name')
-        params[:album]
-      else
-        @logged_in.name
-      end
-    ) { |a| a.person = @logged_in }
+    place = Place.find(params[:place_id])
+    @album =  Album.find_or_create_by_name(place.place_name)
     @album.place_id = params[:place_id] 
     @album.save
     pic  = nil
@@ -102,14 +97,9 @@ class Location::PlacesController < ApplicationController
   
   
   def add_temp_pic
-    @album =  Album.find_or_create_by_name(
-      if params[:album].to_s.any? and params[:album] != t('share.default_album_name')
-        params[:album]
-      else
-        @logged_in.name
-      end
-    ) { |a| a.person = @logged_in }
-    if params[:plave_id]
+     place = Place.find(params[:place_id])
+    @album =  Album.find_or_create_by_name(place.place_name) 
+    if params[:place_id]
       @album.place_id = params[:place_id] 
       @album.save
     end

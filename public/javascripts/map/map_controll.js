@@ -35,7 +35,7 @@ var MapObject =  {
     }),
     
     //初始化map
-    initialize: function (id) {
+    initialize: function (id,is_search) {
         //        alert()
         var myOptions = {
             zoom: this.map_options.zoom,
@@ -49,9 +49,13 @@ var MapObject =  {
             myOptions);
                     
         this.initialLocation();
-        //加入搜索框    
+        if(is_search){
+                    //加入搜索框    
         this.init_marker_from_data("my_home",id);
         this.initControl();
+        }
+        
+
         // Initialize the local searcher
         google.maps.event.trigger(this.map, 'resize');
         

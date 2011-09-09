@@ -1,0 +1,13 @@
+<%= javascript_include_tag "extend/map" %>
+<%= javascript_include_tag "map/markercluster" %>
+<%= javascript_include_tag "extend/jquery.form" %>
+<%= javascript_include_tag  'http://maps.google.com/maps/api/js?sensor=false' %>
+<%= javascript_include_tag  'map/map_controll' %>
+<script src="http://www.google.com/uds/api?file=uds.js&amp;v=1.0&amp;key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxQ82LsCgTSsdpNEnBsExtoeJv4cdBSUkiLH6ntmAr_5O4EfjDwOa0oZBQ" type="text/javascript"></script> 
+<%= javascript_include_tag 'map/map_search' %>
+<script type="text/javascript">
+  $(document).ready(function() {
+ MapObject.initialize(null,false) ;  
+ })
+</script>
+<div id="mapCanvas" style="width: 100%; height: 250px;">map div</div> 

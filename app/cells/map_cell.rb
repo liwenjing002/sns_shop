@@ -16,5 +16,9 @@ helper  ApplicationHelper
     @map = @logged_in.map
     render
   end
+  
+  def map_sign_in
+    render
+  end
 
 end

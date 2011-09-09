@@ -1,10 +1,10 @@
 <%= javascript_include_tag 'rsa.min.js' %>
 
 <div class="left-sidebar line-right">
-  <%= render_page_content 'system/sign_in_header' %>
+  <%= render_cell :map,:map_sign_in %>
   <div class="double-margin-top" style="text-align:center;">
-    <%= link_to image_tag('clean/help.png', :alt => t('session.help_signing_in'), :class => 'no-border'), help_path %><br/>
-    <%= link_to t('session.i_need_help'), help_path %>
+    <%#= link_to image_tag('clean/help.png', :alt => t('session.help_signing_in'), :class => 'no-border'), help_path %><br/>
+   
   </div>
 </div>
 

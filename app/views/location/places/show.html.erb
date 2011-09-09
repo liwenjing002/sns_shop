@@ -52,11 +52,85 @@
     <div id ="share_bar" style="padding-bottom: 5px;padding-top: 5px;">
       <%= render_cell :place,:share_bar,:place=>@place,:mm=>@mm,:logged_in=>@logged_in %>
     </div> 
-    <div id = "place_leave_message">
-      <% cache(:fragment => 'place_share_items') do %>
-        <%= render_cell :place,:place_message,:place=>@place,:stream_items=>@stream_items %>
-      <% end %>
+
+    <div class='tab_profile'>
+      <ul class="tabs">
+        <li class = "li_profile"><a href="#" onclick="return false">留言</a></li>
+        <li class = "li_profile"><a href="#" onclick="return false">签到记录</a></li>
+        <li class = "li_profile"><a href="#" onclick="return false">关注的用户</a></li>
+        <li class = "li_profile"><a href="#" onclick="return false">想去的用户</a></li>
+      </ul>
     </div>
+
+    <div class="panes">
+      <div class="tab_pane">
+        <div id = "place_leave_message">
+          <% cache(:fragment => 'place_share_items') do %>
+            <%= render_cell :place,:place_message,:place=>@place,:stream_items=>@stream_items %>
+          <% end %>
+        </div>
+      </div>
+      <div class="tab_pane">
+        <div class="items" >
+          <%if @be_here_peoples%>
+            <% @be_here_peoples.each do |mm| %>
+              <%i =0%>
+              <%if i%4==0 %>
+                <div>
+                <%end%>
+
+                <%= content_tag :a, :href => person_path(mm.person) do %>
+                  <%= render_cell :people,:thumbnail,:person => mm.person %>
+                <% end %>
+                <%if i%4==0 %>
+                </div>
+              <%end%>
+            <% end %>
+          <%end%>
+        </div>
+      </div>
+      <div class="tab_pane">
+        <div class="items" >
+
+          <% @follow_peoples.each do |mm| %>
+            <%i =0%>
+            <%if i%4==0 %>
+              <div>
+              <%end%>
+
+              <%= content_tag :a, :href => person_path(mm.map.person) do %>
+                <%= render_cell :people,:thumbnail,:person => mm.map.person %>
+              <% end %>
+              <%if i%4==0 %>
+              </div>
+            <%end%>
+          <% end %>
+
+        </div>
+
+      </div>
+      <div class="tab_pane">
+        <div class="items" >
+          <%if @love_to_peoples%>
+            <% @love_to_peoples.each do |mm| %>
+              <%i =0%>
+              <%if i%4==0 %>
+                <div>
+                <%end%>
+
+                <%= content_tag :a, :href => person_path(mm.person) do %>
+                  <%= render_cell :people,:thumbnail,:person => mm.person %>
+                <% end %>
+                <%if i%4==0 %>
+                </div>
+              <%end%>
+            <% end %>
+          <%end%>
+        </div>
+      </div>
+    </div>
+
+
 
   </div>
 
@@ -65,8 +139,7 @@
     <div id = "place_description">
       <%= render_cell :place, :place_description,:place=>@place %>
     </div>
-    <div id= "place_people"><%= render_cell :place,:people,:place=>@place,:follow_peoples=>@follow_peoples,
-        :be_here_peoples=>@be_here_peoples,:love_to_peoples=>@love_to_peoples  %></div>
+
     <div id = "place_impression">
       <%= render_cell :place,:impression,:impressions=>@impressions,
         :place=>@place,:p_impression=>@p_impression %></div>
@@ -78,9 +151,12 @@
 
 </div>
 <div class="clear"></div>
-<script>
+
+<script type="text/javascript">
   $(function() {
-    $('textarea').wmd();
+    $("ul.tabs").tabs("div.panes > div.tab_pane");
   });
 </script>
+
+
 
