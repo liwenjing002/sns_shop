@@ -56,6 +56,11 @@ class PeopleCell < Cell::Rails
     @markers =  Marker.find_my_locus time
     render
   end
+  
+    def thumbnail_wall
+    @peoples = Person.find(:all,:limit=>35)
+    render 
+  end
 
 
 end

@@ -58,5 +58,10 @@ class Marker < ActiveRecord::Base
       :order=>"created_at desc",:limit=>1)
   end
   
+  #得想办法返回 marker ，暂时先用 markerToMap
+  def self.get_hotest_marker marker_type
+   mm =  MarkerToMap.find(:all,:conditions=>["marker_type= ?",marker_type],:group=> "marker_id",:order=>"count(marker_id)",:limit=>35)
+  end
+  
 
 end

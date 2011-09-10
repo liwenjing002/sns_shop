@@ -26,12 +26,9 @@
     </script>
   <% end %>
     
-    <div id ="people_pic_wall" width="100%" height="200px">
-      头像墙
-    </div>
-    <div id ="place_pic_wall" width="100%" height="200px">
-      地点墙
-    </div>
+    <%= render_cell :people,:thumbnail_wall %>
+    <%= render_cell :place,:place_pic_wall %>
+
     
   <% if Setting.get(:features, :prayer_event) %>
     <h3><%= t('prayer_signups.home_page_heading') %></h3>

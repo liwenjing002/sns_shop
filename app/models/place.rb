@@ -33,6 +33,13 @@ class Place < ActiveRecord::Base
     items
   end
   
+   
+    #获取前几位热门的place，热门度目前采用关注人数
+   def get_hoteset_place num
+     
+     
+   end
+  
     
     def can_send?(person)
 #    (members_send and person.member_of?(self) and person.messages_enabled?) or admin?(person)

@@ -79,5 +79,16 @@ class PlaceCell < Cell::Rails
     render
   end
   
+  def place_pic_wall
+    @markerToMap = Marker.get_hotest_marker("Place")
+   
+  render
+  end
+  
+  def place_tn
+    @place = options[:place]
+    render
+  end
+  
 
 end

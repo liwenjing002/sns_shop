@@ -1,0 +1,5 @@
+<% if @place and @place.picture %>
+  <%= image_tag @place.picture.photo.url(:tn), :alt => @place.place_name, :class => 'icon thumbnail' %>
+<% else %>
+  <%= image_tag('missing_tn.png', :alt => t('none')) %>
+  <% end %>

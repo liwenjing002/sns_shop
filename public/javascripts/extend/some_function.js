@@ -556,10 +556,11 @@ InputSuggest.prototype = {
      $(".follow_link").live("click",function(){
          link = $(this)
          marker_id =link.attr("marker_id")
+         marker_type = link.attr("marker_type")
          action = link.attr("action")
                  $.ajax({
             type: "post",
-            url: "/markers/follow?marker_id="+marker_id +"&do="+action,
+            url: "/markers/follow?marker_id="+marker_id +"&do="+action +"&marker_type="+marker_type ,
             success: function(message){
                 if(message.success ==true){
                     if(action=='add'){

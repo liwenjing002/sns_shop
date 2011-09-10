@@ -5,5 +5,7 @@ class StreamCell < Cell::Rails
     @stream_item = options[:stream_item]
     render
   end
+  
+
 
 end
