@@ -1,6 +1,6 @@
 class Place < ActiveRecord::Base
   acts_as_taggable
-  has_many :albums
+  has_one :album
   has_many :stream_items, :dependent => :destroy
   has_many :attachments, :dependent => :delete_all
   has_many :admins, :through => :memberships, :source => :person, :order => 'last_name, first_name', :conditions => ['memberships.admin = ?', true]

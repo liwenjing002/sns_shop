@@ -10,8 +10,7 @@ class Location::PlacesController < ApplicationController
   def show
     @place = Place.find(params[:id])
     @mm = MarkerToMap.find_by_marker_id_and_map_id(@place.marker_id,@logged_in.map.id)
-    @albums = @place.albums
-    @pictures = @albums[0].pictures.paginate(:order => 'id',:page=>1) if @albums.length >0
+    @album = @place.album
     @impressions = Impression.find_all_by_i_type 'Place'
     @p_impression = PersonImpression.find_all_by_person_id_and_object_type_and_object_id(@logged_in.id,'Place',params[:id])
     @follow_peoples = MarkerToMap.find_all_by_marker_id @place.marker_id
