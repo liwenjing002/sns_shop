@@ -64,9 +64,9 @@ module ApplicationHelper
   end
 
   def javascript_tags
-#    javascript_include_tag('jquery-1.4.4.min', 'jquery-ui-1.8.7.custom.min', 'jquery.qtip-1.0.0-rc3.min.js', 'rails', 'application', :cache => true) + "\n" + \
+    #    javascript_include_tag('jquery-1.4.4.min', 'jquery-ui-1.8.7.custom.min', 'jquery.qtip-1.0.0-rc3.min.js', 'rails', 'application', :cache => true) + "\n" + \
     javascript_include_tag('all','extend/some_function','extend/ajaxfileupload','extend/jquery.simplemodal','extend/jquery.tools.min') + "\n" + \
-    csrf_meta_tag + "\n" + \
+      csrf_meta_tag + "\n" + \
       "<!--[if lte IE 8]>\n".html_safe + \
       javascript_include_tag('ie') + "\n" + \
       "<![endif]-->\n".html_safe + \
@@ -136,7 +136,7 @@ module ApplicationHelper
         </script>
       HTML
     else
-       <<-HTML
+      <<-HTML
         <div id="notice" style="display:none"></div>
       HTML
     end
@@ -327,19 +327,21 @@ module ApplicationHelper
     marker.owner == @logged_in
   end
   def render_cell_for(id, cell, action, options = nil, &block)
-  content_for id do
-    render_cell(cell, action, options, &block)
+    content_for id do
+      render_cell(cell, action, options, &block)
+    end
   end
-end
 
   
-  def is_blank string
-    if string and string != ""
-      true
-    else
-      false
+  def is_blank *args
+    args.each do |arg|
+      if arg==nil or arg == ""
+        return true
+      else
+       next
+      end
     end
-    
+    false
   end
 
   
