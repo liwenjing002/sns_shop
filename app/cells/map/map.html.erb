@@ -9,8 +9,8 @@
       MapObject.center = new BMap.Point('<%=@map.center_latitude%>','<%=@map.center_longitude%>')
 <%end%>
 <% if !is_blank(@map.zoom) %>MapObject.zoom_level = <%= @map.zoom%>;<%end%>
-<%if !is_blank(@logged_in.postition.home_latitude,@logged_in.postition.home_longitude)%>  
-      MapObject.home_marker_point = new BMap.Point('<%=@logged_in.postition.home_longitude%>','<%=@logged_in.postition.home_latitude%>')  
+<%if !is_blank(@person.postition.home_latitude,@person.postition.home_longitude)%>  
+      MapObject.home_marker_point = new BMap.Point('<%=@person.postition.home_longitude%>','<%=@person.postition.home_latitude%>')  
 <%end%>
     MapObject.initialize('<%=@person.id%>',"mapCanvas",null) ;
 	
@@ -27,8 +27,8 @@
 
 <div id="map_controll">
   <ul class="buttons">
-    <li><span class="button" id="new-marker-tab" onclick="MapObject.add_marker_listen();">发布地点</span></li>
-    <li><span class="button" onclick="MapObject.init_marker_from_data('firend_postition');">查看好友位置</span></li>
+    <li><span class="button" id="new-marker-tab" onclick="MapObject.add_place_to_map_listen();">发布地点</span></li>
+    <li><span class="button" onclick="MapObject.init_marker_from_data('friend_position','<%= @person.id %>');">查看好友位置</span></li>
     <li><span class="button" id="posittion-tab">我要旅游</span></li>
     <li><span class="button" id="activities-tab">我要活动</span></li>
   </ul>

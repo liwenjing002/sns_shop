@@ -198,7 +198,6 @@ class Person < ActiveRecord::Base
       when 'Person'
         !what.deleted? and (
           what == self or
-            what.family_id == self.family_id or
             admin?(:view_hidden_profiles) or
             staff? or what.visible?
         )

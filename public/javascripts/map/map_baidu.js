@@ -1,6 +1,7 @@
    
 var MapObject =  {
     map: null, //map对象
+    person_id:null,//person id
     home_marker_point:null, //家庭地址 的marker 坐标
     center: new BMap.Point(116.404, 39.915), //地图中心坐标
     markerClusterer: null, //markers集合器
@@ -15,6 +16,7 @@ var MapObject =  {
     geolocation: new BMap.Geolocation(),//定位对象
     geocoder: new BMap.Geocoder(),// 创建地理编码实例 
     infoWindow: new BMap.InfoWindow(),//窗体覆盖物
+    file_path: "/system/development",//文件存放路径
     
     
     //初始化map
@@ -25,19 +27,13 @@ var MapObject =  {
     //level: 默认缩放级别
     initialize: function (person_id,container_id) {
         this.map =  new BMap.Map(container_id);
-        if(home_marker!=null){
-            this.home_marker = home_marker
-        }
+        this.person_id = person_id
         this.map.centerAndZoom(this.center, this.zoom_level); 
         if(this.is_enableScrollWheelZoom){
             this.map.enableScrollWheelZoom()    
         }
         if(this.home_marker_point!= null){
-            var home_marker = new BMap.Marker(this.home_marker_point,{
-                icon: this.setIcon("/images/map/home.png",34,30)
-                });        // 创建家庭标注  
-            this.map.addOverlay(home_marker);
-            MapObject.getLocation(this.home_marker_point, MapObject.show_locaton_infoWindow(home_marker));
+            MapObject.getLocation(this.home_marker_point, MapObject.show_locaton_infoWindow("home",this.home_marker_point,"/images/map/home.png",34,30));
             this.map.centerAndZoom(this.home_marker_point, this.zoom_level); 
         }
         if(this.is_navigationControl!= null){
@@ -64,13 +60,8 @@ var MapObject =  {
     show_my_location_now: function(){
         return function(geolocationResult) {
             if(geolocationResult!= null){
-                MapObject.myLocation = geolocationResult.point
-                MapObject.my_location_marker = new BMap.Marker(geolocationResult.point,{
-                    icon: MapObject.setIcon("/images/map/default.png",57,34)
-                    });        // 创建我的位置标注  
-                MapObject.map.addOverlay(MapObject.my_location_marker);
                 MapObject.map.centerAndZoom(geolocationResult.point, 17); 
-                MapObject.getLocation(geolocationResult.point, MapObject.show_locaton_infoWindow(MapObject.my_location_marker));
+                MapObject.getLocation(geolocationResult.point, MapObject.show_locaton_infoWindow("location",geolocationResult.point,"/images/map/default.png",57,34));
             }else{
                 alert("定位失败")
             }
@@ -80,13 +71,14 @@ var MapObject =  {
     
     
     //根据反向地理解析显示当前位置描述
-    show_locaton_infoWindow:function(my_location_marker){
-         return function(result) {
+    show_locaton_infoWindow:function(marker_type,point,icon_url,icon_w,icon_h){
+        return function(result) {
             if(result!= null){
                 MapObject.myLocation_address = result.address;
-                MapObject.infoWindow.setContent("<div>"+result.address+"</div>");
+                MapObject.infoWindow.setContent(eval("MapObject."+marker_type+"_html('"+result.address+"')"));
+                my_location_marker=  MapObject.add_marker_to_map(point,icon_url,icon_w,icon_h,eval("MapObject."+marker_type+"_html('"+result.address+"')"),true)
                 my_location_marker.openInfoWindow(MapObject.infoWindow);
-                my_location_marker.addEventListener("click",MapObject.markerClickFunction("<div>"+result.address+"</div>",my_location_marker))
+                my_location_marker.addEventListener("click",MapObject.markerClickFunction(eval("MapObject."+marker_type+"_html('"+result.address+"')"),my_location_marker))
             }else{
                 alert("定位失败")
             }
@@ -96,7 +88,7 @@ var MapObject =  {
     
     
     
-     //鼠标点击或悬停mark打开窗体
+    //鼠标点击或悬停mark打开窗体
     markerClickFunction:function(html, marker) {
         return function(e) {
             marker.openInfoWindow( MapObject.infoWindow);
@@ -112,10 +104,75 @@ var MapObject =  {
     },
     
     //获得我家 的infoWindow 窗体的HTML
-    get_my_home_html: function(){
-        
-    }
+    home_html: function(address){
+        return "<div>"+address+"</div>"
+    },
+    //获得当前地点 的infoWindow 窗体的HTML
+    location_html: function(address){
+        return "<div>"+address+"</div>"
+    },
     
+    
+    //从后台获取数据后初始化marker
+    init_marker_from_data:function(type,people_id){
+        id_string = ''
+        if(people_id !=null && people_id != ''){
+            id_string +=("&people_id="+people_id)
+        }
+        $.ajax({                                                
+            type: "GET",                                    
+            url: "/markers?type="+type+id_string,
+            success: function(data, textStatus){
+                //                alert(textStatus)
+                //                                alert(obj2str(data))
+                eval("MapObject.show_"+type+"("+'data'+")")
+            } 
+        });
+    },
+    
+    //显示好友位置
+    show_friend_position:function(data){
+        string_html = "<div> <span><a href='/people/"+data[0].person.id    +
+        "'><img alt="+ data[0].person.first_name+" src="   + 
+        this.file_path+"/people/photos/"+data[0].person.id +
+        "tn/"+data[0].person.photo_file_name+".jpg title=" +
+        data[0].person.first_name+"></a></span><div style='clear:left;'></div></div>"
+
+        
+        alert(string_html)
+    },
+    
+    //在地图添加一个marker
+    //point: marker 坐标；
+    //icon_url： icon 图片地址；
+    //icon_w： 图标 width；
+    //icon_h： 图标 height；
+    //marker_html： infoWindow
+    add_marker_to_map: function(point,icon_url,icon_w,icon_h,marker_html,is_show){
+        marker = new BMap.Marker(point,{
+            icon: this.setIcon(icon_url,icon_w,icon_h)
+        });
+        this.map.addOverlay(marker);
+        if(is_show){
+        this.infoWindow.setContent(marker_html)    
+        marker.openInfoWindow(MapObject.infoWindow);
+        }
+        marker.addEventListener("click",MapObject.markerClickFunction(marker_html,marker));
+        return marker;
+    },
+    
+    
+    //增加地图添加place点事件
+    //点击地图 新增一个place 页面
+    add_place_to_map_listen:function(){
+        function showInfo(e){ 
+           
+            MapObject.add_marker_to_map(e.point,"/images/map/default.png",57,34,document.getElementById("map_infowindow").innerHTML,true);
+            MapObject.map.removeEventListener("click", showInfo);  
+        } 
+        this.map.addEventListener("click", showInfo)
+            
+    }
     
 
 

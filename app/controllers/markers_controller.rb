@@ -13,8 +13,8 @@ class MarkersController < ApplicationController
       @markers = map.markers
     when "rander"
       @markers = Marker.find(:all,:conditions=>['object_type=?','Place'], :order => "RAND()", :limit =>3 )
-    when 'firend_postition'
-      @friends = user.friends
+    when 'friend_position'
+     render :json =>  @friends = user.friends.to_json
     when 'schedule'
       @plans = user.plans
     when 'location'
@@ -25,6 +25,7 @@ class MarkersController < ApplicationController
     end
     
     #render :json => Marker.find_all_by_map_id(map_id).to_json
+    #@markers = Marker.owner_friendships_person_id_is(@logged_in.id)
   end
 
   def update
