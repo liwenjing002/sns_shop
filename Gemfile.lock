@@ -61,6 +61,11 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    meta_search (1.0.6)
+      actionpack (~> 3.0.2)
+      activerecord (~> 3.0.2)
+      activesupport (~> 3.0.2)
+      arel (~> 2.0.2)
     mime-types (1.16)
     mysql (2.8.1)
     mysql (2.8.1-x86-mingw32)
@@ -118,6 +123,7 @@ DEPENDENCIES
   jquery-rails (~> 0.2.4)
   liquid (~> 2.2.2)
   loofah (~> 1.0.0)
+  meta_search
   mysql
   nokogiri (~> 1.4.0)
   paperclip (~> 2.3.6)

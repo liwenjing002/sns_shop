@@ -1,10 +1,11 @@
 source 'http://rubygems.org'
 #gem 'hoe', '= 1.5.1'
 gem 'rails',                  '= 3.0.4'
+gem "meta_search" 
 gem 'cells'
 gem 'mysql'   
 gem 'aws-s3'
-gem 'liquid',                 '~> 2.2.2'
+gem 'liquid',                 '~> 2.2.2' 
 gem 'jquery-rails',           '~> 0.2.4'
 gem 'will_paginate',          '~> 3.0.pre2'
 gem 'highline',               '~> 1.6.1'

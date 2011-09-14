@@ -1,7 +1,7 @@
 <div id="postition"  class ="object" style="display: none; ">
 
   <%= form.label :home_postition,       t('people.home_postition') %> 
-
+  <%= form.text_field :home_city,:placeholder =>"输入您所在城市"  %>
   <%= form.text_field :home_address,:size=>22,:id=>'search_address',:onclick=>"javascript:var pos = GetObjPos(this)",:placeholder =>"输入您所在城市或区县" %>
   <%= form.text_field :home_latitude,:hidden=>true,:value=>"" %>
   <%= form.text_field :home_longitude,:hidden=>true,:value=>"" %>

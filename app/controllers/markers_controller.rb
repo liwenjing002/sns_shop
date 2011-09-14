@@ -7,18 +7,21 @@ class MarkersController < ApplicationController
     case params[:type]
     when "own"
       map = user.map
-      @markers = Marker.find_my_marker map.id
+      render :json =>@markers = Marker.find_my_marker(map.id).to_json
     when "follow"
       map = user.map
       @markers = map.markers
     when "rander"
       @markers = Marker.find(:all,:conditions=>['object_type=?','Place'], :order => "RAND()", :limit =>3 )
     when 'friend_position'
-     render :json =>  @friends = user.friends.to_json
+      render :json =>  Person.all(:select=>"people.id,people.first_name,people.photo_file_name,
+                                         people.postition_id,postitions.home_latitude,postitions.home_longitude,
+                                          postitions.current_latitude,postitions.current_longitude ",
+                                :joins=>[:friendships,:postition],:conditions=>["friendships.friend_id = ?",1]).to_json
     when 'schedule'
       @plans = user.plans
     when 'location'
-       @markers = Marker.find_my_location 
+      @markers = Marker.find_my_location 
     when 'locus'
       @markers = Marker.find_my_locus Time.new
       
@@ -36,21 +39,21 @@ class MarkersController < ApplicationController
           @stream_item = @marker.object
           @stream_item.streamable.body += "<div id='location_now'><span color: #5F9128>当前位置：</span>#{@marker.geocode_position}</div>".html_safe
           @stream_item.save
-#          html = "#{@marker.marker_html}<div id='location_now'><span color: #5F9128>当前位置：</span>#{@marker.geocode_position}</div>".html_safe
-#          html = html.gsub(/\'/, '"')
-#          html = html.gsub(/[\n\r]/,'')
-#          @marker.marker_html = html.html_safe
-#          @marker.save
+          #          html = "#{@marker.marker_html}<div id='location_now'><span color: #5F9128>当前位置：</span>#{@marker.geocode_position}</div>".html_safe
+          #          html = html.gsub(/\'/, '"')
+          #          html = html.gsub(/[\n\r]/,'')
+          #          @marker.marker_html = html.html_safe
+          #          @marker.save
           render :json => {:success=>false} 
         else
-            render :json => {:success=>false} 
+          render :json => {:success=>false} 
         end
       else
         render :json => {:success=>false} 
       end
-  else
-     render :json => {:success=>false} 
-  end
+    else
+      render :json => {:success=>false} 
+    end
   end
 
   def destroy
@@ -108,12 +111,12 @@ class MarkersController < ApplicationController
   
   def locus
     if params[:marker_id]
-    marker = Marker.find(params[:marker_id])
-    @markers = Marker.find(:all,:conditions=["DATE_FORMAT(created_at,'%y%m%d') = ? and object_type != 'Place'",marker.created_at.strftime("%y%m%d")])
-    @markers
+      marker = Marker.find(params[:marker_id])
+      @markers = Marker.find(:all,:conditions=["DATE_FORMAT(created_at,'%y%m%d') = ? and object_type != 'Place'",marker.created_at.strftime("%y%m%d")])
+      @markers
     end
     if params[:marker][:day]
-    @day = params[:marker][:day]
+      @day = params[:marker][:day]
     end
   end
   
@@ -129,8 +132,8 @@ class MarkersController < ApplicationController
   def locus_index
     streamitem = StreamItem.find(params[:id])
     if streamitem
-     @markers =  Marker.find_my_locus streamitem.created_at.strftime("%Y/%m/%d")
-     @person = streamitem.person
+      @markers =  Marker.find_my_locus streamitem.created_at.strftime("%Y/%m/%d")
+      @person = streamitem.person
     end
   end
   

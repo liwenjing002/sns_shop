@@ -96,8 +96,8 @@ class Location::PlacesController < ApplicationController
   
   
   def add_temp_pic
-     place = Place.find(params[:place_id])
-    @album =  Album.find_or_create_by_name(place.place_name) 
+     place = Place.find(params[:place_id]) if params[:place_id]
+    @album =  Album.find_or_create_by_name(place ? place.place_name : @logged_in.name) 
     if params[:place_id]
       @album.place_id = params[:place_id] 
       @album.save
