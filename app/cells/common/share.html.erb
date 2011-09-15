@@ -76,15 +76,15 @@
         if($(".is_location").attr("checked")==true){
           $("#location_info").show();
           $("#marker_geocode_position").attr("value",  MapObject.myLocation_address);
-          $("#note_l_coordinate").attr("value",  MapObject.myLocation.lat() );
-          $("#note_d_coordinate").attr("value",  MapObject.myLocation.lng());
+          $("#marker_marker_latitude").attr("value",  MapObject.myLocation.lat );
+          $("#marker_marker_longitude").attr("value",  MapObject.myLocation.lng);
         }else{
           $("#location_info").hide();
            $("#travel_type").hide();
           $("#marker_geocode_position").attr("value", '');
           $("#marker_destin_position").attr("value", '');
-          $("#note_l_coordinate").attr("value",  "");
-          $("#note_d_coordinate").attr("value",  "");
+          $("#marker_marker_latitude").attr("value",  "");
+          $("#marker_marker_longitude").attr("value",  "");
         }
       
       })
@@ -94,8 +94,8 @@
           $("#marker_marker_latitude").attr("value",  "");
           $("#marker_marker_longitude").attr("value",  "");
         }else{
-          $("#marker_marker_latitude").attr("value",  MapObject.myLocation.lat() );
-          $("#marker_marker_longitude").attr("value",  MapObject.myLocation.lng());
+          $("#marker_marker_latitude").attr("value",  MapObject.myLocation.lat);
+          $("#marker_marker_longitude").attr("value",  MapObject.myLocation.lng);
         }
       })
       

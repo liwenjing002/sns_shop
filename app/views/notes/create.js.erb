@@ -1,86 +1,22 @@
-if(MapObject){
-
 <%if @marker_at %>
-<%if @marker_last and @marker_last.length>0%>
-MapObject.infoWindow.close();
-MapObject.markerClusterer.removeMarker(MapObject.markers.get('<%=@marker_last[0].id%>'),false);
-MapObject.markers.remove('<%=  @marker_last[0].id%>')
-<%end%>
-  <%if is_blank(@marker_at.marker_latitude) and is_blank(@marker_at.marker_longitude) %>
-  
-    latLng = new google.maps.LatLng('<%=@marker_at.marker_latitude%>', '<%= @marker_at.marker_longitude %>');
-    marker = new google.maps.Marker({
-    map: MapObject.map,
-    draggable: false,
-    <%#*icon: "/images/map/home.png",%>
-    animation: google.maps.Animation.BOUNCE,
-    position: latLng
-    });
+  <%if @marker_last and @marker_last.length>0%>
 
-    MapObject.geocoder.geocode({
-    latLng: latLng
-    }, function(responses){
-    string = MapObject.split_responses_address(responses);
-    html = '<div id="location_now">'+'<span color: #5F9128>当前位置：</span>'+string 
-    var fn = MapObject.markerClickFunction('<%= raw mark_html(@marker_at) %>'+html, marker);
-    google.maps.event.addListener(marker, 'mouseover', fn);
-    google.maps.event.addListener(marker, 'mouseout', MapObject.markerCloseFunction);
-    MapObject.markers_array.push(marker);
-    MapObject.markers.put(<%=@marker_at.id%>,marker);
-    MapObject.map.setCenter(latLng)
-    data = "marker[id]="+<%=@marker_at.id%>+ "&marker[geocode_position]="+ string +"&marker[marker_latitude]=" +latLng.lat()+ "&marker[marker_longitude]=" +latLng.lng(),  
-    MapObject.updata_data_marker(data,<%=@marker_at.id%>)
-    });
-
-
-
-
-    //MapObject.markerClusterer.addMarker(marker,true);
-  <%else%> 
-    MapObject.re_geocodePosition('<%=  @marker_at.geocode_position%>',null,'<%= raw mark_html(@marker_at) %>','<%=@marker_at.id%>');
   <%end%>
-   
+  <%if !is_blank(@marker_at.marker_latitude) and !is_blank(@marker_at.marker_longitude) %>
 
-    
+    point = new BMap.Point('<%= @marker_at.marker_longitude %>', '<%=@marker_at.marker_latitude%>')
+    html = '<%= raw mark_html(@marker_at) %>'+ '<div id="location_now">'+'<span color: #5F9128>当前位置：</span>'+'<%=@marker_at.geocode_position%>' +'</div>'
+    marker = MapObject.add_marker_to_map(point,"/images/map/default.png",34,30,html,true)
+  <%else%> 
+    MapObject.getPoint('<%=@marker_at.geocode_position%>', MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"home",MapObject.map,true,'<%=@marker_at.geocode_position%>'),MapObject.map);
+  <%end%>
+
+
+
 <%end%>
 
-<%if is_blank(@marker_at.destin_latitude) and is_blank(@marker_at.destin_longitude) %>
-  
-    latLng = new google.maps.LatLng('<%=  @marker_at.destin_latitude%>', '<%= @marker_at.destin_longitude %>');
-    marker = new google.maps.Marker({
-    map: MapObject.map,
-    draggable: false,
-    <%#*icon: "/images/map/home.png",%>
-    animation: google.maps.Animation.BOUNCE,
-    position: latLng
-    });
 
-    MapObject.geocoder.geocode({
-    latLng: latLng
-    }, function(responses){
-    string = MapObject.split_responses_address(responses);
-    html = "<div id='location_now'>"+"<span color: #5F9128>想去的位置：</span>"+string 
-    var fn = MapObject.markerClickFunction(html, marker);
-    google.maps.event.addListener(marker, 'mouseover', fn);
-    //google.maps.event.addListener(marker, 'mouseout', MapObject.markerCloseFunction);
-    MapObject.markers_array.push(marker);
-    MapObject.markers.put(<%=  @marker_at.id%>,marker);
-    MapObject.map.setCenter(latLng)
-    data = "marker[id]="+<%=  @marker_at.id%>+ "&marker[geocode_position]="+ string +"&marker[marker_latitude]=" +latLng.lat()+ "&marker[marker_longitude]=" +latLng.lng(),  
-    MapObject.updata_data_marker(data,<%=  @marker_at.id%>)
-    });
-
-
-
-
-    //MapObject.markerClusterer.addMarker(marker,true);
-  <%else%> 
-    alert()
-    MapObject.re_geocodePosition('<%=  @marker_at.destin_position%>',null,'我要去<%=  @marker_at.destin_position%>','<%=  @marker_at.id%>d');
-  <%end%>
-}
-
-$(".stream-items").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :object => @marker_at.object ) %>");
+$(".stream-items").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :object => @note.stream_item ) %>");
 $(".stream-item").first().hide();
 $(".stream-items :first-child").slideDown("slow");
 
@@ -89,5 +25,7 @@ $(".stream-items :first-child").slideDown("slow");
   $("#notice").show()
   $('#notice').fadeOut(15000);
 <%end%>
-$("#share-note").resetForm()
+$("#share-note").resetForm();
+$("#marker_geocode_position").attr("value", '');
+$("#marker_destin_position").attr("value", '');
 

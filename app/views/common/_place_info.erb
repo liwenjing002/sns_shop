@@ -11,16 +11,16 @@
   <%end%>
   </div>
 
-  <div style="min-height:100px;">
+  <div style="min-height:100px;" id="place_pic_small">
    
    <% if !place or !place.picture%>
-        <p><%= image_tag('missing_small.png', :alt => t('none'),:style=>"float: left") %></p>
+        <p id="place_pic_small"><%= image_tag('missing_small.png', :alt => t('none'),:style=>"float: left") %></p>
       <%else%>
-        <%= image_tag(place.picture.photo.url(:small), :alt =>place.place_name,:style=>"float: left") %>
+        <p id="place_pic_small"><%= image_tag(place.picture.photo.url(:small), :alt =>place.place_name,:style=>"float: left") %></p>
       <% end %>
-   <span style="float: left;margin-left: 10px;"><p><%= place ? place.place_description : "" %></p></span>
+   <span style="float: left;margin-left: 10px;"><p id="place_desc"><%= place ? place.place_description : "" %></p></span>
   </div>
-  <div class = 'marker_address'>
+  <div id = 'marker_address'>
     <%if place%>
     <%= get_address_href(place.full_address)%>
     <%end%>

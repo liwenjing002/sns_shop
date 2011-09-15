@@ -37,7 +37,7 @@ class Location::PlacesController < ApplicationController
     
     @place = Place.new(params[:place])
     @place.picture = Picture.find(params[:picture][:id]) if params[:picture][:id] and params[:picture][:id]!=""
-    
+
     if @place.save
       @marker = Marker.new
       @marker.marker_latitude = @place.place_latitude
@@ -46,7 +46,7 @@ class Location::PlacesController < ApplicationController
       @marker.object_type = "Place"
       @marker.owner = @logged_in
       @marker.object_id = @place.id
-      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker})
+      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker,:marker_type=>"Place"})
       @marker.save
       @place.marker = @marker
       @place.save

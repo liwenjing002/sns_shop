@@ -1,34 +1,57 @@
 class MarkersController < ApplicationController
   respond_to :html,:js
   def index
+    
     @my_home = @logged_in.postition
     @ta_home = Person.find(params[:people_id]).postition if  params[:people_id]
     user =  params[:people_id]? Person.find(params[:people_id]):@logged_in
+    map = user.map
+    html = nil
     case params[:type]
     when "own"
-      map = user.map
-      render :json =>@markers = Marker.find_my_marker(map.id).to_json
+      markers = Marker.find_my_places user.id
+      html =[]
+      markers.each do |marker|
+        html<<  {:html=>render_to_string(:partial => 'common/place_info',
+            :locals => {:place=>marker.object,:marker=>marker}),
+          :longitude=>marker.marker_longitude,
+          :latitude=>marker.marker_latitude,
+          :geocode_position=>marker.geocode_position}
+      end
     when "follow"
-      map = user.map
-      @markers = map.markers
+      markers = Marker.find_follow_places map.id
+      html =[]
+      markers.each do |marker|
+        html<<  {:html=>render_to_string(:partial => 'common/place_info',
+            :locals => {:place=>marker.object,:marker=>marker}),
+          :longitude=>marker.marker_longitude,
+          :latitude=>marker.marker_latitude,
+          :geocode_position=>marker.geocode_position}
+      end
     when "rander"
       @markers = Marker.find(:all,:conditions=>['object_type=?','Place'], :order => "RAND()", :limit =>3 )
     when 'friend_position'
       render :json =>  Person.all(:select=>"people.id,people.first_name,people.photo_file_name,
                                          people.postition_id,postitions.home_latitude,postitions.home_longitude,
                                           postitions.current_latitude,postitions.current_longitude ",
-                                :joins=>[:friendships,:postition],:conditions=>["friendships.friend_id = ?",1]).to_json
+        :joins=>[:friendships,:postition],:conditions=>["friendships.friend_id = ?",1]).to_json
     when 'schedule'
       @plans = user.plans
     when 'location'
-      @markers = Marker.find_my_location 
+      @markers = Marker.find_my_location.to_json(:object)
     when 'locus'
-      @markers = Marker.find_my_locus Time.new
-      
+      markers = Marker.find_my_locus(Time.new.strftime("%Y/%m/%d"))
+      html =[]
+      markers.each do |marker|
+        html<<  {:html=>render_to_string(:partial => 'streams/stream_item', :object => marker.object),
+          :longitude=>marker.marker_longitude,
+          :latitude=>marker.marker_latitude,
+          :geocode_position=>marker.geocode_position
+          }
+      end
+
     end
-    
-    #render :json => Marker.find_all_by_map_id(map_id).to_json
-    #@markers = Marker.owner_friendships_person_id_is(@logged_in.id)
+    render :json =>html.to_json
   end
 
   def update

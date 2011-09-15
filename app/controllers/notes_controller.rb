@@ -43,19 +43,20 @@ class NotesController < ApplicationController
     params[:marker][:owner_id] =  @logged_in.id
     params[:note].delete(:travel_type) if params[:note][:travel_type]
     @note = Note.create(params[:note])
-    unless params[:note][:location]=='' and params[:note][:l_coordinate]=="" and params[:note][:d_coordinate]
+    unless params[:marker][:destin_position]=='' and params[:marker][:marker_longitude]=="" and params[:marker][:marker_latitude] ==''
       @marker_last = Marker.find(:all,:conditions=>["marker_latitude =? and marker_longitude = ? and owner_id =?",params[:note][:l_coordinate],params[:note][:d_coordinate],@logged_in.id],:order=>"id desc",:limit=>1)if params[:note][:l_coordinate] and params[:note][:d_coordinate]
       @marker_last = Marker.find(:conditions=>["geocode_position=? and owner_id =?",params[:note][:location],@logged_in.id],:order=>"id desc" ,:limit=>1) if @marker_last ==nil and params[:note][:location] 
       @marker_at = Marker.new(params[:marker])
       @note.stream_item.body += "<div id='location_now'><span color: #5F9128>当前位置：</span>#{params[:marker][:geocode_position]}</div>".html_safe if params[:marker][:geocode_position] !=''
       @note.stream_item.body += "<div id='next_destin'><span color: #5F9128>下一站：</span>#{params[:marker][:destin_position]}</div>".html_safe if params[:marker][:destin_position] !=''
       @note.stream_item.save
-      end
-      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker_at})
+
+      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker_at,:marker_type=>'StreamItem'})
       @marker_at.object_type = "StreamItem"
       @marker_at.object_id = @note.stream_item_id
       @marker_at.save
       @last_destination = @marker_at.get_last_destination(Time.new)
+            end
     flash[:notice] = t('notes.saved')
   end
 

@@ -140,7 +140,7 @@
           <% @album.pictures.each do|picture|%>
             <%= image_tag(picture.photo.url(:large),:class=>"picture", :alt => t('pictures.click_to_see_original')) %>
             <%=picture.photo_text%>
-          <%end%>
+          <%end if @album%>
         
       </div>
       

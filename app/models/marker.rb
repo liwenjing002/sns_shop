@@ -1,8 +1,9 @@
 class Marker < ActiveRecord::Base
-  belongs_to :map
   belongs_to :owner, :class_name => 'Person'
   belongs_to :object, :polymorphic => true
-
+  has_many :marker_to_maps
+  has_many :maps, :through => :marker_to_maps
+  has_one :place
   
   def html
     if self.object_type == "Note"
@@ -10,12 +11,13 @@ class Marker < ActiveRecord::Base
     end
   end
   
-  def self.find_my_marker id
-    markers =  self.all(:select=>"markers.id,places.place_name,places.place_description,places.place_latitude,
-                                         places.place_longitude,
-                                          places.full_address,pictures.photo_file_name",
-                                :joins=>"left join places on places.marker_id = markers.id left join pictures on pictures.id = places.picture_id",:conditions=>["markers.owner_id = ? and markers.object_type =?",id,"Place"])
-    markers
+  def self.find_my_places id
+   find_all_by_owner_id_and_object_type id,"Place"
+  end
+  
+  def self.find_follow_places map_id
+     search = Marker.search(:marker_to_maps_map_id_eq=>map_id,:marker_to_maps_marker_type_eq=>"Place")
+     markers = search.all()
   end
   
   #我的一天轨迹
