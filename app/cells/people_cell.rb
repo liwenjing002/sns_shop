@@ -53,7 +53,8 @@ class PeopleCell < Cell::Rails
     @person= options[:person]
     @logged_in = options[:logged_in]
     time = options[:day] 
-    @markers =  Marker.find_my_locus time
+    @postitions = Postition.find_my_locus(time,@logged_in.id,false)
+
     render
   end
   

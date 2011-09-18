@@ -2,13 +2,12 @@
   <%if @marker_last and @marker_last.length>0%>
 
   <%end%>
-  <%if !is_blank(@marker_at.marker_latitude) and !is_blank(@marker_at.marker_longitude) %>
-
+    html = '<%= raw mark_html(@marker_at) %>'
+  <%if !is_blank_zero(@marker_at.marker_latitude,@marker_at.marker_longitude) %>
     point = new BMap.Point('<%= @marker_at.marker_longitude %>', '<%=@marker_at.marker_latitude%>')
-    html = '<%= raw mark_html(@marker_at) %>'+ '<div id="location_now">'+'<span color: #5F9128>当前位置：</span>'+'<%=@marker_at.geocode_position%>' +'</div>'
-    marker = MapObject.add_marker_to_map(point,"/images/map/default.png",34,30,html,true)
+    marker = MapObject.add_marker_to_map(point,"/images/map/default.png",34,30,html,"share",<%=@marker_at.id%>,true)
   <%else%> 
-    MapObject.getPoint('<%=@marker_at.geocode_position%>', MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"home",MapObject.map,true,'<%=@marker_at.geocode_position%>'),MapObject.map);
+    MapObject.getPoint('<%=@marker_at.geocode_position%>', MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"share",html,'<%=@marker_at.geocode_position%>',<%=@marker_at.id%>,<%=@marker_at.id%>,true,MapObject.map),MapObject.map);
   <%end%>
 
 

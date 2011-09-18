@@ -1,4 +1,5 @@
 <%= javascript_include_tag "extend/jquery.form" %>
+<%= javascript_include_tag "extend/map" %>
 <%= javascript_include_tag  'http://api.map.baidu.com/api?v=1.2' %>
 <%= javascript_include_tag  'http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay.js' %>
 <%= javascript_include_tag  'http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer.js' %>
@@ -12,15 +13,10 @@
       MapObject.center = new BMap.Point('<%=@map.center_latitude%>','<%=@map.center_longitude%>')
 <%end%>
 <% if !is_blank(@map.zoom) %>MapObject.zoom_level = <%= @map.zoom%>;<%end%>
-<%if !is_blank(@person.postition.home_latitude,@person.postition.home_longitude)%>  
-      MapObject.home_marker_point = new BMap.Point('<%=@person.postition.home_longitude%>','<%=@person.postition.home_latitude%>')  
+<%if !is_blank(@person.home_address)%>  
+      MapObject.home_address = '<%=@person.home_address%>' 
 <%end%>
-<%if !is_blank(@person.postition.home_address)%>  
-      MapObject.home_address = '<%=@person.postition.home_address%>' 
-<%end%>
-<%if !is_blank(@person.postition.home_city)%>  
-      MapObject.home_city = '<%=@person.postition.home_city%>' 
-<%end%>
+
     MapObject.initialize('<%=@person.id%>',"mapCanvas",null) ;
 	
   });

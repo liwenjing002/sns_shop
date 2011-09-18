@@ -19,16 +19,13 @@
         }
       }).trigger('keyup');  
     </script>
-    <%@markers.each do |marker|%>
-      <%if marker.destin_position !=''%>
+    <%@postitions.each do |postitions|%>
+      <%if postitions.current_address !=''%>
         <div class="position"> 
-          我要去： <%= marker.destin_position %>
+          我在： <%= postitions.current_address %>
         </div>
         <br>
       <%end%>
-      <div class="position"> 
-        <%= render :partial => '../views/streams/stream_item', :object => marker.object %>
-      </div>
     <%end%>
   </div>
 </div>

@@ -50,6 +50,7 @@ module StreamsHelper
         "<img#{$1}src=\"#{url}\""
       end
     end
+    content += (" <div id='location_now'><span color: #5F9128>发表位置：</span>"+stream_item.streamable.location+"</div>") if !is_blank stream_item.streamable.location if stream_item.streamable_type == 'Note'
     raw content
   end
 

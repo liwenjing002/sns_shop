@@ -347,6 +347,17 @@ module ApplicationHelper
     end
     false
   end
+  
+    def is_blank_zero *args
+    args.each do |arg|
+      if arg==nil or arg == "" or arg.to_f  == 0
+        return true
+      else
+       next
+      end
+    end
+    false
+  end
 
   
   

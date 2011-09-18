@@ -302,16 +302,16 @@
       <div class="business">
         <% if private("address") %>
           <% unless 
-            (@person.postition.home_address) %>
+            (@person.home_address) %>
             <em><%= t('people.nothing_here_yet') %></em>
           <% end %>
 
           <div class="favorites-group">
-            <% if @person.postition.home_address.to_s.any? %>
+            <% if @person.home_address.to_s.any? %>
               <div class="favorites-group">
                 <h4><%= t('people.home_postition') %></h4>
                 <span>
-                  <%= @person.postition.home_address%>
+                  <%= @person.home_address%>
                 </span>
               </div>
 

@@ -1,8 +1,9 @@
 class Location::PostitionsController < ApplicationController
  
-  def update_postition
-    postition = Postition.find(params[:id]) if params[:id]
-    postition.update_attributes(params[:postition]) if postition
-        render :json=>{:success=>true}
+  
+  def create
+    Postition.create(params[:postition]) unless Postition.find(:all,:conditions=>params[:postition]).length>0
+   render :json=>"success"
   end
+  
 end

@@ -16,7 +16,7 @@
       <%= form.text_area :body, :rows => 2 ,:class=>"share_text",:placeholder => "用@标注你所在位置，用go2 标注出你要去的地方"%><br/>
       <div id="location_info" style="display:none">
         <%= text_field 'marker','geocode_position', :placeholder=>"我的位置" %><br>
-        <%= text_field 'marker','destin_position',:placeholder=>"我目的地"%><br>
+        <%#= text_field 'marker','destin_position',:placeholder=>"我目的地"%><br>
         </div>
         <div id ="travel_type" style="display:none">
           <%= select 'marker','travel_type',
@@ -64,7 +64,7 @@
           if(!boo){
             $(".is_location").attr("checked",false)
             $("#marker_geocode_position").attr("value", '');
-            $("#marker_destin_position").attr("value", '');
+            <%#*$("#marker_destin_position").attr("value", '');%>
           }else{
             $(".is_location").attr("checked",true)
             $("#location_info").show();
@@ -82,14 +82,14 @@
           $("#location_info").hide();
            $("#travel_type").hide();
           $("#marker_geocode_position").attr("value", '');
-          $("#marker_destin_position").attr("value", '');
+          <%#*$("#marker_destin_position").attr("value", '');%>
           $("#marker_marker_latitude").attr("value",  "");
           $("#marker_marker_longitude").attr("value",  "");
         }
       
       })
       
-  $("#note_location").keyup(function(){
+  $("#marker_geocode_position").change(function(){
         if($(this).attr("value")!=MapObject.myLocation_address){
           $("#marker_marker_latitude").attr("value",  "");
           $("#marker_marker_longitude").attr("value",  "");
@@ -99,14 +99,14 @@
         }
       })
       
-            $("#marker_destin_position").keyup(function(){           
-        if($(this).attr("value")!=""){
-          $("#travel_type").show();
+            <%#*$("#marker_destin_position").keyup(function(){%>           
+        <%#*if($(this).attr("value")!=""){%>
+          <%#*$("#travel_type").show();%>
           
-        }else{
-           $("#travel_type").hide();
-        }
-      })
+        <%#*}else{%>
+           <%#*$("#travel_type").hide();%>
+        <%#*}%>
+      <%#*})%>
   
       $("#share-note").submit(function(){  
         var options = {   
@@ -117,7 +117,7 @@
           },
           success:function(){
            $("#location_info").hide();
-           $("#travel_type").hide();
+           <%#*$("#travel_type").hide();%>
           }
         };
         $('#share-note').ajaxSubmit(options);   

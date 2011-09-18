@@ -6,71 +6,43 @@ class MarkersController < ApplicationController
     @ta_home = Person.find(params[:people_id]).postition if  params[:people_id]
     user =  params[:people_id]? Person.find(params[:people_id]):@logged_in
     map = user.map
-    html = nil
+    html = []
     case params[:type]
     when "own"
       markers = Marker.find_my_places user.id
-      html =[]
       markers.each do |marker|
-        html<<  {:html=>render_to_string(:partial => 'common/place_info',
-            :locals => {:place=>marker.object,:marker=>marker}),
-          :longitude=>marker.marker_longitude,
-          :latitude=>marker.marker_latitude,
-          :geocode_position=>marker.geocode_position}
+        html<<  marker_html(marker)
       end
     when "follow"
       markers = Marker.find_follow_places map.id
-      html =[]
       markers.each do |marker|
-        html<<  {:html=>render_to_string(:partial => 'common/place_info',
-            :locals => {:place=>marker.object,:marker=>marker}),
-          :longitude=>marker.marker_longitude,
-          :latitude=>marker.marker_latitude,
-          :geocode_position=>marker.geocode_position}
+       html<<  marker_html(marker)
       end
     when "rander"
       @markers = Marker.find(:all,:conditions=>['object_type=?','Place'], :order => "RAND()", :limit =>3 )
     when 'friend_position'
-      render :json =>  Person.all(:select=>"people.id,people.first_name,people.photo_file_name,
-                                         people.postition_id,postitions.home_latitude,postitions.home_longitude,
-                                          postitions.current_latitude,postitions.current_longitude ",
-        :joins=>[:friendships,:postition],:conditions=>["friendships.friend_id = ?",1]).to_json
+      html = Postition.find_friend_locus(Time.new.strftime("%Y/%m/%d"),@logged_in.id)
     when 'schedule'
       @plans = user.plans
     when 'location'
       @markers = Marker.find_my_location.to_json(:object)
     when 'locus'
-      markers = Marker.find_my_locus(Time.new.strftime("%Y/%m/%d"))
-      html =[]
+      html = Postition.find_my_locus(Time.new.strftime("%Y/%m/%d"),@logged_in.id,true)
+  when 'share'
+    search = Marker.search(params[:marker],:marker_type=>"StreamItem")
+     markers = search.all(:limit=>10)
       markers.each do |marker|
-        html<<  {:html=>render_to_string(:partial => 'streams/stream_item', :object => marker.object),
-          :longitude=>marker.marker_longitude,
-          :latitude=>marker.marker_latitude,
-          :geocode_position=>marker.geocode_position
-          }
+        html<< marker_html(marker)
       end
-
-    end
+  end
     render :json =>html.to_json
   end
 
   def update
-    if params[:marker][:id]
-      @marker = Marker.find(params[:marker][:id])
+    if params[:id]
+      @marker = Marker.find(params[:id])
       if @marker.update_attributes(params[:marker])
-        if @marker.object_type == 'StreamItem'
-          @stream_item = @marker.object
-          @stream_item.streamable.body += "<div id='location_now'><span color: #5F9128>当前位置：</span>#{@marker.geocode_position}</div>".html_safe
-          @stream_item.save
-          #          html = "#{@marker.marker_html}<div id='location_now'><span color: #5F9128>当前位置：</span>#{@marker.geocode_position}</div>".html_safe
-          #          html = html.gsub(/\'/, '"')
-          #          html = html.gsub(/[\n\r]/,'')
-          #          @marker.marker_html = html.html_safe
-          #          @marker.save
-          render :json => {:success=>false} 
-        else
-          render :json => {:success=>false} 
-        end
+        render :json => {:success=>false} 
       else
         render :json => {:success=>false} 
       end
@@ -160,5 +132,27 @@ class MarkersController < ApplicationController
     end
   end
   
+  
+  private
+  def marker_html marker
+      html = nil
+     case marker.object_type
+     when "Place"
+        html =  {:html=>render_to_string(:partial => 'common/place_info',
+            :locals => {:place=>marker.object,:marker=>marker}),
+          :longitude=>marker.marker_longitude,
+          :latitude=>marker.marker_latitude,
+          :marker_id=>marker.id,
+          :geocode_position=>marker.geocode_position}
+     when "StreamItem"
+       html =  {:html=>render_to_string(:partial => 'common/marker_info',:locals => {:marker=> marker}),
+          :longitude=>marker.marker_longitude,
+          :latitude=>marker.marker_latitude,
+          :marker_id=>marker.id,
+          :geocode_position=>marker.geocode_position}
+     end
+     html
+    
+  end
   
 end

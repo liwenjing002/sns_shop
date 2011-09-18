@@ -410,7 +410,7 @@ class Person < ActiveRecord::Base
     elsif params[:person]
       if Person.logged_in.can_edit_profile?
         params[:person].cleanse(:birthday, :anniversary)
-        update_attributes(params[:person]) && postition.update_attributes(params[:postition])
+        update_attributes(params[:person])
       else
         Update.create_from_params(params, self)
         update_attributes(params[:person].reject { |k, v| !EXTRAS.include?(k) })

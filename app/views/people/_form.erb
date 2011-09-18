@@ -1,25 +1,22 @@
 <%= form_for @person do |form| %>
-<div class="panes">
+  <div class="panes">
 
     <%= render :partial => 'edit_photo' %>
-  
+
     <%= render :partial => 'edit_basic' ,:locals => { :form => form}%>
 
     <%= render :partial => 'edit_about' ,:locals => { :form => form}%>
-
-    <%= fields_for @postition do |postition| %>
-      <%= render :partial => 'edit_address', :locals => {:form => postition} %>
-    <% end %>
+    <%= render :partial => 'edit_address', :locals => {:form => form} %>
 
     <%= render :partial => 'edit_business' ,:locals => { :form => form}%>
 
 
     <p class="double-margin-top"><%= form.submit t('save_changes') %></p>
 
- 
 
-</div>
- <% end %>
+
+  </div>
+<% end %>
 <script type="text/javascript">
  
 

@@ -1,3 +1,4 @@
+include AbstractController
 class Marker < ActiveRecord::Base
   belongs_to :owner, :class_name => 'Person'
   belongs_to :object, :polymorphic => true
@@ -20,12 +21,7 @@ class Marker < ActiveRecord::Base
      markers = search.all()
   end
   
-  #我的一天轨迹
-  # date 格式 %y/%m/%d
-  def self.find_my_locus date
-    Marker.find(:all,:conditions=>["DATE_FORMAT(created_at,'%Y/%m/%d') = ? and (object_type = 'StreamItem' )",date],
-      :order=>"created_at desc")                      
-  end
+
   
   #获取我当前@地点和go2的地点
   def self.find_my_location

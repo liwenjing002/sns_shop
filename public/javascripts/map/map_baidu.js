@@ -1,12 +1,19 @@
    
 var MapObject =  {
     map: null, //map对象
+    map_width:null,//地图宽度
+    map_heigth:null,//地图高度
     person_id:null,//person id
     home_marker_point:null, //家庭地址 的marker 坐标
     home_city:null,//家庭地址 城市
     home_address: null,//家庭地址 描述
     center: new BMap.Point(116.404, 39.915), //地图中心坐标
-    markerClusterer: null, //markers集合器
+    markerClusterer: null, //place markers集合器
+    ownClusterer: null, //place own markers集合器
+    followClusterer: null, //place own markers集合器
+    postitionClusterer: null, //place markers集合器
+    shareClusterer: null, //状态 markers集合器
+    shareMarkers : new Map(),//状态 marker hash集合
     markers_array: [], //markers数组
     myLocation:null,  //我当前位置的坐标
     my_location_marker: null,//我当前位置marker
@@ -24,6 +31,7 @@ var MapObject =  {
     temp_place_marker:null,//临时place marker
     city:null,//当前城市
     localCity:null,//城市服务对象
+    polyline:new BMap.Polyline(),//折线对象
     
     
     //初始化map
@@ -39,14 +47,12 @@ var MapObject =  {
         this.get_city();
         this.person_id = person_id;
         this.map.centerAndZoom(this.center, this.zoom_level); 
+        this.map_width = $("#mapCanvas").width();
+        this.map_heigth = $("#mapCanvas").height();
         if(this.is_enableScrollWheelZoom){
             this.map.enableScrollWheelZoom()    
         }
-        if(this.home_marker_point!= null){
-            MapObject.getLocation(this.home_marker_point, MapObject.show_locaton_infoWindow("home",null,this.home_marker_point,"/images/map/home.png",34,30));
-        }else if(this.home_address!= null){
-            MapObject.getPoint(this.home_address, MapObject.add_marker_to_map_function("/images/map/home.png",34,30,"home",null,this.home_city,true,this.home_address),this.home_city);
-        }
+
         if(this.is_navigationControl!= null){
             this.map.addControl(new BMap.NavigationControl());  
         }
@@ -55,6 +61,19 @@ var MapObject =  {
             minClusterSize:5,
             maxZoom:13
         });
+        this.ownClusterer = this.markerClusterer;
+        this.followClusterer = this.markerClusterer;
+        this.postitionClusterer = new BMapLib.MarkerClusterer(this.map,{
+            minClusterSize:5,
+            maxZoom:13
+        });
+        this.shareClusterer = new BMapLib.MarkerClusterer(this.map,{
+            minClusterSize:5,
+            maxZoom:13
+        });
+        this.map.addEventListener("moveend",this.move_zoom_drag_chang());
+        this.map.addEventListener("zoomend",this.move_zoom_drag_chang());
+        this.map.addEventListener("dragend",this.move_zoom_drag_chang())
       
     },
     
@@ -63,7 +82,9 @@ var MapObject =  {
         this.localCity.get(function(LocalCityResult){
             MapObject.city = LocalCityResult.name
             MapObject.map.centerAndZoom(LocalCityResult.center.point, 13); 
-            
+            if(MapObject.home_address!= null){
+                MapObject.getPoint(MapObject.home_address, MapObject.add_marker_to_map_function("/images/map/home.png",34,30,"home",null,MapObject.home_address,true,null,MapObject.city),MapObject.city);
+            }
         })
     },
     
@@ -87,6 +108,7 @@ var MapObject =  {
                 MapObject.map.centerAndZoom(geolocationResult.point, 13);
                 MapObject.myLocation = geolocationResult.point;
                 MapObject.getLocation(geolocationResult.point, MapObject.show_locaton_infoWindow("location",null,geolocationResult.point,"/images/map/default.png",57,34));
+
             }else{
                 alert("我当前位置坐标定位失败")
             }
@@ -101,9 +123,14 @@ var MapObject =  {
             if(result!= null){
                 MapObject.myLocation_address = result.address;
                 MapObject.infoWindow.setContent(eval("MapObject."+marker_type+"_html('"+result.address+"')"));
-                my_location_marker=  MapObject.add_marker_to_map(point,icon_url,icon_w,icon_h,eval("MapObject."+marker_type+"_html('"+result.address+"'"+ ",dom)"),true)
-                my_location_marker.openInfoWindow(MapObject.infoWindow);
-                my_location_marker.addEventListener("click",MapObject.markerClickFunction(eval("MapObject."+marker_type+"_html('"+result.address+"'"+ ",dom)"),my_location_marker))
+                MapObject.my_location_marker=  MapObject.add_marker_to_map(point,icon_url,icon_w,icon_h,eval("MapObject."+marker_type+"_html('"+result.address+"'"+ ",dom)"),"my_location",null,true)
+                MapObject.my_location_marker.openInfoWindow(MapObject.infoWindow);
+                MapObject.my_location_marker.addEventListener("click",MapObject.markerClickFunction(eval("MapObject."+marker_type+"_html('"+result.address+"'"+ ",dom)"),MapObject.my_location_marker))
+                data = "postition[current_latitude]="+point.lat+"&postition[current_longitude]="+point.lng
+                +"&postition[person_id]="+MapObject.person_id+"&postition[current_address]="+result.address
+                url = "/location/postitions";
+                request_type = "POST";
+                MapObject.update_date_to_service(data, request_type, url, function(){})
             }else{
                 alert("定位失败")
             }
@@ -150,13 +177,13 @@ var MapObject =  {
         return "<div>"+address+"</div>"
     },
     
-    streamable_html:function(address,dom){
+    share_html:function(address,dom){
         return dom
     },
     
     
     //从后台获取数据后初始化marker
-    init_marker_from_data:function(type,people_id){
+    init_marker_from_data:function(type,people_id,data){
         id_string = ''
         if(people_id !=null && people_id != ''){
             id_string +=("&people_id="+people_id)
@@ -164,6 +191,7 @@ var MapObject =  {
         $.ajax({                                                
             type: "GET",                                    
             url: "/markers?type="+type+id_string,
+            data:data,
             success: function(data, textStatus){
                 MapObject.markerClusterer.clearMarkers()
                 eval("MapObject.show_"+type+"("+'data'+")")
@@ -171,34 +199,42 @@ var MapObject =  {
         });
     },
     
+    update_date_to_service:function(data,request_type,url,call_function){
+        $.ajax({                                                
+            type: request_type,                                    
+            url: url,
+            data:data,
+            success: call_function
+        });
+    },
+    
     //显示好友位置
     show_friend_position:function(data){
-        //        alert(obj2str(data))
+        for (var i=0;i<=data.length-1;i++) 
+        {
+            if(data[i].longitude =='' && data[i].latitude ==''){
+                MapObject.getPoint(data[0].geocode_position, MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"streamable",data[i].html,this.map,null,true,data[i].marker_id,data[i].geocode_position),this.map);
+            }else{
+                point = new BMap.Point(data[i].longitude, data[i].latitude)
+                marker = this.add_marker_to_map(point,"/images/map/default.png",34,30,data[i].html,"friend_postition",false)
+                MapObject.markerClusterer.addMarker(marker); 
+            }
 
-        if(data[0].person.photo_file_name!=null){
-            pic_url = this.file_path+"/people/photos/"+data[0].person.id + "tn/"+data[0].person.photo_file_name+".jpg"
-        }else{
-            pic_url = "/images/clean/manoutline.tn.png"
         }
-        string_html = "<div> <span><a href='/people/"+data[0].person.id    +
-        "'><img alt="+ data[0].person.first_name+" src='"   + pic_url
-        +"' title=" +
-        data[0].person.first_name+"></a></span><div style='clear:left;'></div></div>"
-        point = new BMap.Point(data[0].person.home_longitude, data[0].person.home_latitude)
-        this.add_marker_to_map(point,"/images/map/home.png",34,30,string_html,false)
-    
     
     },
     
     show_own:function(data){
+        MapObject.ownClusterer.clearMarkers();
+        point_array = []
         for (var i=0;i<=data.length-1;i++) 
-        {   if(data[i].longitude =='' && data[i].latitude ==''){
-              MapObject.getPoint(data[0].geocode_position, MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"streamable",data[i].html,this.map,true,data[0].geocode_position),this.map);
-        }else{
-            point = new BMap.Point(data[i].longitude, data[i].latitude)
-            marker = this.add_marker_to_map(point,"/images/map/default.png",34,30,data[i].html,false)
-            MapObject.markerClusterer.addMarker(marker); 
-        }
+        {
+            if(data[i].longitude !='' && data[i].latitude !=''){
+                point = new BMap.Point(data[i].longitude, data[i].latitude)
+                point_array[i] = point
+                marker = this.add_marker_to_map(point,"/images/map/default.png",34,30,data[i].html,"own",false)
+                MapObject.ownClusterer.addMarker(marker); 
+            }
 
         }
     },
@@ -207,9 +243,47 @@ var MapObject =  {
         this.show_own(data)
     },
     
+    show_share:function(data){
+        MapObject.shareClusterer.clearMarkers();
+        for (var i=0;i<=data.length-1;i++) 
+        {
+            if(data[i].longitude =='' && data[i].latitude ==''){
+                MapObject.getPoint(data[0].geocode_position, MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"share",data[i].html,this.map,null,true,data[i].marker_id,data[i].geocode_position),this.map);
+            }else{
+                point = new BMap.Point(data[i].longitude, data[i].latitude)
+                marker = this.add_marker_to_map(point,"/images/map/default.png",34,30,data[i].html,"share",false)
+                MapObject.shareClusterer.addMarker(marker); 
+            }
+
+        }
+    },
     
     show_locus:function(data){
-        this.show_own(data)
+        MapObject.map.clearOverlays(MapObject.my_location_marker)
+        MapObject.postitionClusterer.clearMarkers();
+        point_array = []
+        for (var i=0;i<=data.length-1;i++) 
+        {
+            if(data[i].longitude !='' && data[i].latitude !=''){
+                point = new BMap.Point(data[i].longitude, data[i].latitude)
+                point_array[i] = point
+                marker = this.add_marker_to_map(point,"/images/map/default.png",34,30,data[i].html,"locus",data[i].marker_id,false)
+                MapObject.postitionClusterer.addMarker(marker); 
+            }
+
+        }
+        this.polyline.setPath(point_array);
+        this.polyline.enableEditing()
+        MapObject.map.addOverlay(this.polyline);  
+    },
+    
+    //显示公交线路
+    show_transit:function(city,add1,add2){
+        
+    },
+    //显示驾车路线
+    show_driving:function(city,add1,add2){
+        
     },
     
     
@@ -219,7 +293,7 @@ var MapObject =  {
     //icon_w： 图标 width；
     //icon_h： 图标 height；
     //marker_html： infoWindow
-    add_marker_to_map: function(point,icon_url,icon_w,icon_h,marker_html,is_show){
+    add_marker_to_map: function(point,icon_url,icon_w,icon_h,marker_html,marker_type,marker_id,is_show){
        
         marker = new BMap.Marker(point,{
             icon: this.setIcon(icon_url,icon_w,icon_h)
@@ -227,16 +301,26 @@ var MapObject =  {
         this.map.addOverlay(marker);
         if(is_show){
             MapObject.infoWindow.setContent(marker_html);
-            MapObject.infoWindow.redraw()
+            //            MapObject.infoWindow.redraw()
             marker.openInfoWindow(MapObject.infoWindow);
         }
+        if(eval("this."+marker_type+"Clusterer")){
+            eval("this."+marker_type+"Clusterer").addMarker(marker);
+        }
+        if(eval("this."+marker_type+"Markers")){
+            if(marker_id){
+                eval("this."+marker_type+"Markers").put(marker_id,marker);   
+            }
+        }
+
+
         marker.addEventListener("click",MapObject.markerClickFunction(marker_html,marker));
         return marker;
     },
     
     
     //显示我当前位置坐标，使用 Geocoder
-    add_marker_to_map_function: function(icon_url,icon_w,icon_h,marker_type,dom_html,address,is_show,city){
+    add_marker_to_map_function: function(icon_url,icon_w,icon_h,marker_type,dom_html,address,is_show,marker_id,city){
         return function(point) {
             if(point!= null){
                 marker = new BMap.Marker(point,{
@@ -248,14 +332,28 @@ var MapObject =  {
                     marker.openInfoWindow(MapObject.infoWindow);
                 }
                 marker.addEventListener("click",MapObject.markerClickFunction(eval("MapObject."+marker_type+"_html('"+address+"',dom_html)"),marker));
+                if(eval("MapObject."+marker_type+"Clusterer")){
+                    eval("MapObject."+marker_type+"Clusterer").addMarker(marker);
+                }
+                if(eval("MapObject."+marker_type+"Markers")){
+                    if(marker_id){
+                        eval("MapObject."+marker_type+"Markers").put(marker_id,marker);  
+                    }
+                }
+                if(marker_id){
+                    data = "marker[marker_latitude]="+point.lat+"&marker[marker_longitude]="+point.lng
+                    request_type = "PUT";
+                    url = "/markers/"+marker_id
+                    MapObject.update_date_to_service(data, request_type, url, function(){})
+                }
             }else{
-                MapObject.get_local_search(city,address,MapObject.add_marker_to_map_local_search_function(icon_url,icon_w,icon_h,marker_type,address,true))
+                MapObject.get_local_search(city,address,MapObject.add_marker_to_map_local_search_function(icon_url,icon_w,icon_h,marker_type,marker_id,address,true))
             }
         };
     },
     
     //显示我当前位置坐标，使用local search
-    add_marker_to_map_local_search_function: function(icon_url,icon_w,icon_h,marker_type,address,is_show){
+    add_marker_to_map_local_search_function: function(icon_url,icon_w,icon_h,marker_type,marker_id,address,is_show){
         return function(rs) {
             if( MapObject.local_search.getStatus() == BMAP_STATUS_SUCCESS){
                 var poi = rs.getPoi(0); 
@@ -268,6 +366,12 @@ var MapObject =  {
                     marker.openInfoWindow(MapObject.infoWindow);
                 }
                 marker.addEventListener("click",MapObject.markerClickFunction(eval("MapObject."+marker_type+"_html('"+address+"')"),marker));
+                if(marker_id){
+                    data = "marker[marker_latitude]="+point.lat+"&marker[marker_longitude]="+point.lng
+                    request_type = "PUT";
+                    url = "/markers/"+marker_id
+                    MapObject.update_date_to_service(data, request_type, url, function(){})
+                }
             }else{
                 alert("查找失败")
             }
@@ -281,7 +385,7 @@ var MapObject =  {
     //点击地图 新增一个place 页面
     add_place_to_map_listen:function(){
         function showInfo(e){ 
-            MapObject.temp_marker = MapObject.add_marker_to_map(e.point,"/images/map/default.png",57,34,MapObject.place_html,true);
+            MapObject.temp_marker = MapObject.add_marker_to_map(e.point,"/images/map/default.png",57,34,MapObject.place_html,"temp_place",null,true);
             MapObject.temp_marker.enableDragging()
             MapObject.map.removeEventListener("click", showInfo);  
             MapObject.map.setDefaultCursor("pointer");
@@ -303,7 +407,26 @@ var MapObject =  {
         MapObject.map.addEventListener("click", showInfo);
         MapObject.map.setDefaultCursor("crosshair");
             
+    },
+    marker_move: function(marker_type,marker_id){
+        alert(marker_type)
+        marker = eval("MapObject."+marker_type+"Markers").get(marker_id)
+        alert(marker)
+        marker.enableDragging()
+    },
+    //地图移动或者缩放或者拖拽的时候，获得边界坐标，并向后台请求数据
+    move_zoom_drag_chang:function(){
+        return function fun(e){ 
+            cent = MapObject.map.getCenter();
+            left_top = MapObject.map.pixelToPoint(new BMap.Pixel(0,0))
+            right_down = MapObject.map.pixelToPoint(new BMap.Pixel(MapObject.map_width,MapObject.map_heigth))
+            data = "marker[marker_latitude_lt]="+left_top.lat+"&marker[marker_latitude_gt]="+right_down.lat +
+            "&marker[marker_longitude_gt]="+left_top.lng+"&marker[marker_longitude_lt]="+right_down.lng
+            MapObject.init_marker_from_data("share", MapObject.person_id, data); 
+        }
     }
+    
+	
     
 
 
