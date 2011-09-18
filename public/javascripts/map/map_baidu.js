@@ -347,13 +347,13 @@ var MapObject =  {
                     MapObject.update_date_to_service(data, request_type, url, function(){})
                 }
             }else{
-                MapObject.get_local_search(city,address,MapObject.add_marker_to_map_local_search_function(icon_url,icon_w,icon_h,marker_type,marker_id,address,true))
+                MapObject.get_local_search(city,address,MapObject.add_marker_to_map_local_search_function(icon_url,icon_w,icon_h,marker_type,dom_html,marker_id,address,true))
             }
         };
     },
     
     //显示我当前位置坐标，使用local search
-    add_marker_to_map_local_search_function: function(icon_url,icon_w,icon_h,marker_type,marker_id,address,is_show){
+    add_marker_to_map_local_search_function: function(icon_url,icon_w,icon_h,marker_type,dom_html,marker_id,address,is_show){
         return function(rs) {
             if( MapObject.local_search.getStatus() == BMAP_STATUS_SUCCESS){
                 var poi = rs.getPoi(0); 
@@ -362,10 +362,10 @@ var MapObject =  {
                 });
                 MapObject.map.addOverlay(marker);
                 if(is_show){
-                    MapObject.infoWindow.setContent(eval("MapObject."+marker_type+"_html('"+address+"')"))    
+                    MapObject.infoWindow.setContent(eval("MapObject."+marker_type+"_html('"+address+"',dom_html)"))    
                     marker.openInfoWindow(MapObject.infoWindow);
                 }
-                marker.addEventListener("click",MapObject.markerClickFunction(eval("MapObject."+marker_type+"_html('"+address+"')"),marker));
+                marker.addEventListener("click",MapObject.markerClickFunction(eval("MapObject."+marker_type+"_html('"+address+"',dom_html)"),marker));
                 if(marker_id){
                     data = "marker[marker_latitude]="+point.lat+"&marker[marker_longitude]="+point.lng
                     request_type = "PUT";

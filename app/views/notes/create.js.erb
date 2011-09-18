@@ -7,7 +7,7 @@
     point = new BMap.Point('<%= @marker_at.marker_longitude %>', '<%=@marker_at.marker_latitude%>')
     marker = MapObject.add_marker_to_map(point,"/images/map/default.png",34,30,html,"share",<%=@marker_at.id%>,true)
   <%else%> 
-    MapObject.getPoint('<%=@marker_at.geocode_position%>', MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"share",html,'<%=@marker_at.geocode_position%>',<%=@marker_at.id%>,<%=@marker_at.id%>,true,MapObject.map),MapObject.map);
+    MapObject.getPoint('<%=@marker_at.geocode_position%>', MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"share",html,'<%=@marker_at.geocode_position%>',true,<%=@marker_at.id%>,MapObject.map),MapObject.map);
   <%end%>
 
 
