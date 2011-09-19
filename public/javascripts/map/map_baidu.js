@@ -35,6 +35,7 @@ var MapObject =  {
     temp_place_marker:null,//临时place marker
     city:null,//当前城市
     localCity:null,//城市服务对象
+    transit:null,//公交服务
     polyline:new BMap.Polyline(),//折线对象
     
     
@@ -289,198 +290,201 @@ var MapObject =  {
     
     //显示公交线路
     go_with_bus:function(){
-        var transit = new BMap.TransitRoute(this.map);
-        if (this.my_location_marker){
-            this.start_point = this.my_location_marker.getPosition();
-        }else{
-            this.start_point = this.map.getCenter();
-        }
-        
-        transit.setSearchCompleteCallback(function(results){  
-            if (transit.getStatus() == BMAP_STATUS_SUCCESS){  
-                var firstPlan = results.getPlan(0);  
-                // 绘制步行线路  
-                for (var i = 0; i < firstPlan.getNumRoutes(); i ++){  
-                    var walk = firstPlan.getRoute(i);  
-                    if (walk.getDistance(false) > 0){  
-                        // 步行线路有可能为0  
-                        MapObject.map.addOverlay(new BMap.Polyline(walk.getPath(), {
-                            lineColor: "green"
-                        }));  
-                    }  
-                }  
-                // 绘制公交线路  
-                for (i = 0; i < firstPlan.getNumLines(); i ++){  
-                    var line = firstPlan.getLine(i);  
-                    MapObject.map.addOverlay(new BMap.Polyline(line.getPath()));  
-                }
-            }
-        });     
-        transit.search(this.start_point, this.end_marker.getPosition()); 
-    },
-    //显示驾车路线
-    go_with_car:function(){
-        
-    },
-    
-    
-    //在地图添加一个marker
-    //point: marker 坐标；
-    //icon_url： icon 图片地址；
-    //icon_w： 图标 width；
-    //icon_h： 图标 height；
-    //marker_html： infoWindow
-    add_marker_to_map: function(point,icon_url,icon_w,icon_h,marker_html,marker_type,marker_id,is_show){
-       
-        marker = new BMap.Marker(point,{
-            icon: this.setIcon(icon_url,icon_w,icon_h)
-        });
-        this.map.addOverlay(marker);
-        if(is_show){
-            MapObject.infoWindow.setContent(marker_html);
-            //            MapObject.infoWindow.redraw()
-            marker.openInfoWindow(MapObject.infoWindow);
-        }
-        if(eval("this."+marker_type+"Clusterer")){
-            eval("this."+marker_type+"Clusterer").addMarker(marker);
-        }
-        if(eval("this."+marker_type+"Markers")){
-            if(marker_id){
-                eval("this."+marker_type+"Markers").put(marker_id,marker);   
-            }
-        }
-
-
-        marker.addEventListener("click",MapObject.markerClickFunction(marker_html,marker));
-        return marker;
-    },
-    
-    
-    //显示我当前位置坐标，使用 Geocoder
-    add_marker_to_map_function: function(icon_url,icon_w,icon_h,marker_type,dom_html,address,is_show,marker_id,city){
-        return function(point) {
-            if(point!= null){
-                marker = new BMap.Marker(point,{
-                    icon: MapObject.setIcon(icon_url,icon_w,icon_h)
+        if(this.transit==null){
+            this.transit =new BMap.TransitRoute(this.map,{
+                renderOptions:{
+                    map: this.map,
+                    panel: "results",
+                    autoViewport:true
+                },
+                onMarkersSet: function(pois){
+                var start = pois[0].marker, end = pois[1].marker;
+                start.enableDragging();//开启起点拖拽功能
+                end.enableDragging();//开启终点拖拽功能
+                start.addEventListener("dragend",function(e){                   
+                    MapObject.map.clearOverlays();
+                    MapObject.transit.search(e.point,end.getPosition());                   
                 });
-                MapObject.map.addOverlay(marker);
-                if(is_show){
-                    MapObject.infoWindow.setContent(eval("MapObject."+marker_type+"_html('"+address+"',dom_html)"))    
-                    marker.openInfoWindow(MapObject.infoWindow);
-                }
-                marker.addEventListener("click",MapObject.markerClickFunction(eval("MapObject."+marker_type+"_html('"+address+"',dom_html)"),marker));
-                if(eval("MapObject."+marker_type+"Clusterer")){
-                    eval("MapObject."+marker_type+"Clusterer").addMarker(marker);
-                }
-                if(eval("MapObject."+marker_type+"Markers")){
-                    if(marker_id){
-                        eval("MapObject."+marker_type+"Markers").put(marker_id,marker);  
-                    }
-                }
-                if(marker_id){
-                    data = "marker[marker_latitude]="+point.lat+"&marker[marker_longitude]="+point.lng
-                    request_type = "PUT";
-                    url = "/markers/"+marker_id
-                    MapObject.update_date_to_service(data, request_type, url, function(){})
-                }
-            }else{
-                MapObject.get_local_search(city,address,MapObject.add_marker_to_map_local_search_function(icon_url,icon_w,icon_h,marker_type,dom_html,marker_id,address,true))
-            }
-        };
-    },
-    
-    //显示我当前位置坐标，使用local search
-    add_marker_to_map_local_search_function: function(icon_url,icon_w,icon_h,marker_type,dom_html,marker_id,address,is_show){
-        return function(rs) {
-            if( MapObject.local_search.getStatus() == BMAP_STATUS_SUCCESS){
-                var poi = rs.getPoi(0); 
-                marker = new BMap.Marker(poi.point,{
-                    icon: MapObject.setIcon(icon_url,icon_w,icon_h)
+                end.addEventListener("dragend",function(e){                    
+                    MapObject.map.clearOverlays();                      
+                    MapObject.transit.search(start.getPosition(),e.point);                  
                 });
-                MapObject.map.addOverlay(marker);
-                if(is_show){
-                    MapObject.infoWindow.setContent(eval("MapObject."+marker_type+"_html('"+address+"',dom_html)"))    
-                    marker.openInfoWindow(MapObject.infoWindow);
-                }
-                marker.addEventListener("click",MapObject.markerClickFunction(eval("MapObject."+marker_type+"_html('"+address+"',dom_html)"),marker));
-                if(marker_id){
-                    data = "marker[marker_latitude]="+poi.point.lat+"&marker[marker_longitude]="+poi.point.lng
-                    request_type = "PUT";
-                    url = "/markers/"+marker_id
-                    MapObject.update_date_to_service(data, request_type, url, function(){})
-                }
-            }else{
-                alert("查找失败")
             }
-        };
-    },
-    
-    
-    
-    
-    //增加地图添加place点事件
-    //点击地图 新增一个place 页面
-    add_place_to_map_listen:function(){
-        function showInfo(e){ 
-            MapObject.temp_marker = MapObject.add_marker_to_map(e.point,"/images/map/default.png",57,34,MapObject.place_html,"temp_place",null,true);
-            MapObject.temp_marker.enableDragging()
-            MapObject.map.removeEventListener("click", showInfo);  
-            MapObject.map.setDefaultCursor("pointer");
-            MapObject.getLocation(e.point,
-                function(result) {
-                    $("#place_location").html(result.address);
-                    $("#place_full_address").attr("value",result.address);
-                    $("#place_place_latitude").attr("value",e.point.lat);
-                    $("#place_place_longitude").attr("value",e.point.lng);
-                    $("#place_location").show();
-                    MapObject.infoWindow.redraw();
-                    MapObject.infoWindow.addEventListener("close", function(){
-                        MapObject.map.removeOverlay(MapObject.temp_marker); 
-                    });   
-                    
-                }
-                );
-        } 
-        MapObject.map.addEventListener("click", showInfo);
-        MapObject.map.setDefaultCursor("crosshair");
-            
-    },
-    marker_move: function(marker_type,marker_id){
-        alert(marker_type)
-        marker = eval("MapObject."+marker_type+"Markers").get(marker_id)
-        alert(marker)
-        marker.enableDragging()
-    },
-    //地图移动或者缩放或者拖拽的时候，获得边界坐标，并向后台请求数据
-    move_zoom_drag_chang:function(){
-        return function fun(e){ 
-            cent = MapObject.map.getCenter();
-            left_top = MapObject.map.pixelToPoint(new BMap.Pixel(0,0))
-            right_down = MapObject.map.pixelToPoint(new BMap.Pixel(MapObject.map_width,MapObject.map_heigth))
-            data = "marker[marker_latitude_lt]="+left_top.lat+"&marker[marker_latitude_gt]="+right_down.lat +
-            "&marker[marker_longitude_gt]="+left_top.lng+"&marker[marker_longitude_lt]="+right_down.lng
-            MapObject.init_marker_from_data("share", MapObject.person_id, data); 
-        }
-    },
-    
-    //我要去
-    i_go_to:function(){
-        function show_go_to(e){
-            MapObject.getLocation(e.point, function(result){
-                MapObject.end_marker = new BMap.Marker(e.point,{
-                    icon: MapObject.setIcon("/images/map/default.png",57,34)
-                });
-                MapObject.map.removeEventListener("click", show_go_to);  
-                MapObject.map.addOverlay(MapObject.end_marker);
-                MapObject.end_p = result.address
-                now_html = eval("MapObject."+"go_to"+"_html('"+result.address+"',null)")
-                MapObject.infoWindow.setContent(now_html)    
-                MapObject.end_marker.openInfoWindow(MapObject.infoWindow);
-                MapObject.end_marker.addEventListener("click",MapObject.markerClickFunction(now_html, MapObject.end_marker));  
-            }) ;
-        }
-        this.map.addEventListener("click",show_go_to);
+            });
     }
+    if (this.my_location_marker){
+        this.start_point = this.my_location_marker.getPosition();
+    }else{
+        this.start_point = this.map.getCenter();
+    }
+        
+  
+    this.transit.search(this.start_point, this.end_marker.getPosition()); 
+},
+//显示驾车路线
+go_with_car:function(){
+        
+},
+    
+    
+//在地图添加一个marker
+//point: marker 坐标；
+//icon_url： icon 图片地址；
+//icon_w： 图标 width；
+//icon_h： 图标 height；
+//marker_html： infoWindow
+add_marker_to_map: function(point,icon_url,icon_w,icon_h,marker_html,marker_type,marker_id,is_show){
+       
+    marker = new BMap.Marker(point,{
+        icon: this.setIcon(icon_url,icon_w,icon_h)
+    });
+    this.map.addOverlay(marker);
+    if(is_show){
+        MapObject.infoWindow.setContent(marker_html);
+        //            MapObject.infoWindow.redraw()
+        marker.openInfoWindow(MapObject.infoWindow);
+    }
+    if(eval("this."+marker_type+"Clusterer")){
+        eval("this."+marker_type+"Clusterer").addMarker(marker);
+    }
+    if(eval("this."+marker_type+"Markers")){
+        if(marker_id){
+            eval("this."+marker_type+"Markers").put(marker_id,marker);   
+        }
+    }
+
+
+    marker.addEventListener("click",MapObject.markerClickFunction(marker_html,marker));
+    return marker;
+},
+    
+    
+//显示我当前位置坐标，使用 Geocoder
+add_marker_to_map_function: function(icon_url,icon_w,icon_h,marker_type,dom_html,address,is_show,marker_id,city){
+    return function(point) {
+        if(point!= null){
+            marker = new BMap.Marker(point,{
+                icon: MapObject.setIcon(icon_url,icon_w,icon_h)
+            });
+            MapObject.map.addOverlay(marker);
+            if(is_show){
+                MapObject.infoWindow.setContent(eval("MapObject."+marker_type+"_html('"+address+"',dom_html)"))    
+                marker.openInfoWindow(MapObject.infoWindow);
+            }
+            marker.addEventListener("click",MapObject.markerClickFunction(eval("MapObject."+marker_type+"_html('"+address+"',dom_html)"),marker));
+            if(eval("MapObject."+marker_type+"Clusterer")){
+                eval("MapObject."+marker_type+"Clusterer").addMarker(marker);
+            }
+            if(eval("MapObject."+marker_type+"Markers")){
+                if(marker_id){
+                    eval("MapObject."+marker_type+"Markers").put(marker_id,marker);  
+                }
+            }
+            if(marker_id){
+                data = "marker[marker_latitude]="+point.lat+"&marker[marker_longitude]="+point.lng
+                request_type = "PUT";
+                url = "/markers/"+marker_id
+                MapObject.update_date_to_service(data, request_type, url, function(){})
+            }
+        }else{
+            MapObject.get_local_search(city,address,MapObject.add_marker_to_map_local_search_function(icon_url,icon_w,icon_h,marker_type,dom_html,marker_id,address,true))
+        }
+    };
+},
+    
+//显示我当前位置坐标，使用local search
+add_marker_to_map_local_search_function: function(icon_url,icon_w,icon_h,marker_type,dom_html,marker_id,address,is_show){
+    return function(rs) {
+        if( MapObject.local_search.getStatus() == BMAP_STATUS_SUCCESS){
+            var poi = rs.getPoi(0); 
+            marker = new BMap.Marker(poi.point,{
+                icon: MapObject.setIcon(icon_url,icon_w,icon_h)
+            });
+            MapObject.map.addOverlay(marker);
+            if(is_show){
+                MapObject.infoWindow.setContent(eval("MapObject."+marker_type+"_html('"+address+"',dom_html)"))    
+                marker.openInfoWindow(MapObject.infoWindow);
+            }
+            marker.addEventListener("click",MapObject.markerClickFunction(eval("MapObject."+marker_type+"_html('"+address+"',dom_html)"),marker));
+            if(marker_id){
+                data = "marker[marker_latitude]="+poi.point.lat+"&marker[marker_longitude]="+poi.point.lng
+                request_type = "PUT";
+                url = "/markers/"+marker_id
+                MapObject.update_date_to_service(data, request_type, url, function(){})
+            }
+        }else{
+            alert("查找失败")
+        }
+    };
+},
+    
+    
+    
+    
+//增加地图添加place点事件
+//点击地图 新增一个place 页面
+add_place_to_map_listen:function(){
+    function showInfo(e){ 
+        MapObject.temp_marker = MapObject.add_marker_to_map(e.point,"/images/map/default.png",57,34,MapObject.place_html,"temp_place",null,true);
+        MapObject.temp_marker.enableDragging()
+        MapObject.map.removeEventListener("click", showInfo);  
+        MapObject.map.setDefaultCursor("pointer");
+        MapObject.getLocation(e.point,
+            function(result) {
+                $("#place_location").html(result.address);
+                $("#place_full_address").attr("value",result.address);
+                $("#place_place_latitude").attr("value",e.point.lat);
+                $("#place_place_longitude").attr("value",e.point.lng);
+                $("#place_location").show();
+                MapObject.infoWindow.redraw();
+                MapObject.infoWindow.addEventListener("close", function(){
+                    MapObject.map.removeOverlay(MapObject.temp_marker); 
+                });   
+                    
+            }
+            );
+    } 
+    MapObject.map.addEventListener("click", showInfo);
+    MapObject.map.setDefaultCursor("crosshair");
+            
+},
+marker_move: function(marker_type,marker_id){
+    alert(marker_type)
+    marker = eval("MapObject."+marker_type+"Markers").get(marker_id)
+    alert(marker)
+    marker.enableDragging()
+},
+//地图移动或者缩放或者拖拽的时候，获得边界坐标，并向后台请求数据
+move_zoom_drag_chang:function(){
+    return function fun(e){ 
+        cent = MapObject.map.getCenter();
+        left_top = MapObject.map.pixelToPoint(new BMap.Pixel(0,0))
+        right_down = MapObject.map.pixelToPoint(new BMap.Pixel(MapObject.map_width,MapObject.map_heigth))
+        data = "marker[marker_latitude_lt]="+left_top.lat+"&marker[marker_latitude_gt]="+right_down.lat +
+        "&marker[marker_longitude_gt]="+left_top.lng+"&marker[marker_longitude_lt]="+right_down.lng
+        MapObject.init_marker_from_data("share", MapObject.person_id, data); 
+    }
+},
+    
+//我要去
+i_go_to:function(){
+    function show_go_to(e){
+        MapObject.getLocation(e.point, function(result){
+            MapObject.end_marker = new BMap.Marker(e.point,{
+                icon: MapObject.setIcon("/images/map/default.png",57,34),
+                enableDragging:true
+            });
+            MapObject.map.removeEventListener("click", show_go_to);  
+            MapObject.map.addOverlay(MapObject.end_marker);
+            MapObject.end_p = result.address
+            now_html = eval("MapObject."+"go_to"+"_html('"+result.address+"',null)")
+            MapObject.infoWindow.setContent(now_html)    
+            MapObject.end_marker.openInfoWindow(MapObject.infoWindow);
+            MapObject.end_marker.addEventListener("click",MapObject.markerClickFunction(now_html, MapObject.end_marker));  
+        }) ;
+    }
+    this.map.addEventListener("click",show_go_to);
+}
     
 
 	
