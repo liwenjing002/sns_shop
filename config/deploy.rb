@@ -1,7 +1,7 @@
 require File.expand_path("../../lib/rvm_cap", __FILE__)
 
-#set :rvm_ruby_string, '1.8.7-p334'
-set :rvm_ruby_string, 'ree@onebody'
+set :rvm_ruby_string, '1.8.7'
+#set :rvm_ruby_string, '1.8.7body'
 #set :rvm_bin_path, "$HOME/bin"
 # point to your server
 set :host, '127.0.0.1'
