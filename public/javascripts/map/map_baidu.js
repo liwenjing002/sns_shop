@@ -43,7 +43,7 @@ var MapObject =  {
     initialize: function (person_id,container_id) {
         this.map =  new BMap.Map(container_id);
         this.localCity = new BMap.LocalCity();
-        this.infoWindow.disableCloseOnClick();
+        this.infoWindow.disableAutoPan();
         this.get_city();
         this.person_id = person_id;
         this.map.centerAndZoom(this.center, this.zoom_level); 
@@ -367,7 +367,7 @@ var MapObject =  {
                 }
                 marker.addEventListener("click",MapObject.markerClickFunction(eval("MapObject."+marker_type+"_html('"+address+"',dom_html)"),marker));
                 if(marker_id){
-                    data = "marker[marker_latitude]="+point.lat+"&marker[marker_longitude]="+point.lng
+                    data = "marker[marker_latitude]="+poi.point.lat+"&marker[marker_longitude]="+poi.point.lng
                     request_type = "PUT";
                     url = "/markers/"+marker_id
                     MapObject.update_date_to_service(data, request_type, url, function(){})

@@ -30,7 +30,7 @@ class MarkersController < ApplicationController
       html = Postition.find_my_locus(Time.new.strftime("%Y/%m/%d"),@logged_in.id,true)
   when 'share'
     search = Marker.search(params[:marker],:marker_type=>"StreamItem")
-     markers = search.all(:limit=>10)
+     markers = search.all(:limit=>100)
       markers.each do |marker|
         html<< marker_html(marker)
       end

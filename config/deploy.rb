@@ -1,6 +1,6 @@
 require File.expand_path("../../lib/rvm_cap", __FILE__)
 
-set :rvm_ruby_string, '1.8.7'
+set :rvm_ruby_string, '1.8.7-p334'
 #set :rvm_ruby_string, 'ree'
 #set :rvm_bin_path, "$HOME/bin"
 # point to your server
@@ -12,7 +12,7 @@ role :db,host,:primary=>true
 set :repository, "git://github.com/0612800232/sns_shop.git"
 set :scm, :git
 
-set :application, 'onebody'
+set :application, 'sns'
 set :user, 'lee'
 set :runner, user
 set :repository_cache, 'git_cache'
