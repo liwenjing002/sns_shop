@@ -17,6 +17,10 @@ var MapObject =  {
     markers_array: [], //markers数组
     myLocation:null,  //我当前位置的坐标
     my_location_marker: null,//我当前位置marker
+    start_marker: null,//起点marker
+    end_marker: null,//结束marker
+    start_p: null,//起点
+    end_p: null,//结束
     myLocation_address:null,//我当前位置的文字描述 
     is_enableScrollWheelZoom:true,//启用滚轮放大缩小，默认开启
     zoom_level:10,//默认缩放级别
@@ -122,6 +126,7 @@ var MapObject =  {
         return function(result) {
             if(result!= null){
                 MapObject.myLocation_address = result.address;
+                MapObject.start_p = result.address;
                 MapObject.infoWindow.setContent(eval("MapObject."+marker_type+"_html('"+result.address+"')"));
                 MapObject.my_location_marker=  MapObject.add_marker_to_map(point,icon_url,icon_w,icon_h,eval("MapObject."+marker_type+"_html('"+result.address+"'"+ ",dom)"),"my_location",null,true)
                 MapObject.my_location_marker.openInfoWindow(MapObject.infoWindow);
@@ -179,6 +184,11 @@ var MapObject =  {
     
     share_html:function(address,dom){
         return dom
+    },
+    //我要去的html
+    go_to_html:function(address,dom){
+        return "<div id='start_p'>去："+address+"<span class='button' onclick='MapObject.go_with_bus()' >公交</span>\n\
+                <span class='button' onclick='MapObject.go_with_car()' >驾车</span></div>"
     },
     
     
@@ -278,11 +288,38 @@ var MapObject =  {
     },
     
     //显示公交线路
-    show_transit:function(city,add1,add2){
+    go_with_bus:function(){
+        var transit = new BMap.TransitRoute(this.map);
+        if (this.my_location_marker){
+            this.start_point = this.my_location_marker.getPosition();
+        }else{
+            this.start_point = this.map.getCenter();
+        }
         
+        transit.setSearchCompleteCallback(function(results){  
+            if (transit.getStatus() == BMAP_STATUS_SUCCESS){  
+                var firstPlan = results.getPlan(0);  
+                // 绘制步行线路  
+                for (var i = 0; i < firstPlan.getNumRoutes(); i ++){  
+                    var walk = firstPlan.getRoute(i);  
+                    if (walk.getDistance(false) > 0){  
+                        // 步行线路有可能为0  
+                        MapObject.map.addOverlay(new BMap.Polyline(walk.getPath(), {
+                            lineColor: "green"
+                        }));  
+                    }  
+                }  
+                // 绘制公交线路  
+                for (i = 0; i < firstPlan.getNumLines(); i ++){  
+                    var line = firstPlan.getLine(i);  
+                    MapObject.map.addOverlay(new BMap.Polyline(line.getPath()));  
+                }
+            }
+        });     
+        transit.search(this.start_point, this.end_marker.getPosition()); 
     },
     //显示驾车路线
-    show_driving:function(city,add1,add2){
+    go_with_car:function(){
         
     },
     
@@ -424,8 +461,28 @@ var MapObject =  {
             "&marker[marker_longitude_gt]="+left_top.lng+"&marker[marker_longitude_lt]="+right_down.lng
             MapObject.init_marker_from_data("share", MapObject.person_id, data); 
         }
+    },
+    
+    //我要去
+    i_go_to:function(){
+        function show_go_to(e){
+            MapObject.getLocation(e.point, function(result){
+                MapObject.end_marker = new BMap.Marker(e.point,{
+                    icon: MapObject.setIcon("/images/map/default.png",57,34)
+                });
+                MapObject.map.removeEventListener("click", show_go_to);  
+                MapObject.map.addOverlay(MapObject.end_marker);
+                MapObject.end_p = result.address
+                now_html = eval("MapObject."+"go_to"+"_html('"+result.address+"',null)")
+                MapObject.infoWindow.setContent(now_html)    
+                MapObject.end_marker.openInfoWindow(MapObject.infoWindow);
+                MapObject.end_marker.addEventListener("click",MapObject.markerClickFunction(now_html, MapObject.end_marker));  
+            }) ;
+        }
+        this.map.addEventListener("click",show_go_to);
     }
     
+
 	
     
 
