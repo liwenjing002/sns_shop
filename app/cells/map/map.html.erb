@@ -7,8 +7,10 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    MapObject.place_html = document.getElementById("map_infowindow").innerHTML;
+    MapObject.place_html = document.getElementById("place_infowindow").innerHTML;
+    MapObject.share_html = document.getElementById("share_infowindow").innerHTML;
     $('#map_infowindow').remove();
+     $('#share_infowindow').remove();
 <% if !is_blank(@map.center_latitude,@map.center_longitude)%>
       MapObject.center = new BMap.Point('<%=@map.center_latitude%>','<%=@map.center_longitude%>')
 <%end%>
@@ -26,9 +28,12 @@
 
 <%#end%>
 <div id ="temp_div" style="display: none" >
-<div id ="map_infowindow" >
+<div id ="place_infowindow" >
   <%= render_cell :common, :new_place %>
 </div>
+<div id ="share_infowindow" >
+  <%= render_cell :common, :new_share %>
+</div>  
 <div id ="place_info">
 <%=render :partial => '../views/common/place_info',:locals => {:place=>nil,:marker=>nil}%>
 </div>
@@ -36,7 +41,7 @@
 
 <div id="map_controll">
   <ul class="buttons">
-    <li><span class="button" id="new-marker-tab" onclick="MapObject.add_place_to_map_listen();">发布地点</span></li>
+    <%#*<li><span class="button" id="new-marker-tab" onclick="MapObject.add_place_to_map_listen();">发布地点</span></li>%>
     <li><span class="button" onclick="MapObject.init_marker_from_data('friend_position','<%= @person.id %>');">查看好友位置</span></li>
     <li><span class="button" id="posittion-tab">我要旅游</span></li>
     <li><span class="button" id="activities-tab">我要活动</span></li>

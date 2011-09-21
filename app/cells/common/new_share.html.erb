@@ -1,0 +1,67 @@
+<div class="share-marker">
+        当前位置：<br>
+        <span id="place_adress_span"></span><br>
+  <ul class="share-details share-selector">
+    <% if Setting.get(:features, :notes) %>
+      <li><%= link_to_function t('share.note'), "selectMarkerShare('share-note-marker')", :class => 'comment2-icon', :id => 'share-note-marker-icon' %></li>
+    <% end %>
+    <% if Setting.get(:features, :pictures) %>
+      <li><%= link_to_function t('share.picture'), "selectMarkerShare('share-picture-marker')", :class => 'picture-icon', :id => 'share-picture-marker-icon' %></li>
+    <% end %>
+  </ul>
+  <% if Setting.get(:features, :notes) %>
+    <%= form_for Note.new, :html => {:id => 'share-note-marker', :class => 'share-type-marker'},:remote=>true  do |form| %>
+      <%= hidden_field_tag :redirect_to, stream_path %>
+      <span class="small"><%= t('share.note_label') %></span><br/>
+      <%= form.text_area :body, :rows => 2 ,:class=>"share_text",:placeholder => "用@标注你所在位置，用go2 标注出你要去的地方"%><br/>
+      <%= text_field 'marker','geocode_position', :type=>'hidden' %>
+      <%= text_field 'marker','marker_latitude', :type=>'hidden' %>
+      <%= text_field 'marker','marker_longitude', :type=>'hidden' %>
+      <%= submit_tag t('share.share') %>
+    <% end %>
+  <% end %>
+  <% if Setting.get(:features, :pictures) %>
+    <%= form_for Picture.new, :html => {:multipart => true, :id => 'share-picture-marker', :class => 'share-type-marker'} do |form| %>
+      <%= file_field_tag 'pictures[]', :multiple => true %><br/>
+      <%= text_field_tag 'album', '', :size => 10, :placeholder => t('share.default_album_name') %><br/>
+      <%= text_area_tag "photo_text",'',:class=>"share_text",:size => "40x2", :placeholder => "用@标注你所在位置，用go2 标注出你要去的地方" %><br/>
+      <%= text_field 'marker','geocode_position', :type=>'hidden' %>
+      <%= text_field 'marker','marker_latitude', :type=>'hidden' %>
+      <%= text_field 'marker','marker_longitude', :type=>'hidden' %>
+      <%= submit_tag t('share.share') %>
+    <% end %>
+  <% end %>
+  </div>
+
+  <script>
+    $(document).ready(function(){    
+      $("#share-note-marker").submit(function(){  
+        var options = {   
+          url:$(this).attr("action"), //提交给哪个执行  
+          type:'POST',
+          beforeSubmit:function(formData, jqForm, options){
+         
+          },
+          success:function(){
+
+          }
+        };
+        $('#share-note-marker').ajaxSubmit(options);   
+           
+        return false; //为了不刷新页面,返回false，反正都已经在后台执行完了，没事！  
+      }
+    );
+    
+      
+    })
+    function selectMarkerShare(show) {
+      $('.share-type-marker').hide();
+      $('#'+show).show();
+      //    $('#'+share+' :input[type!="hidden"]')[0].focus();
+      $('.share-selector a').removeClass('active');
+      $('#'+show+'-icon').addClass('active');
+      MapObject.infoWindow.redraw();
+    };
+
+    $("#share-note-marker").show()
+  </script>

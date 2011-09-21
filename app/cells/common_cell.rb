@@ -11,6 +11,9 @@ class CommonCell < Cell::Rails
   def new_place
     render
   end
+  def new_share
+    render
+  end
 
   def place_info
     render
