@@ -33,6 +33,7 @@ var MapObject =  {
     file_path: "/system/development",//文件存放路径,
     place_html: null,//新增一个place 的界面样式
     share_html: null,//新增一个share 的界面样式
+    destination_html: null,//新增一个destination 的界面样式
     temp_place_marker:null,//临时place marker
     city:null,//当前城市
     localCity:null,//城市服务对象
@@ -64,7 +65,7 @@ var MapObject =  {
         if(this.is_navigationControl!= null){
             this.map.addControl(new BMap.NavigationControl());  
         }
-        this.geolocation_function(this.show_my_location_now())  
+     
         this.markerClusterer = new BMapLib.MarkerClusterer(this.map,{
             minClusterSize:5,
             maxZoom:13
@@ -99,11 +100,11 @@ var MapObject =  {
         },
         {
             text:'我去这里',
-            callback:MapObject.add_place_to_map()
+            callback:MapObject.add_destination_to_map()
         },
         {
             text:'附近查找',
-            callback:MapObject.add_place_to_map()
+            callback:MapObject.add_destination_to_map()
         }
         ];
         for(var i=0; i < txtMenuItem.length; i++){
@@ -116,13 +117,17 @@ var MapObject =  {
     },
     
     
+    
+    
     get_city:function(){
         this.localCity.get(function(LocalCityResult){
-            MapObject.city = LocalCityResult.name
-            MapObject.map.centerAndZoom(LocalCityResult.center.point, 13); 
+            MapObject.city = LocalCityResult.name;
+            MapObject.center = LocalCityResult.center;
+            MapObject.map.centerAndZoom(LocalCityResult.center, 13); 
             if(MapObject.home_address!= null){
                 MapObject.getPoint(MapObject.home_address, MapObject.add_marker_to_map_function("/images/map/home.png",34,30,"home",null,MapObject.home_address,true,null,MapObject.city),MapObject.city);
             }
+            MapObject.geolocation_function(MapObject.show_my_location_now())  
         })
     },
     
@@ -148,7 +153,7 @@ var MapObject =  {
                 MapObject.getLocation(geolocationResult.point, MapObject.show_locaton_infoWindow("location",null,geolocationResult.point,"/images/map/default.png",57,34));
 
             }else{
-                alert("我当前位置坐标定位失败")
+                MapObject.map.centerAndZoom(MapObject.center, 13);
             }
 
         };
@@ -162,7 +167,7 @@ var MapObject =  {
                 MapObject.myLocation_address = result.address;
                 MapObject.start_p = result.address;
                 MapObject.infoWindow.setContent(eval("MapObject."+marker_type+"_html('"+result.address+"')"));
-                MapObject.my_location_marker=  MapObject.add_marker_to_map(point,icon_url,icon_w,icon_h,eval("MapObject."+marker_type+"_html('"+result.address+"'"+ ",dom)"),"my_location",null,true)
+                MapObject.my_location_marker=  MapObject.add_marker_to_map(point,icon_url,icon_w,icon_h,eval("MapObject."+marker_type+"_html('"+result.address+"'"+ ",dom)"),"my_location",null,true,true)
                 MapObject.my_location_marker.openInfoWindow(MapObject.infoWindow);
                 MapObject.my_location_marker.addEventListener("click",MapObject.markerClickFunction(eval("MapObject."+marker_type+"_html('"+result.address+"'"+ ",dom)"),MapObject.my_location_marker))
                 data = "postition[current_latitude]="+point.lat+"&postition[current_longitude]="+point.lng
@@ -171,8 +176,8 @@ var MapObject =  {
                 request_type = "POST";
                 MapObject.update_date_to_service(data, request_type, url, function(){})
             }else{
-                alert("定位失败")
-            }
+                
+        }
 
         };
     },
@@ -219,12 +224,7 @@ var MapObject =  {
     share_html:function(address,dom){
         return dom
     },
-    //我要去的html
-    go_to_html:function(address,dom){
-        return "<div id='start_p'>去："+address+"<span class='button' onclick='MapObject.go_with_bus()' >公交</span>\n\
-                <span class='button' onclick='MapObject.go_with_car()' >驾车</span></div>"
-    },
-    
+   
     
     //从后台获取数据后初始化marker
     init_marker_from_data:function(type,people_id,data){
@@ -366,12 +366,14 @@ var MapObject =  {
     //icon_w： 图标 width；
     //icon_h： 图标 height；
     //marker_html： infoWindow
-    add_marker_to_map: function(point,icon_url,icon_w,icon_h,marker_html,marker_type,marker_id,is_show){
+    add_marker_to_map: function(point,icon_url,icon_w,icon_h,marker_html,marker_type,marker_id,is_show,is_overlay){
        
         marker = new BMap.Marker(point,{
             icon: this.setIcon(icon_url,icon_w,icon_h)
         });
-        this.map.addOverlay(marker);
+        if(is_overlay==true){
+            this.map.addOverlay(marker);    
+        }
         if(is_show){
             MapObject.infoWindow.setContent(marker_html);
             //            MapObject.infoWindow.redraw()
@@ -452,9 +454,22 @@ var MapObject =  {
     },
     
     
+    add_destination_to_map:function(){
+        return function(point){
+            MapObject.getLocation(point, function(result){
+                MapObject.end_marker = new BMap.Marker(point,{
+                    icon: MapObject.setIcon("/images/map/default.png",57,34),
+                    enableDragging:true
+                });
+                MapObject.go_with_bus();
+            }) ;
+        }  
+    },
+    
+    
     add_place_to_map:function(){ 
         return function(point){
-            MapObject.temp_marker = MapObject.add_marker_to_map(point,"/images/map/default.png",57,34,MapObject.place_html,"temp_place",null,true);
+            MapObject.temp_marker = MapObject.add_marker_to_map(point,"/images/map/default.png",57,34,MapObject.place_html,"temp_place",null,true,true);
             MapObject.temp_marker.enableDragging()
             MapObject.map.removeEventListener("click", MapObject.add_place_to_map());  
             MapObject.map.setDefaultCursor("pointer");
@@ -485,10 +500,9 @@ var MapObject =  {
     
     add_share_to_map:function(){ 
         return function(point){
-            MapObject.temp_marker = MapObject.add_marker_to_map(point,"/images/map/default.png",57,34,MapObject.share_html,"temp_place",null,true);
+            MapObject.temp_marker = MapObject.add_marker_to_map(point,"/images/map/default.png",57,34,MapObject.share_html,"temp_place",null,true,true);
             MapObject.temp_marker.enableDragging()
-            MapObject.map.removeEventListener("click", MapObject.add_share_to_map());  
-            MapObject.map.setDefaultCursor("pointer");
+            
             MapObject.getLocation(point,
                 function(result) {
                     $("#place_adress_span").html(result.address);

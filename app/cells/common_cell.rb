@@ -22,5 +22,9 @@ class CommonCell < Cell::Rails
   def share
     render
   end
+  
+  def new_destination
+  render
+  end
 
 end

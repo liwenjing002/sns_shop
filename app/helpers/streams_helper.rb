@@ -28,12 +28,14 @@ module StreamsHelper
           ) 
           
           temp += '<div class="simple_overlay" id="mies'+picture_id.to_s+'">' + image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :original),:alt => t('pictures.click_to_enlarge')) +'</div>'
+#                text = Picture.find()
+      content += "<div>描述：#{}</div>"
           content_temp <<  temp
         end
       end.html_safe
       content += "</div>"
       content += "</div>"
-      
+
     end
     if stream_item.body
       content += "<div id= 'text_share'>"

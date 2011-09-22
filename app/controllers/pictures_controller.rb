@@ -1,5 +1,5 @@
 class PicturesController < ApplicationController
-
+respond_to :html,:js
   def index
     @album = Album.find(params[:album_id])
     @pictures = @album.pictures.paginate(:order => 'id', :page => params[:page])
@@ -66,7 +66,7 @@ class PicturesController < ApplicationController
     flash[:notice] = t('pictures.saved', :success => success)
     flash[:notice] += " " + t('pictures.failed', :fail => fail) if fail > 0
     flash[:notice] += " " + errors.join('; ') if errors.any?
-    redirect_to params[:redirect_to] || @group || album_pictures_path(@album)
+#    redirect_to params[:redirect_to] || @group || album_pictures_path(@album)
   end
 
   # rotate / cover selection
@@ -99,4 +99,6 @@ class PicturesController < ApplicationController
   
 
 
+  
+  
 end

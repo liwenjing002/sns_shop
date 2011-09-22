@@ -9,8 +9,10 @@
   $(document).ready(function() {
     MapObject.place_html = document.getElementById("place_infowindow").innerHTML;
     MapObject.share_html = document.getElementById("share_infowindow").innerHTML;
+    MapObject.destination_html = document.getElementById("destination_infowindow").innerHTML;
     $('#map_infowindow').remove();
-     $('#share_infowindow').remove();
+    $('#share_infowindow').remove();
+     $('#destination_infowindow').remove();
 <% if !is_blank(@map.center_latitude,@map.center_longitude)%>
       MapObject.center = new BMap.Point('<%=@map.center_latitude%>','<%=@map.center_longitude%>')
 <%end%>
@@ -33,7 +35,10 @@
 </div>
 <div id ="share_infowindow" >
   <%= render_cell :common, :new_share %>
-</div>  
+</div>
+<div id ="destination_infowindow" >
+  <%= render_cell :common, :new_destination %>
+</div>   
 <div id ="place_info">
 <%=render :partial => '../views/common/place_info',:locals => {:place=>nil,:marker=>nil}%>
 </div>

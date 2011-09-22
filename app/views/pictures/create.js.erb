@@ -1,7 +1,8 @@
-$(".stream-items").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :object => @note.stream_item ) %>");
+<%@album.pictures.each do |pic|%>
+$(".stream-items").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :object => pic.stream_item ) %>");
 $(".stream-item").first().hide();
 $(".stream-items :first-child").slideDown("slow");
-
+<%end%>
 <%if flash[:notice]%>
   $("#notice").html("<%=flash[:notice]%>")
   $("#notice").show()

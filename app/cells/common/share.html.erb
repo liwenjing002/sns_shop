@@ -14,117 +14,132 @@
       <%= hidden_field_tag :redirect_to, stream_path %>
       <span class="small"><%= t('share.note_label') %></span><br/>
       <%= form.text_area :body, :rows => 2 ,:class=>"share_text",:placeholder => "用@标注你所在位置，用go2 标注出你要去的地方"%><br/>
-      <div id="location_info" style="display:none">
+      <div class="location_info" style="display:none">
         <%= text_field 'marker','geocode_position', :placeholder=>"我的位置" %><br>
-        <%#= text_field 'marker','destin_position',:placeholder=>"我目的地"%><br>
-        </div>
-        <div id ="travel_type" style="display:none">
-          <%= select 'marker','travel_type',
-            {"步行"=>"WALKING",
-            "公交"=>"BUS",
-            "行车"=>"DRIVING"
-          }%> 
-        </div>
-        <%= text_field 'marker','marker_latitude', :type=>'hidden' %>
-        <%= text_field 'marker','marker_longitude', :type=>'hidden' %>
-        <%= submit_tag t('share.share') %>
-        <input class="is_location" title="是否带地理位置，默认为当前位置" type="checkbox" value="1">地理位置
-      <% end %>
+      </div>
+      <%= text_field 'marker','marker_latitude', :type=>'hidden' %>
+      <%= text_field 'marker','marker_longitude', :type=>'hidden' %>
+      <%= submit_tag t('share.share') %>
+      <input class="is_location" title="是否带地理位置，默认为当前位置" type="checkbox" value="1">地理位置
     <% end %>
-    <% if Setting.get(:features, :pictures) %>
-      <%= form_for Picture.new, :html => {:multipart => true, :id => 'share-picture', :class => 'share-type'} do |form| %>
-        <%= file_field_tag 'pictures[]', :multiple => true %><br/>
-        <%= text_field_tag 'album', '', :size => 10, :placeholder => t('share.default_album_name') %><br/>
-        <%= text_area_tag "photo_text",'',:class=>"share_text",:size => "40x2", :placeholder => "用@标注你所在位置，用go2 标注出你要去的地方" %><br/>
-        <%= form.text_field 'location', :placeholder=>"我的位置" %>
-        <%= form.text_field 'destination',:placeholder=>"我目的地" %>
-        <%= form.text_field 'l_coordinate', :type=>'hidden' %>
-        <%= form.text_field 'd_coordinate', :type=>'hidden' %>
-        <%= submit_tag t('share.share') %>
-        <input class="is_location" title="是否带地理位置，默认为当前位置" type="checkbox" value="1">地理位置
-      <% end %>
-    <% end %>
-    </div>
-
-    <script>
-      $(document).ready(function(){
-
-        $("#note_body").change(function(){
-          boo = false
-          at = $(this).val().match(/.*@(.*)@.*/)
-          if(at!= null&&at!=''){
-            $("#marker_geocode_position").attr("value", at[1]);
-            boo = true
-          }
-          to = $(this).val().match(/.*go(.*)2.*/)
-          if(to!= null&&to!=''){
-            $("#marker_destin_position").attr("value", to[1]);
-            boo = true
-          }
-          if(!boo){
-            $(".is_location").attr("checked",false)
-            $("#marker_geocode_position").attr("value", '');
-            <%#*$("#marker_destin_position").attr("value", '');%>
-          }else{
-            $(".is_location").attr("checked",true)
-            $("#location_info").show();
-          }
+  <% end %>
+  <% if Setting.get(:features, :pictures) %>
+    <%= form_for Picture.new, :html => {:multipart => true, :id => 'share-picture', :class => 'share-type'} do |form| %>
+      <%= file_field_tag 'pictures[]', :multiple => true %><br/>
+      <%= text_field_tag 'album', '', :size => 10, :placeholder => t('share.default_album_name') %><br/>
+      <%= text_area_tag "photo_text",'',:class=>"share_text",:size => "40x2", :placeholder => "用@标注你所在位置，用go2 标注出你要去的地方" %><br/>
+      <div class="location_info" style="display:none">
+        <%= text_field 'marker','geocode_position', :placeholder=>"我的位置" %><br>
+      </div>
+      <%= text_field 'marker','marker_latitude', :type=>'hidden' %>
+      <%= text_field 'marker','marker_longitude', :type=>'hidden' %>
       
-        })
+      <span class='button' onclick='ajaxFileUpload_file()' ><%= t('share.share') %></span>
+      <input class="is_location" title="是否带地理位置，默认为当前位置" type="checkbox" value="1">地理位置
+    <% end %>
+  <% end %>
+  </div>
+
+  <script>
+    $(document).ready(function(){
+
+      $("#note_body").change(function(){
+        boo = false
+        at = $(this).val().match(/.*@(.*)@.*/)
+        if(at!= null&&at!=''){
+          $("#marker_geocode_position").attr("value", at[1]);
+          boo = true
+        }
+        to = $(this).val().match(/.*go(.*)2.*/)
+        if(to!= null&&to!=''){
+          $("#marker_destin_position").attr("value", to[1]);
+          boo = true
+        }
+        if(!boo){
+          $(".is_location").attr("checked",false)
+          $("#marker_geocode_position").attr("value", '');
+        }else{
+          $(".is_location").attr("checked",true)
+          $(".location_info").show();
+        }
+      
       })
-      $(".is_location").change(function(){
-        if($(".is_location").attr("checked")==true){
-          $("#location_info").show();
+    })
+    $(".is_location").change(function(){
+      if($(this).attr("checked")==true){
+        $(".location_info").show();
+        $(".is_location").attr("checked",true)
+        if(MapObject.myLocation){
           $("#marker_geocode_position").attr("value",  MapObject.myLocation_address);
           $("#marker_marker_latitude").attr("value",  MapObject.myLocation.lat );
           $("#marker_marker_longitude").attr("value",  MapObject.myLocation.lng);
-        }else{
-          $("#location_info").hide();
-           $("#travel_type").hide();
-          $("#marker_geocode_position").attr("value", '');
-          <%#*$("#marker_destin_position").attr("value", '');%>
-          $("#marker_marker_latitude").attr("value",  "");
-          $("#marker_marker_longitude").attr("value",  "");
         }
+
+      }else{
+        $(".location_info").hide();
+        $("#marker_geocode_position").attr("value", '');
+        $("#marker_marker_latitude").attr("value",  "");
+        $("#marker_marker_longitude").attr("value",  "");
+      }
       
-      })
+    })
       
-  $("#marker_geocode_position").change(function(){
-        if($(this).attr("value")!=MapObject.myLocation_address){
-          $("#marker_marker_latitude").attr("value",  "");
-          $("#marker_marker_longitude").attr("value",  "");
-        }else{
+    $("#marker_geocode_position").change(function(){
+      if($(this).attr("value")!=MapObject.myLocation_address){
+        $("#marker_marker_latitude").attr("value",  "");
+        $("#marker_marker_longitude").attr("value",  "");
+      }else{
+        if(MapObject.myLocation){
           $("#marker_marker_latitude").attr("value",  MapObject.myLocation.lat);
           $("#marker_marker_longitude").attr("value",  MapObject.myLocation.lng);
         }
-      })
-      
-            <%#*$("#marker_destin_position").keyup(function(){%>           
-        <%#*if($(this).attr("value")!=""){%>
-          <%#*$("#travel_type").show();%>
-          
-        <%#*}else{%>
-           <%#*$("#travel_type").hide();%>
-        <%#*}%>
-      <%#*})%>
-  
-      $("#share-note").submit(function(){  
-        var options = {   
-          url:$(this).attr("action"), //提交给哪个执行  
-          type:'POST',
-          beforeSubmit:function(formData, jqForm, options){
-         
-          },
-          success:function(){
-           $("#location_info").hide();
-           <%#*$("#travel_type").hide();%>
-          }
-        };
-        $('#share-note').ajaxSubmit(options);   
-           
-        return false; //为了不刷新页面,返回false，反正都已经在后台执行完了，没事！  
+
       }
-    );
+    })
+      
+
+    $("#share-note").submit(function(){  
+      var options = {   
+        url:$(this).attr("action"), //提交给哪个执行  
+        type:'POST',
+        beforeSubmit:function(formData, jqForm, options){
+         
+        },
+        success:function(){
+          $("#location_info").hide();
+      }
+    };
+    $('#share-note').ajaxSubmit(options);   
+           
+    return false; //为了不刷新页面,返回false，反正都已经在后台执行完了，没事！  
+  }
+);
   
-    </script>
-    <%= javascript_include_tag "extend/ui" %>
+  
+  function ajaxFileUpload_file(){
+  url = "?album="+$("#album").val() +"&photo_text="+$("#photo_text")
+    $.ajaxFileUpload({
+      url:'/pictures/'+url,
+      secureuri:false,
+      dataType: 'json',
+      fileElementId:'fileToUpload',
+      success: function (data,status){
+        if(data && data.success=="true"){
+          $("#picture_id").attr("value",data.pic_id)
+          $("#temp_pic").attr("src",data.pic_url);
+          $("#temp_pic").attr("style","display:");
+        }else{
+          alert("文件保存失败")
+        }
+      },
+      error: function (data, status, e){
+        alert("文件保存失败")
+      }
+    })
+    return false;
+  }
+  
+  
+  
+  </script>
+  <%= javascript_include_tag "extend/ui" %>

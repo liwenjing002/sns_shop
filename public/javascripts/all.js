@@ -806,9 +806,9 @@ $.easing.drop = function (x, t, b, c, d) {
 //}
 //);
 
-$("img[rel]").overlay({
-    effect: 'drop',
-    mask: '#789'
-});
+//$("img[rel]").overlay({
+//    effect: 'drop',
+//    mask: '#789'
+//});
 
 
