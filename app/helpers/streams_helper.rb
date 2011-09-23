@@ -20,7 +20,7 @@ module StreamsHelper
       content += "<div id= 'pic_share'>"
       content += "<div id= 'triggers'>"
       content +=  "".tap do |content_temp|
-        stream_item.context['picture_ids'].to_a.each do |picture_id, fingerprint, extension|
+        stream_item.context['picture_ids'].to_a.each do |picture_id, fingerprint, extension,photo_text|
            
           temp = ''+link_to(
             image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :large), :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic',:rel=>"#mies#{picture_id}"),
@@ -28,8 +28,9 @@ module StreamsHelper
           ) 
           
           temp += '<div class="simple_overlay" id="mies'+picture_id.to_s+'">' + image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :original),:alt => t('pictures.click_to_enlarge')) +'</div>'
-#                text = Picture.find()
-      content += "<div>描述：#{}</div>"
+          if !is_blank photo_text 
+            temp += "<div>描述：#{photo_text}</div>"
+          end
           content_temp <<  temp
         end
       end.html_safe

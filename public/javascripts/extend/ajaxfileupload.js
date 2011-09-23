@@ -194,7 +194,8 @@ jQuery.extend({
         // evaluate scripts within html
         if ( type == "html" )
             jQuery("<div>").html(data).evalScripts();
-
+        if(type == "default")
+            data = r.responseText;
         return data;
     }
 })

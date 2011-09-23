@@ -55,7 +55,7 @@ class Picture < ActiveRecord::Base
 #    else
      item = StreamItem.create!(
         :title           => album.name,
-        :context         => {'picture_ids' => [[id, photo.fingerprint, photo_extension]]},
+        :context         => {'picture_ids' => [[id, photo.fingerprint, photo_extension,photo_text]]},
         :person_id       => person_id,
         :group_id        => album.group_id,
         :streamable_type => 'Album',

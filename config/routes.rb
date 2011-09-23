@@ -6,6 +6,12 @@ OneBody::Application.routes.draw do
      get :admin
     end
   end
+  
+  resources :pictures do
+    collection do
+     get :get_stream_item
+    end
+  end
 
   namespace :location  do
    

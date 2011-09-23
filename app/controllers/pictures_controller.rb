@@ -1,5 +1,5 @@
 class PicturesController < ApplicationController
-respond_to :html,:js
+  respond_to :html,:js
   def index
     @album = Album.find(params[:album_id])
     @pictures = @album.pictures.paginate(:order => 'id', :page => params[:page])
@@ -27,7 +27,7 @@ respond_to :html,:js
   def create
     if params[:group_id]
       unless @group = Group.find(params[:group_id]) and @group.pictures? \
-        and (@logged_in.member_of?(@group) or @logged_in.can_edit?(@group))
+          and (@logged_in.member_of?(@group) or @logged_in.can_edit?(@group))
         render :text => t('There_was_an_error'), :layout => true, :status => 500
         return
       end
@@ -43,17 +43,20 @@ respond_to :html,:js
     ) { |a| a.person = @logged_in }
     success = fail = 0
     errors = []
+    pic_arr =[]
     Array(params[:pictures]).each do |pic|
       picture = @album.pictures.create(
         :person => (params[:remove_owner] ? nil : @logged_in),
         :photo  => pic,
-        :photo_text  => params[:photo_text]
+        :photo_text  => params[:photo_text],
+        :location=> params[:marker][:geocode_position]
       )
       if picture.errors.any?
         errors += picture.errors.full_messages
       end
       if picture.photo.exists?
         success += 1
+        pic_arr << picture
         if @album.pictures.count == 1 # first pic should be default cover pic
           picture.update_attribute(:cover, true)
         end
@@ -66,9 +69,35 @@ respond_to :html,:js
     flash[:notice] = t('pictures.saved', :success => success)
     flash[:notice] += " " + t('pictures.failed', :fail => fail) if fail > 0
     flash[:notice] += " " + errors.join('; ') if errors.any?
-#    redirect_to params[:redirect_to] || @group || album_pictures_path(@album)
+    html = []
+    pic_arr.each do |pic|
+      params[:marker][:owner_id] =  @logged_in.id
+      unless params[:marker][:geocode_position]=='' and params[:marker][:marker_longitude]=="" and params[:marker][:marker_latitude] ==''
+        params[:marker][:marker_longitude] = BigDecimal.new(params[:marker][:marker_longitude])
+        params[:marker][:marker_latitude] = BigDecimal.new(params[:marker][:marker_latitude])
+        marker = Marker.new(params[:marker])
+
+        MarkerToMap.create({:map=>@logged_in.map,:marker=>marker,:marker_type=>'StreamItem'})
+        marker.object_type = "StreamItem"
+        marker.object_id = pic.stream_item_id
+        marker.save
+        html << {:pic_id=>pic.id,:marker_id=>marker.id}   
+        next
+      end
+        html << {:pic_id=>pic.id}
+    end
+    
+    render :text=> {:success=>true,:html=>html,:notice=>flash[:notice]}.to_json
+    #    redirect_to params[:redirect_to] || @group || album_pictures_path(@album)
   end
 
+  
+  
+  def get_stream_item
+    @pic = Picture.find_by_id(params[:pic_id])
+    @marker = Marker.find_by_id(params[:marker_id])
+  end
+  
   # rotate / cover selection
   def update
     @album = Album.find(params[:album_id])
