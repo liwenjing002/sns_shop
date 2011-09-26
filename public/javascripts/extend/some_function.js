@@ -131,7 +131,7 @@ jQuery(function ($) {
     OSX2 = {
         container: null,
         init: function () {
-            $("#posittion-tab").click(function (e) {
+            $("#i_want_to_go").click(function (e) {
                 e.preventDefault();	
 
                 $("#osx-modal-content").modal({
@@ -578,7 +578,7 @@ InputSuggest.prototype = {
      });
 
 
-
+    $(".location_now").tooltip({ position: 'bottom center ',  delay: 50 });
 
 
 

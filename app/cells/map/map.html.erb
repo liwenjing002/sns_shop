@@ -44,18 +44,21 @@
 </div>
  </div>
 
-<div id="map_controll">
-  <ul class="buttons">
-    <%#*<li><span class="button" id="new-marker-tab" onclick="MapObject.add_place_to_map_listen();">发布地点</span></li>%>
-    <li><span class="button" onclick="MapObject.init_marker_from_data('friend_position','<%= @person.id %>');">查看好友位置</span></li>
-    <li><span class="button" id="posittion-tab">我要旅游</span></li>
-    <li><span class="button" id="activities-tab">我要活动</span></li>
-    <li><span class="button" id="" onclick="MapObject.i_go_to()" >我要去</span></li>
-  </ul>
-</div>
 
-
-
+<span class="button" id="pack_up">收起</span>
+<span class="button" id="pack_down">放下</span>
 <div id="mapCanvas" style="width: 100%; height: 385px;">map div</div> 
 <div id="results"></div>
 <div id="searchwell"></div> 
+<script>
+   $(document).ready(function() {
+     $("#pack_up").click(function(){
+       $("#mapCanvas").slideUp("slow");
+      
+     })
+     $("#pack_down").click(function(){
+       $("#mapCanvas").slideDown("slow");
+     })
+     
+   })
+  </script>

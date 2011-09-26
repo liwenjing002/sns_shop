@@ -51,9 +51,14 @@ var MapObject =  {
     //level: 默认缩放级别
     initialize: function (person_id,container_id) {
         this.map =  new BMap.Map(container_id);
+        // 创建控件
+        var myZoomCtrl = new ZoomControl();
+        // 添加到地图当中
+        this.map.addControl(myZoomCtrl);
+        
         this.localCity = new BMap.LocalCity();
         this.infoWindow.disableAutoPan();
-        this.get_city();
+        this.get_city(true);
         this.person_id = person_id;
         this.map.centerAndZoom(this.center, this.zoom_level); 
         this.map_width = $("#mapCanvas").width();
@@ -106,10 +111,24 @@ var MapObject =  {
             text:'附近查找',
             callback:MapObject.add_destination_to_map()
         }
+        ,
+        {
+            text:'我的位置',
+            callback:function(){
+                MapObject.clearAllClusterer();
+                MapObject.get_city(false); 
+            }
+        },
+        {
+            text:'好友位置',
+            callback:function(){
+                MapObject.init_marker_from_data('friend_position',MapObject.person_id)
+            }
+        }
         ];
         for(var i=0; i < txtMenuItem.length; i++){
             this.menu.addItem(new BMap.MenuItem(txtMenuItem[i].text,txtMenuItem[i].callback,100));
-            if(i==1 || i==3) {
+            if(i==1 || i==3 || i ==5) {
                 this.menu.addSeparator();
             }
         }
@@ -119,7 +138,7 @@ var MapObject =  {
     
     
     
-    get_city:function(){
+    get_city:function(is_zoom){
         this.localCity.get(function(LocalCityResult){
             MapObject.city = LocalCityResult.name;
             MapObject.center = LocalCityResult.center;
@@ -127,7 +146,7 @@ var MapObject =  {
             if(MapObject.home_address!= null){
                 MapObject.getPoint(MapObject.home_address, MapObject.add_marker_to_map_function("/images/map/home.png",34,30,"home",null,MapObject.home_address,true,null,MapObject.city),MapObject.city);
             }
-            MapObject.geolocation_function(MapObject.show_my_location_now())  
+            MapObject.geolocation_function(MapObject.show_my_location_now(is_zoom))  
         })
     },
     
@@ -145,15 +164,19 @@ var MapObject =  {
     },
     
     //显示我当前位置坐标
-    show_my_location_now: function(){
+    show_my_location_now: function(is_zoom){
         return function(geolocationResult) {
             if(geolocationResult!= null){
-                MapObject.map.centerAndZoom(geolocationResult.point, 13);
+                if(is_zoom==true){
+                    MapObject.map.centerAndZoom(geolocationResult.point, 13);
+                }
                 MapObject.myLocation = geolocationResult.point;
                 MapObject.getLocation(geolocationResult.point, MapObject.show_locaton_infoWindow("location",null,geolocationResult.point,"/images/map/default.png",57,34));
 
             }else{
-                MapObject.map.centerAndZoom(MapObject.center, 13);
+                if(is_zoom==true){
+                    MapObject.map.centerAndZoom(MapObject.center, 13);
+                }
             }
 
         };
@@ -165,6 +188,7 @@ var MapObject =  {
         return function(result) {
             if(result!= null){
                 MapObject.myLocation_address = result.address;
+                alert(result.address)
                 MapObject.start_p = result.address;
                 MapObject.infoWindow.setContent(eval("MapObject."+marker_type+"_html('"+result.address+"')"));
                 MapObject.my_location_marker=  MapObject.add_marker_to_map(point,icon_url,icon_w,icon_h,eval("MapObject."+marker_type+"_html('"+result.address+"'"+ ",dom)"),"my_location",null,true,true)
@@ -221,9 +245,10 @@ var MapObject =  {
         return "<div>"+address+"</div>"
     },
     
-    share_html:function(address,dom){
+    stream_item_html:function(address,dom){
         return dom
     },
+    
    
     
     //从后台获取数据后初始化marker
@@ -237,10 +262,17 @@ var MapObject =  {
             url: "/markers?type="+type+id_string,
             data:data,
             success: function(data, textStatus){
-                MapObject.markerClusterer.clearMarkers()
+                MapObject.clearAllClusterer()
                 eval("MapObject.show_"+type+"("+'data'+")")
             } 
         });
+    },
+    
+    
+    clearAllClusterer:function(){
+        MapObject.markerClusterer.clearMarkers();
+        MapObject.shareClusterer.clearMarkers();
+        MapObject.postitionClusterer.clearMarkers();
     },
     
     update_date_to_service:function(data,request_type,url,call_function){
@@ -296,6 +328,7 @@ var MapObject =  {
             }else{
                 point = new BMap.Point(data[i].longitude, data[i].latitude)
                 marker = this.add_marker_to_map(point,"/images/map/default.png",34,30,data[i].html,"share",false)
+                MapObject.shareMarkers.put(data[i].marker_id,marker);
                 MapObject.shareClusterer.addMarker(marker); 
             }
 
@@ -521,10 +554,11 @@ var MapObject =  {
 
     
     marker_move: function(marker_type,marker_id){
-        alert(marker_type)
+        //        alert(marker_type)
         marker = eval("MapObject."+marker_type+"Markers").get(marker_id)
-        alert(marker)
-        marker.enableDragging()
+        //        alert(marker)
+        marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+        marker.enableDragging();
     },
     //地图移动或者缩放或者拖拽的时候，获得边界坐标，并向后台请求数据
     move_zoom_drag_chang:function(){
@@ -573,6 +607,38 @@ var MapObject =  {
    
 
   
+}
+
+
+// 定义一个控件类,即function
+function ZoomControl(){
+    // 默认停靠位置和偏移量
+    this.defaultAnchor = BMAP_ANCHOR_TOP_RIGHT;
+    this.defaultOffset = new BMap.Size(300, 10);
+}
+
+// 通过JavaScript的prototype属性继承于BMap.Control
+ZoomControl.prototype = new BMap.Control();
+
+// 自定义控件必须实现自己的initialize方法,并且将控件的DOM元素返回
+// 在本方法中创建个div元素作为控件的容器,并将其添加到地图容器中
+ZoomControl.prototype.initialize = function(map){
+    // 创建一个DOM元素
+    var div = document.createElement("div");
+      div.innerHTML = '<input checked="checked" type="checkbox" ><label style="display: inline;">我的</label>\n\
+                      <input checked="checked" type="checkbox" ><label style="display: inline;">好友</label>\n\
+                      <input checked="checked" type="checkbox" ><label style="display: inline;">所有人</label>\n\
+                     <input checked="checked" type="checkbox" ><label style="display: inline;">热门</label>' 
+
+    // 设置样式
+ div.style.cursor = "pointer";
+  div.style.border = "1px solid gray";
+  div.style.backgroundColor = "white";
+
+    // 添加DOM元素到地图中
+    MapObject.map.getContainer().appendChild(div);
+    // 将DOM元素返回
+    return div;
 }
 
 

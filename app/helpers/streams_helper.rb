@@ -3,9 +3,9 @@ module StreamsHelper
 
   def stream_item_path(stream_item)
     if stream_item.streamable_type == 'Place' or stream_item.streamable_type == 'PlaceShare'
-    send("location_" +stream_item.streamable_type.underscore + '_path', stream_item.streamable_id)
+      send("location_" +stream_item.streamable_type.underscore + '_path', stream_item.streamable_id)
     else
-    send(stream_item.streamable_type.underscore + '_path', stream_item.streamable_id)
+      send(stream_item.streamable_type.underscore + '_path', stream_item.streamable_id)
     end
   end
 
@@ -53,7 +53,17 @@ module StreamsHelper
         "<img#{$1}src=\"#{url}\""
       end
     end
-    content += (" <div id='location_now'><span color: #5F9128>发表位置：</span>"+stream_item.streamable.location+"</div>") if !is_blank stream_item.streamable.location if stream_item.streamable_type == 'Note'
+    content += (" <div stream_item_id = '#{stream_item.id}' class='location_now' style='cursor:pointer;color:red'><span color: #5F9128>发表位置：</span>"+stream_item.streamable.location+"</div>") if stream_item.streamable_type == 'Note' and !is_blank stream_item.streamable.location
+    marker = ""
+      if  stream_item.streamable_type == 'Note' 
+      if !is_blank stream_item.streamable.latitude 
+        marker = "#{stream_item.streamable.longitude},#{stream_item.streamable.latitude}"
+      else if !is_blank stream_item.streamable.location
+          marker = stream_item.streamable.location
+        end
+      end
+    end
+    content += "<div class='tooltip_stream_item'><img src='http://api.map.baidu.com/staticimage?center=#{marker}&markers=#{marker}&width=300&height=140&zoom=13'></img></div>" if marker != ""
     raw content
   end
 

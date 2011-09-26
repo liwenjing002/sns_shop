@@ -171,7 +171,7 @@ fieldset {
     color: $light;
 }
 #common-nav {
-   float: right;
+    float: right;
     text-align: left;
     vertical-align: top;
     width: 50px;
@@ -530,8 +530,8 @@ margin-bottom: 20px;
 .share {
     margin-bottom: 25px;
     width: 550px;
-    
-.cancel-link {
+
+    .cancel-link {
     float: right;
     text-align: right;
     a {
@@ -565,8 +565,8 @@ a.active {
 .share-marker {
     margin-bottom: 25px;
     width: 300px;
-    
-.cancel-link {
+
+    .cancel-link {
     float: right;
     text-align: right;
     a {
@@ -695,7 +695,7 @@ a.button {
 }
 
 span.button {
-	cursor: pointer;
+    cursor: pointer;
     @include gradient($light, $light - 50);
     @include curve(4px);
     @include shadow;
@@ -1118,7 +1118,7 @@ p.divider {
 
 
 .map_infowindow .share-type textarea {
-width:90%;
+    width:90%;
 }
 
 .map_infowindow .share-type {
@@ -1126,37 +1126,37 @@ width:90%;
 }
 
 .map_infowindow .share-selector {
-padding: 2px;
-margin-bottom: 8px;
-list-style: none;
+    padding: 2px;
+    margin-bottom: 8px;
+    list-style: none;
 }
 .map_infowindow .share-selector li {
-display: inline;
-display: inline-block;
-margin-right: 15px;
+    display: inline;
+    display: inline-block;
+    margin-right: 15px;
 }
 .map_infowindow  .share-selector li a.active {
-color: #5F9128;
+    color: #5F9128;
 }
 .map_infowindow .share-selector li a {
-text-decoration: none;
+    text-decoration: none;
 }
 .map_infowindow .cancel-link {
-float: right;
-text-align: right;
+    float: right;
+    text-align: right;
 }
 .map_infowindow .cancel-link a {
-margin-right: -15px;
+    margin-right: -15px;
 }
 
 .map_mark_note{
-	margin-bottom: opx;
+    margin-bottom: opx;
 }
 
 
 
 .add_place{
-	color: #5F9128;
+    color: #5F9128;
 }
 
 .cursor{
@@ -1164,16 +1164,16 @@ margin-right: -15px;
 }
 
 #share_bar span {
-color: #5F9128;
+    color: #5F9128;
 }
 
 .span_link{
     cursor: pointer
 }
 .span_link:hover {
-color: #3286B5;
+    color: #3286B5;
 }
- 
+
 
 
 /*
@@ -1193,13 +1193,13 @@ color: #3286B5;
 
 }
 .scrollable .items {
-	/* this cannot be too large */
-	width:20000em;
-	position:absolute;
+    /* this cannot be too large */
+    width:20000em;
+    position:absolute;
 }
 
 .items div {
-	float:left;
+    float:left;
 }
 
 
@@ -1213,7 +1213,7 @@ color: #3286B5;
     border:1px solid #ccc;
     width:50px;
     height:50px;
-    
+
 
 }
 
@@ -1244,7 +1244,7 @@ a.browse {
 /* right */
 a.right
 { background-position: 0 0;
-top: 40px;
+  top: 40px;
 }
 
 
@@ -1276,34 +1276,55 @@ a.disabled {
 }   
 
 
-  .tooltip_ablum.bottom {
-	background:url(/images/black_arrow_bottom.png);
-	padding-top:40px;
-	height:55px;
+.tooltip_ablum.bottom {
+    background:url(/images/black_arrow_bottom.png);
+    padding-top:40px;
+    height:55px;
 }
 
 .tooltip_ablum.bottom {
-	background:url(/images/black_arrow_bottom.png);
+    background:url(/images/black_arrow_bottom.png);
 }
 
 /* tooltip styling. by default the element to be styled is .tooltip  */
 .tooltip_ablum {
-	display:none;
-	background:transparent url(/images/black_arrow_big.png);
-	font-size:12px;
-	height:163px;
-	width:310px;;
-	padding:25px;
-	color:#fff;
+    display:none;
+    background:transparent url(/images/black_arrow_big.png);
+    font-size:12px;
+    height:163px;
+    width:310px;;
+    padding:25px;
+    color:#fff;
 }
+/* tooltip styling. by default the element to be styled is .tooltip  */
+.tooltip_stream_item {
+    display:none;
+    background:transparent url(/images/white_big.png);
+    height:140px;
+    padding:40px 30px 10px 30px;
+    width:310px;
+    font-size:11px;
+}
+
+
+.tooltip {
+    display:none;
+    background:url(/images/white_big.png);
+    height:140px;
+    padding:40px 30px 10px 30px;
+    width:310px;
+    font-size:11px;
+
+}
+
 .profile_icon{
-width:170px;
-max-height:140px;
+    width:170px;
+    max-height:140px;
 }
 .thumbnail{
-width:32px;
-height:32px;
-margin-bottom:10px;
+    width:32px;
+    height:32px;
+    margin-bottom:10px;
 }
 
 
@@ -1325,71 +1346,71 @@ margin-bottom:10px;
 }
 /* Image container style */
 .ps_container{
-	width:680px;
-	height:450px;
-	position:fixed;
-	top:50%;
-	margin-top:-125px;
-	left:50%;
-	margin-left:-240px;
-	z-index:100;
+    width:680px;
+    height:450px;
+    position:fixed;
+    top:50%;
+    margin-top:-125px;
+    left:50%;
+    margin-left:-240px;
+    z-index:100;
 }
 .ps_container img{
-	border:10px solid #fff;
-	position:absolute;
-	top:50%;
-	left:50%;
-	-moz-box-shadow:1px 1px 10px #000;
-	-webkit-box-shadow:1px 1px 10px #000;
-	box-shadow:1px 1px 10px #000;
+    border:10px solid #fff;
+    position:absolute;
+    top:50%;
+    left:50%;
+    -moz-box-shadow:1px 1px 10px #000;
+    -webkit-box-shadow:1px 1px 10px #000;
+    box-shadow:1px 1px 10px #000;
 }
 /* Close button for preview mode */
 a.ps_close{
-	background:#000 url(/images/close.png) no-repeat center center;
-	cursor:pointer;
-	width:56px;
-	height:56px;
-	position:fixed;
-	right:80px;
-	top:240px;
-	z-index:1000;
-	-moz-border-radius:10px;
-	-webkit-border-radius:10px;
-	border-radius:10px;
-	opacity:0.6;
-	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=60);
+    background:#000 url(/images/close.png) no-repeat center center;
+    cursor:pointer;
+    width:56px;
+    height:56px;
+    position:fixed;
+    right:80px;
+    top:240px;
+    z-index:1000;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    border-radius:10px;
+    opacity:0.6;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=60);
 }
 /* Next photo button for preview mode */
 a.ps_next_photo{
-	position:absolute;
-	top:50%;
-	left:50%;
-	width:56px;
-	height:56px;
-	margin:-28px 0 0 -28px;
-	z-index:200;
-	cursor:pointer;
-	background:#000 url(/images/next_photo.png) no-repeat 50% 50%;
-	opacity:0.6;
-	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=60);
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:56px;
+    height:56px;
+    margin:-28px 0 0 -28px;
+    z-index:200;
+    cursor:pointer;
+    background:#000 url(/images/next_photo.png) no-repeat 50% 50%;
+    opacity:0.6;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=60);
     -moz-border-radius:10px;
     -webkit-border-radius:10px;
     border-radius:10px;
 }
 a.ps_next_photo:hover,
 a.ps_close:hover{
-	opacity:0.8;
-	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=80);
+    opacity:0.8;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=80);
 }
- .loading{
-	background:url(/images/pics_loading.gif) no-repeat 50% 50%;
-        width: 31px;
-        height: 31px;
-        position: fixed;
-        top: 50%;
-        left: 50%;
+.loading{
+    background:url(/images/pics_loading.gif) no-repeat 50% 50%;
+    width: 31px;
+    height: 31px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
 
-        z-index: 100;
+    z-index: 100;
 }
 
 
@@ -1425,11 +1446,11 @@ a.ps_close:hover{
     width:32px;
 }
 .details {
-                bottom: -100px;
-                left: 0px;
-		font-size:11px;
-		color:#fff;
-		width:150px;
+    bottom: -100px;
+    left: 0px;
+    font-size:11px;
+    color:#fff;
+    width:150px;
 }
 
 /*搜索下下拉css*/

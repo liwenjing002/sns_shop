@@ -49,7 +49,7 @@ class PicturesController < ApplicationController
         :person => (params[:remove_owner] ? nil : @logged_in),
         :photo  => pic,
         :photo_text  => params[:photo_text],
-        :location=> params[:marker][:geocode_position]
+        :location=> params[:marker]?params[:marker][:geocode_position]:""
       )
       if picture.errors.any?
         errors += picture.errors.full_messages
@@ -70,22 +70,28 @@ class PicturesController < ApplicationController
     flash[:notice] += " " + t('pictures.failed', :fail => fail) if fail > 0
     flash[:notice] += " " + errors.join('; ') if errors.any?
     html = []
+    
     pic_arr.each do |pic|
-      params[:marker][:owner_id] =  @logged_in.id
-      unless params[:marker][:geocode_position]=='' and params[:marker][:marker_longitude]=="" and params[:marker][:marker_latitude] ==''
-        params[:marker][:marker_longitude] = BigDecimal.new(params[:marker][:marker_longitude])
-        params[:marker][:marker_latitude] = BigDecimal.new(params[:marker][:marker_latitude])
-        marker = Marker.new(params[:marker])
+      if params[:marker]
+        params[:marker][:owner_id] =  @logged_in.id 
+        unless params[:marker][:geocode_position]=='' and params[:marker][:marker_longitude]=="" and params[:marker][:marker_latitude] ==''
+          params[:marker][:marker_longitude] = BigDecimal.new(params[:marker][:marker_longitude])
+          params[:marker][:marker_latitude] = BigDecimal.new(params[:marker][:marker_latitude])
+          marker = Marker.new(params[:marker])
 
-        MarkerToMap.create({:map=>@logged_in.map,:marker=>marker,:marker_type=>'StreamItem'})
-        marker.object_type = "StreamItem"
-        marker.object_id = pic.stream_item_id
-        marker.save
-        html << {:pic_id=>pic.id,:marker_id=>marker.id}   
-        next
-      end
+          MarkerToMap.create({:map=>@logged_in.map,:marker=>marker,:marker_type=>'StreamItem'})
+          marker.object_type = "StreamItem"
+          marker.object_id = pic.stream_item_id
+          marker.save
+          html << {:pic_id=>pic.id,:marker_id=>marker.id}   
+          next
+        end
+      else
         html << {:pic_id=>pic.id}
+      end
+       
     end
+   
     
     render :text=> {:success=>true,:html=>html,:notice=>flash[:notice]}.to_json
     #    redirect_to params[:redirect_to] || @group || album_pictures_path(@album)
