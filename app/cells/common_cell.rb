@@ -26,5 +26,13 @@ class CommonCell < Cell::Rails
   def new_destination
   render
   end
+  
+  def i_want_go
+    render
+  end
+  
+  def activity
+    render
+  end
 
 end

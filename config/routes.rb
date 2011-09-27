@@ -1,6 +1,8 @@
 OneBody::Application.routes.draw do
   
   
+  resources :activities
+
   resources :shares do
     collection do
      get :admin
