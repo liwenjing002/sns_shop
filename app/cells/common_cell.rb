@@ -32,7 +32,19 @@ class CommonCell < Cell::Rails
   end
   
   def activity
+    @logged_in = options[:logged_in]
     render
   end
 
+  def get_friend_group
+    @logged_in = options[:logged_in]
+     @friends = @logged_in.friends.paginate(:order => 'created_at desc', :page => params[:page])
+     @groups = @logged_in.groups.paginate(:order => 'created_at desc', :page => params[:page])
+    render
+  end
+
+  def friend_list
+    @friends = options[:friends]
+    render
+  end
 end

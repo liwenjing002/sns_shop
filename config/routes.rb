@@ -86,6 +86,7 @@ OneBody::Application.routes.draw do
       post :hashify
       post :batch
       put  :import
+      post :get_friends
       post :change_pic
     end
     member do

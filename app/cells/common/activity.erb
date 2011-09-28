@@ -1,6 +1,9 @@
 <!-- modal content --> 
 <div id="activity-modal-content" style="display:none"> 
-  <div id="activity-modal-title">发起一个活动</div> 
+  <div id="activity-modal-title">发起一个活动
+    <span style="background-color: #FEC;padding: 4px;text-align: center;display: none" id="update_notice">
+
+    </span></div>
   <div class="close"><a href="#" class="simplemodal-close">x</a></div> 
   <div id="activity-modal-data" > 
     <div id = "activity_from" style="float:left">
@@ -50,7 +53,7 @@
       </div>
     </div> 
     <div id="invite_from" style="float:left;display:none">
-      邀请好友
+      <%=render_cell :common,:get_friend_group,:logged_in=>@logged_in%>
     </div>
   </div> 
 </div>

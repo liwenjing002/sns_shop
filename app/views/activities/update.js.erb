@@ -1,1 +1,6 @@
-$("#invite_from").show()
+<%if flash[:notice]%>
+  $("#update_notice").html("<%=flash[:notice]%>")
+  $("#update_notice").show()
+  $('#update_notice').fadeOut(15000);
+<%end%>
+

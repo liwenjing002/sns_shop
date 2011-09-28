@@ -23,8 +23,8 @@ class PeopleController < ApplicationController
       @person = @logged_in
       @map = @person.map 
       if !@map
-      @map = Map.create 
-      @person.map =@map
+        @map = Map.create
+        @person.map =@map
       end
       @plans =@person.plans
     elsif params[:legacy_id]
@@ -37,7 +37,7 @@ class PeopleController < ApplicationController
       @plans =@person.plans
 
     end
-     @stream_items = @person.shared_stream_items(40,true)
+    @stream_items = @person.shared_stream_items(40,true)
     if params[:limited] or !@logged_in.full_access?
       render :action => 'show_limited'
     elsif @person and @logged_in.can_see?(@person)
@@ -61,18 +61,18 @@ class PeopleController < ApplicationController
   end
 
   def new
-      if Person.can_create?
-        @business_categories = Person.business_categories
-        @custom_types = Person.custom_types
-        if @logged_in.admin?(:edit_profiles)
-          defaults = {:can_sign_in => true, :visible_to_everyone => true, :visible_on_printed_directory => true, :full_access => true}
-          @person = Person.new(defaults)
-        else
-          render :text => t('not_authorized'), :layout => true, :status => 401
-        end
+    if Person.can_create?
+      @business_categories = Person.business_categories
+      @custom_types = Person.custom_types
+      if @logged_in.admin?(:edit_profiles)
+        defaults = {:can_sign_in => true, :visible_to_everyone => true, :visible_on_printed_directory => true, :full_access => true}
+        @person = Person.new(defaults)
       else
-        render :text => t('people.cant_be_added'), :layout => true, :status => 401
+        render :text => t('not_authorized'), :layout => true, :status => 401
       end
+    else
+      render :text => t('people.cant_be_added'), :layout => true, :status => 401
+    end
   end
 
   def create
@@ -237,13 +237,16 @@ class PeopleController < ApplicationController
           flash[:warning] = @object.errors.full_messages.join('; ')
         end
       end
-       render :text => "{success:'" + "true" + "', pic_id:'" +@logged_in.photo.id.to_s + "',pic_url:'" + @logged_in.photo.url(:profile) + "'}";
+      render :text => "{success:'" + "true" + "', pic_id:'" +@logged_in.photo.id.to_s + "',pic_url:'" + @logged_in.photo.url(:profile) + "'}";
     else
-       render :text => "{success:'" + "false" + "', pic_id:'" + pic.id.to_s + "',pic_url:'" + pic.photo.url(:profile) + "'}";
+      render :text => "{success:'" + "false" + "', pic_id:'" + pic.id.to_s + "',pic_url:'" + pic.photo.url(:profile) + "'}";
     end
   end
 
-def test
-end  
+  def get_friends
+    @friends = @logged_in.friends.paginate(:order => 'created_at desc',
+      :page => params[:page],
+      :conditions=>["first_name like ?",params[:people][:first_name]=="" ? "%":params[:people][:first_name]])
+  end
 
 end

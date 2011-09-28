@@ -70,7 +70,7 @@
 <!--我想去窗口 -->
 <%= render_cell :common, :i_want_go%>
 <!--我要活动窗口 -->
-<%= render_cell :common,:activity %>
+<%= render_cell :common,:activity,:logged_in=>@logged_in   %>
 
 <script type="text/javascript">
   $(document).ready(function() {

@@ -42,6 +42,7 @@ class ActivitiesController < ApplicationController
   def create
     @activity = Activity.new(params[:activity])
     @activity.save
+     flash[:notice] ="创建活动成功"
   end
 
   # PUT /activities/1
@@ -49,6 +50,7 @@ class ActivitiesController < ApplicationController
   def update
     @activity = Activity.find(params[:id])
     @activity.update_attributes(params[:activity])
+    flash[:notice] ="修改活动成功"
   end
 
   # DELETE /activities/1
