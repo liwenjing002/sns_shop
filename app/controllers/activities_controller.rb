@@ -64,4 +64,14 @@ class ActivitiesController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  def invite_friend
+    @activity = Activity.find(params[:activity_id])
+    friends_ids = params[:friends_ids].split(/,/)
+    friends_ids.each do |friend|
+      PeopleActivity.create({:activity_id=>@activity.id,:people_id=>friend,:status=>"w"})
+    end
+    render :json=>{:success=>true}
+  end
+  
 end

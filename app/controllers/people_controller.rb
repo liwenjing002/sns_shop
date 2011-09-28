@@ -246,7 +246,7 @@ class PeopleController < ApplicationController
   def get_friends
     @friends = @logged_in.friends.paginate(:order => 'created_at desc',
       :page => params[:page],
-      :conditions=>["first_name like ?",params[:people][:first_name]=="" ? "%":params[:people][:first_name]])
+      :conditions=>["first_name like ?","%#{params[:people][:first_name]}%"])
   end
 
 end

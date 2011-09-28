@@ -1,7 +1,11 @@
 OneBody::Application.routes.draw do
   
   
-  resources :activities
+  resources :activities do
+    collection do
+      get :invite_friend
+    end
+  end
 
   resources :shares do
     collection do

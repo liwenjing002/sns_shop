@@ -13,7 +13,7 @@ class AddActivity < ActiveRecord::Migration
       t.integer :create_id
     end
     
-    create_table :activity_people do|t|
+    create_table :people_activities do|t|
       t.integer :activity_id
       t.integer :people_id
     end
@@ -21,6 +21,6 @@ class AddActivity < ActiveRecord::Migration
 
   def self.down
     drop_table :activities
-    drop_table :activity_people
+    drop_table :people_activities
   end
 end

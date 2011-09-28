@@ -9,7 +9,7 @@
       <%= image_tag 'clean/manoutline.tn.png', :alt => friend.try(:name), :class => 'icon thumbnail' %>
     <% end %>
   <% end %>
- <%= check_box :select_friends, :id,:friend_id=>friend.id %>
+ <%= check_box :select_friends, :id,:friend_id=>friend.id,:class=>"select_friends" %>
   <br/>
 <%end%>
 </div>
