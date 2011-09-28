@@ -19,7 +19,7 @@ development:
   
 test:
   adapter: mysql
-  database: onebody_test
+  database: onebody_dev
   host: localhost
   encodings: utf8
   username: root

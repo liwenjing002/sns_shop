@@ -3,9 +3,9 @@ module StreamsHelper
 
   def stream_item_path(stream_item)
     if stream_item.streamable_type == 'Place' or stream_item.streamable_type == 'PlaceShare'
-    send("location_" +stream_item.streamable_type.underscore + '_path', stream_item.streamable_id)
+      send("location_" +stream_item.streamable_type.underscore + '_path', stream_item.streamable_id)
     else
-    send(stream_item.streamable_type.underscore + '_path', stream_item.streamable_id)
+      send(stream_item.streamable_type.underscore + '_path', stream_item.streamable_id)
     end
   end
 
@@ -20,7 +20,7 @@ module StreamsHelper
       content += "<div id= 'pic_share'>"
       content += "<div id= 'triggers'>"
       content +=  "".tap do |content_temp|
-        stream_item.context['picture_ids'].to_a.each do |picture_id, fingerprint, extension|
+        stream_item.context['picture_ids'].to_a.each do |picture_id, fingerprint, extension,photo_text|
            
           temp = ''+link_to(
             image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :large), :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic',:rel=>"#mies#{picture_id}"),
@@ -28,12 +28,15 @@ module StreamsHelper
           ) 
           
           temp += '<div class="simple_overlay" id="mies'+picture_id.to_s+'">' + image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :original),:alt => t('pictures.click_to_enlarge')) +'</div>'
+          if !is_blank photo_text 
+            temp += "<div>描述：#{photo_text}</div>"
+          end
           content_temp <<  temp
         end
       end.html_safe
       content += "</div>"
       content += "</div>"
-      
+
     end
     if stream_item.body
       content += "<div id= 'text_share'>"
@@ -50,7 +53,17 @@ module StreamsHelper
         "<img#{$1}src=\"#{url}\""
       end
     end
-    content += (" <div id='location_now'><span color: #5F9128>发表位置：</span>"+stream_item.streamable.location+"</div>") if !is_blank stream_item.streamable.location if stream_item.streamable_type == 'Note'
+    content += (" <div stream_item_id = '#{stream_item.id}' class='location_now' style='cursor:pointer;color:red'><span color: #5F9128>发表位置：</span>"+stream_item.streamable.location+"</div>") if stream_item.streamable_type == 'Note' and !is_blank stream_item.streamable.location
+    marker = ""
+      if  stream_item.streamable_type == 'Note' 
+      if !is_blank stream_item.streamable.latitude 
+        marker = "#{stream_item.streamable.longitude},#{stream_item.streamable.latitude}"
+      else if !is_blank stream_item.streamable.location
+          marker = stream_item.streamable.location
+        end
+      end
+    end
+    content += "<div class='tooltip_stream_item'><img src='http://api.map.baidu.com/staticimage?center=#{marker}&markers=#{marker}&width=300&height=140&zoom=13'></img></div>" if marker != ""
     raw content
   end
 

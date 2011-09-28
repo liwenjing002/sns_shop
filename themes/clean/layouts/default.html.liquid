@@ -29,7 +29,11 @@
   </div>
   {{ notice }}
   <div id="main">
+
     <div class="inner">
+        <div ">
+          {{ content_for_top }}
+        </div>
       {% if content_for_sidebar %}
         <div class="left-sidebar">
           {{ content_for_sidebar }}

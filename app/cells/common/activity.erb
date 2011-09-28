@@ -1,0 +1,96 @@
+<!-- modal content --> 
+<div id="activity-modal-content" style="display:none"> 
+  <div id="activity-modal-title">发起一个活动</div> 
+  <div class="close"><a href="#" class="simplemodal-close">x</a></div> 
+  <div id="activity-modal-data" > 
+    <div id = "activity_from" style="float:left">
+      <div>
+        <%= form_for @activity = Activity.new ,:remote=>true do |form| %>
+          <div>
+            <%= form.label :name, "活动名称"%>
+            <%= form.text_field :name %>
+          </div>
+          <div>
+            <%= form.label :activity_time, "活动时间"%>
+            <%= form.date_field :activity_time %>
+          </div>
+          <div>
+            <%= form.label :location,"活动地点" %>
+            <%= form.text_field :location,:size=>22,:placeholder => "活动的地点"%>
+          </div>
+        <div>
+          <%= image_tag 'plus.gif', :id => "more_activity_detail",:is_plus=>1 %>
+          <span id="more_activity_detail_span"><%= t("people.more") %></span>
+        </div>
+          <div class="more_activity_detail" style="display: none; ">
+            <div>
+              <%= form.label :apply_time, "活动申请截止时间"%>
+              <%= form.date_field :apply_time %>
+            </div>
+            <div>
+              <%= form.label :charge_people, "活动负责人"%>
+              <%= form.text_field :charge_people,:placeholder => "请填写活动的负责人姓名" %>
+            </div>
+            <div>
+              <%= form.label :charge_phone, "电话"%>
+              <%= form.text_field :charge_phone,:placeholder => "请填写活动的负责人联系方式" %>
+            </div>
+            <div>
+              <%= form.label :activity_spend, "活动费用"%>
+              <%= form.text_field :activity_spend,:placeholder => "请填写活动的具体费用" %>
+            </div>
+            <div>
+              <%= form.label :activity_memo, "活动详细安排"%>
+              <%= form.text_area :activity_memo,:cols=>"25",:rows => "4",:placeholder => "请填写活动的具体安排" %>
+            </div>
+          </div>
+          <%= form.submit :value=>"创建活动"%>
+          <span style="cursor:pointer" id ="tags_cancel" class ="button simplemodal-close">取消</span>
+        <%end%>
+      </div>
+    </div> 
+    <div id="invite_from" style="float:left;display:none">
+      邀请好友
+    </div>
+  </div> 
+</div>
+<!-- modal content --> 
+
+<script type="text/javascript">
+      
+  $(document).ready(function() {
+    
+  
+            
+            
+    $("#more_activity_detail").click(function(){
+      if($(this).attr("is_plus") == 1){
+        $(this).attr("src","/images/minus.gif")
+        $(this).attr("is_plus","0")
+        $("#activity-container").height(630);
+        $('.more_activity_detail').slideDown('1500');
+        
+      }else{
+        $('.more_activity_detail').slideUp('1500');
+        $(this).attr("src","/images/plus.gif")
+        $(this).attr("is_plus","1")
+        $("#activity-container").height(300);
+      }
+    })
+            
+    $("#more_activity_detail_span").click(function(){
+      if($("#more_activity_detail").attr("is_plus") == 1){
+        $('.more_activity_detail').slideDown('1500');
+        $("#more_activity_detail").attr("src","/images/minus.gif")
+        $("#more_activity_detail").attr("is_plus","0")
+      }else{
+        $('.more_activity_detail').slideUp('1500');
+        $("#more_activity_detail").attr("src","/images/plus.gif")
+        $("#more_activity_detail").attr("is_plus","1")
+      }
+    })
+  }
+)
+
+  $('#activity_activity_time, #activity_apply_time').datepicker({changeYear:true, yearRange:'1900:2025', dateFormat:'<%= datepicker_format %>'});
+</script>

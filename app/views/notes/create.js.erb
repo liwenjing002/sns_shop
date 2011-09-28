@@ -1,20 +1,3 @@
-<%if @marker_at %>
-  <%if @marker_last and @marker_last.length>0%>
-
-  <%end%>
-    html = '<%= raw mark_html(@marker_at) %>'
-  <%if !is_blank_zero(@marker_at.marker_latitude,@marker_at.marker_longitude) %>
-    point = new BMap.Point('<%= @marker_at.marker_longitude %>', '<%=@marker_at.marker_latitude%>')
-    marker = MapObject.add_marker_to_map(point,"/images/map/default.png",34,30,html,"share",<%=@marker_at.id%>,true)
-  <%else%> 
-    MapObject.getPoint('<%=@marker_at.geocode_position%>', MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"share",html,'<%=@marker_at.geocode_position%>',true,<%=@marker_at.id%>,MapObject.map),MapObject.map);
-  <%end%>
-
-
-
-<%end%>
-
-
 $(".stream-items").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :object => @note.stream_item ) %>");
 $(".stream-item").first().hide();
 $(".stream-items :first-child").slideDown("slow");
@@ -27,4 +10,26 @@ $(".stream-items :first-child").slideDown("slow");
 $("#share-note").resetForm();
 $("#marker_geocode_position").attr("value", '');
 $("#marker_destin_position").attr("value", '');
+if(MapObject.temp_marker){
+MapObject.temp_marker.closeInfoWindow(MapObject.infoWindow);
+MapObject.map.removeOverlay(MapObject.temp_marker); 
+}
+<%if @marker_at %>
+  <%if @marker_last and @marker_last.length>0%>
+
+  <%end%>
+  html = '<%= raw mark_html(@marker_at) %>'
+  <%if !is_blank_zero(@marker_at.marker_latitude,@marker_at.marker_longitude) %>
+    point = new BMap.Point('<%= @marker_at.marker_longitude %>', '<%=@marker_at.marker_latitude%>')
+    marker = MapObject.add_marker_to_map(point,"/images/map/default.png",34,30,html,"share",<%=@marker_at.id%>,true)
+  <%else%> 
+    MapObject.getPoint('<%=@marker_at.geocode_position%>', MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"stream_item",html,'<%=@marker_at.geocode_position%>',true,<%=@marker_at.id%>,MapObject.map),MapObject.map);
+  <%end%>
+
+
+
+<%end%>
+
+
+
 

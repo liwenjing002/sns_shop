@@ -20,11 +20,11 @@
 
 
     <h3>活动
-      <p style="float: right"><%= link_to '活动管理', "#", :class => 'add-icon' %></p>
+      <p style="float: right"><%= link_to '发起活动', "#", :class => 'add-icon',:id=>"activity" %></p>
     </h3>
 
     <h3>想去那里
-      <p style="float: right"><%= link_to '行程管理', "#", :class => 'add-icon' %></p>
+      <p style="float: right"><%= link_to '我想去', "#", :class => 'add-icon',:id=>"i_want_to_go" %></p>
     </h3>
     <table>
       <tr>
@@ -68,7 +68,9 @@
 
 
 <!--我想去窗口 -->
-<%= render :partial=>"i_want_go" %>
+<%= render_cell :common, :i_want_go%>
+<!--我要活动窗口 -->
+<%= render_cell :common,:activity %>
 
 <script type="text/javascript">
   $(document).ready(function() {

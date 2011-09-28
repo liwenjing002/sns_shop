@@ -127,11 +127,11 @@ jQuery(function ($) {
         
         
         
-    //我的标签
+
     OSX2 = {
         container: null,
         init: function () {
-            $("#posittion-tab").click(function (e) {
+            $("#i_want_to_go").click(function (e) {
                 e.preventDefault();	
 
                 $("#osx-modal-content").modal({
@@ -271,7 +271,78 @@ jQuery(function ($) {
 
     OSX3.init();
     
-    
+    OSX4 = {
+        container: null,
+        init: function () {
+            $("#activity").click(function (e) {
+                e.preventDefault();	
+
+                $("#activity-modal-content").modal({
+                    overlayId: 'activity-overlay',
+                    containerId: 'activity-container',
+                    closeHTML: null,
+                    minHeight: 200,
+                    opacity: 65, 
+                    position: ["0",],
+                    overlayClose: true,
+                    autoResize:true,
+                    onOpen: OSX4.open,
+                    onClose: OSX4.close
+                });
+            });
+        },
+        open: function (d) {
+            var self = this;
+            self.container = d.container[0];
+            d.overlay.fadeIn( function () {
+
+                $("#activity-modal-content", self.container).show();
+                var title = $("#activity-modal-title", self.container);
+                title.show();
+                d.container.slideDown( function () {
+                    setTimeout(function () {
+                        var h = $("#activity-modal-data", self.container).height()
+                        + title.height()
+                        + 20; // padding
+                        d.container.animate(
+                        {
+                            height: h
+                        }, 
+                        200,
+                        function () {
+                            $("div.close", self.container).show();
+                            $("#activity-modal-data", self.container).show();
+                          
+                        }
+                        );
+                    }, 300);
+                });
+            })
+        },
+        close: function (d) {
+
+            var self = this; // this = SimpleModal object
+            d.container.animate(
+            {
+                top:"-" + (d.container.height() + 20)
+            },
+            500,
+            function () {
+                temp_my_all_tags= $("#my_all_tags").clone();
+                temp_place_tags_input = $("#place_tags_input").attr("value")
+                //                                        alert(temp_my_all_tags.html())
+                //                                        alert($("#place_tags_input").attr("value"))
+                                        
+                self.close(); // or $.modal.close();
+                $("#my_all_tags").html(temp_my_all_tags.html())
+                $("#place_tags_input").attr("value",temp_place_tags_input)
+                                        
+            }
+            );
+        }
+    };
+
+    OSX4.init();
 
 });
 
@@ -578,7 +649,7 @@ InputSuggest.prototype = {
      });
 
 
-
+    $(".location_now").tooltip({ position: 'bottom center ',  delay: 50 });
 
 
 

@@ -7,8 +7,12 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    MapObject.place_html = document.getElementById("map_infowindow").innerHTML;
+    MapObject.place_html = document.getElementById("place_infowindow").innerHTML;
+    MapObject.share_html = document.getElementById("share_infowindow").innerHTML;
+    MapObject.destination_html = document.getElementById("destination_infowindow").innerHTML;
     $('#map_infowindow').remove();
+    $('#share_infowindow').remove();
+     $('#destination_infowindow').remove();
 <% if !is_blank(@map.center_latitude,@map.center_longitude)%>
       MapObject.center = new BMap.Point('<%=@map.center_latitude%>','<%=@map.center_longitude%>')
 <%end%>
@@ -26,26 +30,40 @@
 
 <%#end%>
 <div id ="temp_div" style="display: none" >
-<div id ="map_infowindow" >
+<div id ="place_infowindow" >
   <%= render_cell :common, :new_place %>
 </div>
+<div id ="share_infowindow" >
+  <%= render_cell :common, :new_share %>
+</div>
+<div id ="destination_infowindow" >
+  <%= render_cell :common, :new_destination %>
+</div>   
 <div id ="place_info">
 <%=render :partial => '../views/common/place_info',:locals => {:place=>nil,:marker=>nil}%>
 </div>
  </div>
 
-<div id="map_controll">
-  <ul class="buttons">
-    <li><span class="button" id="new-marker-tab" onclick="MapObject.add_place_to_map_listen();">发布地点</span></li>
-    <li><span class="button" onclick="MapObject.init_marker_from_data('friend_position','<%= @person.id %>');">查看好友位置</span></li>
-    <li><span class="button" id="posittion-tab">我要旅游</span></li>
-    <li><span class="button" id="activities-tab">我要活动</span></li>
-    <li><span class="button" id="" onclick="MapObject.i_go_to()" >我要去</span></li>
-  </ul>
-</div>
 
-
-
+<span class="button" id="pack_up">收起</span>
+<span class="button" id="pack_down">放下</span>
 <div id="mapCanvas" style="width: 100%; height: 385px;">map div</div> 
 <div id="results"></div>
 <div id="searchwell"></div> 
+<script>
+   $(document).ready(function() {
+     $("#pack_down").hide();
+     $("#pack_up").click(function(){
+       $("#mapCanvas").slideUp("slow");
+       $("#pack_up").hide();
+       $("#pack_down").show()
+      
+     })
+     $("#pack_down").click(function(){
+       $("#mapCanvas").slideDown("slow");
+       $("#pack_down").hide();
+        $("#pack_up").show()
+     })
+     
+   })
+  </script>

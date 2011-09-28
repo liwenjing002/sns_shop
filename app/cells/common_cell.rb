@@ -11,12 +11,27 @@ class CommonCell < Cell::Rails
   def new_place
     render
   end
+  def new_share
+    render
+  end
 
   def place_info
     render
   end
 
   def share
+    render
+  end
+  
+  def new_destination
+  render
+  end
+  
+  def i_want_go
+    render
+  end
+  
+  def activity
     render
   end
 

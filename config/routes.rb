@@ -1,9 +1,17 @@
 OneBody::Application.routes.draw do
   
   
+  resources :activities
+
   resources :shares do
     collection do
      get :admin
+    end
+  end
+  
+  resources :pictures do
+    collection do
+     get :get_stream_item
     end
   end
 
