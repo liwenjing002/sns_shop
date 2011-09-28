@@ -1,0 +1,14 @@
+<label style="display: block;">邀请好友</label>
+<%= form_tag "/people/get_friends", { :method => :post,:remote=>true } do %>
+  <%= text_field :people, :first_name   %>
+  <%= submit_tag "查找好友", :class => "submit" %>
+<% end %>
+<%=render_cell :common,:friend_list,:friends=>@friends%>
+
+ <%= will_paginate @friends %>
+<span class="button" id="invite_friends">邀请好友</span>
+<script  >
+  $("#invite_friends").click(function(){
+  alert()
+  })
+</script>

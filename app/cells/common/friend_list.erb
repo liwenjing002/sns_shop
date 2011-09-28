@@ -1,0 +1,16 @@
+<div id="friend_list">
+<%@friends.each do |friend|%>
+  <% if friend and friend.photo.exists? %>
+    <%= image_tag friend.photo.url(:tn), :alt => friend.name, :class => 'icon thumbnail' %>
+  <% else %>
+    <% if friend and friend.gender.to_s == 'Female' %>
+      <%= image_tag 'clean/womanoutline.tn.png', :alt => friend.try(:name), :class => 'icon thumbnail' %>
+    <% else %>
+      <%= image_tag 'clean/manoutline.tn.png', :alt => friend.try(:name), :class => 'icon thumbnail' %>
+    <% end %>
+  <% end %>
+ <%= check_box :select_friends, :id,:friend_id=>friend.id %>
+  <br/>
+<%end%>
+</div>
+
