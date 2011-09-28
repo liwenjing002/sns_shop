@@ -71,7 +71,9 @@ GEM
     multi_json (1.0.3)
     multi_xml (0.4.0)
     mysql (2.8.1)
+    mysql (2.8.1-x86-mingw32)
     nokogiri (1.4.7)
+    nokogiri (1.4.7-x86-mingw32)
     paperclip (2.3.16)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
@@ -113,6 +115,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   ar_mailer_rails3

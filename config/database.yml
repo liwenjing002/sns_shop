@@ -15,7 +15,7 @@ development:
   host: localhost
   username: root
   encodings: utf8
-  password: 
+  password: root
   
 test:
   adapter: mysql
@@ -23,11 +23,11 @@ test:
   host: localhost
   encodings: utf8
   username: root
-  password: 
+  password: root
 production:
   adapter: mysql
   database: onebody_dev
   encodings: utf8
   host: localhost
   username: root
-  password: 
+  password: root
