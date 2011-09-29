@@ -24,10 +24,10 @@
           <td>
             地点：<%= activity_invite.activity.location %>
           </td>
-          <td>
+          <td class ="deal<%=activity_invite.id%>">
             <%= link_to "加入", deal_invite_person_activities_path(@logged_in, :invite_id=>activity_invite.id, :status => 'a'), :method => 'get', :class => 'add-icon',:remote=>true %><br/>
           </td>
-          <td>
+          <td class ="deal<%=activity_invite.id%>">
             <%= link_to "忽略", deal_invite_person_activities_path(@logged_in, :invite_id=>activity_invite.id, :status => 'a'), :method => 'get', :confirm => t('are_you_sure'), :class => 'delete-icon',:remote=>true  %>
           </td>
         </tr>

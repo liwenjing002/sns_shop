@@ -1,5 +1,6 @@
-$("#activity_invite<%=@peopleActivity.id%>").slideUp("slow");
+$('.deal<%=@peopleActivity.id%>').remove();
 html = "<tr class='activities_tr'>"+$("#activity_invite<%=@peopleActivity.id%>").html() +"</tr>"
+$("#activity_invite<%=@peopleActivity.id%>").remove();
 $("#activities").prepend(html);
 $(".activities_tr").first().hide();
 $("#activities :first-child").slideDown("slow");

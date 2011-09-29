@@ -68,7 +68,7 @@ class ActivitiesController < ApplicationController
 
   def index
      @person = Person.find(params[:person_id])
-     @activity_invite = @person.people_activities(:condition=>["status=?","w"])
+     @activity_invite = @person.invite_activities
      @activities = @person.activities
   end
 

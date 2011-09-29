@@ -18,6 +18,7 @@ class Person < ActiveRecord::Base
   has_many :places
   has_one :map
   has_many :people_activities
+   has_many :invite_activities,:class_name=>"PeopleActivity", :conditions=>["status=?","w"]
   has_many :activities,:through => :people_activities,:conditions => "status = 'a'"
   has_many :memberships, :dependent => :destroy
   has_many :membership_requests, :dependent => :destroy
