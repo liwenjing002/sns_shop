@@ -1,0 +1,5 @@
+$("#activity_invite<%=@peopleActivity.id%>").slideUp("slow");
+html = "<tr class='activities_tr'>"+$("#activity_invite<%=@peopleActivity.id%>").html() +"</tr>"
+$("#activities").prepend(html);
+$(".activities_tr").first().hide();
+$("#activities :first-child").slideDown("slow");

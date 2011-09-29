@@ -102,7 +102,11 @@ OneBody::Application.routes.draw do
         post :reorder
       end
     end
-    resources:activities
+    resources:activities do
+      collection do
+        get :deal_invite
+      end
+    end
     resources :relationships do
       collection do
         post :batch

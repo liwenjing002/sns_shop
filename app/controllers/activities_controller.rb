@@ -71,5 +71,11 @@ class ActivitiesController < ApplicationController
      @activity_invite = @person.people_activities(:condition=>["status=?","w"])
      @activities = @person.activities
   end
+
+  def deal_invite
+     @peopleActivity = PeopleActivity.find(params[:invite_id])
+     @peopleActivity.status = params[:status]
+     @peopleActivity.save
+  end
   
 end
