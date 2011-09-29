@@ -5,11 +5,7 @@ class ActivitiesController < ApplicationController
   # GET /activities/1.xml
   def show
     @activity = Activity.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @activity }
-    end
+    @person = @logged_in
   end
 
   # GET /activities/new
@@ -33,6 +29,7 @@ class ActivitiesController < ApplicationController
   def create
     params[:activity][:create_id] = @logged_in.id
     @activity = Activity.new(params[:activity])
+    
     @activity.save
      flash[:notice] ="创建活动成功"
   end

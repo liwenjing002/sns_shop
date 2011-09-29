@@ -18,7 +18,7 @@ class Person < ActiveRecord::Base
   has_many :places
   has_one :map
   has_many :people_activities
-   has_many :invite_activities,:class_name=>"PeopleActivity", :conditions=>["status=?","w"]
+  has_many :invite_activities,:class_name=>"PeopleActivity", :conditions=>["status=?","w"]
   has_many :activities,:through => :people_activities,:conditions => "status = 'a'"
   has_many :memberships, :dependent => :destroy
   has_many :membership_requests, :dependent => :destroy
@@ -107,7 +107,7 @@ class Person < ActiveRecord::Base
 
 
   def gmaps4rails_address
-	self.address.to_s
+    self.address.to_s
   end
 
   def name
@@ -225,8 +225,10 @@ class Person < ActiveRecord::Base
         what.album.is_public? or can_see?(what.person)
       when 'Place'
         what.is_public?
-       when 'PlaceShare'
-       what.is_public? 
+      when 'PlaceShare'
+        what.is_public?
+      when 'Activity'
+        what.creater and can_see?(what.creater)
       else
         raise "Unrecognized argument to can_see? (#{what.inspect})"
       end
@@ -241,7 +243,7 @@ class Person < ActiveRecord::Base
     when 'Group'
       what.admin?(self) or self.admin?(:manage_groups)
     when 'Place'
-#      what.admin?(self) or self.admin?(:manage_groups)
+      #      what.admin?(self) or self.admin?(:manage_groups)
     when 'Ministry'
       admin?(:manage_ministries) or what.administrator == self
     when 'Person'
@@ -258,6 +260,8 @@ class Person < ActiveRecord::Base
       admin?(:manage_pictures) or (what.album and can_edit?(what.album)) or what.person_id == self.id
     when 'Note'
       self == what.person or self.admin?(:manage_notes)
+    when 'Activity'
+      self == what.creater or self.admin?(:manage_activities)
     when 'Comment'
       self == what.person or self.admin?(:manage_comments)
     when 'Page'
@@ -480,31 +484,32 @@ class Person < ActiveRecord::Base
     enabled_types << 'Note'        if Setting.get(:features, :notes       )
     enabled_types << 'PrayerRequest'
     enabled_types << 'Place'
+    enabled_types << 'Activity'
     enabled_types << 'PlaceShare'
     friend_ids = all_friend_and_groupy_ids
     place_ids = all_places_ids
     group_ids = groups.find_all_by_hidden(false, :select => 'groups.id').map { |g| g.id }
     group_ids = [0] unless group_ids.any?
     if !is_self
-    relation = StreamItem.scoped \
-      .where(:streamable_type => enabled_types) \
-      .where(:shared => true) \
-      .where("(group_id in (:group_ids) or" +
-        " (group_id is null and wall_id is null and person_id in (:friend_ids)) or" +
-        " person_id = :id or" +
-        " streamable_type in ('NewsItem', 'Publication')" +
-        "or (place_id in (:place_ids)))", :group_ids => group_ids, :friend_ids => friend_ids, :id => id,:place_ids=>place_ids) \
-      .order('created_at desc') \
-      .limit(count) \
-      .includes(:person, :group)
+      relation = StreamItem.scoped \
+        .where(:streamable_type => enabled_types) \
+        .where(:shared => true) \
+        .where("(group_id in (:group_ids) or" +
+          " (group_id is null and wall_id is null and person_id in (:friend_ids)) or" +
+          " person_id = :id or" +
+          " streamable_type in ('NewsItem', 'Publication')" +
+          "or (place_id in (:place_ids)))", :group_ids => group_ids, :friend_ids => friend_ids, :id => id,:place_ids=>place_ids) \
+        .order('created_at desc') \
+        .limit(count) \
+        .includes(:person, :group)
     else
-          relation = StreamItem.scoped \
-      .where(:streamable_type => enabled_types) \
-      .where(:shared => true) \
-      .where(" person_id = :id ", :id => id) \
-      .order('created_at desc') \
-      .limit(count) \
-      .includes(:person, :group)
+      relation = StreamItem.scoped \
+        .where(:streamable_type => enabled_types) \
+        .where(:shared => true) \
+        .where(" person_id = :id ", :id => id) \
+        .order('created_at desc') \
+        .limit(count) \
+        .includes(:person, :group)
     end
     relation.to_a.tap do |stream_items|
       # do our own eager loading here...
@@ -530,7 +535,7 @@ class Person < ActiveRecord::Base
   
   #隐私控制
   def privacy_controll(type,who)
-return true unless self.privacy
+    return true unless self.privacy
     all_v = self.privacy.share_all_visible
     friend_v = self.privacy.share_friend_visible
     all_type = self.privacy.send("share_all_#{type}")

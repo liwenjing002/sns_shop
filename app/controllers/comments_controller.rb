@@ -9,6 +9,8 @@ class CommentsController < ApplicationController
       object = Picture.find(params[:picture_id])
      elsif params[:placeshare_id]
       object = PlaceShare.find(params[:placeshare_id])
+       elsif params[:activity_id]
+      object = Activity.find(params[:activity_id])
     else
       raise 'Error.'
     end

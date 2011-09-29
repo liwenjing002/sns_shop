@@ -11,11 +11,13 @@ class AddActivity < ActiveRecord::Migration
       t.string :activity_spend
       t.text :activity_memo
       t.integer :create_id
+      t.timestamps
     end
     
     create_table :people_activities do|t|
       t.integer :activity_id
       t.integer :person_id
+      t.timestamps
     end
   end
 

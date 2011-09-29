@@ -64,6 +64,9 @@ module StreamsHelper
       end
     end
     content += "<div class='tooltip_stream_item'><img src='http://api.map.baidu.com/staticimage?center=#{marker}&markers=#{marker}&width=300&height=140&zoom=13'></img></div>" if marker != ""
+    if stream_item.streamable_type =="Activity"
+      content += activity stream_item
+    end
     raw content
   end
 
@@ -73,6 +76,18 @@ module StreamsHelper
     else
       time.to_s
     end
+  end
+
+  private
+  def activity stream_item
+    content = ""
+    if stream_item.streamable.creater == @logged_in
+    content += "<div>创建活动： #{stream_item.streamable.name}</div>"
+    else
+      content += "<div>加入活动： #{stream_item.streamable.name}</div>"
+    end
+    content += "<div>活动时间：#{stream_item.streamable.activity_time.strftime("%y-%m-%d")}</div><div>活动地点:#{stream_item.streamable.location}</div>"
+    content
   end
 
 end

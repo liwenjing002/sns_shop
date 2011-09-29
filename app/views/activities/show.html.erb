@@ -1,5 +1,40 @@
-<p id="notice"><%= notice %></p>
+<% content_for :sidebar do %>
+  <%= render :partial => 'people/person_photo' %>
+  <p>
+    活动创建于 <%= @activity.created_at.strftime("%Y-%m-%d") %>
+    创建人：<%= link_to @activity.creater.name, person_url(:id => @activity.creater) %>
+  </p>
+  <% if @logged_in.can_edit?(@activity) %>
+    <%= link_to t('notes.edit_note'), edit_note_path(@activity), :class => 'edit-icon' %><br/>
+    <%= link_to t('notes.delete_note'), @activity, :class => 'delete-icon', :method => :delete, :confirm => t('are_you_sure') %>
+  <% end %>
+<% end %>
+  <h3>活动名称</h3>
+<div>
+  <%= @activity.name %>
+</div>
 
+  <h3>活动时间</h3>
+<div>
 
-<%= link_to 'Edit', edit_activity_path(@activity) %> |
-<%= link_to 'Back', activities_path %>
+  <%= @activity.activity_time %>
+</div>
+
+  <h3>活动地点</h3>
+<div>
+
+  <%= @activity.location %>
+</div>
+  <h3>其他</h3>
+<div>
+
+  申请截止时间： <%= @activity.apply_time %><br/>
+  负责人： <%=@activity.charge_people%><br/>
+  负责人联系电话： <%=@activity.charge_phone%><br/>
+  活动持续时间： <%=@activity.lasting_time%><br/>
+  活动花费： <%=@activity.activity_spend%><br/>
+  活动详情： <%=@activity.activity_memo%>
+</div>
+
+<h2><%= t('Comments') %></h2>
+<%= render :partial => 'comments/comments', :locals => {:object => @activity, :intro => t('notes.about_this_note') + '.'} %>
