@@ -1,21 +1,61 @@
-<h1>Listing activities</h1>
-
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @activities.each do |activity| %>
-  <tr>
-    <td><%= link_to 'Show', activity %></td>
-    <td><%= link_to 'Edit', edit_activity_path(activity) %></td>
-    <td><%= link_to 'Destroy', activity, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<% content_for :sidebar do %>
+  <%= render :partial => 'people/person_photo' %>
+  <h2><%= t('friends.personal_friends', :name => @person.name_possessive) %></h2>
 <% end %>
-</table>
 
-<br />
+<% if @activity_invite.any? %>
+  <div>
+    <h3>活动邀请</h3>
+    <p>以下好友邀请你加入活动</p>
+    <table class="spaced">
+      <% @activity_invite.each do |activity_invite| %>
+        <tr>
+          <td>
+            <a href="<%= url_for person_url(:id =>activity_invite.activity.create_id) %>">
+              <%= render :partial => 'people/thumbnail', :locals => {:person => activity_invite.activity.creater} %>
+            </a>
+          </td>
+          <td>
+            活动名称：<%= link_to activity_invite.activity.name, activity_invite.activity %>
+          </td>
+           <td>
+            时间：<%= activity_invite.activity.activity_time.strftime("%y-%m-%d") %>
+          </td>
+                     <td>
+            地点：<%= activity_invite.activity.location %>
+          </td>
+          <td>
+            <%= link_to "加入", "", :method => 'put', :class => 'add-icon' %><br/>
+          </td>
+          <td>
+            <%= link_to "忽略", "", :method => 'put', :confirm => t('are_you_sure'), :class => 'delete-icon' %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>
 
-<%= link_to 'New Activity', new_activity_path %>
+<h3>加入的活动</h3>
+
+<% if @activities.any? %>
+  <ul id="friends" style="list-style-type:none;">
+    <% @activities.each do |activity| %>
+      <li id="friendship_<%= activity.id %>">
+        <a href="<%= url_for person_url(:id => activity.creater) %>">
+          <%= render :partial => 'people/thumbnail', :locals => {:person => activity.creater} %>
+        </a>
+        <%= link_to activity.creater.name, activity.creater %>
+        (added <%= activity.created_at.to_time.to_s %>)
+        <% if me? %>
+          <%= link_to t('friends.remove_from_friends'),"", :class => 'delete-icon', :method => 'delete', :confirm => t('are_you_sure') %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+
+<% else %>
+  <p>目前没有加入任何活动</p>
+<% end %>
+
+

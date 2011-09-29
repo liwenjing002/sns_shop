@@ -13,6 +13,11 @@
     </div>
   <% end %>
 <% end %>
+    <% if @has_activity_invite %>
+    <div class="highlight">
+      <%= t('friends.you_have_activity_invite_html', :url => person_activities_path(@person)) %>
+    </div>
+  <% end %>
 <% content_for :top do %>
   <%= render_cell :map, :map,:map => @person.map,:person=>@person,:logged_in=>@logged_in %>
 <%end%>

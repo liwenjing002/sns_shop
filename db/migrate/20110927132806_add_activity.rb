@@ -15,7 +15,7 @@ class AddActivity < ActiveRecord::Migration
     
     create_table :people_activities do|t|
       t.integer :activity_id
-      t.integer :people_id
+      t.integer :person_id
     end
   end
 

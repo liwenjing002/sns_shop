@@ -1110,6 +1110,7 @@ zh:
     search_in_the_directory: 搜索目录中的朋友
     unknown_state: 未知状态
     you_have_pending_requests_html: 您有一个好友请求<a href=%{url}>等待您的处理</a>。
+    you_have_activity_invite_html: 您有一个活动邀请<a href=%{url}>等待您的处理</a>。
 
   generated_files: 
     building: “建筑你的文件... 

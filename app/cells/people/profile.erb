@@ -171,7 +171,7 @@
     <div class="about">
       <% unless( @person.about.to_s.any? or
             @verses.any? or
-            @person.activities.to_s.any? or
+            @person.love_activities.to_s.any? or
             @person.interests.to_s.any? or
             @person.books.to_s.any? or
             @person.music.to_s.any? or
@@ -195,10 +195,10 @@
           </ul>
         </div>
       <% end %>
-      <% if @person.activities.to_s.any? %>
+      <% if @person.love_activities.to_s.any? %>
         <div class="favorites-group">
           <h4><%= t('people.activities') %></h4>
-          <%= preserve_breaks @person.activities %>
+          <%= preserve_breaks @person.love_activities %>
         </div>
       <% end %>
       <% if @person.interests.to_s.any? %>

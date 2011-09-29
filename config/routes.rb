@@ -9,13 +9,13 @@ OneBody::Application.routes.draw do
 
   resources :shares do
     collection do
-     get :admin
+      get :admin
     end
   end
   
   resources :pictures do
     collection do
-     get :get_stream_item
+      get :get_stream_item
     end
   end
 
@@ -26,22 +26,22 @@ OneBody::Application.routes.draw do
         get :update_postition
       end
     end
-      resources :impressions
-      resources :place_shares
-      resources :places do
-        collection do
-          post :search_ajax
-          post :search
-          get :search
-          post :follow_place
-          post :add_share
-          post :tags_change
-          post :add_temp_pic
-          post :owner_manager
-          post :add_impression
-        end
+    resources :impressions
+    resources :place_shares
+    resources :places do
+      collection do
+        post :search_ajax
+        post :search
+        get :search
+        post :follow_place
+        post :add_share
+        post :tags_change
+        post :add_temp_pic
+        post :owner_manager
+        post :add_impression
       end
     end
+  end
     
 
   
@@ -102,6 +102,7 @@ OneBody::Application.routes.draw do
         post :reorder
       end
     end
+    resources:activities
     resources :relationships do
       collection do
         post :batch

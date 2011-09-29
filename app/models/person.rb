@@ -17,8 +17,8 @@ class Person < ActiveRecord::Base
   has_many :plans
   has_many :places
   has_one :map
-  has_many :activity_peoples
-  has_many :activities,:through => :activity_peoples
+  has_many :people_activities
+  has_many :activities,:through => :people_activities,:conditions => "status = 'a'"
   has_many :memberships, :dependent => :destroy
   has_many :membership_requests, :dependent => :destroy
   has_many :groups, :through => :memberships

@@ -11,7 +11,7 @@ class StreamsController < ApplicationController
     unless fragment_exist?(:controller => 'streams', :action => 'show', :for => @logged_in.id, :fragment => 'friendship_requests')
       @has_friendship_requests = @logged_in.pending_friendship_requests.count > 0
     end
-    @has
+    @has_activity_invite = @logged_in.people_activities(:condition=>["status=?","w"]).count>0
     @album_names = @person.albums.all(:select => 'name').map { |a| a.name }
     respond_to do |format|
       format.html
