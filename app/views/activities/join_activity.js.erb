@@ -1,0 +1,5 @@
+<%if flash[:notice]%>
+  $("#notice").html("<%=flash[:notice]%>")
+  $("#notice").show()
+  $('#notice').fadeOut(15000);
+<%end%>

@@ -8,24 +8,29 @@
     <%= link_to t('notes.edit_note'), edit_note_path(@activity), :class => 'edit-icon' %><br/>
     <%= link_to t('notes.delete_note'), @activity, :class => 'delete-icon', :method => :delete, :confirm => t('are_you_sure') %>
   <% end %>
+  <%if is_in_activity @logged_in%>
+    <%= link_to "加入", join_activity_person_activities_path(@logged_in, :activity_id=>@activity.id), :method => 'get', :class => 'add-icon',:remote=>true %><br/>
+  <%end%>
+  
 <% end %>
-  <h3>活动名称</h3>
+
+<h3>活动名称</h3>
 <div>
   <%= @activity.name %>
 </div>
 
-  <h3>活动时间</h3>
+<h3>活动时间</h3>
 <div>
 
   <%= @activity.activity_time %>
 </div>
 
-  <h3>活动地点</h3>
+<h3>活动地点</h3>
 <div>
 
   <%= @activity.location %>
 </div>
-  <h3>其他</h3>
+<h3>其他</h3>
 <div>
 
   申请截止时间： <%= @activity.apply_time %><br/>

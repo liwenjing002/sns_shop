@@ -1,8 +1,42 @@
 <% content_for :sidebar do %>
   <%= render :partial => 'people/person_photo' %>
-  <h2><%= t('friends.personal_friends', :name => @person.name_possessive) %></h2>
+  <h2></h2>
 <% end %>
 <%if me?%>
+
+  <% if @process_invite.any? %>
+  <div>
+    <h3>活动处理</h3>
+    <p>以下好友申请加入活动</p>
+    <table class="spaced">
+      <% @process_invite.each do |process_invite| %>
+      <tr id="activity_invite<%=  process_invite.id%>">
+          <td>
+            <a href="<%= url_for person_url(:id =>process_invite.person_id) %>">
+              <%= render :partial => 'people/thumbnail', :locals => {:person => process_invite.person} %>
+            </a>
+          </td>
+          <td>
+            活动名称：<%= link_to process_invite.activity.name, process_invite.activity %>
+          </td>
+          <td>
+            时间：<%= process_invite.activity.activity_time.strftime("%y-%m-%d") %>
+          </td>
+          <td>
+            地点：<%= process_invite.activity.location %>
+          </td>
+          <td class ="deal<%=  process_invite.id%>">
+            <%= link_to "同意", deal_invite_person_activities_path(@logged_in, :invite_id=>process_invite.id, :status => 'w'), :method => 'get', :class => 'add-icon',:remote=>true %><br/>
+          </td>
+          <td class ="deal<%=  process_invite.id%>">
+            <%= link_to "忽略", deal_invite_person_activities_path(@logged_in, :invite_id=>process_invite.id, :status => 'n'), :method => 'get', :confirm => t('are_you_sure'), :class => 'delete-icon',:remote=>true  %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+<% end %>
+
 <% if @activity_invite.any? %>
   <div>
     <h3>活动邀请</h3>

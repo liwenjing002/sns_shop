@@ -4,6 +4,7 @@ OneBody::Application.routes.draw do
   resources :activities do
     collection do
       get :invite_friend
+
     end
   end
 
@@ -105,6 +106,7 @@ OneBody::Application.routes.draw do
     resources:activities do
       collection do
         get :deal_invite
+        get :join_activity
       end
     end
     resources :relationships do

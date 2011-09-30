@@ -188,7 +188,7 @@ var MapObject =  {
         return function(result) {
             if(result!= null){
                 MapObject.myLocation_address = result.address;
-                alert(result.address)
+//                alert(result.address)
                 MapObject.start_p = result.address;
                 MapObject.infoWindow.setContent(eval("MapObject."+marker_type+"_html('"+result.address+"')"));
                 MapObject.my_location_marker=  MapObject.add_marker_to_map(point,icon_url,icon_w,icon_h,eval("MapObject."+marker_type+"_html('"+result.address+"'"+ ",dom)"),"my_location",null,true,true)
@@ -481,7 +481,7 @@ var MapObject =  {
                     MapObject.update_date_to_service(data, request_type, url, function(){})
                 }
             }else{
-                alert("查找失败")
+//                alert("查找失败")
             }
         };
     },
