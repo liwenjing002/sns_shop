@@ -30,14 +30,12 @@
   <%end%>
 
 <% end %>
-=======
   <%if is_in_activity @logged_in%>
     <%= link_to "加入", join_activity_person_activities_path(@logged_in, :activity_id=>@activity.id), :method => 'get', :class => 'add-icon',:remote=>true %><br/>
   <%end%>
   
 <% end %>
 
->>>>>>> 890c8c363f1bf7a4426b28ecdbcae7ba83177df3
 <h3>活动名称</h3>
 <div>
   <%= @activity.name %>
