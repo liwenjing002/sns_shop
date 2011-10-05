@@ -8,24 +8,44 @@
     <%= link_to t('notes.edit_note'), edit_note_path(@activity), :class => 'edit-icon' %><br/>
     <%= link_to t('notes.delete_note'), @activity, :class => 'delete-icon', :method => :delete, :confirm => t('are_you_sure') %>
   <% end %>
+  <br/><br/>
+  <%if @activity.apply_person.any? %>
+    <div>
+      <h3>申请的好友</h3>  
+      <%@activity.apply_person.each do |people|%>
+        <%=render_cell :people ,:thumbnail,:person=>people%>
+      <%end%>
+    </div>
+  <%end%>
+
+  <br/><br/>
+  <%if @activity.in_person.any? %>
+    <div>
+      <h3>加入的好友</h3>  
+      <%@activity.in_person.each do |people|%>
+        <%=render_cell :people ,:thumbnail,:person=>people%>
+      <%end%>
+    </div>
+  <%end%>
+
 <% end %>
-  <h3>活动名称</h3>
+<h3>活动名称</h3>
 <div>
   <%= @activity.name %>
 </div>
 
-  <h3>活动时间</h3>
+<h3>活动时间</h3>
 <div>
 
   <%= @activity.activity_time %>
 </div>
 
-  <h3>活动地点</h3>
+<h3>活动地点</h3>
 <div>
 
   <%= @activity.location %>
 </div>
-  <h3>其他</h3>
+<h3>其他</h3>
 <div>
 
   申请截止时间： <%= @activity.apply_time %><br/>

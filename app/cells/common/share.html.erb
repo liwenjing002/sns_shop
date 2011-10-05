@@ -13,7 +13,7 @@
     <%= form_for Note.new, :html => {:id => 'share-note', :class => 'share-type'},:remote=>true  do |form| %>
       <%= hidden_field_tag :redirect_to, stream_path %>
       <span class="small"><%= t('share.note_label') %></span><br/>
-      <%= form.text_area :body, :rows => 2 ,:class=>"share_text",:placeholder => "用@标注你所在位置，用go2 标注出你要去的地方"%><br/>
+      <%= form.text_area :body, :rows => 2 ,:class=>"share_text",:placeholder => "你想发表的心情，状态，感想"%><br/>
       <div class="location_info" style="display:none">
         <%= text_field 'marker','geocode_position', :placeholder=>"我的位置",:class=>"marker_geocode_position" %><br>
       </div>
@@ -45,6 +45,7 @@
     $(".is_location").change(function(){
       if($(this).attr("checked")==true){
         $(".location_info").show();
+
         $(".is_location").attr("checked",true)
         if(MapObject.myLocation){
           $(".marker_geocode_position").attr("value",  MapObject.myLocation_address);
@@ -76,11 +77,14 @@
       
 
     $("#share-note").submit(function(){  
+      if ($(".marker_geocode_position").attr("value") == "我的位置"){
+        $(".marker_geocode_position").attr("value","")
+      }
       var options = {   
         url:$(this).attr("action"), //提交给哪个执行  
         type:'POST',
         beforeSubmit:function(formData, jqForm, options){
-         
+
         },
         success:function(){
           $("#location_info").hide();
@@ -101,7 +105,7 @@
           "&marker[marker_latitude]="+$(".marker_marker_latitude").val()+
           "&marker[marker_longitude]="+$(".marker_marker_longitude").val()
       }else{
-      url = "?album="+$("#album").val() +"&photo_text="+$("#photo_text").val()
+        url = "?album="+$("#album").val() +"&photo_text="+$("#photo_text").val()
       }
      
       $.ajaxFileUpload({
@@ -140,4 +144,4 @@
   
   
   </script>
-<%= javascript_include_tag "extend/ui" %>
+  <%= javascript_include_tag "extend/ui" %>

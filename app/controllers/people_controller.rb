@@ -35,7 +35,6 @@ class PeopleController < ApplicationController
    	  @map = Map.create({:people_id=>@person.id})if !@map 
       @plan = Plan.new
       @plans =@person.plans
-
     end
     @stream_items = @person.shared_stream_items(40,true)
     if params[:limited] or !@logged_in.full_access?
@@ -44,14 +43,6 @@ class PeopleController < ApplicationController
       @albums = @person.albums.all(:order => 'created_at desc')
       @friends = @person.friends.thumbnails unless fragment_exist?(:controller => 'people', :action => 'show', :id => @person.id, :fragment => 'friends')
       @verses = @person.verses.all(:order => 'book, chapter, verse')
-      if params[:business]
-        render :action => 'business'
-      else
-        respond_to do |format|
-          format.html
-          format.xml { render :xml => @person.to_xml } if can_export?
-        end
-      end
     elsif @person and @person.deleted? and @logged_in.admin?(:edit_profiles)
       @deleted_people_url = administration_deleted_people_path('search[id]' => @person.id)
       render :text => t('people.deleted_html', :url => @deleted_people_url), :status => 404, :layout => true
@@ -229,18 +220,14 @@ class PeopleController < ApplicationController
     if @logged_in.can_edit?(@logged_in)
       if params[:picture]
         @logged_in.photo = params[:picture]
-        # annoying to users if changing their photo fails due to some other unrelated validation failure
-        # this is a total hack
         if @logged_in.valid? or @logged_in.errors.select { |a, e| a == :photo_content_type }.empty?
           @logged_in.save(:validate => false)
-        else
-          flash[:warning] = @object.errors.full_messages.join('; ')
+          render :text => "{success:'" + "true" + "', pic_id:'" +@logged_in.photo.id.to_s + "',pic_url:'" + @logged_in.photo.url(:profile) + "'}";
+          return 
         end
       end
-      render :text => "{success:'" + "true" + "', pic_id:'" +@logged_in.photo.id.to_s + "',pic_url:'" + @logged_in.photo.url(:profile) + "'}";
-    else
-      render :text => "{success:'" + "false" + "', pic_id:'" + pic.id.to_s + "',pic_url:'" + pic.photo.url(:profile) + "'}";
     end
+    render :text => "{success:'" + "false'}"
   end
 
   def get_friends

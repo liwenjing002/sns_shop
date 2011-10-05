@@ -1,23 +1,17 @@
 <% content_for :head do %>
-  <link rel="alternate" type="application/atom+xml" title='<%= t("stream.feed") %>' href="<%= url_for stream_path(:format => 'xml', :code => @logged_in.feed_code) %>"/>
   <%= javascript_include_tag "extend/jquery.tools.min" %>
   <%= javascript_include_tag "extend/pic_effects" %>
 <%end%>
-
-
-
-<% cache(:fragment => 'friendship_requests', :for => @logged_in.id) do %>
-  <% if @has_friendship_requests %>
-    <div class="highlight">
-      <%= t('friends.you_have_pending_requests_html', :url => person_friends_path(@person)) %>
-    </div>
-  <% end %>
+<% if @has_friendship_requests %>
+  <div class="highlight">
+    <%= t('friends.you_have_pending_requests_html', :url => person_friends_path(@person)) %>
+  </div>
 <% end %>
-    <% if @has_activity_invite %>
-    <div class="highlight">
-      <%= t('friends.you_have_activity_invite_html', :url => person_activities_path(@person)) %>
-    </div>
-  <% end %>
+<% if @has_activity_invite %>
+  <div class="highlight">
+    <%= t('friends.you_have_activity_invite_html', :url => person_activities_path(@person)) %>
+  </div>
+<% end %>
 <% content_for :top do %>
   <%= render_cell :map, :map,:map => @person.map,:person=>@person,:logged_in=>@logged_in %>
 <%end%>
@@ -28,9 +22,7 @@
     <p><%= t('stream.share_something_about') %></p>
     <%=render_cell :common,:share%>
     <%= javascript_include_tag "extend/ui" %>
-    <script type="text/javascript">
-      $('#album').autocomplete({source: <%= raw @album_names.inspect %>});
-    </script>
+
   <% end %>
 
   <%= render_cell :people,:thumbnail_wall %>
@@ -47,8 +39,6 @@
   <% end %>
 <% end %>
 
-<% cache(:fragment => 'stream_items', :for => @logged_in.id) do %>
-  <div class="stream-items">
-    <%= render :partial => 'stream_items' %>
-  </div>
-<% end %>
+<div class="stream-items">
+  <%= render :partial => 'stream_items' %>
+</div>

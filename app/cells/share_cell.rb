@@ -1,5 +1,5 @@
 class ShareCell < Cell::Rails
-
+  helper  ApplicationHelper
    def hot
     @hot_places =Share.find(:all,:conditions=>['shareable_type=?','Place'], :order => "share_order", :limit =>5)
     render

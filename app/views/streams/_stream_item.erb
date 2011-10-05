@@ -6,7 +6,7 @@
   <div class="stream-item-body">
     <% if stream_item.title %>
       <h3>
-        <%= link_to stream_item.title, stream_item %>
+        <%= link_to stream_item.title+t(stream_item.streamable_type), stream_item %>
       </h3>
     <% else %>
       <div class="stream-item-content">

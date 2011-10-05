@@ -188,7 +188,7 @@ var MapObject =  {
         return function(result) {
             if(result!= null){
                 MapObject.myLocation_address = result.address;
-                alert(result.address)
+//                alert(result.address)
                 MapObject.start_p = result.address;
                 MapObject.infoWindow.setContent(eval("MapObject."+marker_type+"_html('"+result.address+"')"));
                 MapObject.my_location_marker=  MapObject.add_marker_to_map(point,icon_url,icon_w,icon_h,eval("MapObject."+marker_type+"_html('"+result.address+"'"+ ",dom)"),"my_location",null,true,true)
@@ -539,9 +539,9 @@ var MapObject =  {
             MapObject.getLocation(point,
                 function(result) {
                     $("#place_adress_span").html(result.address);
-                    $("#marker_geocode_position").attr("value",result.address);
-                    $("#marker_marker_latitude").attr("value",point.lat);
-                    $("#marker_marker_longitude").attr("value",point.lng);
+                    $(".geocode_position").attr("value",result.address);
+                    $(".marker_latitude").attr("value",point.lat);
+                    $(".marker_longitude").attr("value",point.lng);
                     MapObject.infoWindow.redraw();
                     MapObject.infoWindow.addEventListener("close", function(){
                         MapObject.map.removeOverlay(MapObject.temp_marker); 

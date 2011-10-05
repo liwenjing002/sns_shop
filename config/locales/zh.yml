@@ -134,6 +134,8 @@ zh:
   type: 类型
   you_made_a_change_page: 。看起来你做了更改的东西在此页单击确定以放弃您编辑并离开此页面。
   your: 你的
+  Album: (相册)
+  Activity: （活动）
 
   errors: 
     format: %{message} 

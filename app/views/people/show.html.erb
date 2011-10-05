@@ -2,9 +2,12 @@
   <%= javascript_include_tag "extend/jquery.form" %>
   <%= stylesheet_link_tag 'global-0.52' %>
   <%= stylesheet_link_tag  "osx" %>
+  <%= javascript_include_tag "extend/jquery.tools.min" %>
+  <%= javascript_include_tag "extend/pic_effects" %>
 <% end %>
 
- <%= render_cell :map, :map,:map => @map,:person=>@person,:logged_in=>@logged_in %>
+
+<%= render_cell :map, :map,:map => @map,:person=>@person,:logged_in=>@logged_in %>
 <div class="clear"></div>
 
 
@@ -50,9 +53,9 @@
       <ul class="tabs">
         <li class = "li_php"><a href="#"><%= t('people.php') %></a></li>
         <li class = "li_profile"><a href="#"><%= t('people.profile') %></a></li>
-         <li class = "li_group"><a href="#">我的小组</a></li>
-         <li class = "li_profile"><a href="#">我的地点</a></li>
-         <li class = "li_profile"><a href="#">我的轨迹</a></li>
+        <li class = "li_group"><a href="#">我的小组</a></li>
+        <li class = "li_profile"><a href="#">我的地点</a></li>
+        <li class = "li_profile"><a href="#">我的轨迹</a></li>
       </ul>
     </div>
     <br/>
