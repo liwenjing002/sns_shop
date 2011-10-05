@@ -26,6 +26,10 @@
       <p style="float: right"><%= link_to '发起活动', "#", :class => 'add-icon',:id=>"activity" %></p>
     </h3>
 
+    <h3>梦想单
+      <p style="float: right"><%= link_to '梦想单', "#", :class => 'add-icon',:id=>"dream" %></p>
+    </h3>
+    
     <h3>想去那里
       <p style="float: right"><%= link_to '我想去', "#", :class => 'add-icon',:id=>"i_want_to_go" %></p>
     </h3>
@@ -74,6 +78,8 @@
 <%= render_cell :common, :i_want_go%>
 <!--我要活动窗口 -->
 <%= render_cell :common,:activity,:logged_in=>@logged_in   %>
+<!--我要活动窗口 -->
+<%= render_cell :common,:dream   %>
 
 <script type="text/javascript">
   $(document).ready(function() {

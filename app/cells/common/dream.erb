@@ -1,0 +1,69 @@
+<!-- modal content --> 
+<div id="dream-modal-content" style="display:none"> 
+  <div id="dream-modal-title">造一个梦想
+    <span style="background-color: #FEC;padding: 4px;text-align: center;display: none" id="update_notice">
+
+    </span></div>
+  <div class="close"><a href="#" class="simplemodal-close">x</a></div> 
+  <div id="dream-modal-data" > 
+    <div id = "dream_from" style="float:left">
+      <div>
+        <%= form_for @dream = Dream.new ,:remote=>true do |form| %>
+          <div>
+            <%= form.label :name, "活动名称"%>
+            <%= form.text_field :name %>
+          </div>
+        
+        <div>
+          <%= image_tag 'plus.gif', :id => "more_dream_detail",:is_plus=>1 %>
+          <span id="more_dream_detail_span"><%= t("people.more") %></span>
+        </div>
+          <div class="more_dream_detail" style="display: none; ">
+            
+          </div>
+          <%= form.submit :value=>"创建活动"%>
+          <span style="cursor:pointer" id ="tags_cancel" class ="button simplemodal-close">取消</span>
+        <%end%>
+      </div>
+    </div> 
+  </div> 
+</div>
+<!-- modal content --> 
+
+<script type="text/javascript">
+      
+  $(document).ready(function() {
+    
+           
+            
+    $("#more_dream_detail").click(function(){
+      if($(this).attr("is_plus") == 1){
+        $(this).attr("src","/images/minus.gif")
+        $(this).attr("is_plus","0")
+        $("#dream-container").height(630);
+        $('.more_dream_detail').slideDown('1500');
+        
+      }else{
+        $('.more_dream_detail').slideUp('1500');
+        $(this).attr("src","/images/plus.gif")
+        $(this).attr("is_plus","1")
+        $("#dream-container").height(300);
+      }
+    })
+            
+    $("#more_dream_detail_span").click(function(){
+      if($("#more_dream_detail").attr("is_plus") == 1){
+        $('.more_dream_detail').slideDown('1500');
+        $("#more_dream_detail").attr("src","/images/minus.gif")
+        $("#more_dream_detail").attr("is_plus","0")
+      }else{
+        $('.more_dream_detail').slideUp('1500');
+        $("#more_dream_detail").attr("src","/images/plus.gif")
+        $("#more_dream_detail").attr("is_plus","1")
+      }
+    })
+  }
+)
+
+ 
+</script>

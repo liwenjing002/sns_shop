@@ -52,4 +52,8 @@ class CommonCell < Cell::Rails
     @comment = options[:comment]
     render 
   end
+  
+  def dream
+    render
+  end
 end

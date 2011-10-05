@@ -7,6 +7,7 @@
     <% if Setting.get(:features, :pictures) %>
       <li><%= link_to_function t('share.picture'), "selectShare('share-picture')", :class => 'picture-icon', :id => 'share-picture-icon' %></li>
     <% end %>
+       <li><%= link_to_function t('share.video'), "selectShare('share-video')", :class => 'picture-icon', :id => 'share-video-icon' %></li>
     <li class="cancel-link"><%= link_to_function '', 'hideShare()', :class =>  'delete-icon' %></li>
   </ul>
   <% if Setting.get(:features, :notes) %>
