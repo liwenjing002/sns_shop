@@ -47,4 +47,9 @@ class CommonCell < Cell::Rails
     @friends = options[:friends]
     render
   end
+  
+  def comment
+    @comment = options[:comment]
+    render 
+  end
 end

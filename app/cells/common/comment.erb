@@ -1,0 +1,16 @@
+<% if @comment['person'] %>
+  <tr class="stream-item-comment">
+    <td style="text-align:right;">
+      <a href="<%= url_for @comment['person'] %>">
+      <%= render :partial => '../views/people/thumbnail', :locals => {:person => @comment['person']} %>
+      </a>
+    </td>
+    <td>
+      <%= link_to @comment['person'].name, @comment['person'] %>:
+      <%= @comment['text'] %>
+      <span class="stream-item-timestamp">
+        <%= time_ago_in_words(@comment['created_at']) %> <%= t('comments.ago') %>
+      </span>
+    </td>
+  </tr>
+<% end %>
