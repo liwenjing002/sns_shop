@@ -481,7 +481,7 @@ var MapObject =  {
                     MapObject.update_date_to_service(data, request_type, url, function(){})
                 }
             }else{
-                alert("查找失败")
+//                alert("查找失败")
             }
         };
     },

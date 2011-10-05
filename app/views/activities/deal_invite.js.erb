@@ -1,6 +1,13 @@
-$('.deal<%=@peopleActivity.id%>').remove();
-html = "<tr class='activities_tr'>"+$("#activity_invite<%=@peopleActivity.id%>").html() +"</tr>"
-$("#activity_invite<%=@peopleActivity.id%>").remove();
-$("#activities").prepend(html);
-$(".activities_tr").first().hide();
-$("#activities :first-child").slideDown("slow");
+<%if @peopleActivity.status =='a'%>
+  $('.deal<%=@peopleActivity.id%>').remove();
+  html = "<tr class='activities_tr'>"+$("#activity_invite<%=@peopleActivity.id%>").html() +"</tr>"
+  $("#activity_invite<%=@peopleActivity.id%>").remove();
+  $("#activities").prepend(html);
+  $(".activities_tr").first().hide();
+  $("#activities :first-child").slideDown("slow");
+<%else%>
+  $("#activity_invite<%=@peopleActivity.id%>").slideUp("slow");
+  $("#notice").html("<%=flash[:notice]%>")
+  $("#notice").show()
+  $('#notice').fadeOut(15000);
+<%end%>

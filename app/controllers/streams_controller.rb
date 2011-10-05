@@ -6,8 +6,20 @@ class StreamsController < ApplicationController
   def show
     @stream_items = @logged_in.shared_stream_items(30)
     @person = @logged_in
+<<<<<<< HEAD
     @has_friendship_requests = @logged_in.pending_friendship_requests.count > 0
     @has_activity_invite = @logged_in.invite_activities.count>0
+=======
+    unless fragment_exist?(:controller => 'streams', :action => 'show', :for => @logged_in.id, :fragment => 'friendship_requests')
+      @has_friendship_requests = @logged_in.pending_friendship_requests.count > 0
+    end
+    @has_activity_invite = (@logged_in.invite_activities.count + @logged_in.process_activities.count)>0
+    @album_names = @person.albums.all(:select => 'name').map { |a| a.name }
+    respond_to do |format|
+      format.html
+      format.xml { render :layout => false }
+    end
+>>>>>>> 890c8c363f1bf7a4426b28ecdbcae7ba83177df3
   end
 
 end

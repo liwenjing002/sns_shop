@@ -18,8 +18,15 @@ class Person < ActiveRecord::Base
   has_many :places
   has_one :map
   has_many :people_activities
-  has_many :invite_activities,:class_name=>"PeopleActivity", :conditions=>["status=?","w"]
+  #创建的活动
+  has_many :own_activities,:class_name=>"Activity", :foreign_key => 'create_id'
+  #所有活动
   has_many :activities,:through => :people_activities,:conditions => "status = 'a'"
+  #受邀
+  has_many :invite_activities,:class_name=>"PeopleActivity", :conditions=>["status=? ","w"]
+  #待批准的活动
+  has_many :process_activities,:source=>:people_activity,:through => :own_activities,:conditions => "status = 'p'"
+
   has_many :memberships, :dependent => :destroy
   has_many :membership_requests, :dependent => :destroy
   has_many :groups, :through => :memberships
