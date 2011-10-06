@@ -188,7 +188,7 @@ var MapObject =  {
         return function(result) {
             if(result!= null){
                 MapObject.myLocation_address = result.address;
-//                alert(result.address)
+                //                alert(result.address)
                 MapObject.start_p = result.address;
                 MapObject.infoWindow.setContent(eval("MapObject."+marker_type+"_html('"+result.address+"')"));
                 MapObject.my_location_marker=  MapObject.add_marker_to_map(point,icon_url,icon_w,icon_h,eval("MapObject."+marker_type+"_html('"+result.address+"'"+ ",dom)"),"my_location",null,true,true)
@@ -257,9 +257,28 @@ var MapObject =  {
         if(people_id !=null && people_id != ''){
             id_string +=("&people_id="+people_id)
         }
+        conditions = ""
+        c = 0
+        $(".select").each( function(index, element)
+        {
+            if($(this).attr("checked")==true){
+                if($(this).attr("value")=='my_select'){
+                    c +=1
+                    conditions =("marker[owner_id_eq]="+MapObject.person_id+"&")
+                }
+                if($(this).attr("value")=='friends_select'){
+                    c +=1
+                    conditions =("marker[owner_friendships_friend_id_eq]="+MapObject.person_id+"&")
+                }
+                if($(this).attr("value")=='all_select'){
+                    c  +=2
+                }
+            }
+        }
+        );
         $.ajax({                                                
             type: "GET",                                    
-            url: "/markers?type="+type+id_string,
+            url: "/markers?type="+type+id_string+"&"+conditions,
             data:data,
             success: function(data, textStatus){
                 MapObject.clearAllClusterer()
@@ -481,8 +500,8 @@ var MapObject =  {
                     MapObject.update_date_to_service(data, request_type, url, function(){})
                 }
             }else{
-//                alert("查找失败")
-            }
+        //                alert("查找失败")
+        }
         };
     },
     
@@ -563,14 +582,19 @@ var MapObject =  {
     //地图移动或者缩放或者拖拽的时候，获得边界坐标，并向后台请求数据
     move_zoom_drag_chang:function(){
         return function fun(e){ 
-            cent = MapObject.map.getCenter();
-            left_top = MapObject.map.pixelToPoint(new BMap.Pixel(0,0))
-            right_down = MapObject.map.pixelToPoint(new BMap.Pixel(MapObject.map_width,MapObject.map_heigth))
-            data = "marker[marker_latitude_lt]="+left_top.lat+"&marker[marker_latitude_gt]="+right_down.lat +
-            "&marker[marker_longitude_gt]="+left_top.lng+"&marker[marker_longitude_lt]="+right_down.lng
-            MapObject.init_marker_from_data("share", MapObject.person_id, data); 
+           MapObject.reflesh();
         }
     },
+    
+    reflesh:function(){
+        cent = MapObject.map.getCenter();
+        left_top = MapObject.map.pixelToPoint(new BMap.Pixel(0,0))
+        right_down = MapObject.map.pixelToPoint(new BMap.Pixel(MapObject.map_width,MapObject.map_heigth))
+        data = "marker[marker_latitude_lt]="+left_top.lat+"&marker[marker_latitude_gt]="+right_down.lat +
+        "&marker[marker_longitude_gt]="+left_top.lng+"&marker[marker_longitude_lt]="+right_down.lng
+        MapObject.init_marker_from_data("share", MapObject.person_id, data); 
+    },
+    
     
     //我要去
     i_go_to:function(){
@@ -625,23 +649,26 @@ ZoomControl.prototype = new BMap.Control();
 ZoomControl.prototype.initialize = function(map){
     // 创建一个DOM元素
     var div = document.createElement("div");
-      div.innerHTML = '<input checked="checked" type="checkbox" ><label style="display: inline;">我的</label>\n\
-                      <input checked="checked" type="checkbox" ><label style="display: inline;">好友</label>\n\
-                      <input checked="checked" type="checkbox" ><label style="display: inline;">所有人</label>\n\
-                     <input checked="checked" type="checkbox" ><label style="display: inline;">热门</label>' 
+    div.innerHTML = '<input checked="checked" name="select" type="radio" class= "select" value="my_select"><label style="display: inline;">我的</label>\n\
+                      <input  type="radio" name="select" class= "select" value="friends_select" ><label style="display: inline;">好友</label>\n\
+                      <input  type="radio" name="select" class= "select" value="all_select" ><label style="display: inline;">所有人</label>\n\
+                     <input  type="radio"  name="select" class= "select" value="hot_select" ><label style="display: inline;">热门</label>' 
 
     // 设置样式
- div.style.cursor = "pointer";
-  div.style.border = "1px solid gray";
-  div.style.backgroundColor = "white";
+    div.style.cursor = "pointer";
+    div.style.border = "1px solid gray";
+    div.style.backgroundColor = "white";
 
     // 添加DOM元素到地图中
     MapObject.map.getContainer().appendChild(div);
     // 将DOM元素返回
+
     return div;
 }
 
-
+    $(".select").live("change",function(){
+       MapObject.reflesh();
+    })
 
 
 
