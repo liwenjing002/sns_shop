@@ -1,6 +1,6 @@
 <% content_for :sidebar do %>
   <%= render :partial => 'people/person_photo' %>
-  <h2></h2>
+  <h2><%= t('friends.personal_friends', :name => @person.name_possessive) %></h2>
 <% end %>
 <%if me?%>
 
