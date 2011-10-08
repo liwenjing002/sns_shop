@@ -47,6 +47,25 @@
 #osx-container span {color:#777;}
 
 
+#dream-modal-content, #dream-modal-data {display:none;}
+
+/* Overlay */
+#dream-overlay {background-color:#000; cursor:wait;}
+
+/* Container */
+#dream-container {background-color:#eee; color:#000; font: 16px/24px "Lucida Grande",Arial,sans-serif; padding-bottom:4px; width:600px; -moz-border-radius-bottomleft:6px; -webkit-border-bottom-left-radius:6px; -moz-border-radius-bottomright:6px; -webkit-border-bottom-right-radius:6px; border-radius:0 0 6px 6px; -moz-box-shadow:0 0 64px #000; -webkit-box-shadow:0 0 64px #000; box-shadow:0 0 64px #000;}
+#dream-container a {color: #5F9128;}
+#dream-container #dream-modal-title {color:#000; background-color:#ddd; border-bottom:1px solid #ccc; font-weight:bold; padding:6px 8px; text-shadow:0 1px 0 #f4f4f4;}
+#dream-container .close {display:none; position:absolute; right:0; top:0;}
+#dream-container .close a {display:block; color:#777; font-weight:bold; padding:6px 12px 0; text-decoration:none; text-shadow:0 1px 0 #f4f4f4;}
+#dream-container .close a:hover {color:#000;}
+#dream-container #dream-modal-data {font-size:12px; padding:6px 12px;}
+#dream-container h2 {margin:10px 0 6px;}
+#dream-container p {margin-bottom:10px;}
+#dream-container span {color:#777;}
+#dream-modal-data {max-height: 500px}
+
+
 
 
 

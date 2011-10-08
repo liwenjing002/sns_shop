@@ -270,7 +270,7 @@ jQuery(function ($) {
     };
 
     OSX3.init();
-    
+    //活动
     OSX4 = {
         container: null,
         init: function () {
@@ -349,6 +349,80 @@ jQuery(function ($) {
     };
 
     OSX4.init();
+    
+    
+     //活动
+    OSX5 = {
+        container: null,
+        init: function () {
+            $("#dream").click(function (e) {
+                e.preventDefault();	
+
+                $("#dream-modal-content").modal({
+                    overlayId: 'dream-overlay',
+                    containerId: 'dream-container',
+                    closeHTML: null,
+                    minHeight: 200,
+                    opacity: 65, 
+                    position: ["0",],
+                    overlayClose: false,
+                    autoResize:true,
+                    onOpen: OSX5.open,
+                    onClose: OSX5.close
+                });
+            });
+        },
+        open: function (d) {
+            var self = this;
+            self.container = d.container[0];
+            d.overlay.fadeIn( function () {
+
+                $("#dream-modal-content", self.container).show();
+                var title = $("#dream-modal-title", self.container);
+                title.show();
+                    
+                d.container.slideDown( function () {
+                    setTimeout(function () {
+                        var h = $("#dream-modal-data", self.container).height()
+                        + title.height()
+                        + 20; // padding
+                        d.container.animate(
+                        {
+                            height: h
+                        }, 
+                        200,
+                        function () {
+                            $("div.close", self.container).show();
+                            $("#dream-modal-data", self.container).show();
+                          
+                        }
+                        );
+                    }, 300);
+                });
+            })
+        },
+        close: function (d) {
+
+            var self = this; // this = SimpleModal object
+            d.container.animate(
+            {
+                top:"-" + (d.container.height() + 20)
+            },
+            500,
+            function () {
+                temp_my_all_tags= $("#my_all_tags").clone();
+                temp_place_tags_input = $("#place_tags_input").attr("value")
+                //                                        alert(temp_my_all_tags.html())
+                //                                        alert($("#place_tags_input").attr("value"))
+                                        
+                self.close(); // or $.modal.close();
+                                        
+            }
+            );
+        }
+    };
+
+    OSX5.init();
 
 });
 
@@ -666,7 +740,7 @@ $(document).ready(function() {
 
     $("#invite_friends").click(function(){
         friend_ids = ""
-        actiity_id = $("#new_activity").attr("activity_id")
+        actiity_id = $("#new_dream").attr("dream_id")
         $.each($(".select_friends"), function(){
             if($(this).attr("checked")==true){
                 friend_ids += ($(this).attr("friend_id")+",")
@@ -675,7 +749,7 @@ $(document).ready(function() {
         if(friend_ids!="" && actiity_id!= null){
             $.ajax({                                                
                 type: "GET",                                    
-                url: "/activities/invite_friend?activity_id="+actiity_id+"&friends_ids="+friend_ids,
+                url: "/activities/invite_friend?dream_id="+actiity_id+"&friends_ids="+friend_ids,
                 success: function(data, textStatus){
                     $("#update_notice").html("邀请已发出")
                     $("#update_notice").show()

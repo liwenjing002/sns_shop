@@ -1,5 +1,5 @@
 <div style="float:left">
-  <%if is_blank @videos[0].out_img%>
+  <%if @videos.length >0 and !is_blank @videos[0].out_img%>
     <%= image_tag(@videos[0].out_img,:alt =>"分享视频",:width=>"250px",:id=>"video_pic")%>
   <%else%>
     <%= image_tag('missing_original.png',:alt =>"分享视频",:width=>"250px",:id=>"video_pic")%>

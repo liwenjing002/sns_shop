@@ -49,6 +49,8 @@ class PicturesController < ApplicationController
         :person => (params[:remove_owner] ? nil : @logged_in),
         :photo  => pic,
         :photo_text  => params[:photo_text],
+        :longitude=> (params[:marker]and params[:marker][:marker_longitude])?params[:marker][:marker_longitude]:"",
+        :latitude=> (params[:marker]and params[:marker][:marker_latitude])?params[:marker][:marker_latitude]:"",
         :location=> params[:marker]?params[:marker][:geocode_position]:""
       )
       if picture.errors.any?

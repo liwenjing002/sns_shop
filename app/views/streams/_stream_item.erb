@@ -6,7 +6,7 @@
   <div class="stream-item-body">
     <% if stream_item.title %>
       <h3>
-        <%= link_to stream_item.title, stream_item %>
+        <%= link_to stream_item.title+t(stream_item.streamable_type), stream_item %>
       </h3>
     <% else %>
       <div class="stream-item-content">
@@ -33,28 +33,13 @@
     <% if stream_item.title %>
       <%= stream_item_content stream_item %>
     <% end %>
-    <% if stream_item.context['comments'].to_a.any? %>
-      <table class="comments">
+    
+    <table class="comments"id ="<%=stream_item.id%>_comments">
         <% stream_item.context['comments'].to_a.each do |comment| %>
-          <% if comment['person'] %>
-            <tr class="stream-item-comment">
-              <td style="text-align:right;">
-                <a href="<%= url_for comment['person'] %>">
-                  <%= render :partial => 'people/thumbnail', :locals => {:person => comment['person']} %>
-                </a>
-              </td>
-              <td>
-                <%= link_to comment['person'].name, comment['person'] %>:
-                <%= comment['text'] %>
-                <span class="stream-item-timestamp">
-                  <%= time_ago_in_words(comment['created_at']) %> <%= t('comments.ago') %>
-                </span>
-              </td>
-            </tr>
-          <% end %>
+          <%=render_cell :common,:comment,:comment=>comment%>
         <% end %>
       </table>
-    <% end %>
+
     <% if stream_item.can_have_comments? %>
       <div class="new-comment">
         <%= link_to_function t('comments.add_a_comment'),
@@ -62,7 +47,8 @@
           :class => 'discreet small comment-icon' %>
          <%= link_to_function '', "$('#new-comment-for-#{stream_item.id}').hide()", :class =>  'delete-icon',:style=>"margin-left:270px;" %>
         <div id="new-comment-for-<%= stream_item.id %>" style="display:none;">
-          <%= form_for Comment.new do |form| %>
+          <%= form_for Comment.new,:remote=>true do |form| %>
+          <%= hidden_field_tag 'stream_item_id', stream_item.id %>
             <% if stream_item.streamable_type == 'Album' %>
               <% if Array(stream_item.context['picture_ids']).length == 1 %>
                 <%= hidden_field_tag 'picture_id', stream_item.context['picture_ids'].first[0] %>
@@ -78,7 +64,7 @@
               <%= hidden_field_tag stream_item.streamable_type.downcase + '_id', stream_item.streamable_id %>
             <% end %>
             <%= hidden_field_tag :return_to, stream_path %>
-            <%= text_area_tag 'text', '', :rows => 3, :cols => 40, :id => 'new_comment_textarea' %><br/>
+            <%= text_area_tag 'text', '', :rows => 3, :cols => 40, :id => "new_comment_textarea_#{stream_item.id}" %><br/>
             <%= form.submit t('comments.save') %>
           <% end %>
         </div>

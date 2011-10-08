@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @dream.name %>
+</p>
+
+<p>
+  <b>Desc:</b>
+  <%= @dream.desc %>
+</p>
+
+<p>
+  <b>Detail:</b>
+  <%= @dream.detail %>
+</p>
+
+
+<%= link_to 'Edit', edit_dream_path(@dream) %> |
+<%= link_to 'Back', dreams_path %>

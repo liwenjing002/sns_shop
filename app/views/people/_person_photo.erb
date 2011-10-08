@@ -4,7 +4,7 @@
   <% elsif me? and params[:controller] == 'people' and params[:action] == 'show' %>
     <div class="temp_pic silhouette-<%= @person.gender.to_s == 'Female' ? 'woman' : 'man' %>" >
       <span class="span_link">
-        <input type="file"  id ="fileToUpload" name ="picture" onchange="profile_pic_Change(this.value)"/>
+        <input type="file"  id ="fileToUpload_people" name ="picture" onchange="profile_pic_Change(this.value)"/>
       </span>        
       <%=image_tag("loading.gif",:id=>"loading",:style=>"display:none",:height => '30')%>
 
@@ -14,29 +14,9 @@
   <% end %>
 </div>
 
-<!-- tooltip element -->
-<div class="tooltip">
-  <h3 style="font-size: 10pt;">头像相册</h3>
-  <a href="/3.2/">What's new in 3.2</a>
-</div>
+
 
 <script>
-
-  $(document).ready(function(){
-   
-    $(".profile-pic").tooltip({
-
-      // tweak the position
-      offset: [10, 2],
-      position: "center right ",
-
-      // use the "slide" effect
-      effect: 'slide'
-
-      // add dynamic plugin with optional configuration for bottom edge
-    });
-  })
-
 
   function profile_pic_Change(full_path){
     profile_ajaxFileUpload();
@@ -50,7 +30,7 @@
       url:'change_pic',
       secureuri:false,
       dataType: 'json',
-      fileElementId:'fileToUpload',
+      fileElementId:'fileToUpload_people',
       success: function (data,status){
         if(data.success=="true"){
           $(".temp_pic").remove();

@@ -30,4 +30,4 @@ production:
   encodings: utf8
   host: localhost
   username: root
-  password: root
+  password: 

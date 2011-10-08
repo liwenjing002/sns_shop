@@ -16,7 +16,7 @@ module OneBody
 #    config.autoload_paths << "#{config.root}/app/sweepers"
 
     # Cache store location
-    config.action_controller.cache_store = [:file_store, "#{config.root}/cache"]
+   # config.action_controller.cache_store = [:file_store, "#{config.root}/cache"]
 
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer

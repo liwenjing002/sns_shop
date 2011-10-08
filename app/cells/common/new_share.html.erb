@@ -1,6 +1,6 @@
 <div class="share-marker">
-        当前位置：<br>
-        <span id="place_adress_span"></span><br>
+  当前位置：<br>
+  <span id="place_adress_span"></span><br>
   <ul class="share-details share-selector">
     <% if Setting.get(:features, :notes) %>
       <li><%= link_to_function t('share.note'), "selectMarkerShare('share-note-marker')", :class => 'comment2-icon', :id => 'share-note-marker-icon' %></li>
@@ -14,9 +14,9 @@
       <%= hidden_field_tag :redirect_to, stream_path %>
       <span class="small"><%= t('share.note_label') %></span><br/>
       <%= form.text_area :body, :rows => 2 ,:class=>"share_text",:placeholder => "用@标注你所在位置，用go2 标注出你要去的地方"%><br/>
-      <%= text_field 'marker','geocode_position', :type=>'hidden' %>
-      <%= text_field 'marker','marker_latitude', :type=>'hidden' %>
-      <%= text_field 'marker','marker_longitude', :type=>'hidden' %>
+      <%= text_field 'marker','geocode_position', :type=>'hidden',:class=>"geocode_position" %>
+      <%= text_field 'marker','marker_latitude', :type=>'hidden',:class=>"marker_latitude" %>
+      <%= text_field 'marker','marker_longitude', :type=>'hidden',:class=>"marker_longitude" %>
       <%= submit_tag t('share.share') %>
     <% end %>
   <% end %>
@@ -25,10 +25,11 @@
       <%= file_field_tag 'pictures[]', :multiple => true %><br/>
       <%= text_field_tag 'album', '', :size => 10, :placeholder => t('share.default_album_name') %><br/>
       <%= text_area_tag "photo_text",'',:class=>"share_text",:size => "40x2", :placeholder => "用@标注你所在位置，用go2 标注出你要去的地方" %><br/>
-      <%= text_field 'marker','geocode_position', :type=>'hidden' %>
-      <%= text_field 'marker','marker_latitude', :type=>'hidden' %>
-      <%= text_field 'marker','marker_longitude', :type=>'hidden' %>
-      <%= submit_tag t('share.share') %>
+      <%= text_field 'marker','geocode_position', :type=>'hidden',:class=>"geocode_position" %>
+      <%= text_field 'marker','marker_latitude', :type=>'hidden',:class=>"marker_latitude" %>
+      <%= text_field 'marker','marker_longitude', :type=>'hidden',:class=>"marker_longitude" %>
+
+      <span class='button' onclick='ajaxFileUpload_file_marker()' ><%= t('share.share') %></span>
     <% end %>
   <% end %>
   </div>
@@ -63,5 +64,46 @@
       MapObject.infoWindow.redraw();
     };
 
-    $("#share-note-marker").show()
+    $("#share-note-marker").show();
+    
+    
+    function ajaxFileUpload_file_marker(){
+      url = "?album="+$("#album").val() +"&photo_text="+$("#photo_text").val()+
+        "&marker[geocode_position]="+$("#marker_geocode_position").val()+
+        "&marker[marker_latitude]="+$("#marker_marker_latitude").val()+
+        "&marker[marker_longitude]="+$("#marker_marker_longitude").val()
+      $.ajaxFileUpload({
+        url:'/pictures/'+url,
+        secureuri:false,
+        dataType: 'json',
+        fileElementId:'pictures_',
+        success: function (data,status){
+          if(data && data.success==true){
+            $("#notice").html(data.notice)
+            $("#notice").show()
+            $('#notice').fadeOut(15000);
+            $("#share-picture").resetForm();
+            $("#marker_geocode_position").attr("value", '');
+            $("#marker_destin_position").attr("value", '')
+            for (var i=0;i<=data.html.length-1;i++) {
+              $.ajax({                                                
+                type: "GET",                                    
+                url: "/pictures/get_stream_item",
+                data:"pic_id="+data.html[i].pic_id+"&marker_id="+data.html[i].marker_id,
+                success: function(){}
+              });
+            }
+          }else{
+            alert("文件保存失败1")
+          }
+        },
+        error: function (data, status, e){
+          alert(data.success)
+          alert("文件保存失败2")
+        }
+      })
+      return false;
+    }
+  
+  
   </script>

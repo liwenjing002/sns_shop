@@ -1,7 +1,6 @@
 class MarkersController < ApplicationController
   respond_to :html,:js
   def index
-    
     @my_home = @logged_in.postition
     @ta_home = Person.find(params[:people_id]).postition if  params[:people_id]
     user =  params[:people_id]? Person.find(params[:people_id]):@logged_in

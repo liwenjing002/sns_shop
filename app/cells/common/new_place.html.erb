@@ -13,7 +13,7 @@
  是否公开该地点？<%= form.check_box :is_public,:title=>"公开的地点无法删除" %>
 <br/>
    <span class ='picture-icon' style='color: #5F9128;margin-top: 5px'>添加图片:&nbsp</span>
-   <input type="file"  id ="fileToUpload" name ="picture" onchange="fileChange(this.value)" style="width:100px;"/>
+   <input type="file"  id ="fileToUpload_place" name ="picture" onchange="fileChange(this.value)" style="width:100px;"/>
 <% end %>
 
 
@@ -35,7 +35,7 @@
       url:'/location/places/add_temp_pic',
       secureuri:false,
       dataType: 'json',
-      fileElementId:'fileToUpload',
+      fileElementId:'fileToUpload_place',
       success: function (data,status){
         if(data && data.success=="true"){
           $("#picture_id").attr("value",data.pic_id)

@@ -1,6 +1,8 @@
 OneBody::Application.routes.draw do
   
   
+  resources :dreams
+
   resources :activities do
     collection do
       get :invite_friend

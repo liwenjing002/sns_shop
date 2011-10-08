@@ -134,6 +134,8 @@ zh:
   type: 类型
   you_made_a_change_page: 。看起来你做了更改的东西在此页单击确定以放弃您编辑并离开此页面。
   your: 你的
+  Album: (相册)
+  Activity: （活动）
 
   errors: 
     format: %{message} 
@@ -1905,6 +1907,7 @@ zh:
   share: 
     default_album_name: 专辑名称
     email: 电子邮件
+    video: 视频
     group: “跟你的小组的东西。 
     note: 请注意
     note_label: “什么对你的想法？ 

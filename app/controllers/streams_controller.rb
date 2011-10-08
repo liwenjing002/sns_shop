@@ -4,19 +4,12 @@ class StreamsController < ApplicationController
   before_filter :authenticate_user_with_code_or_session, :only => %w(show)
 
   def show
-#    unless [nil, 'html'].include?(params[:format]) and fragment_exist?(:controller => 'streams', :action => 'show', :for => @logged_in.id, :fragment => 'stream_items')
-      @stream_items = @logged_in.shared_stream_items(30)
-#    end
+    @stream_items = @logged_in.shared_stream_items(30)
     @person = @logged_in
-    unless fragment_exist?(:controller => 'streams', :action => 'show', :for => @logged_in.id, :fragment => 'friendship_requests')
-      @has_friendship_requests = @logged_in.pending_friendship_requests.count > 0
-    end
+    @has_friendship_requests = @logged_in.pending_friendship_requests.count > 0
     @has_activity_invite = (@logged_in.invite_activities.count + @logged_in.process_activities.count)>0
     @album_names = @person.albums.all(:select => 'name').map { |a| a.name }
-    respond_to do |format|
-      format.html
-      format.xml { render :layout => false }
-    end
+    3
   end
 
 end

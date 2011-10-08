@@ -59,7 +59,8 @@ class Person < ActiveRecord::Base
   has_many :stream_items
   has_many :generated_files
   belongs_to :site
-
+  after_create :create_map
+  
   scope_by_site_id
 
   attr_accessible :gender, :first_name,  :mobile_phone, :work_phone, :fax, :birthday, :email, :website, :activities, :interests, :music, :tv_shows, :movies, :books, :quotes, :about, :testimony, :share_address, :share_home_phone, :share_mobile_phone, :share_work_phone, :share_fax, :share_email, :share_birthday, :share_anniversary, :business_name, :business_description, :business_phone, :business_email, :business_website, :business_category, :suffx, :anniversary, :alternate_email, :get_wall_email, :wall_enabled, :messages_enabled, :business_address, :visible, :friends_enabled, :share_activity, :twitter_account
@@ -139,6 +140,10 @@ class Person < ActiveRecord::Base
 
   def inspect
     "<#{name}>"
+  end
+  
+  def create_map
+    self.map = Map.create({:person_id => id})
   end
 
   serialize :custom_fields

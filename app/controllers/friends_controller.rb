@@ -65,7 +65,6 @@ class FriendsController < ApplicationController
   end
 
   private
-
     def person_must_be_user
       unless @logged_in.id == params[:person_id].to_i
         render :text => t('people.friendship_manage'), :layout => true, :status => 401

@@ -3,6 +3,9 @@ class Activity < ActiveRecord::Base
   has_many :people_activity
   has_many :comments, :dependent => :destroy
   after_create :create_people_activity,:create_as_stream_item
+  has_many :people_activity
+  has_many :in_person,:through => :people_activity
+  has_many :apply_person,:through => :people_activity
   
   def create_people_activity
     PeopleActivity.create({:activity_id=>id,:person_id=>create_id,:status=>"a"})
