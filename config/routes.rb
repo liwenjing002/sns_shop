@@ -1,6 +1,8 @@
 OneBody::Application.routes.draw do
   
   
+  resources :videos
+
   resources :dreams
 
   resources :activities do

@@ -39,6 +39,20 @@
       <input class="is_location" title="是否带地理位置，默认为当前位置" type="checkbox" value="1">地理位置
     <% end %>
   <% end %>
+      
+        <%= form_for Video.new, :html => {:id => 'share-video', :class => 'share-type'},:remote=>true  do |form| %>
+      <%= form.text_field :name,:placeholder => "视频名称"%><br/>
+      <%= form.text_field :desc,:placeholder => "视频描述"%><br/>
+      <%= form.text_field :video_url,:placeholder => "视频地址"%><br/>
+      <div class="location_info" style="display:none">
+        <%= text_field 'marker','geocode_position', :placeholder=>"我的位置",:class=>"marker_geocode_position" %><br>
+      </div>
+      <%= text_field 'marker','marker_latitude', :type=>'hidden',:class=>"marker_marker_latitude" %>
+      <%= text_field 'marker','marker_longitude', :type=>'hidden',:class=>"marker_marker_longitude" %>
+      <%= submit_tag t('share.share') %>
+      <input class="is_location" title="是否带地理位置，默认为当前位置" type="checkbox" value="1">地理位置
+    <% end %>  
+      
   </div>
 
   <script>

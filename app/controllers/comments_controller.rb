@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
       end
       @comment = comment_array[comment_array.length-1]
       flash[:notice] = t('comments.saved')
-      #      redirect_back
+            redirect_back if !params[:stream_item_id]
     else
       render :text => t('comments.object_not_found', :name => @object.class.name), :layout => true, :status => 404
     end
