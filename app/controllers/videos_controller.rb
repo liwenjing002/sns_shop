@@ -40,11 +40,11 @@ class VideosController < ApplicationController
   # POST /videos
   # POST /videos.xml
   def create
+    params[:video][:person_id] = @logged_in.id
     @video = Video.new(params[:video])
 
     respond_to do |format|
       if @video.save
-        format.html { redirect_to(@video, :notice => 'Video was successfully created.') }
         format.xml  { render :xml => @video, :status => :created, :location => @video }
       else
         format.html { render :action => "new" }

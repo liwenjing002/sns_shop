@@ -43,7 +43,7 @@
         <%= form_for Video.new, :html => {:id => 'share-video', :class => 'share-type'},:remote=>true  do |form| %>
       <%= form.text_field :name,:placeholder => "视频名称"%><br/>
       <%= form.text_field :desc,:placeholder => "视频描述"%><br/>
-      <%= form.text_field :video_url,:placeholder => "视频地址"%><br/>
+      <%= form.text_field :html_url,:placeholder => "视频地址"%><br/>
       <div class="location_info" style="display:none">
         <%= text_field 'marker','geocode_position', :placeholder=>"我的位置",:class=>"marker_geocode_position" %><br>
       </div>
