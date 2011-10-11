@@ -77,8 +77,8 @@ class PicturesController < ApplicationController
       if params[:marker]
         params[:marker][:owner_id] =  @logged_in.id 
         unless params[:marker][:geocode_position]=='' and params[:marker][:marker_longitude]=="" and params[:marker][:marker_latitude] ==''
-          params[:marker][:marker_longitude] = BigDecimal.new(params[:marker][:marker_longitude])
-          params[:marker][:marker_latitude] = BigDecimal.new(params[:marker][:marker_latitude])
+          params[:marker][:marker_longitude] = BigDecimal.new(params[:marker][:marker_longitude].to_s)
+          params[:marker][:marker_latitude] = BigDecimal.new(params[:marker][:marker_latitude].to_s)
           marker = Marker.new(params[:marker])
 
           MarkerToMap.create({:map=>@logged_in.map,:marker=>marker,:marker_type=>'StreamItem'})
