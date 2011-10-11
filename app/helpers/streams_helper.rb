@@ -67,6 +67,10 @@ module StreamsHelper
     if stream_item.streamable_type =="Activity"
       content += activity stream_item
     end
+
+    if stream_item.streamable_type == "Video"
+      content += stream_item.streamable.video_url
+    end
     raw content
   end
 

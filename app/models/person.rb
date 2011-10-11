@@ -498,6 +498,7 @@ class Person < ActiveRecord::Base
     enabled_types << 'Place'
     enabled_types << 'Activity'
     enabled_types << 'PlaceShare'
+     enabled_types << 'Video'
     friend_ids = all_friend_and_groupy_ids
     place_ids = all_places_ids
     group_ids = groups.find_all_by_hidden(false, :select => 'groups.id').map { |g| g.id }
