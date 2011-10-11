@@ -7,7 +7,7 @@ $(".stream-items :first-child").slideDown("slow");
   $("#notice").show()
   $('#notice').fadeOut(15000);
 <%end%>
-$("#share-note").resetForm();
+$("#share-video").resetForm();
 $("#marker_geocode_position").attr("value", '');
 $("#marker_destin_position").attr("value", '');
 if(MapObject.temp_marker){
@@ -30,9 +30,9 @@ MapObject.map.removeOverlay(MapObject.temp_marker);
 
 <%end%>
 
-    $(".location_now").tooltip({
-        position: 'bottom center ',
-        delay: 50
-    });
+$(".location_now").tooltip({
+position: 'bottom center ',
+delay: 50
+});
 
 
