@@ -11,6 +11,8 @@ class CommentsController < ApplicationController
       object = PlaceShare.find(params[:placeshare_id])
     elsif params[:activity_id]
       object = Activity.find(params[:activity_id])
+      elsif params[:video_id]
+      object = Video.find(params[:video_id])
     else
       raise 'Error.'
     end

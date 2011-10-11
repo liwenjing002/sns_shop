@@ -14,16 +14,14 @@ if(MapObject.temp_marker){
 MapObject.temp_marker.closeInfoWindow(MapObject.infoWindow);
 MapObject.map.removeOverlay(MapObject.temp_marker);
 }
-<%if @marker_at %>
-  <%if @marker_last and @marker_last.length>0%>
+<%if @marker %>
 
-  <%end%>
-  html = '<%= raw mark_html(@marker_at) %>'
-  <%if !is_blank_zero(@marker_at.marker_latitude,@marker_at.marker_longitude) %>
-    point = new BMap.Point('<%= @marker_at.marker_longitude %>', '<%=@marker_at.marker_latitude%>')
-    marker = MapObject.add_marker_to_map(point,"/images/map/default.png",34,30,html,"share",<%=@marker_at.id%>,true)
+  html = '<%= raw mark_html(@marker) %>'
+  <%if !is_blank_zero(@marker.marker_latitude,@marker.marker_longitude) %>
+    point = new BMap.Point('<%= @marker.marker_longitude %>', '<%=@marker.marker_latitude%>')
+    marker = MapObject.add_marker_to_map(point,"/images/map/default.png",34,30,html,"share",<%=@marker.id%>,true)
   <%else%>
-    MapObject.getPoint('<%=@marker_at.geocode_position%>', MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"stream_item",html,'<%=@marker_at.geocode_position%>',true,<%=@marker_at.id%>,MapObject.map),MapObject.map);
+    MapObject.getPoint('<%=@marker.geocode_position%>', MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"stream_item",html,'<%=@marker.geocode_position%>',true,<%=@marker.id%>,MapObject.map),MapObject.map);
   <%end%>
 
 

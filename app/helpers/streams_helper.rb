@@ -70,6 +70,7 @@ module StreamsHelper
 
     if stream_item.streamable_type == "Video"
       content += stream_item.streamable.video_url
+      content += add_ditu_pic(stream_item.id,stream_item.streamable)
     end
     raw content
   end
