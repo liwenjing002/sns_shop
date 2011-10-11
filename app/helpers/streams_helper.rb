@@ -23,18 +23,18 @@ module StreamsHelper
         stream_item.context['picture_ids'].to_a.each do |picture_id, fingerprint, extension,photo_text|
           if type == "stream_item"
             temp = ''+link_to(
-              image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :large), :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic',:rel=>"#mies#{picture_id}"),
+              image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :large), :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic',:rel=>"#mies#{stream_item.id}"),
               album_picture_path(stream_item.streamable_id, picture_id), :title => t('pictures.click_to_enlarge')
             )
           else if type == "marker" 
               temp = ''+link_to(
-                image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :small), :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic',:rel=>"#mies#{picture_id}"),
+                image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :small), :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic',:rel=>"#mies#{stream_item.id}"),
                 album_picture_path(stream_item.streamable_id, picture_id), :title => t('pictures.click_to_enlarge')
               )  
             end
           end
           
-          temp += '<div class="simple_overlay" id="mies'+picture_id.to_s+'">' + image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :original),:alt => t('pictures.click_to_enlarge')) +'</div>'
+          temp += '<div class="simple_overlay" id="mies'+stream_item.id.to_s+'">' + image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :original),:alt => t('pictures.click_to_enlarge')) +'</div>'
           if !is_blank photo_text 
             temp += "<div>描述：#{photo_text}</div>"
           end
@@ -69,7 +69,12 @@ module StreamsHelper
     end
 
     if stream_item.streamable_type == "Video"
-      content += stream_item.streamable.video_url
+
+      content +=  link_to(
+              image_tag(stream_item.streamable.screenshots_url||"missing_large.png", :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic',:rel=>"#mies#{stream_item.id}"),
+              stream_item.streamable, :title => t('pictures.click_to_enlarge')
+            )
+      content += ('<div class="simple_overlay" id="mies'+stream_item.id.to_s+'">' + "#{stream_item.streamable.video_url}" +'</div>' )  
       content += add_ditu_pic(stream_item.id,stream_item.streamable)
     end
     raw content
