@@ -26,7 +26,7 @@ test:
   password: root
 production:
   adapter: mysql
-  database: onebody_dev
+  database: onebody
   encodings: utf8
   host: localhost
   username: root
