@@ -67,6 +67,26 @@
 
 
 
+#map-modal-content, #map-modal-data {display:none;}
+
+/* Overlay */
+#map-overlay {background-color:#000; cursor:wait;}
+
+/* Container */
+#map-container {background-color:#eee; color:#000; font: 16px/24px "Lucida Grande",Arial,sans-serif; padding-bottom:4px; width:600px; -moz-border-radius-bottomleft:6px; -webkit-border-bottom-left-radius:6px; -moz-border-radius-bottomright:6px; -webkit-border-bottom-right-radius:6px; border-radius:0 0 6px 6px; -moz-box-shadow:0 0 64px #000; -webkit-box-shadow:0 0 64px #000; box-shadow:0 0 64px #000;}
+#map-container a {color: #5F9128;}
+#map-container #map-modal-title {color:#000; background-color:#ddd; border-bottom:1px solid #ccc; font-weight:bold; padding:6px 8px; text-shadow:0 1px 0 #f4f4f4;}
+#map-container .close {display:none; position:absolute; right:0; top:0;}
+#map-container .close a {display:block; color:#777; font-weight:bold; padding:6px 12px 0; text-decoration:none; text-shadow:0 1px 0 #f4f4f4;}
+#map-container .close a:hover {color:#000;}
+#map-container #map-modal-data {font-size:12px; padding:6px 12px;}
+#map-container h2 {margin:10px 0 6px;}
+#map-container p {margin-bottom:10px;}
+#map-container span {color:#777;}
+#map-modal-data {max-height: 500px}
+
+
+
 
 
 

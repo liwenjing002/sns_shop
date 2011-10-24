@@ -74,6 +74,9 @@ module StreamsHelper
               image_tag(stream_item.streamable.screenshots_url||"missing_large.png", :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic',:rel=>"#mies#{stream_item.id}"),
               stream_item.streamable, :title => t('pictures.click_to_enlarge')
             )
+      if !is_blank stream_item.streamable.desc
+            content += "<div>描述：#{stream_item.streamable.desc}</div>"
+          end
       content += ('<div class="simple_overlay" id="mies'+stream_item.id.to_s+'">' + "#{stream_item.streamable.video_url}" +'</div>' )  
       content += add_ditu_pic(stream_item.id,stream_item.streamable)
     end

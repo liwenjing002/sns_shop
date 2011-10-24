@@ -351,7 +351,7 @@ jQuery(function ($) {
     OSX4.init();
     
     
-     //活动
+    //活动
     OSX5 = {
         container: null,
         init: function () {
@@ -423,8 +423,116 @@ jQuery(function ($) {
     };
 
     OSX5.init();
+    
+
+    //地图查看
+    OSX6 = {
+        container: null,
+        init: function () {
+            $("#see_all_map").live("click",function (e) {
+                e.preventDefault();	
+
+                $("#map-modal-content").modal({
+                    overlayId: 'map-overlay',
+                    containerId: 'map-container',
+                    closeHTML: null,
+                    minHeight: 200,
+                    opacity: 65, 
+                    position: ["0",],
+                    overlayClose: true,
+                    autoResize:true,
+                    onOpen: OSX6.open,
+                    onClose: OSX6.close
+                });
+            });
+        },
+        open: function (d) {
+            var self = this;
+            self.container = d.container[0];
+            d.overlay.fadeIn( function () {
+
+                $("#map-modal-content", self.container).show();
+                var title = $("#map-modal-title", self.container);
+                title.show();
+                MapObject.reflesh(false);  
+                fun = function(data, textStatus){
+                    if(data.length >0){
+                        for (var i=0;i<=data.length-1;i++) 
+                        {
+                            $("#see_all_streams").prepend(data[i].html)
+                        }
+        
+                    }
+
+                    d.container.slideDown( function () {
+                        setTimeout(function () {
+                            var h = $("#map-modal-data", self.container).height()
+                            + title.height()
+                            + 20; // padding
+                            d.container.animate(
+                            {
+                                height: h
+                            }, 
+                            200,
+                            function () {
+                                $("div.close", self.container).show();
+                                $("#map-modal-data", self.container).show();
+                          
+                            }
+                            );
+                        }, 300);
+                    });
+                }
+                
+                
+                MapObject.reflesh(false,fun);  
+            //                d.container.slideDown( function () {
+            //                    setTimeout(function () {
+            //                        var h = $("#map-modal-data", self.container).height()
+            //                        + title.height()
+            //                        + 20; // padding
+            //                        d.container.animate(
+            //                        {
+            //                            height: h
+            //                        }, 
+            //                        200,
+            //                        function () {
+            //                            $("div.close", self.container).show();
+            //                            $("#map-modal-data", self.container).show();
+            //                          
+            //                        }
+            //                        );
+            //                    }, 300);
+            //                });
+               
+            })
+        },
+        close: function (d) {
+
+            var self = this; // this = SimpleModal object
+            d.container.animate(
+            {
+                top:"-" + (d.container.height() + 20)
+            },
+            500,
+            function () {                             
+                self.close(); // or $.modal.close();
+                                        
+            }
+            );
+        }
+    };
+
+    OSX6.init();
+   
+   
 
 });
+
+
+
+
+
 
 
 
