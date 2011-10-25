@@ -424,6 +424,73 @@ jQuery(function ($) {
 
     OSX5.init();
 
+         //发表图片窗口
+    PIC = {
+        container: null,
+        init: function () {
+            $("#share-picture-icon").click(function (e) {
+                e.preventDefault();
+
+                $("#pic-modal-content").modal({
+                    overlayId: 'pic-overlay',
+                    containerId: 'pic-container',
+                    closeHTML: null,
+                    minHeight: 200,
+                    opacity: 65,
+                    position: [$(window).height()/2 ,],
+                    overlayClose: true,
+                    autoResize:true,
+                    onOpen: PIC.open,
+                    onClose: PIC.close
+                });
+            });
+        },
+        open: function (d) {
+            var self = this;
+            self.container = d.container[0];
+            d.overlay.fadeIn( function () {
+
+                $("#pic-modal-content", self.container).show();
+                var title = $("#pic-modal-title", self.container);
+                title.show();
+
+                d.container.slideDown( function () {
+                    setTimeout(function () {
+                        var h = $("#pic-modal-data", self.container).height()
+                        + title.height()
+                        + 20; // padding
+                        d.container.animate(
+                        {
+                            height: h
+                        },
+                        200,
+                        function () {
+                            $("div.close", self.container).show();
+                            $("#pic-modal-data", self.container).show();
+                            $(".location_info").hide()
+                        }
+                        );
+                    }, 300);
+                });
+            })
+        },
+        close: function (d) {
+            var self = this; // this = SimpleModal object
+            d.container.animate(
+            {
+                top:"-" + (d.container.height() + 20)
+            },
+            500,
+            function () {
+                self.close();
+            }
+            );
+        }
+    };
+
+    PIC.init();
+
+
 });
 
 
@@ -700,7 +767,109 @@ InputSuggest.prototype = {
 
 
 
+//发表状态 start
 
+$(".is_location").live("change",function(){
+    if($(this).attr("checked")==true){
+      $(".location_info").show();
+
+      $(".is_location").attr("checked",true)
+      if(MapObject.myLocation){
+        $(".marker_geocode_position").attr("value",  MapObject.myLocation_address);
+        $(".marker_marker_latitude").attr("value",  MapObject.myLocation.lat );
+        $(".marker_marker_longitude").attr("value",  MapObject.myLocation.lng);
+      }
+
+    }else{
+      $(".location_info").hide();
+      $(".marker_geocode_position").attr("value", '');
+      $(".marker_marker_latitude").attr("value",  "");
+      $(".marker_marker_longitude").attr("value",  "");
+    }
+
+  })
+
+  $(".marker_geocode_position").live("change",function(){
+    if($(this).attr("value")!=MapObject.myLocation_address){
+      $(".marker_marker_latitude").attr("value",  "");
+      $(".marker_marker_longitude").attr("value",  "");
+    }else{
+      if(MapObject.myLocation){
+        $(".marker_marker_latitude").attr("value",  MapObject.myLocation.lat);
+        $(".marker_marker_longitude").attr("value",  MapObject.myLocation.lng);
+      }
+
+    }
+  })
+
+
+  $("#share-note").live("submit",function(){
+    if ($(".marker_geocode_position").attr("value") == "我的位置"){
+      $(".marker_geocode_position").attr("value","")
+    }
+    var options = {
+      url:$(this).attr("action"), //提交给哪个执行
+      type:'POST',
+      beforeSubmit:function(formData, jqForm, options){
+
+      },
+      success:function(){
+        $("#location_info").hide();
+      }
+    };
+    $('#share-note').ajaxSubmit(options);
+
+    return false; //为了不刷新页面,返回false，反正都已经在后台执行完了，没事！
+  }
+);
+
+
+  function ajaxFileUpload_file(){
+    url = ""
+    if($(".is_location").attr("checked") ==true){
+      url = "?album="+$("#album").val() +"&photo_text="+$("#photo_text").val()+
+        "&marker[geocode_position]="+$(".marker_geocode_position").val()+
+        "&marker[marker_latitude]="+$(".marker_marker_latitude").val()+
+        "&marker[marker_longitude]="+$(".marker_marker_longitude").val()
+    }else{
+      url = "?album="+$("#album").val() +"&photo_text="+$("#photo_text").val()
+    }
+
+    $.ajaxFileUpload({
+      url:'/pictures/'+url,
+      secureuri:false,
+      dataType: 'json',
+      fileElementId:'pictures_',
+      success: function (data,status){
+        if(data && data.success==true){
+          $("#notice").html(data.notice)
+          $("#notice").show()
+          $('#notice').fadeOut(15000);
+          $("#share-picture").resetForm();
+          $("#marker_geocode_position").attr("value", '');
+          $("#marker_destin_position").attr("value", '')
+          for (var i=0;i<=data.html.length-1;i++) {
+            $.ajax({
+              type: "GET",
+              url: "/pictures/get_stream_item",
+              data:"pic_id="+data.html[i].pic_id+"&marker_id="+data.html[i].marker_id,
+              success: function(){}
+            });
+          }
+        }else{
+        //  alert("文件保存失败1")
+        }
+      },
+      error: function (data, status, e){
+        alert(data.success)
+        alert("文件保存失败2")
+      }
+    })
+    return false;
+  }
+
+
+//发表状态 end
 
 
 //一些加載文檔后執行的js

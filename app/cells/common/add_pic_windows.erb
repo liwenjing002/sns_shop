@@ -1,0 +1,31 @@
+<!-- modal content -->
+<div id="pic-modal-content" style="display:none">
+  <div id="pic-modal-title">发布图片
+    <span style="background-color: #FEC;padding: 4px;text-align: center;display: none" id="update_notice">
+    </span></div>
+  <div class="close"><a href="#" class="simplemodal-close">x</a></div>
+  <div id="pic-modal-data" >
+
+
+ <%= form_for Picture.new, :url => pictures_path(:format => 'js'),:html => {:multipart => true, :id => 'share-picture', :target => 'upload_frame'} do |form| %>
+      <%= file_field_tag 'pictures[]', :multiple => true %><br/>
+      <%= text_field_tag 'album', '', :size => 10, :placeholder => t('share.default_album_name') %><br/>
+      <%= text_area_tag "photo_text",'',:class=>"share_text",:size => "40x2", :placeholder => "照片描述" %><br/>
+      <div class="location_info">
+        <%= text_field 'marker','geocode_position', :placeholder=>"我的位置",:class=>"marker_geocode_position" %><br/>
+      </div>
+      <%= text_field 'marker','marker_latitude', :type=>'hidden',:class=>"marker_marker_latitude" %>
+      <%= text_field 'marker','marker_longitude', :type=>'hidden',:class=>"marker_marker_longitude" %>
+
+       <%= submit_tag t('share.share') %>
+      <%#*<span class='submit' onclick='ajaxFileUpload_file()' ><%= t('share.share') %></span>%>
+      <%=check_box "","is_location",:class=>"is_location",:title=>"是否带地理位置，默认为当前位置",:value=>"1"%>地理位置
+    <% end %>
+  </div>
+</div>
+<iframe id="upload_frame" name="upload_frame" style="display: none;"></iframe>
+<!-- modal content -->
+
+
+
+

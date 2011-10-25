@@ -6,7 +6,7 @@ class Place < ActiveRecord::Base
   has_many :admins, :through => :memberships, :source => :person, :order => 'last_name, first_name', :conditions => ['memberships.admin = ?', true]
   
   
-  belongs_to :picture
+  belongs_to :picture 
   belongs_to :marker
 
 

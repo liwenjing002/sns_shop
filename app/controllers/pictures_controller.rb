@@ -93,9 +93,13 @@ class PicturesController < ApplicationController
       end
        
     end
-   
+
+   responds_to_parent do
+     render "create"
+	  end
     
-    render :text=> {:success=>true,:html=>html,:notice=>flash[:notice]}.to_json
+
+#    render :text=> {:success=>true,:html=>html,:notice=>flash[:notice]}.to_json
     #    redirect_to params[:redirect_to] || @group || album_pictures_path(@album)
   end
 

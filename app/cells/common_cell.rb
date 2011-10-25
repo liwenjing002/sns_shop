@@ -24,7 +24,7 @@ class CommonCell < Cell::Rails
   end
   
   def new_destination
-  render
+    render
   end
   
   def i_want_go
@@ -38,8 +38,8 @@ class CommonCell < Cell::Rails
 
   def get_friend_group
     @logged_in = options[:logged_in]
-     @friends = @logged_in.friends.paginate(:order => 'created_at desc', :page => params[:page])
-     @groups = @logged_in.groups.paginate(:order => 'created_at desc', :page => params[:page])
+    @friends = @logged_in.friends.paginate(:order => 'created_at desc', :page => params[:page])
+    @groups = @logged_in.groups.paginate(:order => 'created_at desc', :page => params[:page])
     render
   end
 
@@ -54,6 +54,15 @@ class CommonCell < Cell::Rails
   end
   
   def dream
+    render
+  end
+  def add_note_windows
+    render
+  end
+  def add_pic_windows
+    render
+  end
+  def add_video_windows
     render
   end
 end

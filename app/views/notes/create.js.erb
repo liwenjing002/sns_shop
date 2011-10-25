@@ -8,6 +8,7 @@ $(".stream-items :first-child").slideDown("slow");
   $('#notice').fadeOut(15000);
 <%end%>
 $("#share-note").resetForm();
+$(".location_info").hide();
 $("#marker_geocode_position").attr("value", '');
 $("#marker_destin_position").attr("value", '');
 if(MapObject.temp_marker){
@@ -22,7 +23,7 @@ MapObject.map.removeOverlay(MapObject.temp_marker);
   <%if !is_blank_zero(@marker_at.marker_latitude,@marker_at.marker_longitude) %>
     point = new BMap.Point('<%= @marker_at.marker_longitude %>', '<%=@marker_at.marker_latitude%>')
     marker = MapObject.add_marker_to_map(point,"/images/map/default.png",34,30,html,"share",<%=@marker_at.id%>,true)
-  <%else%> 
+  <%else%>
     MapObject.getPoint('<%=@marker_at.geocode_position%>', MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"stream_item",html,'<%=@marker_at.geocode_position%>',true,<%=@marker_at.id%>,MapObject.map),MapObject.map);
   <%end%>
 
@@ -30,9 +31,9 @@ MapObject.map.removeOverlay(MapObject.temp_marker);
 
 <%end%>
 
-    $(".location_now").tooltip({
-        position: 'bottom center ',  
-        delay: 50
-    });
+$(".location_now").tooltip({
+position: 'bottom center ',  
+delay: 50
+});
 
 
