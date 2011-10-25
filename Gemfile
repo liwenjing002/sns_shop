@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 #gem 'hoe', '= 1.5.1'
 gem 'rails',                  '= 3.0.4'
 gem "meta_search" 
+gem "json"
 gem 'cells'
 gem 'mysql'   
 gem 'aws-s3'

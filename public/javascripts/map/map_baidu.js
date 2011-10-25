@@ -53,8 +53,10 @@ var MapObject =  {
         this.map =  new BMap.Map(container_id);
         // 创建控件
         var myZoomCtrl = new ZoomControl();
+        var see_all_Ctrl = new See_all_Control();
         // 添加到地图当中
         this.map.addControl(myZoomCtrl);
+        this.map.addControl(see_all_Ctrl);
         
         this.localCity = new BMap.LocalCity();
         this.infoWindow.disableAutoPan();
@@ -122,7 +124,7 @@ var MapObject =  {
         {
             text:'好友位置',
             callback:function(){
-                MapObject.init_marker_from_data('friend_position',MapObject.person_id)
+                MapObject.init_marker_from_data('friend_position',MapObject.person_id,true)
             }
         }
         ];
@@ -252,7 +254,8 @@ var MapObject =  {
    
     
     //从后台获取数据后初始化marker
-    init_marker_from_data:function(type,people_id,data){
+    //is_map ；地图数据还是 页面数据
+    init_marker_from_data:function(type,people_id,data,is_map,fun){
         id_string = ''
         if(people_id !=null && people_id != ''){
             id_string +=("&people_id="+people_id)
@@ -276,14 +279,22 @@ var MapObject =  {
             }
         }
         );
+        if(fun == null){
+            fun = function(data, textStatus){
+                if(data.length >0){
+                    
+                    MapObject.clearAllClusterer()
+                    eval("MapObject.show_"+type+"("+'data'+")")
+                }
+            }
+        }    
+            
         $.ajax({                                                
             type: "GET",                                    
-            url: "/markers?type="+type+id_string+"&"+conditions,
+            url: "/markers?type="+type+id_string+"&"+conditions+"&is_map="+is_map,
             data:data,
-            success: function(data, textStatus){
-                MapObject.clearAllClusterer()
-                eval("MapObject.show_"+type+"("+'data'+")")
-            } 
+            success: fun
+            
         });
     },
     
@@ -582,17 +593,17 @@ var MapObject =  {
     //地图移动或者缩放或者拖拽的时候，获得边界坐标，并向后台请求数据
     move_zoom_drag_chang:function(){
         return function fun(e){ 
-           MapObject.reflesh();
+            MapObject.reflesh(true);
         }
     },
     
-    reflesh:function(){
+    reflesh:function(is_map,fun){
         cent = MapObject.map.getCenter();
         left_top = MapObject.map.pixelToPoint(new BMap.Pixel(0,0))
         right_down = MapObject.map.pixelToPoint(new BMap.Pixel(MapObject.map_width,MapObject.map_heigth))
         data = "marker[marker_latitude_lt]="+left_top.lat+"&marker[marker_latitude_gt]="+right_down.lat +
         "&marker[marker_longitude_gt]="+left_top.lng+"&marker[marker_longitude_lt]="+right_down.lng
-        MapObject.init_marker_from_data("share", MapObject.person_id, data); 
+        MapObject.init_marker_from_data("share", MapObject.person_id, data,is_map,fun); 
     },
     
     
@@ -638,7 +649,7 @@ var MapObject =  {
 function ZoomControl(){
     // 默认停靠位置和偏移量
     this.defaultAnchor = BMAP_ANCHOR_TOP_RIGHT;
-    this.defaultOffset = new BMap.Size(300, 10);
+    this.defaultOffset = new BMap.Size(400, 10);
 }
 
 // 通过JavaScript的prototype属性继承于BMap.Control
@@ -666,9 +677,36 @@ ZoomControl.prototype.initialize = function(map){
     return div;
 }
 
-    $(".select").live("change",function(){
-       MapObject.reflesh();
-    })
+
+// 定义一个控件类,即function
+function See_all_Control(){
+    // 默认停靠位置和偏移量
+    this.defaultAnchor = BMAP_ANCHOR_TOP_RIGHT;
+    this.defaultOffset = new BMap.Size(10, 10);
+}
+
+// 通过JavaScript的prototype属性继承于BMap.Control
+See_all_Control.prototype = new BMap.Control();
+
+// 自定义控件必须实现自己的initialize方法,并且将控件的DOM元素返回
+// 在本方法中创建个div元素作为控件的容器,并将其添加到地图容器中
+See_all_Control.prototype.initialize = function(map){
+    // 创建一个DOM元素
+    var div = document.createElement("div");
+    div.innerHTML = '<span class="button" id="see_all_map">查看</span>' 
+
+
+    // 添加DOM元素到地图中
+    MapObject.map.getContainer().appendChild(div);
+    // 将DOM元素返回
+
+    return div;
+}
+
+
+$(".select").live("change",function(){
+    MapObject.reflesh(true,null);
+})
 
 
 

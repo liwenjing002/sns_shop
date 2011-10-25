@@ -5,36 +5,40 @@ class MarkersController < ApplicationController
     @ta_home = Person.find(params[:people_id]).postition if  params[:people_id]
     user =  params[:people_id]? Person.find(params[:people_id]):@logged_in
     map = user.map
-    html = []
+    @html = []
     case params[:type]
     when "own"
       markers = Marker.find_my_places user.id
       markers.each do |marker|
-        html<<  marker_html(marker)
+        @html<<  marker_html(marker)
       end
     when "follow"
       markers = Marker.find_follow_places map.id
       markers.each do |marker|
-       html<<  marker_html(marker)
+       @html<<  marker_html(marker)
       end
     when "rander"
       @markers = Marker.find(:all,:conditions=>['object_type=?','Place'], :order => "RAND()", :limit =>3 )
     when 'friend_position'
-      html = Postition.find_friend_locus(Time.new.strftime("%Y/%m/%d"),@logged_in.id)
+      @html = Postition.find_friend_locus(Time.new.strftime("%Y/%m/%d"),@logged_in.id)
     when 'schedule'
       @plans = user.plans
     when 'location'
       @markers = Marker.find_my_location.to_json(:object)
     when 'locus'
-      html = Postition.find_my_locus(Time.new.strftime("%Y/%m/%d"),@logged_in.id,true)
+      @html = Postition.find_my_locus(Time.new.strftime("%Y/%m/%d"),@logged_in.id,true)
   when 'share'
     search = Marker.search(params[:marker],:marker_type=>"StreamItem")
      markers = search.all(:limit=>100)
       markers.each do |marker|
-        html<< marker_html(marker)
+        @html<< marker_html(marker)
       end
   end
-    render :json =>html.to_json
+#  if params[:is_map] =="true"
+    render :json =>@html.to_json
+#  else
+#    render "see_all"
+#  end
   end
 
   def update

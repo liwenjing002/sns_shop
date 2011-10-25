@@ -8,7 +8,7 @@ nbproject
 .DS_Store
 setup-authorized-ip
 setup-secret
-config/database.yml
+
 config/database.yml.backup
 config/deploy.rb
 config/email.yml

@@ -6,12 +6,13 @@ class Comment < ActiveRecord::Base
   belongs_to :verse
   belongs_to :note
   belongs_to :picture
+  belongs_to :video
   belongs_to :place_share
 
   scope_by_site_id
 
   def on
-    verse || note || picture ||place_share
+    verse || note || picture ||place_share || video|| picture
   end
 
   def name
