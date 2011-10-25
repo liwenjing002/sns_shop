@@ -1,16 +1,24 @@
 <%#
 不用窗体显示
 %>
+		<script>
+			var editor_note;
+			KindEditor.ready(function(K) {
+				editor_note = K.create('#note_body', {
+					items : ['fontsize', '|', 'forecolor','bold', 'italic', 'underline', '|',  'emoticons','link']
+				});
+			});
+		</script>
 
   <%= form_for Note.new, :html => {:id => 'share-note', :class => 'share-type'},:remote=>true  do |form| %>
-    <%= hidden_field_tag :redirect_to, stream_path %>
     <span class="small">今天你二了吗？</span><br/>
-    <%= form.text_area :body, :rows => 2 ,:class=>"share_text",:placeholder => "你想发表的心情，状态，感想"%><br/>
+    <%= form.text_area :body, :style=>"width:285px;height:200px;" %><br/>
     <div class="location_info" style="display:none">
-      <%= text_field 'marker','geocode_position', :placeholder=>"我的位置",:class=>"marker_geocode_position" %><br/>
+      <%= text_field 'marker','geocode_position', :placeholder=>"地球某地",:class=>"marker_geocode_position" %><br/>
     </div>
     <%= text_field 'marker','marker_latitude', :type=>'hidden',:class=>"marker_marker_latitude" %>
     <%= text_field 'marker','marker_longitude', :type=>'hidden',:class=>"marker_marker_longitude" %>
     <%= submit_tag t('share.share') %>
     <%=check_box "","is_location",:class=>"is_location",:title=>"是否带地理位置，默认为当前位置",:value=>"1"%>地理位置
   <% end %>
+    

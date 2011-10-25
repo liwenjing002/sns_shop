@@ -23,11 +23,11 @@ class NotesController < ApplicationController
   def show
     @note = Note.find(params[:id])
     if @logged_in.can_see?(@note)
-#      if @note.stream_item.is_marker #note 带地理标记，定向到轨迹页面
-#         redirect_to(locus_index_markers_path({:id=>@note.stream_item_id}))
-#      else
-        @person = @note.person
-#      end
+      #      if @note.stream_item.is_marker #note 带地理标记，定向到轨迹页面
+      #         redirect_to(locus_index_markers_path({:id=>@note.stream_item_id}))
+      #      else
+      @person = @note.person
+      #      end
       
     else
       render :text => t('not_authorized'), :layout => true, :status => 401
@@ -41,11 +41,20 @@ class NotesController < ApplicationController
   def create
     params[:note][:person_id] =  @logged_in.id
     params[:marker][:owner_id] =  @logged_in.id
-    params[:note][:location] = params[:marker][:geocode_position] if params[:marker][:geocode_position]!= ''
-    params[:note][:longitude] = params[:marker][:marker_longitude] if params[:marker][:marker_longitude]!= ''
-    params[:note][:latitude] = params[:marker][:marker_latitude] if params[:marker][:marker_latitude]!= ''
+    if  params[:marker][:geocode_position]!= '' and 
+        params[:marker][:geocode_position]!= '地球某地'  and
+        params[:marker][:marker_longitude]!= '' and 
+        params[:marker][:marker_latitude]!= ''
+      is_location = true 
+    else
+      is_location = false
+    end
+    
+    params[:note][:location] = params[:marker][:geocode_position] if is_location
+    params[:note][:longitude] = params[:marker][:marker_longitude] if is_location
+    params[:note][:latitude] = params[:marker][:marker_latitude] if is_location
     @note = Note.create(params[:note]) 
-    unless params[:marker][:geocode_position]=='' and params[:marker][:marker_longitude]=="" and params[:marker][:marker_latitude] ==''
+    unless is_location
       params[:marker][:marker_longitude] = BigDecimal.new(params[:marker][:marker_longitude])
       params[:marker][:marker_latitude] = BigDecimal.new(params[:marker][:marker_latitude])
       @marker_at = Marker.new(params[:marker])
@@ -55,7 +64,7 @@ class NotesController < ApplicationController
       @marker_at.object_id = @note.stream_item_id
       @marker_at.save
       @last_destination = @marker_at.get_last_destination(Time.new)
-            end
+    end
     flash[:notice] = t('notes.saved')
   end
 

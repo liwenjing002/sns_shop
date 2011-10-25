@@ -1,9 +1,11 @@
 <% content_for :head do %>
-  <%= stylesheet_link_tag  "osx" %>
+    <%= stylesheet_link_tag  "osx" %>
   <%= javascript_include_tag "extend/jquery.tools.min" %>
   <%= javascript_include_tag "extend/pic_effects" %>
   <%= javascript_include_tag "extend/ui" %>
   <%= javascript_include_tag "extend/some_function" %>
+  <%= javascript_include_tag "Kind_editor/kindeditor-min" %>
+   <%= javascript_include_tag "Kind_editor/lang/zh_CN" %>
 <%end%>
 <% if @has_friendship_requests %>
   <div class="highlight">
@@ -15,6 +17,10 @@
     <%= t('friends.you_have_activity_invite_html', :url => person_activities_path(@person)) %>
   </div>
 <% end %>
+
+
+
+
 <% content_for :top do %>
   <%= render_cell :map, :map,:map => @person.map,:person=>@person,:logged_in=>@logged_in %>
 <%end%>
@@ -23,7 +29,7 @@
   <h3 class="double-margin-top">我要二一下</h3>
   <p>分享你的心情，照片，视频，二二身体好，二二更健康</p>
   <%=render_cell :common,:share%>
-  <%= javascript_include_tag "extend/ui" %>
+
 
 
   <%= render_cell :people,:thumbnail_wall %>
