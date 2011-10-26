@@ -1,0 +1,566 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>插入图片</title>
+    <script type="text/javascript" src="../internal.js"></script>
+    <style type="text/css">
+        * {
+            color: #838383
+        }
+
+        body {
+            font-size: 12px;
+            width: 362px;
+            height: 163px;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .head {
+            position: absolute;
+            height: 31px;
+            top: 9px;
+        }
+
+        .content {
+            height: 180px;
+            border: 1px solid #ddd;
+            padding: 5px
+        }
+
+        .warp {
+            padding: 39px 0 0 15px;
+            height: 100%;
+            position: relative;
+        }
+
+        .head span {
+            width: 62px;
+            height: 29px;
+            line-height: 29px;
+            background: red;
+            display: block;
+            float: left;
+            text-align: center;
+            margin-right: 1px;
+            cursor: pointer
+        }
+
+        .head span.def {
+            background: url("../../themes/default/images/dialog-title-bg.png") repeat-x;
+            border: 1px solid #ccc;
+        }
+
+        .head span.act {
+            background: #FFF;
+            border: 1px solid #ccc;
+            border-bottom: 1px solid #FFF
+        }
+
+        input {
+            height: 21px;
+            line-height: 21px;
+        }
+
+        .content table {
+            padding: 0;
+            margin: 0;
+            position: relative
+        }
+
+        .content table tr {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .content span {
+            padding-right: 4px;
+        }
+
+        .content input {
+            width: 145px;
+            height: 21px;
+            background: #FFF;
+            border: 1px solid #d7d7d7;
+            padding: 0;
+            margin: 0;
+        }
+
+        #url {
+            width: 290px;
+            margin-bottom: 2px
+        }
+
+        #thumb {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 82px;
+            left: 242px;
+            background: #ECECEC;
+            padding: 5px;
+            overflow: auto
+        }
+
+        .url_c{
+            float:left;
+            width:220px;
+            height:30px;
+            overflow:hidden;
+            margin-left:1px !important;
+            margin-left:3px;
+            _margin-left:0;
+        }
+
+    </style>
+</head>
+<body>
+<div class="warp">
+    <div class="head" id="head">
+        <span name="remote" class="act">网络图片</span><span name="local" class="def">本地图片</span>
+    </div>
+    <div class="content" id="remote">
+
+        <table width="300" cellpadding="0" cellspacing="0">
+
+            <tr>
+                <td>
+                    <div style="height:25px; width:280px;">
+                        <span style="display:block;float:left;width:35px;">URL：</span>
+
+                        <div class="url_c">
+                            <input style="width:200px" id="url" type="text" value=""/>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="display:none">
+                <td><span id="sourceSize"></span></td>
+            </tr>
+            <tr>
+                <td><span>宽度：</span><input type="text" id="imgWidth"/> px</td>
+            </tr>
+
+            <tr>
+                <td><span>高度：</span><input type="text" id="imgHeight"/> px</td>
+            </tr>
+
+            <tr>
+                <td><span>标题：</span><input type="text" id="imgTitle"/></td>
+            </tr>
+            <tr>
+                <td><span>对齐方式：</span>
+                    <select id="float">
+                        <option value="">默认</option>
+                        <option value="float: left">左浮动</option>
+                        <option value="float: right">右浮动</option>
+                        <option value="display: block">独占一行</option>
+                    </select>
+                </td>
+            </tr>
+
+        </table>
+
+
+    </div>
+
+    <div class="content" id="local" style="display:none">
+
+        <table cellpadding="0" cellspacing="0">
+            <input id="urll" type="hidden" value=""/>
+            <tr>
+                <td>
+                    <div style="width:240px;">
+                        <span style="display:block;float:left">URL：</span>
+                        <div style="float:right;width:200px;height:30px;" id="iframediv">
+                            <iframe  scrolling="no" frameborder="0" name="upImg" src="upload.php"
+                                    style="width:200px;height:25px;padding:0;margin:0"></iframe>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr style="display:none">
+                <td><span id="sourceSizel"></span></td>
+            </tr>
+
+            <tr>
+                <td><span>宽度：</span><input type="text" id="imgWidthl"/> px</td>
+            </tr>
+
+            <tr>
+                <td><span>高度：</span><input type="text" id="imgHeightl"/> px</td>
+            </tr>
+
+            <tr>
+                <td><span>标题：</span><input type="text" id="imgTitlel"/></td>
+            </tr>
+            <tr>
+                <td><span>对齐方式：</span>
+                    <select id="floatl">
+                        <option value="">默认</option>
+                        <option value="float: left">左浮动</option>
+                        <option value="float: right">右浮动</option>
+                        <option value="display: block">独占一行</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="thumb"></div>
+</div>
+
+<script type="text/javascript">
+function G( id ) {
+    return document.getElementById( id );
+}
+function reloadImg( url ) {
+    clearRemote();
+    var preImg = G( "thumb" );
+
+    if ( !/\.(png|gif|jpg|jpeg|bmp)$/ig.test( url ) && url.indexOf( "api.map.baidu.com" ) == -1 ) {
+        preImg.innerHTML = "";
+        return false;
+    } else {
+        preImg.innerHTML = "图片正在加载。。。";
+        preImg.innerHTML = "<img src='" + url + "' />";
+        var pimg = preImg.firstChild;
+        G( "urll" ).value = pimg.src;
+        pimg.onload = function() {
+            G( "sourceSizel" ).innerHTML = "原始宽：" + this.width + "px&nbsp;&nbsp;原始高：" + this.height + "px";
+            G( "sourceSizel" ).parentNode.parentNode.style.display = "";
+            suo( this, 100 );
+//                        G("imgWidthl").value = pimg.width ? pimg.width : 0;
+//                        G("imgHeightl").value = pimg.height ? pimg.height : 0;
+        };
+        pimg.onerror = function() {
+            preImg.innerHTML = "图片不存在";
+        }
+    }
+}
+
+//给tab注册切换事件
+(function toggletab() {
+    var tabs = G( "head" ).children;
+    for ( var i = 0,j; j = tabs[i]; i++ ) {
+        jbind( j, "click", function() {
+            var name = this.getAttribute( "name" );
+
+            var spans = document.getElementsByTagName( "span" );
+            var len = spans.length;
+            for ( var s = 0; s < len; s++ ) {
+                spans[s].className = 'def';
+            }
+            this.className = 'act';
+            G( "remote" ).style.display = "none";
+            G( "local" ).style.display = "none";
+            G( name ).style.display = "";
+//            if(name =="local" && G('url').value!="" && G('sourceSizel').innerHTML!="" ){
+//                clearRemote();
+//            }
+        } );
+    }
+    tabs[0].focus();
+})();
+
+function clearRemote(){
+    G('url').value = "";
+    G('imgWidth').value="";
+    G('imgHeight').value="";
+    G('imgTitle').value="";
+    G('float').value = "";
+    var source_size = G('sourceSize').parentNode.parentNode;
+    source_size.style.display="none";
+
+}
+
+function clearLocal(){
+    G('urll').value = "";
+    var iframediv = document.getElementById("iframediv");
+    iframediv.innerHTML = '<iframe  scrolling="no" frameborder="0" name="upImg" src="upload.php" style="width:200px;height:25px;padding:0;margin:0"></iframe>';
+    G('imgWidthl').value="";
+    G('imgHeightl').value="";
+    G('imgTitlel').value="";
+    G('floatl').value = "";
+    var source_size = G('sourceSizel').parentNode.parentNode;
+    source_size.style.display="none";
+}
+
+//获得img元素
+var img = editor.selection.getRange().getClosedNode(),image = {};
+if ( img && /img/ig.test( img.tagName ) && img.className != "edui-faked-video" ) {
+    image = img;
+    //判断图片是否在连接内部
+    var link = parent.baidu.editor.dom.domUtils.findParentByTagName( img, "a", true );
+    if ( link != null ) {
+        G( "float" ).disabled = true;
+    }
+}
+//绑定事件
+function jbind( obj, evt, fun ) {
+    if ( obj.addEventListener ) {  // firefox,w3c
+        obj.addEventListener( evt, fun, false );
+    } else {// ie
+        obj.attachEvent( "on" + evt, function() {
+            fun.apply( obj );
+        } );
+    }
+}
+//等比例缩小图片
+function suo( img, max ) {
+    var width = 0,height = 0,percent;
+    img.sWidth = img.width;
+    img.sHeight = img.height;
+    if ( img.width > max || img.height > max ) {
+        if ( img.width >= img.height ) {
+            if ( width = img.width - max ) {
+                percent = (width / img.width).toFixed( 2 );
+                img.height = img.height - img.height * percent;
+                img.width = max;
+            }
+        } else {
+            if ( height = img.height - max ) {
+                percent = (height / img.height).toFixed( 2 );
+                img.width = img.width - img.width * percent;
+                img.height = max;
+            }
+        }
+    }
+
+}
+//获得style里的某个样式对应的值
+function getPars( str, par ) {
+    var reg = new RegExp( par + ":\\s*((\\w)*)", "ig" );
+    var arr = reg.exec( str );
+    return arr ? arr[1] : "";
+}
+//初始化图片
+function initImg() {
+    if ( image.src ) {
+        G( "url" ).value = image.src ? image.src.replace( "&amp;", "&" ) : "";
+        G( "imgTitle" ).value = image.title ? image.title : "";
+        G( "imgTitlel" ).value = image.title ? image.title : "";
+        var url = G( "url" ).value,
+                preImg = G( "thumb" ),
+                pimg = "<img src='" + G( "url" ).value + "' title='" + image.title + "' />";
+        preImg.innerHTML = pimg;
+        var myimg = preImg.firstChild;
+        if ( myimg && myimg.tagName.toLowerCase() == "img" ) {
+            myimg.onload = function() {
+                G( "sourceSize" ).innerHTML = "原始宽：" + myimg.width + "px&nbsp;&nbsp;原始高：" + myimg.height + "px";
+                G( "sourceSize" ).parentNode.parentNode.style.display = "";
+                suo( myimg, 100 );
+            }
+                        myimg.setAttribute( "width", image.width );
+                        myimg.setAttribute( "height", image.height );
+//                        G( "imgWidth" ).value = myimg.width;
+//                        G( "imgHeight" ).value = myimg.height;
+                        var style = image.style.cssText;
+                        var reg = "";
+                        if ( /float/ig.test( style ) ) {
+                            reg = getPars( style, "float" );
+                        } else if ( /display/ig.test( style ) ) {
+                            reg = getPars( style, "display" );
+                        }
+                        switch ( reg ) {
+                            case "left":
+                                G( "float" ).value = "float: left";
+                                    G( "floatl" ).value = "float: left";
+                                break;
+                            case "right" :
+                                G( "float" ).value = "float: right";
+                                    G( "floatl" ).value = "float: right";
+                                break;
+                            case "block" :
+                                G( "float" ).value = "display: block";
+                                    G( "floatl" ).value = "display: block";
+                                break;
+                        }
+                    }
+                }
+
+            }
+
+            //输入url，加载图片的方法
+            function createImg() {
+                var url = G( "url" ).value,pimg,sourceSize,
+                        preImg = G( "thumb" );
+                if ( !/\.(png|gif|jpg|jpeg|bmp)$/ig.test( url ) && url.indexOf( "api.map.baidu.com" ) == -1 ) {
+                    preImg.innerHTML = "";
+                    G( "sourceSize" ).parentNode.parentNode.style.display = "none";
+                    return false;
+                } else {
+                    preImg.innerHTML = "图片正在加载。。。";
+                    preImg.innerHTML = "<img src='" + url + "' />";
+                    pimg = preImg.firstChild;
+                    pimg.onload = function() {
+                        G( "sourceSize" ).innerHTML = "原始宽：" + pimg.width + "px&nbsp;&nbsp;原始高：" + pimg.height + "px";
+                        G( "sourceSize" ).parentNode.parentNode.style.display = "";
+                        suo( this, 100 );
+//                        G("imgWidth").value = pimg.width ? pimg.width : 0;
+//                        G("imgHeight").value = pimg.height ? pimg.height : 0;
+                    }
+                    pimg.onerror = function() {
+                        G( "sourceSize" ).parentNode.parentNode.style.display = "none";
+                        preImg.innerHTML = "图片不存在";
+                    }
+                }
+            }
+
+            if ( parent.baidu.editor.browser.ie ) {
+                G( "url" ).onpropertychange = function() {
+                    if(this.value!=""){
+                       clearLocal();
+                    }
+                    createImg();
+                };
+            } else {
+                G( "url" ).addEventListener( "input", function() {
+                    clearLocal();
+                    createImg();
+                }, false );
+            }
+            initImg();
+            G( "imgWidth" ).onblur = function() {
+                var myimg = document.getElementsByTagName( "img" )[0],
+                        width = this.value;
+                if ( /^[1-9]+[.]?\d*$/g.test( width ) ) {
+                    myimg && myimg.setAttribute( "width", width );
+                }
+            }
+            G( "imgWidthl" ).onblur = function() {
+                var myimg = document.getElementsByTagName( "img" )[0],
+                        width = this.value;
+                if ( /^[1-9]+[.]?\d*$/g.test( width ) ) {
+                    myimg && myimg.setAttribute( "width", width );
+                }
+            }
+
+            G( "imgHeight" ).onblur = function() {
+                var myimg = document.getElementsByTagName( "img" )[0],
+                        height = this.value;
+                if ( /^[1-9]+[.]?\d*$/g.test( height ) ) {
+                    myimg && myimg.setAttribute( "height", height );
+                }
+            };
+
+G( "imgHeightl" ).onblur = function() {
+                var myimg = document.getElementsByTagName( "img" )[0],
+                        height = this.value;
+                if ( /^[1-9]+[.]?\d*$/g.test( height ) ) {
+                    myimg && myimg.setAttribute( "height", height );
+                }
+            };
+            G( "imgTitle" ).onblur = function() {
+                var myimg = document.getElementsByTagName( "img" )[0],val;
+                if ( val = this.value ) {
+                    myimg && myimg.setAttribute( "title", val );
+                }
+            };
+            G( "imgTitlel" ).onblur = function() {
+                var myimg = document.getElementsByTagName( "img" )[0],val;
+                if ( val = this.value ) {
+                    myimg && myimg.setAttribute( "title", val );
+                }
+            };
+
+            dialog.onok = function () {
+
+                var myimg = document.getElementsByTagName( "img" )[0],
+                        imgopt = {},
+//                        imgstr = "<img ",
+                        url,
+                        width,
+                        height;
+                if ( G( "remote" ).style.display != "none" ) {
+                    url = G( "url" ).value;
+                    width = G( "imgWidth" ).value,
+                    height = G( "imgHeight" ).value;
+                } else {
+                    url = G( "urll" ).value;
+                    width = G( "imgWidthl" ).value,
+                     height = G( "imgHeightl" ).value;
+                }
+                if ( !/\.(png|gif|jpg|jpeg|bmp)$/ig.test( url ) && url.indexOf( "api.map.baidu.com" ) == -1 && url.indexOf( "maps.google.com" ) == -1 ) {
+                    alert( "地址不正确！" );
+                    return false;
+                }
+                imgopt.src = url;
+//                imgstr += " src=" + url;
+                if ( !width ) {
+                    imgopt.width = myimg.sWidth;
+//                    imgstr += " width=" + myimg.sWidth;
+                }else if ( width && !/^[1-9]+[.]?\d*$/g.test( width ) ) {
+                    alert( "请输入正确的宽度" );
+                    return false;
+                } else {
+                    myimg && myimg.setAttribute( "width", width );
+                    imgopt.width = width;
+//                    imgstr += " width=" + width;
+                }
+                if ( !height ) {
+//                    imgstr += " height=" + myimg.sHeight;
+                    imgopt.height = myimg.sHeight;
+                }else if ( height && !/^[1-9]+[.]?\d*$/g.test( height ) ) {
+                    alert( "请输入正确的高度" );
+                    return false;
+                } else {
+                    myimg && myimg.setAttribute( "height", height );
+//                    imgstr += " height=" + height;
+                    imgopt.height = myimg.height;
+                }
+
+                if ( G( "imgTitle" ).value ) {
+                    myimg && myimg.setAttribute( "title", G( "imgTitle" ).value );
+//                    imgstr += " title=" + G( "imgTitle" ).value;
+                    imgopt.title =  G( "imgTitle" ).value;
+                }
+                if ( G( "imgTitlel" ).value ) {
+                    myimg && myimg.setAttribute( "title", G( "imgTitlel" ).value );
+//                    imgstr += " title=" + G( "imgTitlel" ).value;
+                    imgopt.title = G( "imgTitlel" ).value;
+                }
+                var alignType;
+                if(G('remote').style.display=="none"){
+                    alignType = G( "floatl" );
+                }else if(G('local').style.display=="none"){
+                   alignType = G( "float" );
+                }
+
+                if ( alignType.value ) {
+//                    imgstr += " style='" + alignType.value + "'";
+                    imgopt.style = alignType.value;
+                }
+//                editor.execCommand( 'inserthtml', imgstr+" >" );
+                editor.execCommand( 'insertimage', imgopt );
+                dialog.close();
+            };
+            var ipt = G( "url" );
+            var isIE = !!window.ActiveXObject;
+            if ( isIE ) {
+                setTimeout( function () {
+                    var r = ipt.createTextRange();
+                    r.collapse( false );
+                    r.select();
+                } );
+            }
+            ipt.focus();
+
+//            if(G('url').value==""){
+//               var remote_flag = G("remote"),
+//                   local_flag = G("local");
+//               var tabs = G( "head" ).children;
+//               tabs[1].className = "act";
+//               local_flag.style.display = "";
+//               tabs[0].className = "def";
+//               remote_flag.style.display = "none";
+//            }
+</script>
+</body>
+</html>

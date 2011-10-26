@@ -2,13 +2,21 @@
 $(".stream-items").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :object => @pic.stream_item ) %>");
 $(".stream-item").first().hide();
 $(".stream-items :first-child").slideDown("slow");
-
+$(".location_now").tooltip({
+position: 'bottom center ',
+delay: 50
+});
+$("img[rel]").overlay({
+effect: 'drop',
+mask: '#789'
+});
 <%if flash[:notice]%>
   $("#notice").html("<%=flash[:notice]%>")
   $("#notice").show()
   $('#notice').fadeOut(15000);
 <%end%>
-$("#share-note").resetForm();
+
+editor_pic.setContent("")
 $("#marker_geocode_position").attr("value", '');
 $("#marker_destin_position").attr("value", '');
 if(MapObject.temp_marker){
@@ -24,19 +32,5 @@ MapObject.map.removeOverlay(MapObject.temp_marker);
   <%else%> 
     MapObject.getPoint('<%=@marker.geocode_position%>', MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"share",html,'<%=@marker.geocode_position%>',true,<%=@marker.id%>,MapObject.map),MapObject.map);
   <%end%>
-
-
-
 <%end%>
 
-
-
-
-$(".location_now").tooltip({
-position: 'bottom center ',  
-delay: 50
-});
-$("img[rel]").overlay({
-effect: 'drop',
-mask: '#789'
-});

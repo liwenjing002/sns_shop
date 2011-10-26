@@ -36,7 +36,7 @@ module StreamsHelper
           
           temp += '<div class="simple_overlay" id="mies'+stream_item.id.to_s+'">' + image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :original),:alt => t('pictures.click_to_enlarge')) +'</div>'
           if !is_blank photo_text 
-            temp += "<div>描述：#{photo_text}</div>"
+            temp += "<div>#{photo_text.html_safe}</div>"
           end
           content_temp <<  temp
           content_temp << add_ditu_pic(stream_item.id,Picture.find(picture_id))

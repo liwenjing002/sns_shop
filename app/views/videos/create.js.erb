@@ -1,12 +1,13 @@
+
+<%if @notice%>
+  $("#update_video_notice").html("<%=@notice%>")
+  $("#update_video_notice").show()
+  $('#update_video_notice').fadeOut(15000);
+<%end%>
+ <%if   @video.errors.length == 0%>
 $(".stream-items").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :object => @video.stream_item ) %>");
 $(".stream-item").first().hide();
 $(".stream-items :first-child").slideDown("slow");
-
-<%if flash[:notice]%>
-  $("#notice").html("<%=flash[:notice]%>")
-  $("#notice").show()
-  $('#notice').fadeOut(15000);
-<%end%>
 $("#share-video").resetForm();
 $("#marker_geocode_position").attr("value", '');
 $("#marker_destin_position").attr("value", '');
@@ -32,5 +33,9 @@ $(".location_now").tooltip({
 position: 'bottom center ',
 delay: 50
 });
-
+$("img[rel]").overlay({
+effect: 'drop',
+mask: '#789'
+});
+<%end%>
 

@@ -1,11 +1,4 @@
-		<script>
-			var editor_note;
-			KindEditor.ready(function(K) {
-				editor_note = K.create('#photo_text', {
-					items : ['fontsize', '|', 'forecolor','bold', 'italic', 'underline', '|',  'emoticons','link']
-				});
-			});
-		</script>
+
 <!-- modal content -->
 <div id="pic-modal-content" style="display:none">
   <div id="pic-modal-title">发布图片
@@ -18,16 +11,18 @@
  <%= form_for Picture.new,:html => {:multipart => true, :id => 'share-picture', :target => 'upload_frame'} do |form| %>
       <%= file_field_tag 'pictures[]', :multiple => true %><br/>
       <%= text_field_tag 'album', '', :size => 10, :placeholder => t('share.default_album_name') %><br/>
-      <%= text_area_tag "photo_text",nil,:style=>"width:285px;height:150px;",:class=>"photo_text" %><br/>
+      <%= text_area_tag "photo_text",nil,:id=>"editor_pic" %>
       <div class="location_info">
         <%= text_field 'marker','geocode_position', :placeholder=>"我的位置",:class=>"marker_geocode_position" %><br/>
       </div>
       <%= text_field 'marker','marker_latitude', :type=>'hidden',:class=>"marker_marker_latitude" %>
       <%= text_field 'marker','marker_longitude', :type=>'hidden',:class=>"marker_marker_longitude" %>
 
-       <%#= submit_tag t('share.share') %>
-      <span class='button' onclick='ajaxFileUpload_file()' ><%= t('share.share') %></span>
+      <div id="pic_submit">
+        <span class='button' onclick='ajaxFileUpload_file()' ><%= t('share.share') %></span>
       <%=check_box "","is_location",:class=>"is_location",:title=>"是否带地理位置，默认为当前位置",:value=>"1"%>地理位置
+      </div>
+
     <% end %>
   </div>
 </div>

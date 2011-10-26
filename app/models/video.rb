@@ -1,5 +1,6 @@
 #require "open-uri" 
 class Video < ActiveRecord::Base
+  validates_presence_of :video_url,:message => "视频地址有误"
   belongs_to :person
   has_many :comments, :dependent => :destroy
   belongs_to :stream_item
@@ -53,6 +54,8 @@ class Video < ActiveRecord::Base
       end
       
     }
+    if self.video_url =="" or self.video_url == null
+    end
   end
   
   

@@ -27,7 +27,8 @@ function obj2str(o){
 }
 
 
-var editor_pic;
+var editor_pic
+
 var OSX = null
 var OSX2 = null
 var OSX3 = null
@@ -437,6 +438,7 @@ jQuery(function ($) {
                     containerId: 'map-container',
                     closeHTML: null,
                     minHeight: 200,
+                    maxHeight: 600,
                     opacity: 65, 
                     position: ["0",],
                     overlayClose: true,
@@ -466,17 +468,16 @@ jQuery(function ($) {
 
                     d.container.slideDown( function () {
                         setTimeout(function () {
-                            var h = $("#map-modal-data", self.container).height()
-                            + title.height()
-                            + 20; // padding
+                            var h = $("#map-modal-data", OSX6.container).height()
+                            + title.height() + 20;// padding
                             d.container.animate(
                             {
                                 height: h
                             }, 
                             200,
                             function () {
-                                $("div.close", self.container).show();
-                                $("#map-modal-data", self.container).show();
+                                $("div.close", OSX6.container).show();
+                                $("#map-modal-data", OSX6.container).show();
                           
                             }
                             );
@@ -486,24 +487,6 @@ jQuery(function ($) {
                 
                 
                 MapObject.reflesh(false,fun);  
-            //                d.container.slideDown( function () {
-            //                    setTimeout(function () {
-            //                        var h = $("#map-modal-data", self.container).height()
-            //                        + title.height()
-            //                        + 20; // padding
-            //                        d.container.animate(
-            //                        {
-            //                            height: h
-            //                        }, 
-            //                        200,
-            //                        function () {
-            //                            $("div.close", self.container).show();
-            //                            $("#map-modal-data", self.container).show();
-            //                          
-            //                        }
-            //                        );
-            //                    }, 300);
-            //                });
                
             })
         },
@@ -539,6 +522,7 @@ jQuery(function ($) {
                     containerId: 'pic-container',
                     closeHTML: null,
                     minHeight: 200,
+                    maxHeight: 600,
                     opacity: 65,
                     position: [$(window).height()/2-100 ,],
                     overlayClose: true,
@@ -559,18 +543,27 @@ jQuery(function ($) {
 
                 d.container.slideDown( function () {
                     setTimeout(function () {
-                        var h = $("#pic-modal-data", self.container).height()
-                        + title.height()
-                        + 20; // padding
+                        var h = $("#pic-modal-data", PIC.container).height()
+                        + title.height()+ 77;// padding
                         d.container.animate(
                         {
                             height: h
                         },
                         200,
                         function () {
-                            $("div.close", self.container).show();
-                            $("#pic-modal-data", self.container).show();
-                            $(".location_info").hide()
+                            $("div.close", PIC.container).show();
+                            $("#pic-modal-data", PIC.container).show();
+                            $(".location_info").hide();
+                            editor_pic = new baidu.editor.ui.Editor({
+                                toolbars:[
+                                ['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','|','MultiMenu'  ]
+                                ],
+                                autoClearinitialContent:true,
+                                initialContent: '<span style="color:#ccc">分享你的心情！！</span>',
+                                elementPathEnabled:false,
+                                textarea: 'picture[photo_text]'
+                            });
+                            editor_pic.render('editor_pic');  //editor为编辑器容器的id
                         }
                         );
                     }, 300);
@@ -592,6 +585,83 @@ jQuery(function ($) {
     };
 
     PIC.init();
+
+
+    //发表图片窗口
+    VIDEO = {
+        container: null,
+        init: function () {
+            $("#share-video-icon").click(function (e) {
+                e.preventDefault();
+
+                $("#video-modal-content").modal({
+                    overlayId: 'video-overlay',
+                    containerId: 'video-container',
+                    closeHTML: null,
+                    minHeight: 200,
+                    maxHeight: 600,
+                    opacity: 65,
+                    position: [$(window).height()/2-100 ,],
+                    overlayClose: true,
+                    autoResize:true,
+                    onOpen: VIDEO.open,
+                    onClose: VIDEO.close
+                });
+            });
+        },
+        open: function (d) {
+            var self = this;
+            self.container = d.container[0];
+            d.overlay.fadeIn( function () {
+
+                $("#video-modal-content", self.container).show();
+                var title = $("#video-modal-title", self.container);
+                title.show();
+
+                d.container.slideDown( function () {
+                    setTimeout(function () {
+                        var h = $("#video-modal-data", VIDEO.container).height()
+                        + title.height()+20;// padding
+                        d.container.animate(
+                        {
+                            height: h
+                        },
+                        200,
+                        function () {
+                            $("div.close", VIDEO.container).show();
+                            $("#video-modal-data", VIDEO.container).show();
+                            $(".location_info").hide();
+                            editor_video = new baidu.editor.ui.Editor({
+                                toolbars:[
+                                ['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','|','MultiMenu'  ]
+                                ],
+                                autoClearinitialContent:true,
+                                initialContent: '<span style="color:#ccc">分享你的心情！！</span>',
+                                elementPathEnabled:false,
+                                textarea: 'video[desc]'
+                            });
+                            editor_video.render('video_desc');  //editor为编辑器容器的id
+                        }
+                        );
+                    }, 300);
+                });
+            })
+        },
+        close: function (d) {
+            var self = this; // this = SimpleModal object
+            d.container.animate(
+            {
+                top:"-" + (d.container.height() + 20)
+            },
+            500,
+            function () {
+                self.close();
+            }
+            );
+        }
+    };
+
+    VIDEO.init();
  
     
 
@@ -918,13 +988,14 @@ $(".marker_geocode_position").live("change",function(){
 
 function ajaxFileUpload_file(){
     url = ""
+    text = editor_pic.getContent()
     if($(".is_location").attr("checked") ==true){
-        url = "?album="+$("#album").val() +"&photo_text="+$("#photo_text").val()+
+        url = "?album="+$("#album").val() +"&photo_text="+text+
         "&marker[geocode_position]="+$(".marker_geocode_position").val()+
         "&marker[marker_latitude]="+$(".marker_marker_latitude").val()+
         "&marker[marker_longitude]="+$(".marker_marker_longitude").val()
     }else{
-        url = "?album="+$("#album").val() +"&photo_text="+$("#photo_text").val()
+        url = "?album="+$("#album").val() +"&photo_text="+text
     }
 
     $.ajaxFileUpload({
@@ -1024,7 +1095,9 @@ $(document).ready(function() {
         }
     });
     
-    
+
+
+
 
 
 })

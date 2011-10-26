@@ -214,7 +214,8 @@ module ApplicationHelper
 
   def sanitize_html(html)
     return nil unless html
-    Sanitize.clean(html, Sanitize::Config::ONEBODY).html_safe
+    #    Sanitize.clean(html, Sanitize::Config::ONEBODY).html_safe
+    html.html_safe
   end
 
   def error_messages_for(form)
@@ -321,7 +322,7 @@ module ApplicationHelper
   end
   def marker_follow? marker
     if marker
-    MarkerToMap.find_by_marker_id_and_map_id(marker.id,@logged_in.map.id)
+      MarkerToMap.find_by_marker_id_and_map_id(marker.id,@logged_in.map.id)
     else
       nil
     end
@@ -342,24 +343,24 @@ module ApplicationHelper
       if arg==nil or arg == ""
         return true
       else
-       next
+        next
       end
     end
     false
   end
   
-    def is_blank_zero *args
+  def is_blank_zero *args
     args.each do |arg|
       if arg==nil or arg == "" or arg.to_f  == 0
         return true
       else
-       next
+        next
       end
     end
     false
   end
 
-  
+
   
 
   class << self
