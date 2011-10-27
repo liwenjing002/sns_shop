@@ -5,20 +5,19 @@
  */
 $(document).ready(function() {
 
-    $("img[rel]").overlay({
-        effect: 'drop',
-        mask: '#789',
-        fixed:false
-    });
-});
+
 
 
 $.easing.drop = function (x, t, b, c, d) {
     return -c * (Math.sqrt(1 - (t/=d)*t) - 1) + b;
 };
 
-
-// loading animation
+    $("img[rel]").overlay({
+        effect: 'drop',
+        mask: '#789',
+        fixed:true
+    });
+//// loading animation
 $.tools.overlay.addEffect("drop", function(css, done) {
     // use Overlay API to gain access to crucial elements
     var conf = this.getConf(),
@@ -38,16 +37,16 @@ $.tools.overlay.addEffect("drop", function(css, done) {
 
     // begin animating with our custom easing
     overlay.animate({
-        top: '+=55',  
-        opacity: 1,  
+        top: '+=55',
+        opacity: 1,
         width: '+=20'
     }, 400, 'drop', done);
 
 /* closing animation */
 }, function(done) {
     this.getOverlay().animate({
-        top:'-=55', 
-        opacity:0, 
+        top:'-=55',
+        opacity:0,
         width:'-=20'
     }, 300, 'drop', function() {
         $(this).hide();
@@ -56,8 +55,6 @@ $.tools.overlay.addEffect("drop", function(css, done) {
 }
 );
 
-$("img[rel]").overlay({
-    effect: 'drop',
-    mask: '#789'
+
 });
 

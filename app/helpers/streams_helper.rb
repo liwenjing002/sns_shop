@@ -15,10 +15,7 @@ module StreamsHelper
 
   def stream_item_content(stream_item, use_code=false,type ="stream_item")
     content = ''
-
     if stream_item.context.any?
-      content += "<div id= 'pic_share'>"
-      content += "<div id= 'triggers'>"
       content +=  "".tap do |content_temp|
         stream_item.context['picture_ids'].to_a.each do |picture_id, fingerprint, extension,photo_text|
           if type == "stream_item"
@@ -42,9 +39,6 @@ module StreamsHelper
           content_temp << add_ditu_pic(stream_item.id,Picture.find(picture_id))
         end
       end.html_safe
-      content += "</div>"
-      content += "</div>"
-
     end
     if stream_item.body
       content += "<div id= 'text_share'>"
@@ -75,7 +69,7 @@ module StreamsHelper
               stream_item.streamable, :title => t('pictures.click_to_enlarge')
             )
       if !is_blank stream_item.streamable.desc
-            content += "<div>描述：#{stream_item.streamable.desc}</div>"
+            content += "<div>#{stream_item.streamable.desc.html_safe}</div>"
           end
       content += ('<div class="simple_overlay" id="mies'+stream_item.id.to_s+'">' + "#{stream_item.streamable.video_url}" +'</div>' )  
       content += add_ditu_pic(stream_item.id,stream_item.streamable)

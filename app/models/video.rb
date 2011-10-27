@@ -1,6 +1,6 @@
 #require "open-uri" 
 class Video < ActiveRecord::Base
-  validates_presence_of :video_url,:message => "视频地址有误"
+#  validates_presence_of :video_url,:message => "视频地址有误"
   belongs_to :person
   has_many :comments, :dependent => :destroy
   belongs_to :stream_item
@@ -43,10 +43,10 @@ class Video < ActiveRecord::Base
       video.video_url = "<embed src='http://player.ku6.com/refer/#{video_id}/v.swf' quality='high' width='480' height='400' allowScriptAccess='sameDomain' type='application/x-shockwave-flash'></embed>"},
   }
 
-  before_create :parseurl
+
   after_create :create_as_stream_item
   
-  def parseurl
+  def validate
     Video::URL_PATTERN.each { |key,value|
       m = value.match(self.html_url)
       if m
@@ -54,9 +54,11 @@ class Video < ActiveRecord::Base
       end
       
     }
-    if self.video_url =="" or self.video_url == null
+    if self.video_url =="" or self.video_url == nil
+      self.errors.add(:video_url, "视频地址有误")
     end
   end
+
   
   
   def create_as_stream_item

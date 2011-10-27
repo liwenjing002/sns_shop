@@ -1005,18 +1005,20 @@ function ajaxFileUpload_file(){
         fileElementId:'pictures_',
         success: function (data,status){
             if(data && data.success==true){
-                $("#notice").html(data.notice)
-                $("#notice").show()
-                $('#notice').fadeOut(15000);
                 $("#share-picture").resetForm();
                 $("#marker_geocode_position").attr("value", '');
                 $("#marker_destin_position").attr("value", '')
+                $("#update_pic_notice").html(data.notice)
+                $("#update_pic_notice").show()
+                $('#update_pic_notice').fadeOut(15000);
+                editor_pic.setContent("");
                 for (var i=0;i<=data.html.length-1;i++) {
                     $.ajax({
                         type: "GET",
                         url: "/pictures/get_stream_item",
                         data:"pic_id="+data.html[i].pic_id+"&marker_id="+data.html[i].marker_id,
-                        success: function(){}
+                        success: function(){
+                        }
                     });
                 }
             }else{
@@ -1024,8 +1026,9 @@ function ajaxFileUpload_file(){
         }
         },
         error: function (data, status, e){
-            alert(data.success)
-            alert("文件保存失败2")
+             $("#update_pic_notice").html('文件保存失败')
+                $("#update_pic_notice").show()
+                $('#update_pic_notice').fadeOut(15000);
         }
     })
     return false;
@@ -1033,6 +1036,151 @@ function ajaxFileUpload_file(){
 
 
 //发表状态 end
+
+
+
+
+
+
+
+
+
+
+function observeFields(func, frequency, fields) {
+    observeFieldsValueMap = window.observeFieldsValueMap || {};
+    $.each(fields, function(index, field){
+        observeFieldsValueMap[field] = $('#'+field).val();
+    });
+    var observer = function() {
+        var changed = false;
+        for(var f in observeFieldsValueMap) {
+            var currentValue = $('#'+f).val();
+            if(observeFieldsValueMap[f] != currentValue) {
+                observeFieldsValueMap[f] = currentValue;
+                changed = true;
+            }
+        }
+        if(changed) func(f);
+    };
+    setInterval(observer, frequency);
+};
+
+function custom_select_val(select_elm, prompt_text){
+    if(val = prompt(prompt_text, '')) {
+        var option = $('<option/>');
+        option.val(val);
+        option.html(val);
+        option.attr('selected', true);
+        option.appendTo(select_elm);
+        return true;
+    } else {
+        return false;
+    }
+};
+
+function shareSomething(hash) {
+    $('#share').dialog('open');
+    $('#share-something').hide();
+    $('#map-container').hide();
+    $('#group-details').hide();
+}
+
+$('#share_picture_form').live('submit', function(){
+    if($('#album_id').val() == '!') {
+        return custom_select_val($('#album_id'), $('#share_picture_form').attr('data-album-prompt'));
+    }
+});
+
+if(location.hash != '') {
+    window.after_tab_setup = function() {
+        shareSomething(location.hash.replace(/#/, ''));
+    };
+}
+
+function setupMenu(selector, contentSelector) {
+    $(selector).qtip({
+        content: $(contentSelector).html(),
+        show: {
+            delay: 0,
+            when: {
+                event: 'mouseover'
+            },
+            effect: {
+                type: 'slide'
+            }
+        },
+        hide: {
+            delay: 500,
+            fixed: true,
+            when: {
+                event: 'mouseout'
+            }
+        },
+        style: {
+            name: 'light',
+            tip: navigator.userAgent.match(/mobile/i) ? 'topLeft' : 'topMiddle'
+        },
+        position: {
+            corner: {
+                target: 'bottomMiddle',
+                tooltip: navigator.userAgent.match(/mobile/i) ? 'topLeft' : 'topMiddle'
+            }
+        }
+    });
+}
+
+function setupMenus() {
+    if($('#home-tab-menu').length == 1) {
+        setupMenu('#home-tab', '#home-tab-menu');
+    }
+    if($('#profile-tab-menu').length == 1) {
+        setupMenu('#profile-tab', '#profile-tab-menu');
+    }
+    if($('#group-tab-menu').length == 1) {
+        setupMenu('#group-tab', '#group-tab-menu');
+    }
+    if($('#marker-tab-menu').length == 1) {
+        setupMenu('#new-marker-tab', '#marker-tab-menu');
+    }
+    if($('#posittion-tab-menu').length == 1) {
+        setupMenu('#posittion-tab', '#posittion-tab-menu');
+    }
+    if($('#activities-tab-menu').length == 1) {
+        setupMenu('#activities-tab', '#activities-tab-menu');
+    }
+}
+
+$(setupMenus);
+
+$(function(){
+    $('input[placeholder]').focus(function(){
+        var i = $(this);
+        var p = i.attr('placeholder');
+        if(i.val() == p) {
+            i.val('');
+            i.removeClass('defaulted');
+        }
+    }).blur(function(){
+        var i = $(this);
+        var p = i.attr('placeholder');
+        if(i.val() == '') {
+            i.val(p);
+            i.addClass('defaulted');
+        }
+    }).trigger('blur');
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //一些加載文檔后執行的js
@@ -1096,7 +1244,52 @@ $(document).ready(function() {
     });
     
 
+$.easing.drop = function (x, t, b, c, d) {
+    return -c * (Math.sqrt(1 - (t/=d)*t) - 1) + b;
+};
 
+    $("img[rel]").overlay({
+        effect: 'drop',
+        mask: '#789',
+        fixed:false
+    });
+//// loading animation
+$.tools.overlay.addEffect("drop", function(css, done) {
+    // use Overlay API to gain access to crucial elements
+    var conf = this.getConf(),
+    overlay = this.getOverlay();
+
+    // determine initial position for the overlay
+    if (conf.fixed)  {
+        css.position = 'fixed';
+    } else {
+        css.top += $(window).scrollTop();
+        css.left += $(window).scrollLeft();
+        css.position = 'absolute';
+    }
+
+    // position the overlay and show it
+    overlay.css(css).show();
+
+    // begin animating with our custom easing
+    overlay.animate({
+        top: '+=55',
+        opacity: 1,
+        width: '+=20'
+    }, 400, 'drop', done);
+
+/* closing animation */
+}, function(done) {
+    this.getOverlay().animate({
+        top:'-=55',
+        opacity:0,
+        width:'-=20'
+    }, 300, 'drop', function() {
+        $(this).hide();
+        done.call();
+    });
+}
+);
 
 
 
