@@ -1,6 +1,6 @@
 class UpdateVideo < ActiveRecord::Migration
   def self.up
-    chang_column :videos,:desc,:text
+    change_column :videos,:desc,:text
   end
 
   def self.down
