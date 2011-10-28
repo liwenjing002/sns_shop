@@ -456,7 +456,6 @@ jQuery(function ($) {
                 $("#map-modal-content", self.container).show();
                 var title = $("#map-modal-title", self.container);
                 title.show();
-                MapObject.reflesh(false);  
                 fun = function(data, textStatus){
                     if(data.length >0){
                         for (var i=0;i<=data.length-1;i++) 
@@ -464,6 +463,8 @@ jQuery(function ($) {
                             $("#see_all_streams").prepend(data[i].html)
                         }
         
+                    }else{
+                        $("#see_all_streams").prepend("<p>没有内容</p>")
                     }
 
                     d.container.slideDown( function () {
@@ -559,7 +560,7 @@ jQuery(function ($) {
                                 ['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','|','MultiMenu'  ]
                                 ],
                                 autoClearinitialContent:true,
-                                initialContent: '<span style="color:#ccc">分享你的心情！！</span>',
+                                initialContent: '',
                                 elementPathEnabled:false,
                                 textarea: 'picture[photo_text]'
                             });
@@ -587,7 +588,7 @@ jQuery(function ($) {
     PIC.init();
 
 
-    //发表图片窗口
+    //发表视频窗口
     VIDEO = {
         container: null,
         init: function () {
@@ -636,7 +637,7 @@ jQuery(function ($) {
                                 ['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','|','MultiMenu'  ]
                                 ],
                                 autoClearinitialContent:true,
-                                initialContent: '<span style="color:#ccc">分享你的心情！！</span>',
+                                initialContent: '',
                                 elementPathEnabled:false,
                                 textarea: 'video[desc]'
                             });

@@ -1,10 +1,10 @@
-<div id = 'stream_item_<%=marker.id%>' class='stream-item' style='margin-bottom: 0px;min-height:70px;height:auto;min-width:200px;width:auto;'>
+<div id = 'stream_item_<%=marker.id%>' class='stream-item' >
 	<div class='stream-item-meta'>
-          <%= render :partial => 'streams/person_thumbnail', :locals => {:stream_item => marker.object} %>
+          <%= render :partial => 'streams/person_thumbnail', :locals => {:person => marker.person} %>
 	<div style='clear:left;'></div>
 	</div>
 	<div class='stream-item-body'><div class='stream-item-content'>
-	 <%= stream_item_content(marker.object,false,"marker") %>
+	 <%= stream_item_content(marker.object,false,show_on) %>
 	<%=link_to t('comments.view') + '...', marker.object, :class => 'small' ,:target=>'_blank'%> 
 	</div>
 	<div class='nowrap stream-item-timestamp'>
@@ -21,6 +21,7 @@
         <span><a href='#' onclick='MapObject.marker_last_next(<%=marker.id%>,1)'>last</a></span> 
         <span><a href='#' onclick='MapObject.marker_last_next(<%=marker.id%>,2)'>next</a></span> 
 	</div>
+</div>
 </div>
 
     

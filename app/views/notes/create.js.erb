@@ -2,6 +2,8 @@ $(".stream-items").prepend("<%= escape_javascript(render :partial => 'streams/st
 $(".stream-item").first().hide();
 $(".stream-items :first-child").slideDown("slow");
 
+
+
 <%if flash[:notice]%>
   $("#notice").html("<%=flash[:notice]%>")
   $("#notice").show()
@@ -17,9 +19,6 @@ MapObject.temp_marker.closeInfoWindow(MapObject.infoWindow);
 MapObject.map.removeOverlay(MapObject.temp_marker); 
 }
 <%if @marker_at %>
-  <%if @marker_last and @marker_last.length>0%>
-
-  <%end%>
   html = '<%= raw mark_html(@marker_at) %>'
   <%if !is_blank_zero(@marker_at.marker_latitude,@marker_at.marker_longitude) %>
     point = new BMap.Point('<%= @marker_at.marker_longitude %>', '<%=@marker_at.marker_latitude%>')

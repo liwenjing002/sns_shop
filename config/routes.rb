@@ -25,7 +25,6 @@ OneBody::Application.routes.draw do
   end
 
   namespace :location  do
-   
     resources :postitions do
       collection do
         get :update_postition

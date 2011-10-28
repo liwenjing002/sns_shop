@@ -17,7 +17,7 @@ class Location::PlacesController < ApplicationController
     @be_here_peoples = PersonImpression.find_all_by_impression_id_and_object_type_and_object_id(4,"Place",params[:id])
     @love_to_peoples = PersonImpression.find_all_by_impression_id_and_object_type_and_object_id(3,"Place",params[:id])
     #    unless  fragment_exist?(:controller => 'places', :action => 'show', :fragment => 'place_share_items')
-    @stream_items = @place.shared_stream_items
+#    @stream_items = @place.shared_stream_items
     #    end
     
   end
@@ -96,20 +96,15 @@ class Location::PlacesController < ApplicationController
   
   
   def add_temp_pic
-     place = Place.find(params[:place_id]) if params[:place_id]
-    @album =  Album.find_or_create_by_name(place ? place.place_name : @logged_in.name) 
     if params[:place_id]
-      @album.place_id = params[:place_id] 
+      place = Place.find(params[:place_id])
+      @album =  Album.find_or_create_by_name( place.place_name)
+      @album.place_id = params[:place_id]
       @album.save
+      pic = @album.pictures.create( :person => (@logged_in), :photo  => params[:picture],:type=>"mix"  )
+    else
+      pic = Pictures.create( :person => (@logged_in), :photo  => params[:picture], :type=>"mix"   )
     end
-     
-    pic = @album.pictures.create(
-      :person => (@logged_in),
-      :photo  => params[:picture],
-      :type=>"mix"
-    )
-    
-    #    render :json=>{:success=>true}
     render :text => "{success:'" + "true" + "', pic_id:'" + pic.id.to_s + "',pic_url:'" + pic.photo.url(:profile) + "'}";
   end
   
@@ -183,16 +178,16 @@ class Location::PlacesController < ApplicationController
   
   
   def search
-     if  params[:place_key]
-        conditions = []
-       conditions.add_condition ['place_name like ?', '%' + params[:place_key] + '%']
-       @places = Place.find(:all, :conditions => conditions, :order => 'place_name')
+    if  params[:place_key]
+      conditions = []
+      conditions.add_condition ['place_name like ?', '%' + params[:place_key] + '%']
+      @places = Place.find(:all, :conditions => conditions, :order => 'place_name')
     end
     if params[:tag] 
-        conditions = []
-       conditions.add_condition ['tag_id = ?', params[:tag]] 
-       conditions.add_condition ['taggable_type = ?', 'Place'] 
-       @places = Place.find(:all,:joins=>["INNER JOIN taggings on taggings.taggable_id = places.id"], :conditions => conditions, :order => 'place_name')
+      conditions = []
+      conditions.add_condition ['tag_id = ?', params[:tag]]
+      conditions.add_condition ['taggable_type = ?', 'Place']
+      @places = Place.find(:all,:joins=>["INNER JOIN taggings on taggings.taggable_id = places.id"], :conditions => conditions, :order => 'place_name')
     end
     
   end

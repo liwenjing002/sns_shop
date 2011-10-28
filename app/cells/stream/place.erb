@@ -1,0 +1,3 @@
+<%=link_to image_tag(@stream_item.streamable.picture||"missing_large.png", :alt => t('pictures.click_to_enlarge'),
+  :class => 'stream-pic',:rel=>"#mies#{@stream_item.id}"),
+  [:location, @stream_item.streamable], :title => t('pictures.click_to_enlarge')  %>

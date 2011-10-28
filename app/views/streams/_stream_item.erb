@@ -10,7 +10,8 @@
       </h3>
     <% else %>
       <div class="stream-item-content">
-        <%= stream_item_content(stream_item) %>
+        <%=render_cell :stream,:content,:stream_item=>stream_item%>
+        <%#= stream_item_content(stream_item) %>
         <% unless stream_item.wall %>
           <%= link_to t('comments.view') + '...', stream_item, :class => 'small' %>
         <% end %>
@@ -31,7 +32,8 @@
       <% end %>
     </div>
     <% if stream_item.title %>
-      <%= stream_item_content stream_item %>
+     <%=render_cell :stream,:content,:stream_item=>stream_item%>
+      <%#= stream_item_content stream_item %>
     <% end %>
     
     <table class="comments"id ="<%=stream_item.id%>_comments">
@@ -45,7 +47,7 @@
         <%= link_to_function t('comments.add_a_comment'),
           "$('#new-comment-for-#{stream_item.id}').show(); $(this.parentNode).css('visibility', 'visible');",
           :class => 'discreet small comment-icon' %>
-         <%= link_to_function '', "$('#new-comment-for-#{stream_item.id}').hide()", :class =>  'delete-icon',:style=>"margin-left:270px;" %>
+         <%= link_to_function '', "$('#new-comment-for-#{stream_item.id}').hide()", :class =>  'delete-icon',:style=>"margin-left:270px;display:none" %>
         <div id="new-comment-for-<%= stream_item.id %>" style="display:none;">
           <%= form_for Comment.new,:remote=>true do |form| %>
           <%= hidden_field_tag 'stream_item_id', stream_item.id %>
@@ -63,7 +65,6 @@
             <% else %>
               <%= hidden_field_tag stream_item.streamable_type.downcase + '_id', stream_item.streamable_id %>
             <% end %>
-            <%= hidden_field_tag :return_to, stream_path %>
             <%= text_area_tag 'text', '', :rows => 3, :cols => 40, :id => "new_comment_textarea_#{stream_item.id}" %><br/>
             <%= form.submit t('comments.save') %>
           <% end %>
@@ -82,8 +83,6 @@
           <%= link_to stream_item.wall.name, stream_item.wall %>
         <% end %>
       </div>
-    <% else %>
-      <div class="stream-item-spacer"></div>
     <% end %>
   </div>
 </div>

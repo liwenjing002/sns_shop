@@ -2,6 +2,7 @@
 class PlaceShare < ActiveRecord::Base
   belongs_to :person
   belongs_to :stream_item
+   belongs_to :place
   belongs_to :picture
   attr_accessor:album
     has_many :comments, :dependent => :destroy

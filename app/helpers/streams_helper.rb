@@ -13,7 +13,7 @@ module StreamsHelper
     send(stream_item.streamable_type.underscore + '_url', stream_item.streamable_id)
   end
 
-  def stream_item_content(stream_item, use_code=false,type ="stream_item")
+  def stream_item_content(stream_item, use_code=false,type ="stream_item",show_on = "wall")
     content = ''
     if stream_item.context.any?
       content +=  "".tap do |content_temp|
@@ -63,7 +63,6 @@ module StreamsHelper
     end
 
     if stream_item.streamable_type == "Video"
-
       content +=  link_to(
               image_tag(stream_item.streamable.screenshots_url||"missing_large.png", :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic',:rel=>"#mies#{stream_item.id}"),
               stream_item.streamable, :title => t('pictures.click_to_enlarge')
@@ -74,6 +73,14 @@ module StreamsHelper
       content += ('<div class="simple_overlay" id="mies'+stream_item.id.to_s+'">' + "#{stream_item.streamable.video_url}" +'</div>' )  
       content += add_ditu_pic(stream_item.id,stream_item.streamable)
     end
+     if stream_item.streamable_type == "Place"
+           content +=  link_to(
+              image_tag(stream_item.streamable.picture||"missing_large.png", :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic',:rel=>"#mies#{stream_item.id}"),
+             [:location, stream_item.streamable], :title => t('pictures.click_to_enlarge')
+            )
+    end
+
+
     raw content
   end
 

@@ -1,4 +1,4 @@
-$(".stream-items").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :object => @pic.stream_item ) %>");
+$("#stream_item_wall").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :object => @pic.stream_item ) %>");
 $(".stream-item").first().hide();
 $(".stream-items :first-child").slideDown("slow");
 $("img[rel='#mies<%=@pic.stream_item.id%>']").overlay({effect: 'drop',mask: '#789' });
@@ -19,7 +19,4 @@ MapObject.map.removeOverlay(MapObject.temp_marker);
   <%end%>
 <%end%>
 
-    $(".location_now").tooltip({
-        position: 'bottom center ',
-        delay: 50
-    });
+
