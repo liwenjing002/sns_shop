@@ -68,9 +68,9 @@ class PicturesController < ApplicationController
         picture.destroy rescue nil
       end
     end
-    flash[:notice] = t('pictures.saved', :success => success)
-    flash[:notice] += " " + t('pictures.failed', :fail => fail) if fail > 0
-    flash[:notice] += " " + errors.join('; ') if errors.any?
+  @notice = t('pictures.saved', :success => success)
+    @notice+= " " + t('pictures.failed', :fail => fail) if fail > 0
+    @notice += " " + errors.join('; ') if errors.any?
     html = []
     
     pic_arr.each do |pic|
@@ -95,7 +95,7 @@ class PicturesController < ApplicationController
     end
 
 
-    render :text=> {:success=>true,:html=>html,:notice=>flash[:notice]}.to_json
+    render :text=> {:success=>true,:html=>html,:notice=>@notice}.to_json
     #    redirect_to params[:redirect_to] || @group || album_pictures_path(@album)
   end
 

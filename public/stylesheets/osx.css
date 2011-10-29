@@ -27,7 +27,7 @@
 #activity-container h2 {margin:10px 0 6px;}
 #activity-container p {margin-bottom:10px;}
 #activity-container span {color:#777;}
-#activity-modal-data {max-height: 500px}
+#activity-modal-data {max-height: 500px;overflow-y:scroll;}
 
 #osx-modal-content, #osx-modal-data {display:none;}
 
@@ -63,7 +63,7 @@
 #dream-container h2 {margin:10px 0 6px;}
 #dream-container p {margin-bottom:10px;}
 #dream-container span {color:#777;}
-#dream-modal-data {max-height: 500px}
+#dream-modal-data {max-height: 500px;overflow-y:scroll;}
 
 
 
@@ -83,7 +83,7 @@
 #map-container h2 {margin:10px 0 6px;}
 #map-container p {margin-bottom:10px;}
 #map-container span {color:#777;}
-#map-modal-data {max-height: 500px}
+#map-modal-data {max-height: 600px;overflow: auto }
 
 
 
@@ -104,7 +104,26 @@
 #pic-container h2 {margin:10px 0 6px;}
 #pic-container p {margin-bottom:10px;}
 #pic-container span {color:#777;}
-#pic-modal-data {max-height: 500px}
+#pic-modal-data {max-height: 600px;overflow: auto}
+
+
+#video-modal-content, #video-modal-data {display:none;}
+
+/* Overlay */
+#video-overlay {background-color:#000; cursor:wait;}
+
+/* Container */
+#video-container {background-color:#eee; color:#000; font: 16px/24px "Lucida Grande",Arial,sans-serif; padding-bottom:4px; width:600px; -moz-border-radius-bottomleft:6px; -webkit-border-bottom-left-radius:6px; -moz-border-radius-bottomright:6px; -webkit-border-bottom-right-radius:6px; border-radius:0 0 6px 6px; -moz-box-shadow:0 0 64px #000; -webkit-box-shadow:0 0 64px #000; box-shadow:0 0 64px #000;}
+#video-container a {color: #5F9128;}
+#video-container #video-modal-title {color:#000; background-color:#ddd; border-bottom:1px solid #ccc; font-weight:bold; padding:6px 8px; text-shadow:0 1px 0 #f4f4f4;}
+#video-container .close {display:none; position:absolute; right:0; top:0;}
+#video-container .close a {display:block; color:#777; font-weight:bold; padding:6px 12px 0; text-decoration:none; text-shadow:0 1px 0 #f4f4f4;}
+#video-container .close a:hover {color:#000;}
+#video-container #video-modal-data {font-size:12px; padding:6px 12px;}
+#video-container h2 {margin:10px 0 6px;}
+#video-container p {margin-bottom:10px;}
+#video-container span {color:#777;}
+#video-modal-data {max-height: 300px;overflow: auto}
 
 
 

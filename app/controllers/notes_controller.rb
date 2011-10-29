@@ -41,10 +41,10 @@ class NotesController < ApplicationController
   def create
     params[:note][:person_id] =  @logged_in.id
     params[:marker][:owner_id] =  @logged_in.id
-    if  params[:marker][:geocode_position]!= '' and 
-        params[:marker][:geocode_position]!= '地球某地'  and
-        params[:marker][:marker_longitude]!= '' and 
-        params[:marker][:marker_latitude]!= ''
+    if  (params[:marker][:geocode_position]!= '' and
+        params[:marker][:geocode_position]!= '地球某地')  or (        params[:marker][:marker_longitude]!= '' and
+        params[:marker][:marker_latitude]!= '')
+
       is_location = true 
     else
       is_location = false

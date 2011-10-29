@@ -1,14 +1,8 @@
-
 $(".stream-items").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :object => @pic.stream_item ) %>");
 $(".stream-item").first().hide();
 $(".stream-items :first-child").slideDown("slow");
+$("img[rel='#mies<%=@pic.stream_item.id%>']").overlay({effect: 'drop',mask: '#789'});
 
-<%if flash[:notice]%>
-  $("#notice").html("<%=flash[:notice]%>")
-  $("#notice").show()
-  $('#notice').fadeOut(15000);
-<%end%>
-$("#share-note").resetForm();
 $("#marker_geocode_position").attr("value", '');
 $("#marker_destin_position").attr("value", '');
 if(MapObject.temp_marker){
@@ -21,14 +15,10 @@ MapObject.map.removeOverlay(MapObject.temp_marker);
   <%if !is_blank_zero(@marker.marker_latitude,@marker.marker_longitude) %>
     point = new BMap.Point('<%= @marker.marker_longitude %>', '<%=@marker.marker_latitude%>')
     marker = MapObject.add_marker_to_map(point,"/images/map/default.png",34,30,html,"share",<%=@marker.id%>,true)
-  <%else%> 
+  <%else%>
     MapObject.getPoint('<%=@marker.geocode_position%>', MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"share",html,'<%=@marker.geocode_position%>',true,<%=@marker.id%>,MapObject.map),MapObject.map);
   <%end%>
-
-
-
 <%end%>
-
 
 
 
@@ -36,7 +26,4 @@ $(".location_now").tooltip({
 position: 'bottom center ',  
 delay: 50
 });
-$("img[rel='<%=@pic.stream_item%>']").overlay({
-effect: 'drop',
-mask: '#789'
-});
+
