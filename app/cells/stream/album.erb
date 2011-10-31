@@ -1,0 +1,46 @@
+<%if @stream_item.context.any?%>
+  <%@stream_item.context['picture_ids'].to_a.each do |picture_id, fingerprint, extension,photo_text|%>
+    <% if @show_on == "wall"%>
+      <%=link_to  image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :large), :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic',:rel=>"#mies#{@stream_item.id}"),
+        album_picture_path(@stream_item.streamable_id, picture_id), :title => t('pictures.click_to_enlarge')
+    %>
+
+      <div class="simple_overlay" id="mies<%=@stream_item.id%>">
+        <%=image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :original),:alt => t('pictures.click_to_enlarge'))%>
+      </div>
+
+    <%else if @show_on == "map" %>
+        <%=link_to(
+          image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :small), :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic',:rel=>"#mies#{@stream_item.id}"),
+          album_picture_path(@stream_item.streamable_id, picture_id), :title => t('pictures.click_to_enlarge')
+        )  %> 
+      <%end%>
+    <%end%>
+
+    <% if !is_blank photo_text%> 
+      <div><%=raw photo_text%></div>
+    <%end%>
+    <% if @show_on == "wall"%>
+      <%pic = Picture.find(picture_id)%>
+      <%if !is_blank pic.location%>
+      <div stream_item_id="<%=@stream_item.id %>" class="location_now" style='cursor:pointer;color:red'>
+        <span style="color: #5F9128">发表位置：</span>
+        <%=pic.location%>
+      </div>
+      <% if !is_blank pic.latitude %>
+        <%marker = "#{pic.longitude},#{pic.latitude}"%>
+      <%else if !is_blank pic.location%>
+          <% marker = pic.location%>
+        <%end%>
+      <%end%>
+
+      <div class="tooltip_stream_item">
+        <img src='http://api.map.baidu.com/staticimage?center=<%= marker%>&markers=<%= marker%>&&width=300&height=140&zoom=13'></img>
+      </div>
+      <%end%>
+
+    <%end%>
+
+  <%end%>
+
+<%end%>

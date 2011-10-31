@@ -1,9 +1,11 @@
 <% content_for :head do %>
-    <%= stylesheet_link_tag  "osx" %>
+  <%= stylesheet_link_tag  "osx" %>
   <%= javascript_include_tag "extend/ui" %>
   <%= javascript_include_tag "ueditor/editor_config" %>
-   <%= javascript_include_tag "ueditor/editor_ui_all_min" %>
+  <%= javascript_include_tag "ueditor/editor_ui_all_min" %>
   <%= stylesheet_link_tag  "ueditor/themes/default/ueditor" %>
+  <%= javascript_include_tag "extend/jquery.form" %>
+  <%= stylesheet_link_tag  "osx" %>
 <%end%>
 <% if @has_friendship_requests %>
   <div class="highlight">
@@ -42,6 +44,6 @@
   <% end %>
 <% end %>
 
-<div class="stream-items">
+<div class="stream-items" id="stream_item_wall">
   <%= render :partial => 'stream_items' %>
 </div>

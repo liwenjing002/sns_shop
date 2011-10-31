@@ -54,7 +54,7 @@ class NotesController < ApplicationController
     params[:note][:longitude] = params[:marker][:marker_longitude] if is_location
     params[:note][:latitude] = params[:marker][:marker_latitude] if is_location
     @note = Note.create(params[:note]) 
-    unless is_location
+    if is_location
       params[:marker][:marker_longitude] = BigDecimal.new(params[:marker][:marker_longitude])
       params[:marker][:marker_latitude] = BigDecimal.new(params[:marker][:marker_latitude])
       @marker_at = Marker.new(params[:marker])
@@ -65,7 +65,7 @@ class NotesController < ApplicationController
       @marker_at.save
       @last_destination = @marker_at.get_last_destination(Time.new)
     end
-    flash[:notice] = t('notes.saved')
+    @notice = t('notes.saved')
   end
 
   def edit

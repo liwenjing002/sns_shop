@@ -1,0 +1,14 @@
+
+<div class='object' style="min-height: 600px;">	
+
+  <%=render_cell :common,:share%>
+    <div class="stream-items">
+    <% @stream_items.each do |stream_item| %>
+      <%= render :partial => '../views/streams/stream_item', :locals =>{:stream_item => stream_item,:show_on=>"wall"} %>
+      <% end %>
+      <% if @stream_items.empty? %>
+        <p><%= t('stream.where_activity_appear') %></p>
+        <p><em><%= t('stream.nothing_to_show') %></em></p>
+      <% end %>
+  </div>
+</div>

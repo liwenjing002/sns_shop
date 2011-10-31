@@ -104,7 +104,7 @@
 #pic-container h2 {margin:10px 0 6px;}
 #pic-container p {margin-bottom:10px;}
 #pic-container span {color:#777;}
-#pic-modal-data {max-height: 600px;overflow: auto}
+#pic-modal-data {min-height: 210px;max-height: 350px;moverflow: auto}
 
 
 #video-modal-content, #video-modal-data {display:none;}

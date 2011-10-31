@@ -36,6 +36,11 @@ class PeopleCell < Cell::Rails
     render
   end
   
+   def show_php
+     @stream_items = options[:stream_items]
+     render
+   end
+  
   
   def pending_updates
     @person= options[:person]

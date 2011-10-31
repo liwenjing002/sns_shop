@@ -1,10 +1,9 @@
-<%= javascript_include_tag "extend/jquery.form" %>
 <%= javascript_include_tag "extend/map" %>
 <%= javascript_include_tag  'http://api.map.baidu.com/api?v=1.2' %>
 <%= javascript_include_tag  'http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay.js' %>
 <%= javascript_include_tag  'http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer.js' %>
 <%= javascript_include_tag "map/map_baidu" %>
-  <%= stylesheet_link_tag  "osx" %>
+
 <script type="text/javascript">
   $(document).ready(function() {
     MapObject.place_html = document.getElementById("place_infowindow").innerHTML;
@@ -40,9 +39,6 @@
   <div id ="destination_infowindow" >
     <%= render_cell :common, :new_destination %>
   </div>   
-  <div id ="place_info">
-    <%=render :partial => '../views/common/place_info',:locals => {:place=>nil,:marker=>nil}%>
-  </div>
     <div id ="see_all_infowindow" >
     <%= render_cell :common, :new_see_all %>
   </div>

@@ -1,0 +1,31 @@
+<%=link_to image_tag(@stream_item.streamable.screenshots_url||"missing_large.png", :alt => "点击放大", :class => 'stream-video',:rel=>"#mies#{@stream_item.id}"),
+  @stream_item.streamable, :title => "点击放大"%> 
+
+<%if !is_blank @stream_item.streamable.desc%>
+
+<div><%=@stream_item.streamable.desc.html_safe%></div>
+<%end%>
+<div class="simple_overlay" id="mies<%=@stream_item.id%>">
+<%=raw @stream_item.streamable.video_url%>
+</div>
+
+<% if @show_on == "wall"%>
+<%video =@stream_item.streamable%>
+<%if !is_blank video.location%>
+  <div stream_item_id="<%=@stream_item.id %>" class="location_now" style='cursor:pointer;color:red'>
+    <span style="color: #5F9128">发表位置：</span>
+    <%=video.location%>
+  </div>
+  <% if !is_blank video.latitude %>
+    <%marker = "#{video.longitude},#{video.latitude}"%>
+  <%else if !is_blank video.location%>
+      <% marker = video.location%>
+    <%end%>
+  <%end%>
+
+  <div class="tooltip_stream_item">
+    <img src='http://api.map.baidu.com/staticimage?center=<%= marker%>&markers=<%= marker%>&&width=300&height=140&zoom=13'></img>
+  </div>
+<%end%>
+<%end%>
+

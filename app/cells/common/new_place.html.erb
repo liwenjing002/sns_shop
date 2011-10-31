@@ -53,11 +53,11 @@
   }
   function loading(){
     $("#loading").ajaxStart(function(){
-      $(this).show();
+      $("#loading").show();
       $("#sbumit_button").removeAttr("onclick");
 
     }).ajaxComplete(function(){
-      $(this).hide();
+      $("#loading").hide();
       $("#sbumit_button").bind( "click", function() { // 绑定新事件
         $('#new_place_form').submit();
       });
