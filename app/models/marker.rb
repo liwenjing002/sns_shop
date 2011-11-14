@@ -13,12 +13,12 @@ class Marker < ActiveRecord::Base
   end
   
   def self.find_my_places id
-   find_all_by_owner_id_and_object_type id,"Place"
+    find_all_by_owner_id_and_object_type id,"Place"
   end
   
   def self.find_follow_places map_id
-     search = Marker.search(:marker_to_maps_map_id_eq=>map_id,:marker_to_maps_marker_type_eq=>"Place")
-     markers = search.all()
+    search = Marker.search(:marker_to_maps_map_id_eq=>map_id,:marker_to_maps_marker_type_eq=>"Place")
+    markers = search.all()
   end
   
 
@@ -38,7 +38,7 @@ class Marker < ActiveRecord::Base
     markers += marker_to if marker_to != nil and marker_to.length>0
   end
   
-    #上一个marker 和下一个marker
+  #上一个marker 和下一个marker
   def self.marker_last_next marker_id,key
     marker_now = Marker.find_by_id(marker_id)
     if marker_now
@@ -61,8 +61,15 @@ class Marker < ActiveRecord::Base
   
   #得想办法返回 marker ，暂时先用 markerToMap
   def self.get_hotest_marker marker_type
-   mm =  MarkerToMap.find(:all,:conditions=>["marker_type= ?",marker_type],:group=> "marker_id",:order=>"count(marker_id)",:limit=>35)
+    mm =  MarkerToMap.find(:all,:conditions=>["marker_type= ?",marker_type],:group=> "marker_id",:order=>"count(marker_id)",:limit=>35)
   end
   
+  
+  
+  def self.my_search params
+    html =[]
+    search =  self.search(params)
+    markers = search.all(:limit=>100)     
+  end
 
 end

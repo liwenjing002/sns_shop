@@ -33,12 +33,13 @@ class PlaceCell < Cell::Rails
   def place_message
 
     @place = options[:place]
-    @stream_items = options[:stream_items]
+    @place_shares = options[:place_shares]
     render
   end
 
   def place_share_item
     @place = options[:place]
+    @place_share = options[:place_share]
     @stream_item = options[:stream_item]
     @is_hide = options[:is_hide]
     render
@@ -47,7 +48,7 @@ class PlaceCell < Cell::Rails
   def place_share_items
 
     @place = options[:place]
-    @stream_items = options[:stream_items]
+     @place_shares = options[:place_shares]
 
     render
   end

@@ -17,7 +17,8 @@ class Location::PlacesController < ApplicationController
     @be_here_peoples = PersonImpression.find_all_by_impression_id_and_object_type_and_object_id(4,"Place",params[:id])
     @love_to_peoples = PersonImpression.find_all_by_impression_id_and_object_type_and_object_id(3,"Place",params[:id])
     #    unless  fragment_exist?(:controller => 'places', :action => 'show', :fragment => 'place_share_items')
-#    @stream_items = @place.shared_stream_items
+    @place_shares = @place.place_shares
+    render
     #    end
     
   end
@@ -34,7 +35,7 @@ class Location::PlacesController < ApplicationController
   end
 
   def create
-    
+    params[:place][:person_id] = @logged_in.id
     @place = Place.new(params[:place])
     @place.picture = Picture.find(params[:picture][:id]) if params[:picture][:id] and params[:picture][:id]!=""
 
@@ -43,10 +44,10 @@ class Location::PlacesController < ApplicationController
       @marker.marker_latitude = @place.place_latitude
       @marker.marker_longitude = @place.place_longitude
       @marker.geocode_position = @place.full_address
-      @marker.object_type = "Place"
+      @marker.object_type = "StreamItem"
       @marker.owner = @logged_in
-      @marker.object_id = @place.id
-      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker,:marker_type=>"Place"})
+      @marker.object_id = @place.stream_item_id
+      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker,:marker_type=>"StreamItem"})
       @marker.save
       @place.marker = @marker
       @place.save
@@ -91,7 +92,7 @@ class Location::PlacesController < ApplicationController
     @album.place.picture = pic if !@album.place.picture
     @album.place.save
     flash[:warning] = "添加地点分享成功"
-    expire_fragment(:controller => 'places', :action => 'show', :fragment => 'place_share_items',:id=>params[:place_id] )
+#    expire_fragment(:controller => 'places', :action => 'show', :fragment => 'place_share_items',:id=>params[:place_id] )
   end
   
   
@@ -103,7 +104,8 @@ class Location::PlacesController < ApplicationController
       @album.save
       pic = @album.pictures.create( :person => (@logged_in), :photo  => params[:picture],:type=>"mix"  )
     else
-      pic = Pictures.create( :person => (@logged_in), :photo  => params[:picture], :type=>"mix"   )
+      @album =  Album.find_or_create_by_name("temp_pci")
+      pic = @album.pictures.create( :person => (@logged_in), :photo  => params[:picture])
     end
     render :text => "{success:'" + "true" + "', pic_id:'" + pic.id.to_s + "',pic_url:'" + pic.photo.url(:profile) + "'}";
   end

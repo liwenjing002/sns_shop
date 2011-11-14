@@ -38,6 +38,8 @@ class PeopleCell < Cell::Rails
   
    def show_php
      @stream_items = options[:stream_items]
+     @logged_in = options[:logged_in]
+    @person= options[:person]
      render
    end
   

@@ -20,7 +20,7 @@
 
 
 <% content_for :top do %>
-  <%= render_cell :map, :map,:map => @person.map,:person=>@person,:logged_in=>@logged_in %>
+  <%= render_cell :map, :map,:map => @person.map,:person=>@person %>
 <%end%>
 <% content_for :sidebar do %>
 
@@ -47,3 +47,5 @@
 <div class="stream-items" id="stream_item_wall">
   <%= render :partial => 'stream_items' %>
 </div>
+ <%=link_to "继续查看",stream_path(:page=>2),:remote=>true,:id=>"show_next"%> 
+    <div id="show_no_stream_msg"></div>

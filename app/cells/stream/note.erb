@@ -14,17 +14,23 @@
       <%end%>
 
       <div class="tooltip_stream_item">
-        <img src='http://api.map.baidu.com/staticimage?center=<%= marker%>&markers=<%= marker%>&&width=300&height=140&zoom=13'></img>
+        <img src='http://api.map.baidu.com/staticimage?center=<%= marker%>&markers=<%= marker%>&&width=300&height=140&zoom=14'></img>
       </div>
       <%end%>
 <%else%>
-	<div class = 'marker_address'>
-		<%= get_address_href(@marker.geocode_position)%>
-	</div> 
+	<%#*<div class = 'marker_address'>%>
+		<%#= get_address_href(@marker.geocode_position)%>
+	<%#*</div>%> 
+      <div style="cursor:pointer;color:red">
+      <span style="color: #5F9128">发表位置：</span>
+        <%=  @stream_item.streamable.location%>
+      </div>
+      <!--
 	<div class ='marker_common' >
  	<span><a href='#' onclick=MapObject.marker_del('share',<%=@marker.id%>)>delete</a></span> 
  	<span><a href='#' onclick=MapObject.marker_move("share","<%=@marker.id%>")>move</a></span>
         <span><a href='#' onclick='MapObject.marker_last_next(<%=@marker.id%>,1)'>last</a></span> 
         <span><a href='#' onclick='MapObject.marker_last_next(<%=@marker.id%>,2)'>next</a></span> 
 	</div>
+      -->
     <%end%>

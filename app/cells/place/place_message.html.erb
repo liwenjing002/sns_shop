@@ -31,12 +31,23 @@
 
 
 
-  <div class="stream-items">
-    <%= render_cell :place,:place_share_items,:place=>@place,:stream_items=>@stream_items %>
-  </div>
+<div class="stream-items">
+  <%= render_cell :place,:place_share_items,:place=>@place,:place_shares=>@place_shares %>
+</div>
 
 
 <script>
+  
+  editor_note = new baidu.editor.ui.Editor({
+    toolbars:[
+      ['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','|','MultiMenu'  ]
+    ],autoClearinitialContent:true,
+    initialContent: '<span style="color:#ccc">分享你的心情！！</span>',
+    elementPathEnabled:false,
+    textarea: 'place_share[text]'
+  });
+  editor_note.render('place_share_text');  //editor为编辑器容器的id
+  
   function fileChange(full_path){
     get_file_name(full_path);
     ajaxFileUpload();
@@ -83,8 +94,8 @@
   
   
   $(".share_link").live("click",function(){
-  $("#type").attr("value",$(this).attr("value"))
-  $('.share_link').removeClass('active');
+    $("#type").attr("value",$(this).attr("value"))
+    $('.share_link').removeClass('active');
     $(this).addClass('active');
   })
   $("#share-starter-text").live("focus",function(){
@@ -96,7 +107,7 @@
   function hideSharebar() {
     $('.share-type, .share-details').hide();
     $('#share-starter-text').show();
-}
+  }
 </script>
 
 

@@ -1027,9 +1027,9 @@ function ajaxFileUpload_file(){
         }
         },
         error: function (data, status, e){
-             $("#update_pic_notice").html('文件保存失败')
-                $("#update_pic_notice").show()
-                $('#update_pic_notice').fadeOut(15000);
+            $("#update_pic_notice").html('文件保存失败')
+            $("#update_pic_notice").show()
+            $('#update_pic_notice').fadeOut(15000);
         }
     })
     return false;
@@ -1178,7 +1178,35 @@ $(function(){
 
 
 
-
+function chang_follow(link){
+    
+        
+    marker_id =link.attr("marker_id")
+    marker_type = link.attr("marker_type")
+    action = link.attr("action")
+    if (action == 'cancer'){
+        var answer = confirm("真的要取消关注？")
+    if (!answer){
+        return;
+    }
+    }
+    
+    $.ajax({
+        type: "post",
+        url: "/markers/follow?marker_id="+marker_id +"&do="+action +"&marker_type="+marker_type ,
+        success: function(message){
+            if(message.success ==true){
+                if(action=='add'){
+                    link.attr("action",'cancer')
+                    link.html("取消关注")
+                }else{
+                    link.attr("action",'add')
+                    link.html("添加关注")
+                }
+            }
+        }
+    });
+}
 
 
 
@@ -1187,29 +1215,29 @@ $(function(){
 //一些加載文檔后執行的js
 $(document).ready(function() {
     //添加和刪除關注place
-    $(".follow_link").live("click",function(){
-        link = $(this)
-        marker_id =link.attr("marker_id")
-        marker_type = link.attr("marker_type")
-        action = link.attr("action")
-        $.ajax({
-            type: "post",
-            url: "/markers/follow?marker_id="+marker_id +"&do="+action +"&marker_type="+marker_type ,
-            success: function(message){
-                if(message.success ==true){
-                    if(action=='add'){
-                        link.attr("action",'cancer')
-                        link.html("取消关注")
-                        link.attr("data-confirm","真的要取消关注")
-                    }else{
-                        link.attr("action",'add')
-                        link.html("添加关注")
-                        link.removeAttr("data-confirm")
-                    }
-                }
-            }
-        });
-    });
+    //    $(".follow_link").live("click",function(){
+    //        link = $(this)
+    //        marker_id =link.attr("marker_id")
+    //        marker_type = link.attr("marker_type")
+    //        action = link.attr("action")
+    //        $.ajax({
+    //            type: "post",
+    //            url: "/markers/follow?marker_id="+marker_id +"&do="+action +"&marker_type="+marker_type ,
+    //            success: function(message){
+    //                if(message.success ==true){
+    //                    if(action=='add'){
+    //                        link.attr("action",'cancer')
+    //                        link.html("取消关注")
+    //                        link.attr("data-confirm","真的要取消关注")
+    //                    }else{
+    //                        link.attr("action",'add')
+    //                        link.html("添加关注")
+    //                        link.removeAttr("data-confirm")
+    //                    }
+    //                }
+    //            }
+    //        });
+    //    });
 
 
     $(".location_now").tooltip({
@@ -1245,52 +1273,52 @@ $(document).ready(function() {
     });
     
 
-$.easing.drop = function (x, t, b, c, d) {
-    return -c * (Math.sqrt(1 - (t/=d)*t) - 1) + b;
-};
+    $.easing.drop = function (x, t, b, c, d) {
+        return -c * (Math.sqrt(1 - (t/=d)*t) - 1) + b;
+    };
 
     $("img[rel]").overlay({
         effect: 'drop',
         mask: '#789',
         fixed:true
     });
-//// loading animation
-$.tools.overlay.addEffect("drop", function(css, done) {
-    // use Overlay API to gain access to crucial elements
-    var conf = this.getConf(),
-    overlay = this.getOverlay();
+    //// loading animation
+    $.tools.overlay.addEffect("drop", function(css, done) {
+        // use Overlay API to gain access to crucial elements
+        var conf = this.getConf(),
+        overlay = this.getOverlay();
 
-    // determine initial position for the overlay
-    if (conf.fixed)  {
-        css.position = 'fixed';
-    } else {
-        css.top += $(window).scrollTop();
-        css.left += $(window).scrollLeft();
-        css.position = 'absolute';
+        // determine initial position for the overlay
+        if (conf.fixed)  {
+            css.position = 'fixed';
+        } else {
+            css.top += $(window).scrollTop();
+            css.left += $(window).scrollLeft();
+            css.position = 'absolute';
+        }
+
+        // position the overlay and show it
+        overlay.css(css).show();
+
+        // begin animating with our custom easing
+        overlay.animate({
+            top: '+=55',
+            opacity: 1,
+            width: '+=20'
+        }, 400, 'drop', done);
+
+    /* closing animation */
+    }, function(done) {
+        this.getOverlay().animate({
+            top:'-=55',
+            opacity:0,
+            width:'-=20'
+        }, 300, 'drop', function() {
+            $(this).hide();
+            done.call();
+        });
     }
-
-    // position the overlay and show it
-    overlay.css(css).show();
-
-    // begin animating with our custom easing
-    overlay.animate({
-        top: '+=55',
-        opacity: 1,
-        width: '+=20'
-    }, 400, 'drop', done);
-
-/* closing animation */
-}, function(done) {
-    this.getOverlay().animate({
-        top:'-=55',
-        opacity:0,
-        width:'-=20'
-    }, 300, 'drop', function() {
-        $(this).hide();
-        done.call();
-    });
-}
-);
+    );
 
 
 

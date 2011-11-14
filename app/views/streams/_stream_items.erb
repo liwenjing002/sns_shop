@@ -1,5 +1,8 @@
 <% @stream_items.each do |stream_item| %>
-  <%= render :partial => 'streams/stream_item', :locals =>{:stream_item => stream_item,:show_on=>"wall",:marker=>nil} %>
+  <%= render :partial => 'streams/stream_item', 
+    :locals =>{:stream_item => stream_item,:show_on=>"wall",
+    :marker=>stream_item.marker,
+    :logged_in=>@logged_in,:person=>@person} %>
 <% end %>
 <% if @stream_items.empty? %>
   <p><%= t('stream.where_activity_appear') %></p>

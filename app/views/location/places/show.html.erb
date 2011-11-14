@@ -1,8 +1,11 @@
 <% content_for  :head do %>
   <%= stylesheet_link_tag 'global-0.52' %>
-  <%= javascript_include_tag "wmd/wmd" %>
   <%= javascript_include_tag "extend/jquery.simplemodal" %>
   <%= stylesheet_link_tag  "osx" %>
+  <%= javascript_include_tag "ueditor/editor_config" %>
+  <%= javascript_include_tag "ueditor/editor_ui_all_min" %>
+  <%= stylesheet_link_tag  "ueditor/themes/default/ueditor" %>
+  <%= javascript_include_tag "extend/jquery.tools.min" %>
   <%= javascript_include_tag "extend/some_function" %>
   <script>
    
@@ -55,23 +58,20 @@
 
     <div class='tab_profile'>
       <ul class="tabs">
-        <li class = "li_profile"><a href="#" onclick="return false">留言</a></li>
-        <li class = "li_profile"><a href="#" onclick="return false">签到</a></li>
-        <li class = "li_profile"><a href="#" onclick="return false">关注</a></li>
-    <%#*<li class = "li_profile"><a href="#" onclick="return false">想去</a></li>%>
-        <li class = "li_profile"><a href="#" onclick="return false">相册</a></li>
+        <li class = "li_profile"><a href="#">留言</a></li>
+        <li class = "li_profile"><a href="#" >签到</a></li>
+        <li class = "li_profile"><a href="#">关注</a></li>
+        <li class = "li_profile"><a href="#">相册</a></li>
       </ul>
     </div>
 
     <div class="panes">
       <div class="tab_pane">
         <div id = "place_leave_message">
-          <% cache(:fragment => 'place_share_items') do %>
-            <%= render_cell :place,:place_message,:place=>@place,:stream_items=>@stream_items %>
-          <% end %>
+          <%= render_cell :place,:place_message,:place=>@place,:place_shares=>@place_shares %>
         </div>
       </div>
-      <%#到过的用户%>
+<%#到过的用户%>
       <div class="tab_pane">
         <div class="items" >
           <%if @be_here_peoples%>
@@ -92,7 +92,7 @@
         </div>
       </div>
 
-      <%#关注的用户%>
+<%#关注的用户%>
       <div class="tab_pane">
         <div class="items" >
 
@@ -113,37 +113,37 @@
         </div>
 
       </div>
-      <%#想去的用户%>
-      <%#*<div class="tab_pane">%>
-      <%#*<div class="items" >%>
-      <%#if @love_to_peoples%>
-      <%# @love_to_peoples.each do |mm| %>
-      <%#i =0%>
-      <%#if i%4==0 %>
-      <%#*<div>%>
-      <%#end%>
+<%#想去的用户%>
+<%#*<div class="tab_pane">%>
+<%#*<div class="items" >%>
+<%#if @love_to_peoples%>
+<%# @love_to_peoples.each do |mm| %>
+<%#i =0%>
+<%#if i%4==0 %>
+<%#*<div>%>
+<%#end%>
 
-      <%#= content_tag :a, :href => person_path(mm.person) do %>
-      <%#= render_cell :people,:thumbnail,:person => mm.person %>
-      <%# end %>
-      <%#if i%4==0 %>
-      <%#*</div>%>
-      <%#end%>
-      <%# end %>
-      <%#end%>
-      <%#*</div>%>
-      <%#*</div>%>
+<%#= content_tag :a, :href => person_path(mm.person) do %>
+<%#= render_cell :people,:thumbnail,:person => mm.person %>
+<%# end %>
+<%#if i%4==0 %>
+<%#*</div>%>
+<%#end%>
+<%# end %>
+<%#end%>
+<%#*</div>%>
+<%#*</div>%>
 
-        <%#相册%>
-      
-         <div class ="tab_pane" id ="album">
-          <% @album.pictures.each do|picture|%>
-            <%= image_tag(picture.photo.url(:large),:class=>"picture", :alt => t('pictures.click_to_see_original')) %>
-            <%=picture.photo_text%>
-          <%end if @album%>
-        
+<%#相册%>
+
+      <div class ="tab_pane" id ="album">
+        <% @album.pictures.each do|picture|%>
+          <%= image_tag(picture.photo.url(:large),:class=>"picture", :alt => t('pictures.click_to_see_original')) %>
+          <%=picture.photo_text%>
+        <%end if @album%>
+
       </div>
-      
+
 
     </div>
 

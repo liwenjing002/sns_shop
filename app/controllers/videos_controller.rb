@@ -64,9 +64,13 @@ class VideosController < ApplicationController
         MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker,:marker_type=>'StreamItem'})
         @marker.object_type = "StreamItem"
         @marker.object_id = @video.stream_item_id
-        @marker.save
+         if @marker.save
+            @notice = "发布视频成功"
+         else
+            @notice = "发布视频失败"
+         end
       end
-     @notice = "发布视频成功"
+    
     else
       error_msg = ''
       @video.errors.full_messages.each do |msg|

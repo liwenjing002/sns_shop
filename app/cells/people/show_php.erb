@@ -4,7 +4,7 @@
   <%=render_cell :common,:share%>
     <div class="stream-items">
     <% @stream_items.each do |stream_item| %>
-      <%= render :partial => '../views/streams/stream_item', :locals =>{:stream_item => stream_item,:show_on=>"wall"} %>
+      <%= render :partial => '../views/streams/stream_item', :locals =>{:stream_item => stream_item,:show_on=>"wall",:marker=>nil,:person=>@person,:logged_in=>@logged_in} %>
       <% end %>
       <% if @stream_items.empty? %>
         <p><%= t('stream.where_activity_appear') %></p>

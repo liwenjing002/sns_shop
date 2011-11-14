@@ -7,6 +7,7 @@ class Place < ActiveRecord::Base
   belongs_to :stream_item
   belongs_to :picture 
   belongs_to :marker
+  belongs_to :person
 
 
   validates_presence_of :place_name,:message => '地点名称不为空'
@@ -14,6 +15,15 @@ class Place < ActiveRecord::Base
   
   after_create :create_as_stream_item
 
+    def validate
+     places =  Place.find(:all,:conditions=>["place_latitude = ? and place_longitude = ?",place_latitude,place_longitude])
+     if places.length >0
+      self.errors.add(:place_latitude, "已存在相同坐标的地点")
+     end
+ 
+  end
+  
+  
   def create_as_stream_item
     item =  StreamItem.create!(
       :title           => place_name,
@@ -28,12 +38,6 @@ class Place < ActiveRecord::Base
   end
   
   
-  def shared_stream_items
-    items = self.stream_items.all(
-      :order => 'stream_items.created_at desc',
-      :include => :person
-    )
-  end
 
   
    

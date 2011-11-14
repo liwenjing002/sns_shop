@@ -47,12 +47,6 @@ class Picture < ActiveRecord::Base
   #相册 不合并状态
   def create_as_stream_item
     return unless self.type != 'mix' and person
-#    last_stream_item = StreamItem.last(:conditions => ["person_id = ? and created_at <= ?", person_id, created_at], :order => 'created_at') 
-#    if last_stream_item and last_stream_item.streamable == album
-#      last_stream_item.context['picture_ids'] << [id, photo.fingerprint, photo_extension]
-#      last_stream_item.created_at = created_at
-#      last_stream_item.save!
-#    else
      item = StreamItem.create!(
         :title           => album.name,
         :context         => {'picture_ids' => [[id, photo.fingerprint, photo_extension,photo_text]]},
@@ -65,7 +59,6 @@ class Picture < ActiveRecord::Base
       )
       self.stream_item_id = item.id
       self.save
-#    end
   end
 
   after_update :update_stream_items

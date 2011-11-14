@@ -1,8 +1,12 @@
+
 <%if @error_string%>
 $("#notice").html("<%=@error_string%>")
 $("#notice").show()
 $('#notice').fadeOut(15000);
 <%else%>
+$("#stream_item_wall").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :locals => {:stream_item=> @place.stream_item,:show_on=>@show_on,:marker=>@marker}) %>");
+$(".stream-item").first().hide();
+$(".stream-items :first-child").slideDown("slow");
 MapObject.map.removeOverlay(MapObject.temp_marker); 
 point = new BMap.Point('<%=@place.place_longitude%>', '<%=@place.place_latitude%>');
 marker = MapObject.add_marker_to_map(point,'/images/map/default.png',57,34,'<%= raw place_html(@marker) %>',true);

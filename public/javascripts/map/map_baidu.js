@@ -283,7 +283,8 @@ var MapObject =  {
             fun = function(data, textStatus){
                 if(data.length >0){
                     
-                    MapObject.clearAllClusterer()
+                    MapObject.clearAllClusterer();
+                    
                     eval("MapObject.show_"+type+"("+'data'+")")
                 }
             }
@@ -618,7 +619,6 @@ var MapObject =  {
                 MapObject.map.removeEventListener("click", show_go_to);  
                 MapObject.map.addOverlay(MapObject.end_marker);
                 MapObject.end_p = result.address
-                now_html = eval("MapObject."+"go_to"+"_html('"+result.address+"',null)")
                 MapObject.infoWindow.setContent(now_html)    
                 MapObject.end_marker.openInfoWindow(MapObject.infoWindow);
                 MapObject.end_marker.addEventListener("click",MapObject.markerClickFunction(now_html, MapObject.end_marker));  

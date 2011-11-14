@@ -8,7 +8,7 @@
 
 
 <%if   @video.errors.length == 0%>
-  $(".stream-items").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :object => @video.stream_item ) %>");
+$("#stream_item_wall").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :locals => {:stream_item=> @video.stream_item,:show_on=>@show_on,:marker=>@marker}) %>");
   $(".stream-item").first().hide();
   $(".stream-items :first-child").slideDown("slow");
   $("#share-video").resetForm();
