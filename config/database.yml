@@ -16,7 +16,7 @@ development:
   host: localhost
   username: root
   encodings: utf8
-  password: 
+  password: lee123
   
 test:
   adapter: mysql
@@ -24,46 +24,10 @@ test:
   host: localhost
   encodings: utf8
   username: root
-  password: root
-production:
+  password: lee123
+production: 
   adapter: mysql
-  database: onebody_dev
-  host: localhost
-  username: root
-  encodings: utf8
-  password: root
-
-#development:
-#  adapter: mysql
-#  database: onebody
-#  host: leedb.c8znmw6lf4ly.us-east-1.rds.amazonaws.com
-##  host: localhost
-#  username: root
-#  encodings: utf8
-#  password: lee123
-  
-  
-  
-development:
-  adapter: mysql
-  database: onebody_dev
-  host: localhost
-  username: root
-  encodings: utf8
-  password: 
-  
-test:
-  adapter: mysql
-  database: onebody_dev
   host: localhost
   encodings: utf8
   username: root
-  password: root
-production:
-  adapter: mysql
-  database: onebody_dev
-  encodings: utf8
-  host: localhost
-  username: root
-  password: 
-
+  password: lee123
