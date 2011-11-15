@@ -31,7 +31,7 @@ production:
   host: localhost
   username: root
   encodings: utf8
-  password: root
+  password: lee123
 
 #development:
 #  adapter: mysql
@@ -44,26 +44,3 @@ production:
   
   
   
-development:
-  adapter: mysql
-  database: onebody_dev
-  host: localhost
-  username: root
-  encodings: utf8
-  password: 
-  
-test:
-  adapter: mysql
-  database: onebody_dev
-  host: localhost
-  encodings: utf8
-  username: root
-  password: root
-production:
-  adapter: mysql
-  database: onebody_dev
-  encodings: utf8
-  host: localhost
-  username: root
-  password: 
-
