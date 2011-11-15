@@ -25,6 +25,7 @@ test:
   encodings: utf8
   username: root
   password: lee123
+
 production:
   adapter: mysql
   database: onebody_dev
