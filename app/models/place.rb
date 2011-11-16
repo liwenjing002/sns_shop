@@ -15,8 +15,6 @@ class Place < ActiveRecord::Base
   after_create :create_as_stream_item
 
   def create_as_stream_item
-    context = {'picture_ids' => [[self.picture.id, self.picture.photo.fingerprint, self.picture.photo_extension]]} if self.picture
-
     item =  StreamItem.create!(
       :title           => place_name,
       :person_id       => person_id,
@@ -25,13 +23,17 @@ class Place < ActiveRecord::Base
       :created_at      => created_at,
       :shared          =>  true
     )
+    self.stream_item_id = item.id
+    self.save
   end
-        def shared_stream_items
+  
+  
+  def shared_stream_items
     items = self.stream_items.all(
       :order => 'stream_items.created_at desc',
       :include => :person
     )
-        end
+  end
 
   
    

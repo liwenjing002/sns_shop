@@ -22,7 +22,7 @@ module MarkersHelper
   
   def streamitem_html(marker)
     html =''
-    html << "#{render :partial => 'common/marker_info',:locals => {:marker=> marker,:show_on=>"map"}}"
+    html << "#{render :partial => 'streams/stream_item',:locals => {:marker=> marker,:stream_item=> marker.object,:show_on=>"map"}}"
     html = html.gsub(/\'/, '"')
     html = html.gsub(/[\n\r]/,'')
   end

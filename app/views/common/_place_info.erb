@@ -1,13 +1,17 @@
-
+<!--
 <div id="place_title"><span  style=" font-size:25px;">
     <%if place%>
       <%= link_to place.place_name,[:location,place],:target=>"_blank" %>
     <%end%>
   </span>
   <%if marker_follow?(marker)%>
-    <span style="margin-left:20px;"><%= link_to "取消关注","#",:class=>"follow_link",:action=>"cancer",:marker_id=>marker.id,:marker_type=>"Place", :confirm=>"真的要取消关注"%></span>
+    <span style="margin-left:20px;">
+<%= link_to "取消关注","#",:class=>"follow_link",:action=>"cancer",:marker_id=>marker.id,:marker_type=>"Place", :confirm=>"真的要取消关注"%>
+    </span>
   <%else%>
-    <span style="margin-left:20px;"><%= link_to "添加关注","#",:class=>"follow_link",:action=>"add",:marker_id=>marker ? marker.id : "",:marker_type=>"Place"%></span>
+    <span style="margin-left:20px;">
+<%= link_to "添加关注","#",:class=>"follow_link",:action=>"add",:marker_id=>marker ? marker.id : "",:marker_type=>"Place"%>
+    </span>
   <%end%>
 </div>
 
@@ -18,7 +22,10 @@
   <%else%>
     <p id="place_pic_small"><%= image_tag(place.picture.photo.url(:small), :alt =>place.place_name,:style=>"float: left") %></p>
   <% end %>
-  <span style="float: left;margin-left: 10px;"><p id="place_desc"><%= place ? place.place_description : "" %></p></span>
+  <span style="float: left;margin-left: 10px;">
+    <p id="place_desc"><%= place ? place.place_description : "" %>
+    </p>
+  </span>
 </div>
 <div id = 'marker_address'>
   <%if place%>
@@ -26,19 +33,24 @@
   <%end%>
 </div>
 <div class ='marker_common' >
-  <span><a href='#' onclick='MapObject.marker_del(<%=marker ? marker.id : ""%>)'>delete</a></span>
-  <span><a href='#' onclick='MapObject.marker_move(<%=marker ? marker.id : ""%>)'>move</a></span>
+  <span>
+    <a href='#' onclick='MapObject.marker_del(<%=marker ? marker.id : ""%>)'>delete</a>
+  </span>
+  <span>
+    <a href='#' onclick='MapObject.marker_move(<%=marker ? marker.id : ""%>)'>move</a>
+  </span>
 </div>
 
+-->
 
 <div id = 'stream_item_<%=marker.id%>' class='stream-item'>
   <div class='stream-item-meta'>
     <%= render :partial => 'streams/person_thumbnail', :locals => {:person => marker.owner} %>
     <div style='clear:left;'></div>
   </div>
-  <div class='stream-item-body'><div class='stream-item-content'>
-      <%= stream_item_content(marker.object.stream_item,false,"map") %>
-      <%=link_to t('comments.view') + '...', marker.object, :class => 'small' ,:target=>'_blank'%>
+  <div class='stream-item-body'>
+    <div class='stream-item-content'>
+        <%=render_cell :stream,:content,:stream_item=>place.stream_item,:show_on=>"map"%>
     </div>
     <div class='nowrap stream-item-timestamp'>
       <%=  marker.object.created_at.strftime("%Y-%m-%d %H:%M:%S") %>

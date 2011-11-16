@@ -1,9 +1,11 @@
 <% content_for :head do %>
-    <%= stylesheet_link_tag  "osx" %>
+  <%= stylesheet_link_tag  "osx" %>
   <%= javascript_include_tag "extend/ui" %>
   <%= javascript_include_tag "ueditor/editor_config" %>
-   <%= javascript_include_tag "ueditor/editor_ui_all_min" %>
+  <%= javascript_include_tag "ueditor/editor_ui_all_min" %>
   <%= stylesheet_link_tag  "ueditor/themes/default/ueditor" %>
+  <%= javascript_include_tag "extend/jquery.form" %>
+  <%= stylesheet_link_tag  "osx" %>
 <%end%>
 <% if @has_friendship_requests %>
   <div class="highlight">
@@ -17,9 +19,7 @@
 <% end %>
 
 
-<% content_for :top do %>
-  <%#= render_cell :map, :map,:map => @person.map,:person=>@person,:logged_in=>@logged_in %>
-<%end%>
+
 <% content_for :sidebar do %>
 
   <h3 class="double-margin-top">我要二一下</h3>
@@ -28,8 +28,7 @@
 
 
 
-  <%= render_cell :people,:thumbnail_wall %>
-  <%= render_cell :place,:place_pic_wall %>
+
 
 
   <% if Setting.get(:features, :prayer_event) %>
@@ -42,6 +41,6 @@
   <% end %>
 <% end %>
 
-<div class="stream-items">
+<div class="stream-items" id="stream_item_wall">
   <%= render :partial => 'stream_items' %>
 </div>

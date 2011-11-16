@@ -1252,7 +1252,7 @@ $.easing.drop = function (x, t, b, c, d) {
     $("img[rel]").overlay({
         effect: 'drop',
         mask: '#789',
-        fixed:false
+        fixed:true
     });
 //// loading animation
 $.tools.overlay.addEffect("drop", function(css, done) {

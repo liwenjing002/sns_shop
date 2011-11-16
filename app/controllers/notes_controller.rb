@@ -65,7 +65,7 @@ class NotesController < ApplicationController
       @marker_at.save
       @last_destination = @marker_at.get_last_destination(Time.new)
     end
-    flash[:notice] = t('notes.saved')
+    @notice = t('notes.saved')
   end
 
   def edit

@@ -1,5 +1,6 @@
 class StreamCell < Cell::Rails
-
+helper  ApplicationHelper
+helper  PeopleHelper
   def person_thumbnail
 
     @stream_item = options[:stream_item]
@@ -8,6 +9,7 @@ class StreamCell < Cell::Rails
   
 def content
    @stream_item = options[:stream_item]
+   @marker = options[:marker]
    @show_on = options[:show_on]
   case  @stream_item.streamable_type
   when "Note"

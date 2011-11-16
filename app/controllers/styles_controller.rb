@@ -29,7 +29,7 @@ class StylesController < ApplicationController
     css = Sass::Engine.new(
       scss,
       :syntax => :scss,
-      :cache  => false,
+      :cache  => true,
       :style  => :compressed
     ).render
     expires_in(1.year)

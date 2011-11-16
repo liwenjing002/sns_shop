@@ -10,8 +10,7 @@
       </h3>
     <% else %>
       <div class="stream-item-content">
-        <%=render_cell :stream,:content,:stream_item=>stream_item%>
-        <%#= stream_item_content(stream_item) %>
+        <%=render_cell :stream,:content,:stream_item=>stream_item,:show_on=>show_on,:marker=>marker%>
         <% unless stream_item.wall %>
           <%= link_to t('comments.view') + '...', stream_item, :class => 'small' %>
         <% end %>
@@ -32,8 +31,7 @@
       <% end %>
     </div>
     <% if stream_item.title %>
-     <%=render_cell :stream,:content,:stream_item=>stream_item%>
-      <%#= stream_item_content stream_item %>
+      <%=render_cell :stream,:content,:stream_item=>stream_item,:show_on=>"wall",:marker=>marker%>
     <% end %>
     
     <table class="comments"id ="<%=stream_item.id%>_comments">

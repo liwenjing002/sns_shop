@@ -1,25 +1,25 @@
-<div id = 'stream_item_<%=marker.id%>' class='stream-item' >
+<div id = 'stream_item_<%=@marker_obj.id%>' class='stream-item' >
 	<div class='stream-item-meta'>
-          <%= render :partial => 'streams/person_thumbnail', :locals => {:person => marker.person} %>
+          <%= render :partial => 'streams/person_thumbnail', :locals => {:person => @marker_obj.person} %>
 	<div style='clear:left;'></div>
 	</div>
 	<div class='stream-item-body'><div class='stream-item-content'>
-	 <%= stream_item_content(marker.object,false,show_on) %>
-	<%=link_to t('comments.view') + '...', marker.object, :class => 'small' ,:target=>'_blank'%> 
+	 <%= stream_item_content(@marker_obj.object,false,show_on) %>
+	<%=link_to t('comments.view') + '...', @marker_obj.object, :class => 'small' ,:target=>'_blank'%> 
 	</div>
 	<div class='nowrap stream-item-timestamp'>
-	 <%=  marker.object.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
-	<%= link_to marker.object.person.name, marker.object.person,:target=>'_blank' %> 
+	 <%=  @marker_obj.object.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
+	<%= link_to @marker_obj.object.person.name, @marker_obj.object.person,:target=>'_blank' %> 
 	</div>
 
 	<div class = 'marker_address'>
-		<%= get_address_href(marker.geocode_position)%>
+		<%= get_address_href(@marker_obj.geocode_position)%>
 	</div> 
 	<div class ='marker_common' >
- 	<span><a href='#' onclick=MapObject.marker_del('share',<%=marker.id%>)>delete</a></span> 
- 	<span><a href='#' onclick=MapObject.marker_move("share","<%=marker.id%>")>move</a></span>
-        <span><a href='#' onclick='MapObject.marker_last_next(<%=marker.id%>,1)'>last</a></span> 
-        <span><a href='#' onclick='MapObject.marker_last_next(<%=marker.id%>,2)'>next</a></span> 
+ 	<span><a href='#' onclick=MapObject.marker_del('share',<%=@marker_obj.id%>)>delete</a></span> 
+ 	<span><a href='#' onclick=MapObject.marker_move("share","<%=@marker_obj.id%>")>move</a></span>
+        <span><a href='#' onclick='MapObject.marker_last_next(<%=@marker_obj.id%>,1)'>last</a></span> 
+        <span><a href='#' onclick='MapObject.marker_last_next(<%=@marker_obj.id%>,2)'>next</a></span> 
 	</div>
 </div>
 </div>

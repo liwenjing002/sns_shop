@@ -148,7 +148,7 @@ class MarkersController < ApplicationController
           :marker_id=>marker.id,
           :geocode_position=>marker.geocode_position}
      when "StreamItem"
-       html =  {:html=>render_to_string(:partial => 'common/marker_info',:locals => {:marker=> marker}),
+       html =  {:html=>render_to_string(:partial => 'streams/stream_item',:locals => {:stream_item=> marker.object,:show_on=>"map",:marker=>marker}),
           :longitude=>marker.marker_longitude,
           :latitude=>marker.marker_latitude,
           :marker_id=>marker.id,

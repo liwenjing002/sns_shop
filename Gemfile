@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
+
 #gem 'hoe', '= 1.5.1'
 gem 'rails',                  '= 3.0.4'
 gem "meta_search" 
@@ -23,7 +24,6 @@ gem 'sanitize',               '~> 1.2.1'
 gem 'haml',                   '~> 3.0.24'
 gem 'paperclip',              '~> 2.3.6'
 gem 'ar_mailer_rails3'
-#gem 'respond_to_parent', :git=>'git://github.com/itkin/respond_to_parent.git'
 group :test,:development do
   gem 'faker',                '~> 0.3.1'
   gem 'shoulda',              '~> 2.11.3'

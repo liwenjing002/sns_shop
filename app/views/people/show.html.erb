@@ -66,7 +66,7 @@
     </div>
     <br/>
     <div class="panes">
-      <%= render :partial => 'show_php'%>
+      <%= render_cell :people,:show_php,:person=>@person,:logged_in =>@logged_in,:stream_items=>@stream_items%>
       <%= render_cell :people,:profile,:person=>@person,:logged_in =>@logged_in,:verses=>@verses%>
       <%= render_cell :people,:group,:person=>@person,:logged_in =>@logged_in%>
       <%= render_cell :people,:place,:person=>@person,:logged_in =>@logged_in%>
