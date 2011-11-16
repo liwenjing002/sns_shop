@@ -1,20 +1,22 @@
 <span class ='comment2-icon add_place'>发布我的地点</span> 
 <div id="place_location" style="display:none"></div>
 <br/>
-<%= form_for [:location,Place.new], :remote=>true,:html => {:multipart => true,:id => 'new_place_form',:onsubmit=>''} do |form| %>  
-  <%= form.text_field :place_name, :placeholder => "给你的地点起个名字" %>
-  <%= form.text_field :full_address, :type=>'hidden' %>
-  <%= form.text_field :place_latitude, :type=>'hidden' %>
-  <%= form.text_field :place_longitude, :type=>'hidden' %>
-  <%= text_field :picture,:id, :type=>'hidden' %>
+
+
+<form accept-charset="UTF-8" action="/location/places" class="new_place" data-remote="true" enctype="multipart/form-data" id="new_place_form" method="post" onsubmit="">
+  <input id="place_place_name" name="place[place_name]" placeholder="给你的地点起个名字" size="30" type="text" />
+  <input id="place_full_address" name="place[full_address]" size="30" type="hidden" />
+  <input id="place_place_latitude" name="place[place_latitude]" size="30" type="hidden" />
+  <input id="place_place_longitude" name="place[place_longitude]" size="30" type="hidden" />
+  <input id="picture_id" name="picture[id]" size="30" type="hidden" />
 <br/>
-<%= form.text_area :place_description, :rows => 2,:width=>'140px',:cols=>35, :placeholder => "留下点说明吧。。。"%>
+<textarea cols="35" id="place_place_description" name="place[place_description]" placeholder="留下点说明吧。。。" rows="2" width="140px"></textarea>
 <br/>
- 是否公开该地点？<%= form.check_box :is_public,:title=>"公开的地点无法删除" %>
+ 是否公开该地点？<input name="place[is_public]" type="hidden" value="0" /><input id="place_is_public" name="place[is_public]" title="公开的地点无法删除" type="checkbox" value="1" />
 <br/>
    <span class ='picture-icon' style='color: #5F9128;margin-top: 5px'>添加图片:&nbsp</span>
    <input type="file"  id ="fileToUpload_place" name ="picture" onchange="fileChange(this.value)" style="width:100px;"/>
-<% end %>
+</form>
 
 
 <span  style=""class="button" id="sbumit_button" onclick="$('#new_place_form').submit();"><%=t('share.share')%></span>

@@ -2,17 +2,17 @@
 不用窗体显示
 %>
 
-<%= form_for Note.new, :html => {:id => 'share-note', :class => 'share-type'},:remote=>true  do |form| %>
+<form accept-charset="UTF-8" action="/notes" class="share-type" data-remote="true" id="share-note" method="post">
   <span class="small">今天你二了吗？</span><br/>
-  <%= form.text_area :body, :style=>"width:285px;height:200px;",:id=>"note_body_editor" %><br/>
+  <textarea cols="40" id="note_body_editor" name="note[body]" rows="20" style="width:285px;height:200px;"></textarea><br/>
   <div class="location_info" style="display:none">
-    <%= text_field 'marker','geocode_position', :placeholder=>"地球某地",:class=>"marker_geocode_position" %><br/>
+    <input class="marker_geocode_position" id="marker_geocode_position" name="marker[geocode_position]" placeholder="地球某地" size="30" type="text" /><br/>
   </div>
-  <%= text_field 'marker','marker_latitude', :type=>'hidden',:class=>"marker_marker_latitude" %>
-  <%= text_field 'marker','marker_longitude', :type=>'hidden',:class=>"marker_marker_longitude" %>
-  <%= submit_tag t('share.share') %>
-  <%=check_box "","is_location",:class=>"is_location",:title=>"是否带地理位置，默认为当前位置",:value=>"1"%>地理位置
-<% end %>
+  <input class="marker_marker_latitude" id="marker_marker_latitude" name="marker[marker_latitude]" size="30" type="hidden" />
+  <input class="marker_marker_longitude" id="marker_marker_longitude" name="marker[marker_longitude]" size="30" type="hidden" />
+  <input name="commit" type="submit" value="分享！" />
+  <input name="[is_location]" type="hidden" value="0" /><input class="is_location" id="_is_location" name="[is_location]" title="是否带地理位置，默认为当前位置" type="checkbox" value="1" />地理位置
+</form>
 <script>
   editor_note = new baidu.editor.ui.Editor({
     toolbars:[

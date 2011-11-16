@@ -10,27 +10,29 @@
     <% end %>
   </ul>
   <% if Setting.get(:features, :notes) %>
-    <%= form_for Note.new, :html => {:id => 'share-note-marker', :class => 'share-type-marker'},:remote=>true  do |form| %>
-      <%= hidden_field_tag :redirect_to, stream_path %>
-      <span class="small"><%= t('share.note_label') %></span><br/>
-      <%= form.text_area :body, :rows => 2 ,:class=>"share_text",:placeholder => "用@标注你所在位置，用go2 标注出你要去的地方"%><br/>
-      <%= text_field 'marker','geocode_position', :type=>'hidden',:class=>"geocode_position" %>
-      <%= text_field 'marker','marker_latitude', :type=>'hidden',:class=>"marker_latitude" %>
-      <%= text_field 'marker','marker_longitude', :type=>'hidden',:class=>"marker_longitude" %>
-      <%= submit_tag t('share.share') %>
-    <% end %>
+   
+       <form accept-charset="UTF-8" action="/notes" class="share-type-marker" data-remote="true" id="share-note-marker" method="post">
+      <input id="redirect_to" name="redirect_to" type="hidden" value="/stream" />
+      <span class="small">“什么对你的想法？</span><br/>
+      <textarea class="share_text" cols="40" id="note_body" name="note[body]" placeholder="用@标注你所在位置，用go2 标注出你要去的地方" rows="2"></textarea><br/>
+      <input class="geocode_position" id="marker_geocode_position" name="marker[geocode_position]" size="30" type="hidden" />
+      <input class="marker_latitude" id="marker_marker_latitude" name="marker[marker_latitude]" size="30" type="hidden" />
+      <input class="marker_longitude" id="marker_marker_longitude" name="marker[marker_longitude]" size="30" type="hidden" />
+      <input name="commit" type="submit" value="分享！" />
+</form>
+   
   <% end %>
   <% if Setting.get(:features, :pictures) %>
-    <%= form_for Picture.new, :html => {:multipart => true, :id => 'share-picture-marker', :class => 'share-type-marker'} do |form| %>
-      <%= file_field_tag 'pictures[]', :multiple => true %><br/>
-      <%= text_field_tag 'album', '', :size => 10, :placeholder => t('share.default_album_name') %><br/>
-      <%= text_area_tag "photo_text",'',:class=>"share_text",:size => "40x2", :placeholder => "用@标注你所在位置，用go2 标注出你要去的地方" %><br/>
-      <%= text_field 'marker','geocode_position', :type=>'hidden',:class=>"geocode_position" %>
-      <%= text_field 'marker','marker_latitude', :type=>'hidden',:class=>"marker_latitude" %>
-      <%= text_field 'marker','marker_longitude', :type=>'hidden',:class=>"marker_longitude" %>
+    <form accept-charset="UTF-8" action="/pictures" class="share-type-marker" enctype="multipart/form-data" id="share-picture-marker" method="post">
+      <input id="pictures_" multiple="multiple" name="pictures[]" type="file" /><br/>
+      <input id="album" name="album" placeholder="专辑名称" size="10" type="text" value="" /><br/>
+      <textarea class="share_text" cols="40" id="photo_text" name="photo_text" placeholder="用@标注你所在位置，用go2 标注出你要去的地方" rows="2"></textarea><br/>
+      <input class="geocode_position" id="marker_geocode_position" name="marker[geocode_position]" size="30" type="hidden" />
+      <input class="marker_latitude" id="marker_marker_latitude" name="marker[marker_latitude]" size="30" type="hidden" />
+      <input class="marker_longitude" id="marker_marker_longitude" name="marker[marker_longitude]" size="30" type="hidden" />
 
-      <span class='button' onclick='ajaxFileUpload_file_marker()' ><%= t('share.share') %></span>
-    <% end %>
+      <span class='button' onclick='ajaxFileUpload_file_marker()' >分享！</span>
+</form> 
   <% end %>
   </div>
 

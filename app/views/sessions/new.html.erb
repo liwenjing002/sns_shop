@@ -1,5 +1,6 @@
+<% content_for :head do %>
 <%= javascript_include_tag 'rsa.min.js' %>
-
+<%end%>
 <div class="left-sidebar line-right">
   <%= render_cell :map,:map_sign_in %>
   <div class="double-margin-top" style="text-align:center;">
@@ -10,11 +11,14 @@
 
 <script type="text/javascript">
   function encrypt_password() {
+  alert(1)
     var rsa = new RSAKey();
+	alert(rsa)
     rsa.setPublic('<%= @public_modulus %>', '<%= @public_exponent %>');
     var res = rsa.encrypt(document.getElementById('password').value);
     if (res) {
       encrypted = linebrk(hex2b64(res), 64);
+	  alert(encrypted)
       document.getElementById('encrypted_password').setAttribute('value', encrypted);
       document.getElementById('password').setAttribute('value', '');
       return true;

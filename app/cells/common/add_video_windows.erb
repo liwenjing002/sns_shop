@@ -7,19 +7,19 @@
   <div id="video-modal-data" >
 
 
-    <%= form_for Video.new, :html => {:id => 'share-video'},:remote=>true  do |form| %>
-      <%= form.text_field :name,:placeholder => "视频名称"%><br/>
+       <form accept-charset="UTF-8" action="/videos" class="new_video" data-remote="true" id="share-video" method="post">
+      <input id="video_name" name="video[name]" placeholder="视频名称" size="30" type="text" /><br/>
       
-      <%= form.text_field :html_url,:placeholder => "视频地址"%><br/>
-      <%= form.text_area :desc,:placeholder => "视频描述"%><br/>
+      <input id="video_html_url" name="video[html_url]" placeholder="视频地址" size="30" type="text" /><br/>
+      <textarea cols="40" id="video_desc" name="video[desc]" placeholder="视频描述" rows="20"></textarea><br/>
       <div class="location_info" style="display:none">
-        <%= text_field 'marker','geocode_position', :placeholder=>"地球某地",:class=>"marker_geocode_position" %>
+        <input class="marker_geocode_position" id="marker_geocode_position" name="marker[geocode_position]" placeholder="地球某地" size="30" type="text" />
       </div>
-      <%= text_field 'marker','marker_latitude', :type=>'hidden',:class=>"marker_marker_latitude" %>
-      <%= text_field 'marker','marker_longitude', :type=>'hidden',:class=>"marker_marker_longitude" %>
-      <%= submit_tag t('share.share') %>
-      <%=check_box nil,"is_location",:class=>"is_location",:title=>"是否带地理位置，默认为当前位置",:value=>"1"%>地理位置
-    <% end %>
+      <input class="marker_marker_latitude" id="marker_marker_latitude" name="marker[marker_latitude]" size="30" type="hidden" />
+      <input class="marker_marker_longitude" id="marker_marker_longitude" name="marker[marker_longitude]" size="30" type="hidden" />
+      <input name="commit" type="submit" value="分享！" />
+      <input name="[is_location]" type="hidden" value="0" /><input class="is_location" id="_is_location" name="[is_location]" title="是否带地理位置，默认为当前位置" type="checkbox" value="1" />地理位置
+</form>
 
 
 
