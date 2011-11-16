@@ -13,7 +13,7 @@
     $("#owner_bar").live('click',function(){ $.ajax({                                                
         type: "POST",                                    
         url: "owner_manager",                                     
-        data: "marker_id="+ <%=@place.marker.id%> +"&owner="+ $("#owner_bar").attr("value"),    
+        data: "marker_id="+ <%=@place.marker_id%> +"&owner="+ $("#owner_bar").attr("value"),    
         success: function(message){  
           if(message.success==true ){
             if(message.owner ==false){

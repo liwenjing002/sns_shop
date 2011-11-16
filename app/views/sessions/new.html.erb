@@ -11,9 +11,9 @@
 
 <script type="text/javascript">
   function encrypt_password() {
-  alert(1)
+
     var rsa = new RSAKey();
-	alert(rsa)
+
     rsa.setPublic('<%= @public_modulus %>', '<%= @public_exponent %>');
     var res = rsa.encrypt(document.getElementById('password').value);
     if (res) {

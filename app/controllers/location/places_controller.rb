@@ -84,6 +84,7 @@ class Location::PlacesController < ApplicationController
     @place_message = PlaceShare.create(
       :person=>@logged_in,
       :picture=>pic,
+      :place_id=>params[:place_id] ,
       :share_type=>params[:type],
       :text=>params[:place_share][:text],
       :is_public=>true,
