@@ -36,7 +36,7 @@ class PeopleController < ApplicationController
       @plan = Plan.new
       @plans =@person.plans
     end
-    @stream_items = @person.shared_stream_items(40,true)
+    @stream_items = @person.shared_stream_items(params[:page]||1,30,true)
     if params[:limited] or !@logged_in.full_access?
       render :action => 'show_limited'
     elsif @person and @logged_in.can_see?(@person)

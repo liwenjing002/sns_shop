@@ -20,6 +20,10 @@
 
 
 
+<% content_for :top do %>
+  <%= render_cell :map, :map,:map => @person.map,:person=>@person %>
+<%end%>
+
 <% content_for :sidebar do %>
 
   <h3 class="double-margin-top">我要二一下</h3>
@@ -42,5 +46,18 @@
 <% end %>
 
 <div class="stream-items" id="stream_item_wall">
-  <%= render :partial => 'stream_items' %>
+  <% @stream_items.each do |stream_item| %>
+  <%= render :partial => 'streams/stream_item', 
+    :locals =>{:stream_item => stream_item,:show_on=>"wall",
+    :marker=>stream_item.marker,
+    :logged_in=>@logged_in,:person=>@person} %>
+<% end %>
+<% if @stream_items.empty? %>
+  <p><%= t('stream.where_activity_appear') %></p>
+  <p><em><%= t('stream.nothing_to_show') %></em></p>
+<% end %>
+
+
 </div>
+ <%=link_to "继续查看",stream_path(:page=>2),:remote=>true,:id=>"show_next"%> 
+    <div id="show_no_stream_msg"></div>

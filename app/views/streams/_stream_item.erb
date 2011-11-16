@@ -31,7 +31,7 @@
       <% end %>
     </div>
     <% if stream_item.title %>
-      <%=render_cell :stream,:content,:stream_item=>stream_item,:show_on=>"wall",:marker=>marker%>
+      <%=render_cell :stream,:content,:stream_item=>stream_item,:show_on=>show_on,:marker=>marker,:logged_in=>@logged_in,:person=>@person%>
     <% end %>
     
     <table class="comments"id ="<%=stream_item.id%>_comments">
@@ -43,10 +43,10 @@
     <% if stream_item.can_have_comments? %>
       <div class="new-comment">
         <%= link_to_function t('comments.add_a_comment'),
-          "$('#new-comment-for-#{stream_item.id}').show(); $(this.parentNode).css('visibility', 'visible');",
+          "$('#new-comment-#{show_on}-for-#{stream_item.id}').show();$('#delete-icon_#{show_on}_#{stream_item.id}').show(); $(this.parentNode).css('visibility', 'visible');",
           :class => 'discreet small comment-icon' %>
-         <%= link_to_function '', "$('#new-comment-for-#{stream_item.id}').hide()", :class =>  'delete-icon',:style=>"margin-left:270px;display:none" %>
-        <div id="new-comment-for-<%= stream_item.id %>" style="display:none;">
+         <%= link_to_function '', "$('#new-comment-#{show_on}-for-#{stream_item.id}').hide();$('#delete-icon_#{show_on}_#{stream_item.id}').hide()",:id=>"delete-icon_#{show_on}_#{stream_item.id}", :class =>  'delete-icon',:style=>"margin-left:270px;display:none" %>
+        <div id="new-comment-<%= show_on%>-for-<%= stream_item.id %>" style="display:none;">
           <%= form_for Comment.new,:remote=>true do |form| %>
           <%= hidden_field_tag 'stream_item_id', stream_item.id %>
             <% if stream_item.streamable_type == 'Album' %>

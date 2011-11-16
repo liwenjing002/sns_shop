@@ -486,7 +486,7 @@ class Person < ActiveRecord::Base
   end
 
   #查询所有分享，分全部跟只查询自己的 分享两种
-  def shared_stream_items(count=30,is_self=nil)
+  def shared_stream_items(page,per_page,is_self=nil)
     enabled_types = []
     enabled_types << 'Message' # wall posts and group posts (not personal messages)
     enabled_types << 'NewsItem'    if Setting.get(:features, :news_page   )
@@ -504,25 +504,23 @@ class Person < ActiveRecord::Base
     group_ids = groups.find_all_by_hidden(false, :select => 'groups.id').map { |g| g.id }
     group_ids = [0] unless group_ids.any?
     if !is_self
-      relation = StreamItem.scoped \
-        .where(:streamable_type => enabled_types) \
-        .where(:shared => true) \
-        .where("(group_id in (:group_ids) or" +
+      relation = StreamItem.scoped 
+      relation.where(:streamable_type => enabled_types)
+      relation.where(:shared => true)
+      relation.where("(group_id in (:group_ids) or" +
           " (group_id is null and wall_id is null and person_id in (:friend_ids)) or" +
           " person_id = :id or" +
           " streamable_type in ('NewsItem', 'Publication')" +
-          "or (place_id in (:place_ids)))", :group_ids => group_ids, :friend_ids => friend_ids, :id => id,:place_ids=>place_ids) \
-        .order('created_at desc') \
-        .limit(count) \
-        .includes(:person, :group)
+          ")", :group_ids => group_ids, :friend_ids => friend_ids, :id => id,:place_ids=>place_ids) 
+       relation.order('created_at desc').includes(:person, :group)
+       relation.paginate :page => page||1, :per_page=>per_page||10
     else
       relation = StreamItem.scoped \
         .where(:streamable_type => enabled_types) \
         .where(:shared => true) \
         .where(" person_id = :id ", :id => id) \
-        .order('created_at desc') \
-        .limit(count) \
-        .includes(:person, :group)
+        .order('created_at desc').includes(:person, :group).paginate :page => page||1,
+                            :per_page=>per_page
     end
     relation.to_a.tap do |stream_items|
       # do our own eager loading here...

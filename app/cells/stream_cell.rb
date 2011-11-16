@@ -10,6 +10,7 @@ helper  PeopleHelper
 def content
    @stream_item = options[:stream_item]
    @marker = options[:marker]
+   @logged_in = options[:logged_in]
    @show_on = options[:show_on]
   case  @stream_item.streamable_type
   when "Note"

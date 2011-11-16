@@ -1,6 +1,6 @@
 ﻿$(".stream-items").prepend("<%= escape_javascript(render_cell :place,:place_share_item,:stream_item =>@stream_item ,:is_hide=>true) %>");
 
-
+editor_note.setContent("")
 $(".stream-item").first().hide();
 $(".stream-items :first-child").slideDown("slow");
 $("#place_share_text").val("");

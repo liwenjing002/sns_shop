@@ -1,19 +1,45 @@
 <% if @show_on == "wall"%>
-  <%=link_to  image_tag(@stream_item.streamable.picture(:large)||"missing_large.png", :alt => t('pictures.click_to_enlarge'),
+ <div id="place_title">
+
+      <%if marker_follow?(@marker)%>
+        <span style="margin-left:20px;">
+          <%= link_to_function "取消关注","chang_follow($(this))",:id=>"cancer_wall",:class=>"follow_link",:action=>"cancer",:marker_id=>@marker.id,:marker_type=>"Place"%>
+        </span>
+      <%else%>
+        <span style="margin-left:20px;">
+          <%= link_to_function "添加关注","chang_follow($(this))",:id=>"follow_wall",:class=>"follow_link",:action=>"add",:marker_id=>@marker ? @marker.id : "",:marker_type=>"Place"%>
+        </span>
+      <%end%>
+    </div>
+
+  <%=link_to  image_tag(@stream_item.streamable.picture ? @stream_item.streamable.picture.photo(:large) : "missing_large.png", :alt => t('pictures.click_to_enlarge'),
     :class => 'stream-pic',:rel=>"#mies#{@stream_item.id}"),
     [:location, @stream_item.streamable], :title => t('pictures.click_to_enlarge')
 %>
 
   <div class="simple_overlay" id="mies<%=@stream_item.id%>">
-    <%=image_tag(@stream_item.streamable.picture(:original)||"missing_small.png", :alt => t('pictures.click_to_enlarge'),
+    <%=image_tag(@stream_item.streamable.picture ? @stream_item.streamable.picture.photo(:original) : "missing_small.png", :alt => t('pictures.click_to_enlarge'),
       :class => 'stream-pic',:rel=>"#mies#{@stream_item.id}")%>
   </div>
 
 <%else if @show_on == "map" %>
+     <div id="place_title">
+      <%if marker_follow?(@marker)%>
+        <span style="margin-left:20px;">
+          <%= link_to_function "取消关注","chang_follow($(this))",:id=>"cancer_map",:class=>"follow_link",:action=>"cancer",:marker_id=>@stream_item.streamable.marker_id,:marker_type=>"Place"%>
+        </span>
+      <%else%>
+        <span style="margin-left:20px;">
+          <%= link_to_function "添加关注","chang_follow($(this))",:id=>"follow_map",:class=>"follow_link",:action=>"add",:marker_id=>@stream_item.streamable.marker ? @stream_item.streamable.marker.id : "",:marker_type=>"Place"%>
+        </span>
+      <%end%>
+    </div>
+
+
     <%=link_to(
-      image_tag(@stream_item.streamable.picture(:small)||"missing_samll.png", :alt => t('pictures.click_to_enlarge'),
+      image_tag(@stream_item.streamable.picture ? @stream_item.streamable.picture.photo(:small) : "missing_samll.png", :alt => t('pictures.click_to_enlarge'),
         :class => 'stream-pic',:rel=>"#mies#{@stream_item.id}"),
-      album_picture_path(@stream_item.streamable_id, picture_id), :title => t('pictures.click_to_enlarge')
+     location_place_path(@stream_item.streamable), :title => t('pictures.click_to_enlarge')
     )  %> 
   <%end%>
 <%end%>

@@ -1,0 +1,8 @@
+<%if @stream_items.length > 0%>
+$("#no_stream_more").remove()
+$("#stream_item_wall").append("<%= escape_javascript( render :partial => 'stream_items') %>");
+$("#show_next").attr("href","/stream?page=<%=  params[:page].to_i+1%>")
+<%else%>
+
+$("#show_no_stream_msg").html("<span id='no_stream_more'>没有了。。。。</span>");
+<%end%>

@@ -45,11 +45,12 @@ class NotesController < ApplicationController
         params[:marker][:geocode_position]!= '地球某地')  or (        params[:marker][:marker_longitude]!= '' and
         params[:marker][:marker_latitude]!= '')
 
-      is_location = true 
+      is_location = true
+      
     else
       is_location = false
     end
-    
+    @show_on = "wall"
     params[:note][:location] = params[:marker][:geocode_position] if is_location
     params[:note][:longitude] = params[:marker][:marker_longitude] if is_location
     params[:note][:latitude] = params[:marker][:marker_latitude] if is_location
@@ -57,13 +58,14 @@ class NotesController < ApplicationController
     if is_location
       params[:marker][:marker_longitude] = BigDecimal.new(params[:marker][:marker_longitude])
       params[:marker][:marker_latitude] = BigDecimal.new(params[:marker][:marker_latitude])
-      @marker_at = Marker.new(params[:marker])
+      @marker = Marker.new(params[:marker])
 
-      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker_at,:marker_type=>'StreamItem'})
-      @marker_at.object_type = "StreamItem"
-      @marker_at.object_id = @note.stream_item_id
-      @marker_at.save
-      @last_destination = @marker_at.get_last_destination(Time.new)
+      MarkerToMap.create({:map=>@logged_in.map,:marker=>@marker,:marker_type=>'StreamItem'})
+      @marker.object_type = "StreamItem"
+      @marker.object_id = @note.stream_item_id
+      @marker.save
+      @last_destination = @marker.get_last_destination(Time.new)
+      @show_on = "map"
     end
     @notice = t('notes.saved')
   end

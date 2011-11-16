@@ -25,9 +25,23 @@ test:
   encodings: utf8
   username: root
   password: lee123
-production: 
+
+production:
   adapter: mysql
+  database: onebody_dev
   host: localhost
-  encodings: utf8
   username: root
+  encodings: utf8
   password: lee123
+
+#development:
+#  adapter: mysql
+#  database: onebody
+#  host: leedb.c8znmw6lf4ly.us-east-1.rds.amazonaws.com
+##  host: localhost
+#  username: root
+#  encodings: utf8
+#  password: lee123
+  
+  
+  

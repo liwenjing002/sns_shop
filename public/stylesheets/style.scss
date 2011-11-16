@@ -659,7 +659,7 @@ textarea {
 .picture-icon    { @include icon-sprite(0px, -200px) }
 .file-icon       { @include icon-sprite(0px, -220px) }
 .verse-icon      { @include icon-sprite(0px, -240px) }
-.delete-icon     { @include icon-sprite(0px, -256px) } /* down a bit */
+.delete-icon     { @include icon-sprite(0px, -256px)} /* down a bit */
 .email-icon      { @include icon-sprite(0px, -280px) }
 .heart-icon      { @include icon-sprite(0px, -300px) }
 .rotate-cw-icon  { @include icon-sprite(0px, -320px) }

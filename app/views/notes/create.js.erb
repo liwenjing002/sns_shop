@@ -1,4 +1,4 @@
-$("#stream_item_wall").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :locals => {:stream_item=> @note.stream_item,:show_on=>"map"}) %>");
+$("#stream_item_wall").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :locals => {:stream_item=> @note.stream_item,:show_on=>"wall",:marker=>@marker}) %>");
 $(".stream-item").first().hide();
 $(".stream-items :first-child").slideDown("slow");
 

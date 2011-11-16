@@ -29,7 +29,7 @@ class MarkersController < ApplicationController
       @html = Postition.find_my_locus(Time.new.strftime("%Y/%m/%d"),@logged_in.id,true)
   when 'share'
     search = Marker.search(params[:marker],:marker_type=>"StreamItem")
-     markers = search.all(:limit=>100)
+     markers = search.all(:limit=>100,:order=>"id desc")
       markers.each do |marker|
         @html<< marker_html(marker)
       end
@@ -140,13 +140,13 @@ class MarkersController < ApplicationController
   def marker_html marker
       html = nil
      case marker.object_type
-     when "Place"
-        html =  {:html=>render_to_string(:partial => 'common/place_info',
-            :locals => {:place=>marker.object,:marker=>marker}),
-          :longitude=>marker.marker_longitude,
-          :latitude=>marker.marker_latitude,
-          :marker_id=>marker.id,
-          :geocode_position=>marker.geocode_position}
+#     when "Place"
+#        html =  {:html=>render_to_string(:partial => 'common/place_info',
+#            :locals => {:place=>marker.object,:marker=>marker}),
+#          :longitude=>marker.marker_longitude,
+#          :latitude=>marker.marker_latitude,
+#          :marker_id=>marker.id,
+#          :geocode_position=>marker.geocode_position}
      when "StreamItem"
        html =  {:html=>render_to_string(:partial => 'streams/stream_item',:locals => {:stream_item=> marker.object,:show_on=>"map",:marker=>marker}),
           :longitude=>marker.marker_longitude,

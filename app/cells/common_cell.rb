@@ -1,17 +1,18 @@
 class CommonCell < Cell::Rails
   helper  ApplicationHelper
+  cache :marker_info, :marker_info ,:new_place,:new_see_all ,:comment,:add_note_windows,:add_pic_windows
   def marker_info
     render
   end
 
-  def menus
+  def marker_info
     render
   end
 
   def new_place
     render
   end
-  def new_see_all
+  def new_see_all 
     render
   end
   
