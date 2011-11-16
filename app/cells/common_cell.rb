@@ -5,7 +5,7 @@ class CommonCell < Cell::Rails
     render
   end
 
-  def marker_info
+  def menus
     render
   end
 
