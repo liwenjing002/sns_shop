@@ -5,7 +5,7 @@ class PlaceShare < ActiveRecord::Base
    belongs_to :place
   belongs_to :picture
   attr_accessor:album
-    has_many :comments, :dependent => :destroy
+   has_many :comments, :dependent => :destroy
 
 
 
@@ -19,7 +19,6 @@ class PlaceShare < ActiveRecord::Base
         :body            => text,
         :context         => context,
         :person_id       => person_id,
-        :place_id        => album.place_id,
         :streamable_type => 'PlaceShare',
         :streamable_id   => id,
         :created_at      => created_at,

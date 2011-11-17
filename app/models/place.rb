@@ -17,7 +17,9 @@ class Place < ActiveRecord::Base
 
     def validate
      places =  Place.find(:all,:conditions=>["place_latitude = ? and place_longitude = ?",place_latitude,place_longitude])
-     if places.length >0
+     if (self.id ==nil and places.length >0) or
+        (self.id !=nil and  places.length > 1) or
+        (self.id !=nil and  places.length == 1 and self.id != places[0].id)
       self.errors.add(:place_latitude, "已存在相同坐标的地点")
      end
  

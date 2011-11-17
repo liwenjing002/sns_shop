@@ -1,34 +1,10 @@
-<% last_place_share = nil; grouped_items = [] %>
+
 
 <% @place_shares.each do |place_share| %>
-  <% if last_place_share and place_share.person_id == last_place_share.person_id and place_share.stream_item.streamable_type == last_place_share.stream_item.streamable_type and place_share.streamable_type != 'NewsItem' and grouped_items.empty? %>
-    <div class="stream-item stream_<%= place_share.streamable_type.downcase %>">
-      <div id="stream-item-group<%= place_share.id %>" style="display:none;">
-        <% grouped_items << place_share.id %>
-      <% end %>
-      <% if grouped_items.any? and not (place_share.person_id == last_place_share.person_id and place_share.stream_item.streamable_type == last_place_share.stream_item.streamable_type) %>
-      </div>
-      <div class="stream-item-group-link">
-        <%= link_to_function t('stream.and_more', { :length => grouped_items.length, :name => (last_place_share.person.name rescue '') } ), "$(this.parentNode).hide(); $('#stream-item-group#{grouped_items.first}').show()" %>
-      </div>
-    </div>
-    <% grouped_items = [] %>
-  <% end %>
-  <% if grouped_items.any? and not grouped_items.include?(place_share.id); grouped_items << place_share.id; end %>
 
+  
   <%= render_cell :place,:place_share_item,:place_share => place_share,:is_hide=>nil %>
-
-  <% last_place_share = place_share %>
-<% end %>
-
-<% if grouped_items.any? %>
-  </div>
-  <div class="stream-item-group-link">
-    <%= link_to_function t('stream.and_more', { :length => grouped_items.length, :name => (last_place_share.person.name rescue '') } ), "$(this.parentNode).hide(); $('#stream-item-group#{grouped_items.first}').show()" %>
-  </div>
-  </div>
-<% end %>
-
+<%end%>
 <% if @place_shares.empty? %>
   <div id="empty_text">
     <p><%= t('stream.where_activity_appear') %></p>
