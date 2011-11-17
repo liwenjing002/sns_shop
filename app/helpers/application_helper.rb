@@ -361,6 +361,19 @@ module ApplicationHelper
   end
 
 
+  #获取头像图片
+  def get_thunbnail_html person
+    if person and person.photo.exists?
+      image_tag person.photo.url(:tn), :alt => person.name, :class => 'icon thumbnail'
+    else
+      if person and person.gender.to_s == 'Female'
+        image_tag 'clean/womanoutline.tn.png', :alt => person.try(:name), :class => 'icon thumbnail'
+      else
+        image_tag 'clean/manoutline.tn.png', :alt => person.try(:name), :class => 'icon thumbnail'
+      end
+    end
+  end
+
   
 
   class << self

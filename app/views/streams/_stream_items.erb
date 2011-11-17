@@ -1,11 +1,6 @@
-
-
   <%= render :partial => 'streams/stream_item', :as => :stream_item,
 		:collection => @stream_items,
     :locals =>{:show_on=>"wall",:logged_in=>@logged_in,:person=>@person} %>
-
-
-
 <% if @stream_items.empty? %>
   <p><%= t('stream.where_activity_appear') %></p>
   <p><em><%= t('stream.nothing_to_show') %></em></p>

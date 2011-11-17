@@ -1,11 +1,9 @@
 <% content_for :head do %>
   <%= stylesheet_link_tag  "osx" %>
+  <%= stylesheet_link_tag  "ueditor/themes/default/ueditor" %>
   <%= javascript_include_tag "extend/ui" %>
   <%= javascript_include_tag "ueditor/editor_config" %>
   <%= javascript_include_tag "ueditor/editor_ui_all_min" %>
-  <%= stylesheet_link_tag  "ueditor/themes/default/ueditor" %>
-  <%= javascript_include_tag "extend/jquery.form" %>
-  <%= stylesheet_link_tag  "osx" %>
 <%end%>
 <% if @has_friendship_requests %>
   <div class="highlight">
@@ -19,23 +17,43 @@
 <% end %>
 
 
-
+<%#*地图%>
 <% content_for :top do %>
-  <%= render_cell :map, :map,:map => @person.map,:person=>@person %>
+  <%= render :partial => 'maps/map',
+    :locals =>{:map => @person.map,:person=>@person,:logged_in=>@logged_in} %>
 <%end%>
 
 <% content_for :sidebar do %>
 
+  <%#*分享栏%>
   <h3 class="double-margin-top">我要二一下</h3>
   <p>分享你的心情，照片，视频，二二身体好，二二更健康</p>
   <%=render_cell :common,:share%>
 
+ <%#*头像墙%>
+  <%@peoples = Person.find(:all,:limit=>35)%>
+  <h3 class="double-margin-top">人物头像墙</h3>
+  <div id ="people_pic_wall">
+    <%@peoples.each do |people|%>
+      <%=link_to   get_thunbnail_html(people),people,:target=>"_blank"%>
+    <%end%>
+  </div>
+  <%#*地点墙%>
+  <%    @places = Place.find(:all,:limit=>35)%>
+  <h3 class="double-margin-top">地点墙
+  </h3>
+  <div id ="place_pic_wall" >
+    <%@places.each do |place|%>
+      <% if  place and  place.picture %>
+        <%=link_to image_tag(place.picture.photo.url(:tn), :alt =>  place.place_name, :class => 'icon thumbnail'),[:location,place],:target=>"_blank" %>
+      <% else %>
+        <%=link_to image_tag('missing_tn.png', :alt => t('none')),[:location,place],:target=>"_blank" %>
+      <% end %>
+    <%end%>
+  </div>
 
-<%= render_cell :people,:thumbnail_wall %>
-  <%= render_cell :place,:place_pic_wall %>
 
-
-
+ <%#*事件通知%>
   <% if Setting.get(:features, :prayer_event) %>
     <h3><%= t('prayer_signups.home_page_heading') %></h3>
     <div id="taken_slots"></div>
@@ -44,21 +62,21 @@
       $.get('<%= prayer_signups_path(:format => 'js') %>');
     </script>
   <% end %>
+
 <% end %>
 
-<div class="stream-items" id="stream_item_wall">
-  <% @stream_items.each do |stream_item| %>
-  <%= render :partial => 'streams/stream_item', 
-    :locals =>{:stream_item => stream_item,:show_on=>"wall",
-    :marker=>stream_item.marker,
-    :logged_in=>@logged_in,:person=>@person} %>
-<% end %>
-<% if @stream_items.empty? %>
-  <p><%= t('stream.where_activity_appear') %></p>
-  <p><em><%= t('stream.nothing_to_show') %></em></p>
-<% end %>
 
+  <%#*内容墙%>
+  <div class="stream-items" id="stream_item_wall">
+  <%= render :partial => 'streams/stream_item', :as => :stream_item,
+    :collection => @stream_items,
+    :locals =>{:show_on=>"wall",:logged_in=>@logged_in,:person=>@person} %>
+
+  <% if @stream_items.empty? %>
+    <p><%= t('stream.where_activity_appear') %></p>
+    <p><em><%= t('stream.nothing_to_show') %></em></p>
+  <% end %>
 
 </div>
- <%=link_to "继续查看",stream_path(:page=>2),:remote=>true,:id=>"show_next"%> 
-    <div id="show_no_stream_msg"></div>
+<%=link_to "继续查看",stream_path(:page=>2),:remote=>true,:id=>"show_next"%> 
+<div id="show_no_stream_msg"></div>

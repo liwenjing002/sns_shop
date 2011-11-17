@@ -1209,6 +1209,89 @@ function chang_follow(link){
 }
 
 
+  //ajax 文件上传
+
+
+
+function fileChange(full_path){
+    ajaxFileUpload();
+  }
+
+
+
+
+  function ajaxFileUpload(){
+    loading();//动态加载小图标
+    $.ajaxFileUpload({
+      url:'/location/places/add_temp_pic',
+      secureuri:false,
+      dataType: 'json',
+      fileElementId:'fileToUpload_place',
+      success: function (data,status){
+        if(data && data.success=="true"){
+          $("#picture_id").attr("value",data.pic_id)
+          $("#temp_pic").attr("src",data.pic_url);
+          $("#temp_pic").attr("style","display:");
+        }else{
+          alert("文件保存失败")
+        }
+      },
+      error: function (data, status, e){
+        alert("文件保存失败")
+      }
+    })
+    return false;
+  }
+  function loading(){
+    $("#loading").ajaxStart(function(){
+      $("#loading").show();
+      $("#sbumit_button").removeAttr("onclick");
+
+    }).ajaxComplete(function(){
+      $("#loading").hide();
+      $("#sbumit_button").bind( "click", function() { // 绑定新事件
+        $('#new_place_form').submit();
+      });
+    });
+  }
+  function ajaxFileUpload_file_marker(){
+    url = "?album="+$("#album").val() +"&photo_text="+$("#photo_text").val()+
+      "&marker[geocode_position]="+$("#marker_geocode_position").val()+
+      "&marker[marker_latitude]="+$("#marker_marker_latitude").val()+
+      "&marker[marker_longitude]="+$("#marker_marker_longitude").val()
+    $.ajaxFileUpload({
+      url:'/pictures/'+url,
+      secureuri:false,
+      dataType: 'json',
+      fileElementId:'pictures_',
+      success: function (data,status){
+        if(data && data.success==true){
+          $("#notice").html(data.notice)
+          $("#notice").show()
+          $('#notice').fadeOut(15000);
+          $("#share-picture").resetForm();
+          $("#marker_geocode_position").attr("value", '');
+          $("#marker_destin_position").attr("value", '')
+          for (var i=0;i<=data.html.length-1;i++) {
+            $.ajax({
+              type: "GET",
+              url: "/pictures/get_stream_item",
+              data:"pic_id="+data.html[i].pic_id+"&marker_id="+data.html[i].marker_id,
+              success: function(){}
+            });
+          }
+        }else{
+          alert("文件保存失败1")
+        }
+      },
+      error: function (data, status, e){
+        alert(data.success)
+        alert("文件保存失败2")
+      }
+    })
+    return false;
+  }
+  //ajax 文件上传
 
 
 
@@ -1238,6 +1321,9 @@ $(document).ready(function() {
     //            }
     //        });
     //    });
+
+
+
 
 
     $(".location_now").tooltip({

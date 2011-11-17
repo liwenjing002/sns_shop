@@ -1,5 +1,6 @@
 class MapCell < Cell::Rails
 helper  ApplicationHelper
+include  ActionView::Helpers::CaptureHelper
 
 
 

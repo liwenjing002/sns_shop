@@ -1,52 +1,184 @@
 <% content_for  :head do %>
-  <%= javascript_include_tag "extend/map" %>
-  <%= javascript_include_tag "map/markercluster" %>
   <%= javascript_include_tag "extend/jquery.form" %>
-  <%= javascript_include_tag  'http://maps.google.com/maps/api/js?sensor=false' %>
-  <%= javascript_include_tag  'map/map_controll' %>
-<script src="http://www.google.com/uds/api?file=uds.js&amp;v=1.0&amp;key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxQ82LsCgTSsdpNEnBsExtoeJv4cdBSUkiLH6ntmAr_5O4EfjDwOa0oZBQ" type="text/javascript"></script> 
-  <%= javascript_include_tag 'map/map_search' %>
+  <%= javascript_include_tag "extend/map" %>
+  <%= javascript_include_tag "ueditor/editor_config" %>
+  <%= javascript_include_tag "ueditor/editor_ui_all_min" %>
+  <%= javascript_include_tag  'http://api.map.baidu.com/api?v=1.2' %>
+  <%= javascript_include_tag  'http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay.js' %>
+  <%= javascript_include_tag  'http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer.js' %>
+  <%= javascript_include_tag "map/map_baidu" %>
+<%= javascript_include_tag "extend/some_function" %>
 
-  <script type="text/javascript">
-    $(document).ready(function() {
-     
-      MapObject.map_share_html = document.getElementById("map_infowindow").innerHTML
-      $('#map_infowindow').remove()
-  <% if @map.center_latitude %> MapObject.map_options.center_latitude = <%= @map.center_latitude%>;<%end%>
-  <% if  @map.center_longitude %> MapObject.map_options.center_longitude = <%= @map.center_longitude%>;<%end%>
-  <% if @map.zoom %>MapObject.map_options.zoom = <%= @map.zoom%>;<%end%>
 
-  <%if @person == @logged_in%>
-      MapObject.initialize(null) ;
-  <%else%>
-      MapObject.initialize('<%=@person.id%>') ;
-  <%end%>
-    
-    
-    
 
-	
-  });
+<script type="text/javascript">
+  $(document).ready(function() {
+    MapObject.place_html = document.getElementById("place_infowindow").innerHTML;
+    MapObject.share_html = document.getElementById("share_infowindow").innerHTML;
+    MapObject.destination_html = document.getElementById("destination_infowindow").innerHTML;
+    $('#map_infowindow').remove();
+    $('#share_infowindow').remove();
+    $('#place_infowindow').remove();
+    $('#destination_infowindow').remove();
+<% if !is_blank( map.center_latitude, map.center_longitude)%>
+      MapObject.center = new BMap.Point('<%= map.center_latitude%>','<%= map.center_longitude%>')
+<%end%>
+<% if !is_blank( map.zoom) %>MapObject.zoom_level = <%=  map.zoom%>;<%end%>
+<%if !is_blank( person.home_address)%>
+      MapObject.home_address = '<%= person.home_address%>'
+<%end%>
 
-  </script>
+    MapObject.initialize('<%= person.id%>',"mapCanvas",null) ;
+
+    $("#pack_down").hide();
+    $("#pack_up").click(function(){
+      $("#mapCanvas").slideUp("slow");
+      $("#pack_up").hide();
+      $("#pack_down").show()
+
+    })
+    $("#pack_down").click(function(){
+      $("#mapCanvas").slideDown("slow");
+      $("#pack_down").hide();
+      $("#pack_up").show()
+    })
+
+    $("#share-note-marker").submit(function(){
+      var options = {
+        url:$(this).attr("action"), //提交给哪个执行
+        type:'POST',
+        beforeSubmit:function(formData, jqForm, options){
+
+        },
+        success:function(){
+
+        }
+      };
+      $('#share-note-marker').ajaxSubmit(options);
+
+      return false; //为了不刷新页面,返回false，反正都已经在后台执行完了，没事！
+    }
+  );
+
+    $("#share-note-marker").submit(function(){
+      var options = {
+        url:$(this).attr("action"), //提交给哪个执行
+        type:'POST',
+        beforeSubmit:function(formData, jqForm, options){
+
+        },
+        success:function(){
+
+        }
+      };
+      $('#share-note-marker').ajaxSubmit(options);
+
+      return false; //为了不刷新页面,返回false，反正都已经在后台执行完了，没事！
+    }
+  );
+
+  })
+  function selectMarkerShare(show) {
+    $('.share-type-marker').hide();
+    $('#'+show).show();
+    //    $('#'+share+' :input[type!="hidden"]')[0].focus();
+    $('.share-selector a').removeClass('active');
+    $('#'+show+'-icon').addClass('active');
+    MapObject.infoWindow.redraw();
+  };
+
+
+
+
+
+
+</script>
 <% end %>
 
+<div id ="temp_div" style="display: none" >
+  <div id ="place_infowindow" >
+    <span class ='comment2-icon add_place'>发布我的地点</span>
+    <div id="place_location" style="display:none"></div>
+    <br/>
+    <form accept-charset="UTF-8" action="/location/places" class="new_place" data-remote="true" enctype="multipart/form-data" id="new_place_form" method="post" onsubmit="">
+      <input id="place_place_name" name="place[place_name]" placeholder="给你的地点起个名字" size="30" type="text" />
+      <input id="place_full_address" name="place[full_address]" size="30" type="hidden" />
+      <input id="place_place_latitude" name="place[place_latitude]" size="30" type="hidden" />
+      <input id="place_place_longitude" name="place[place_longitude]" size="30" type="hidden" />
+      <input id="picture_id" name="place[picture_id]" size="30" type="hidden" />
+      <br/>
+      <textarea cols="35" id="place_place_description" name="place[place_description]" placeholder="留下点说明吧。。。" rows="2" width="140px"></textarea>
+      <br/>
+      是否公开该地点？<input name="place[is_public]" type="hidden" value="0" /><input id="place_is_public" name="place[is_public]" title="公开的地点无法删除" type="checkbox" value="1" />
+      <br/>
+      <span class ='picture-icon' style='color: #5F9128;margin-top: 5px'>添加图片:&nbsp</span>
+      <input type="file"  id ="fileToUpload_place" name ="picture" onchange="fileChange(this.value)" style="width:100px;"/>
+    </form>
+    <span  style=""class="button" id="sbumit_button" onclick="$('#new_place_form').submit();"><%=t('share.share')%></span>
+    <%=image_tag("loading.gif",:id=>"loading",:style=>"display:none;",:height=>20)%>
+    <span style="float:right;margin-right: 20px;"><%=image_tag("missing_tn.png",:id=>"temp_pic",:style=>"display:none",:height => '30')%></span>
+  </div>
+  <div id ="share_infowindow" >
+    <div class="share-marker">
+      当前位置：<br/>
+      <span id="place_adress_span"></span><br/>
+      <ul class="share-details share-selector">
+        <% if Setting.get(:features, :notes) %>
+          <li><%= link_to_function t('share.note'), "selectMarkerShare('share-note-marker')", :class => 'comment2-icon', :id => 'share-note-marker-icon' %></li>
+        <% end %>
+        <% if Setting.get(:features, :pictures) %>
+          <li><%= link_to_function t('share.picture'), "selectMarkerShare('share-picture-marker')", :class => 'picture-icon', :id => 'share-picture-marker-icon' %></li>
+        <% end %>
+      </ul>
+      <% if Setting.get(:features, :notes) %>
+        <form accept-charset="UTF-8" action="/notes" class="share-type-marker share-type-marker-show" data-remote="true" id="share-note-marker" method="post">
+          <input id="redirect_to" name="redirect_to" type="hidden" value="/stream" />
+          <span class="small">“什么对你的想法？</span><br/>
+          <textarea class="share_text" cols="40" id="note_body" name="note[body]" placeholder="用 标注你所在位置，用go2 标注出你要去的地方" rows="2"></textarea><br/>
+          <input class="geocode_position" id="marker_geocode_position" name="marker[geocode_position]" size="30" type="hidden" />
+          <input class="marker_latitude" id="marker_marker_latitude" name="marker[marker_latitude]" size="30" type="hidden" />
+          <input class="marker_longitude" id="marker_marker_longitude" name="marker[marker_longitude]" size="30" type="hidden" />
+          <input name="commit" type="submit" value="分享！" />
+        </form>
+      <% end %>
+      <% if Setting.get(:features, :pictures) %>
+        <form accept-charset="UTF-8" action="/pictures" class="share-type-marker" enctype="multipart/form-data" id="share-picture-marker" method="post">
+          <input id="pictures_" multiple="multiple" name="pictures[]" type="file" /><br/>
+          <input id="album" name="album" placeholder="专辑名称" size="10" type="text" value="" /><br/>
+          <textarea class="share_text" cols="40" id="photo_text" name="photo_text" placeholder="用 标注你所在位置，用go2 标注出你要去的地方" rows="2"></textarea><br/>
+          <input class="geocode_position" id="marker_geocode_position" name="marker[geocode_position]" size="30" type="hidden" />
+          <input class="marker_latitude" id="marker_marker_latitude" name="marker[marker_latitude]" size="30" type="hidden" />
+          <input class="marker_longitude" id="marker_marker_longitude" name="marker[marker_longitude]" size="30" type="hidden" />
 
+          <span class='button' onclick='ajaxFileUpload_file_marker()' >分享！</span>
+        </form>
+      <% end %>
+    </div>
+  </div>
+  <div id ="destination_infowindow" >
+    <div>
+      <div>我要去： <span id ="my_destination"></span></div>
+      <span class='button' onclick='MapObject.go_with_bus()' >公交</span>
+      <span class='button' onclick='MapObject.go_with_car()' >驾车</span>
+    </div>
+  </div>
+  <div id ="see_all_infowindow" >
+    <!-- modal content -->
+    <div id="map-modal-content" style="display:none">
+      <div id="map-modal-title">视野查看
+        <span style="background-color: #FEC;padding: 4px;text-align: center;display: none" id="update_notice">
 
-<div id ="map_infowindow" style="display: none" >
-  <%= render :partial=>"common/new_place" %>
+        </span></div>
+      <div class="close"><a href="#" class="simplemodal-close">x</a></div>
+      <div id="map-modal-data" >
+        <div class="stream-items" id ="see_all_streams">
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<div id="map_controll">
-  <ul class="buttons">
-    <li><span class="button" id="new-marker-tab" onclick="MapObject.add_marker_listen();">发布地点</span></li>
-    <li><span class="button" onclick="MapObject.init_marker_from_data('firend_postition');">查看好友位置</span></li>
-    <li><span class="button" id="posittion-tab">我要旅游</span></li>
-    <li><span class="button" id="activities-tab">我要活动</span></li>
-  </ul>
-</div>
-
-
-
-<div id="mapCanvas" style="width: 100%; height: 385px;">map div</div> 
-<div id="searchwell"></div> 
+<span class="button" id="pack_up">收起</span>
+<span class="button" id="pack_down" style="display:none">放下</span>
+<div id="mapCanvas" style="width: 100%; height: 385px;">map div</div>
+<div id="results"></div>
+<div id="searchwell"></div>

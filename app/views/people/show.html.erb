@@ -1,15 +1,20 @@
 <%= content_for  :head do %>
   <%= javascript_include_tag "extend/jquery.form" %>
   <%= stylesheet_link_tag 'global-0.52' %>
+<%= stylesheet_link_tag  "ueditor/themes/default/ueditor" %>
   <%= stylesheet_link_tag  "osx" %>
   <%= javascript_include_tag "extend/jquery.tools.min" %>
   <%= javascript_include_tag "extend/pic_effects" %>
-<%= javascript_include_tag "extend/ui" %>
-<%= javascript_include_tag "extend/some_function" %>
+  <%= javascript_include_tag "extend/ui" %>
+  <%= javascript_include_tag "ueditor/editor_config" %>
+  <%= javascript_include_tag "ueditor/editor_ui_all_min" %>
 <% end %>
 
 
-<%= render_cell :map, :map,:map => @map,:person=>@person,:logged_in=>@logged_in %>
+<% content_for :top do %>
+  <%= render :partial => 'maps/map',
+    :locals =>{:map => @person.map,:person=>@person,:logged_in=>@logged_in} %>
+<%end%>
 <div class="clear"></div>
 
 
@@ -31,7 +36,7 @@
     <h3>梦想单
       <p style="float: right"><%= link_to '梦想单', "#", :class => 'add-icon',:id=>"dream" %></p>
     </h3>
-    
+
     <h3>想去那里
       <p style="float: right"><%= link_to '我想去', "#", :class => 'add-icon',:id=>"i_want_to_go" %></p>
     </h3>

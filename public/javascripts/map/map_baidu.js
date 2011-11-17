@@ -319,7 +319,7 @@ var MapObject =  {
     show_friend_position:function(data){
         for (var i=0;i<=data.length-1;i++) 
         {
-            if(data[i].longitude =='' && data[i].latitude ==''){
+            if(data[i] != null &&data[i].longitude =='' && data[i].latitude ==''){
                 MapObject.getPoint(data[0].geocode_position, MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"streamable",data[i].html,this.map,null,true,data[i].marker_id,data[i].geocode_position),this.map);
             }else{
                 point = new BMap.Point(data[i].longitude, data[i].latitude)
@@ -353,14 +353,15 @@ var MapObject =  {
     show_share:function(data){
         MapObject.shareClusterer.clearMarkers();
         for (var i=0;i<=data.length-1;i++) 
-        {
-            if(data[i].longitude =='' && data[i].latitude ==''){
+        {  if (data[i]!= null){
+            if(  data[i].longitude =='' && data[i].latitude ==''){
                 MapObject.getPoint(data[0].geocode_position, MapObject.add_marker_to_map_function("/images/map/default.png",34,30,"share",data[i].html,this.map,null,true,data[i].marker_id,data[i].geocode_position),this.map);
             }else{
                 point = new BMap.Point(data[i].longitude, data[i].latitude)
                 marker = this.add_marker_to_map(point,"/images/map/default.png",34,30,data[i].html,"share",false)
                 MapObject.shareMarkers.put(data[i].marker_id,marker);
                 MapObject.shareClusterer.addMarker(marker); 
+            }
             }
 
         }

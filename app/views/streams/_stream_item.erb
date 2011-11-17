@@ -1,6 +1,11 @@
 <div class="stream-item <%= stream_item.streamable_type.underscore.dasherize %> stream_<%= stream_item.streamable_type.underscore %> <% if stream_item.person == @person %>stream_mine<% end %>">
   <div class="stream-item-meta">
-    <%= render_cell :stream,:person_thumbnail, :stream_item => stream_item %>
+    <span class="nowrap">
+      <a href="<%= url_for stream_item.person %>">
+        <%= get_thunbnail_html stream_item.person%>
+      </a>
+    </span>
+
     <div style="clear:left;"></div>
   </div>
   <div class="stream-item-body">
@@ -33,22 +38,39 @@
     <% if stream_item.title %>
       <%=render_cell :stream,:content,:stream_item=>stream_item,:show_on=>show_on,:marker=>stream_item.marker,:logged_in=>@logged_in,:person=>@person%>
     <% end %>
-    
+
     <table class="comments"id ="<%=stream_item.id%>_comments">
-        <% stream_item.context['comments'].to_a.each do |comment| %>
-          <%=render_cell :common,:comment,:comment=>comment%>
+      <% stream_item.context['comments'].to_a.each do |comment| %>
+        <% if comment['person'] %>
+          <tr class="stream-item-comment">
+            <td style="text-align:right;">
+              <a href="<%= url_for comment['person'] %>">
+                <%= get_thunbnail_html comment['person']%>
+              </a>
+            </td>
+            <td>
+              <%= link_to comment['person'].name, comment['person'] %>:
+              <%= comment['text'] %>
+              <span class="stream-item-timestamp">
+                <%= time_ago_in_words(comment['created_at']) %> <%= t('comments.ago') %>
+              </span>
+            </td>
+          </tr>
         <% end %>
-      </table>
+      <% end %>
+    </table>
 
     <% if stream_item.can_have_comments? %>
       <div class="new-comment">
         <%= link_to_function t('comments.add_a_comment'),
           "$('#new-comment-#{show_on}-for-#{stream_item.id}').show();$('#delete-icon_#{show_on}_#{stream_item.id}').show(); $(this.parentNode).css('visibility', 'visible');",
           :class => 'discreet small comment-icon' %>
-         <%= link_to_function '', "$('#new-comment-#{show_on}-for-#{stream_item.id}').hide();$('#delete-icon_#{show_on}_#{stream_item.id}').hide()",:id=>"delete-icon_#{show_on}_#{stream_item.id}", :class =>  'delete-icon',:style=>"margin-left:270px;display:none" %>
+        <%= link_to_function '', "$('#new-comment-#{show_on}-for-#{stream_item.id}').hide();$('#delete-icon_#{show_on}_#{stream_item.id}').hide()",:id=>"delete-icon_#{show_on}_#{stream_item.id}", :class =>  'delete-icon',:style=>"margin-left:270px;display:none" %>
         <div id="new-comment-<%= show_on%>-for-<%= stream_item.id %>" style="display:none;">
-          <%= form_for Comment.new,:remote=>true do |form| %>
-          <%= hidden_field_tag 'stream_item_id', stream_item.id %>
+          <form method="post" id="new_comment" data-remote="true" class="new_comment" action="/comments" accept-charset="UTF-8">
+
+
+            <%= hidden_field_tag 'stream_item_id', stream_item.id %>
             <% if stream_item.streamable_type == 'Album' %>
               <% if Array(stream_item.context['picture_ids']).length == 1 %>
                 <%= hidden_field_tag 'picture_id', stream_item.context['picture_ids'].first[0] %>
@@ -64,8 +86,9 @@
               <%= hidden_field_tag stream_item.streamable_type.downcase + '_id', stream_item.streamable_id %>
             <% end %>
             <%= text_area_tag 'text', '', :rows => 3, :cols => 40, :id => "new_comment_textarea_#{stream_item.id}" %><br/>
-            <%= form.submit t('comments.save') %>
-          <% end %>
+            <input type="submit" value=" <%=  t('comments.save') %>" name="commit" id="comment_submit"/>
+
+          </form>
         </div>
       </div>
     <% elsif stream_item.wall %>

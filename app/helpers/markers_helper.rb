@@ -13,9 +13,9 @@ module MarkersHelper
     html.html_safe
   end
   
-  def place_html(marker)
+  def place_html(place,marker)
     html =''
-  	html << "#{render :partial => 'common/place_info',:locals => {:place=>marker.object.streamable,:marker=>marker}}"
+  	html << "#{render :partial => 'common/place_info',:locals => {:place=>place,:marker=>marker}}"
     html = html.gsub(/\'/, '"')
     html = html.gsub(/[\n\r]/,'')
   end

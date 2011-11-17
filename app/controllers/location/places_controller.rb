@@ -37,8 +37,6 @@ class Location::PlacesController < ApplicationController
   def create
     params[:place][:person_id] = @logged_in.id
     @place = Place.new(params[:place])
-    @place.picture = Picture.find(params[:picture][:id]) if params[:picture][:id] and params[:picture][:id]!=""
-
     if @place.save
       @marker = Marker.new
       @marker.marker_latitude = @place.place_latitude
@@ -56,7 +54,6 @@ class Location::PlacesController < ApplicationController
       @place.errors.full_messages.each { |error|
         @error_string += (error+ " ")
       }
-     
     end
   end	
 

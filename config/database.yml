@@ -32,7 +32,7 @@ production:
   host: localhost
   username: root
   encodings: utf8
-  password: lee123
+  password: 
 
 #development:
 #  adapter: mysql
