@@ -10,11 +10,11 @@
   <script>
    
 
-    $("#owner_bar").live('click',function(){ $.ajax({                                                
-        type: "POST",                                    
-        url: "owner_manager",                                     
-        data: "marker_id="+ <%=@place.marker_id%> +"&owner="+ $("#owner_bar").attr("value"),    
-        success: function(message){  
+    $("#owner_bar").live('click',function(){ $.ajax({
+        type: "POST",
+        url: "owner_manager",
+        data: "marker_id="+ <%=@place.marker_id%> +"&owner="+ $("#owner_bar").attr("value"),
+        success: function(message){
           if(message.success==true ){
             if(message.owner ==false){
               $("#owner_bar").html("申请地主");
@@ -27,9 +27,9 @@
             }
                           
           } else{
-            alert("出错拉。。请重试")             
-          } 
-        } 
+            alert("出错拉。。请重试")
+          }
+        }
       });  });
 
 
@@ -68,7 +68,129 @@
     <div class="panes">
       <div class="tab_pane">
         <div id = "place_leave_message">
-          <%= render_cell :place,:place_message,:place=>@place,:place_shares=>@place_shares %>
+
+          <div class="share">
+            <%= text_field_tag 'share-starter-text', '', :placeholder => "提点建议或者问题" %>
+            <ul class="share-details share-selector" style="display:none;">
+              <li><%= link_to_function "我要建议", :class => 'comment2-icon share_link active', :id => 'share-advise-icon',:value=>"advise" %></li>
+              <li><%= link_to_function "我要提问", :class => 'picture-icon share_link', :id => 'share-question-icon',:value => "question" %></li>
+              <li class="cancel-link"><%= link_to_function '', 'hideSharebar()', :class =>  'delete-icon' %></li>
+            </ul>
+
+
+            <%= form_for [:location,@place_share=PlaceShare.new], :url => add_share_location_places_path,:html => {:id => 'share-addvise', :class => 'share-type'},:remote=>true do |form| %>
+              <%= hidden_field_tag :album, @place.place_name %>
+              <%= hidden_field_tag :place_id, @place.id %>
+              <%= hidden_field_tag :type, 'advise' %>
+              <%= text_field :picture,:id, :type=>'hidden' %>
+              <%= form.text_area :text,:size => "50x2", :placeholder => "对于去"+@place.place_name+"的游客,您有什么建议"%><br/>
+
+              <div style="height:40px;">
+                <span class ='picture-icon' style='color: #5F9128;cursor:pointer;float:left;'>添加图片:&nbsp</span>
+                <span id="file_name" style='float:left;'></span>
+                <div style='clear:both;'></div>
+                <input type="file"  id ="fileToUpload" name ="picture" onchange="fileChange(this.value)" style='cursor:pointer;float:left;margin-top:-20px; *margin-top:-40px; filter:alpha(opacity=0);-moz-opacity:0;opacity:0;'/>
+              </div>
+              <%= submit_tag t('share.share'),:class=>"submit_button" %>
+              <%=image_tag("loading.gif",:id=>"loading",:style=>"display:none",:height => '30')%>
+              <span style="height:35px;float:right;margin-right: 20px;"><%=image_tag("missing_small.png",:id=>"temp_pic",:style=>"display:none",:height => '30')%></span>
+            <% end %>
+          </div>
+          <%= javascript_include_tag "extend/ui" %>
+
+
+
+
+
+          <div class="stream-items">
+            <%= render :partial => 'streams/stream_item', :as => :stream_item,
+              :collection => @stream_items,
+              :locals =>{:show_on=>"wall",:logged_in=>@logged_in,:person=>@person} %>
+
+          </div>
+
+
+          <script>
+
+            editor_note = new baidu.editor.ui.Editor({
+              toolbars:[
+                ['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','|','MultiMenu'  ]
+              ],autoClearinitialContent:true,
+              initialContent: '<span style="color:#ccc">分享你的心情！！</span>',
+              elementPathEnabled:false,
+              textarea: 'place_share[text]'
+            });
+            editor_note.render('place_share_text');  //editor为编辑器容器的id
+
+            function fileChange(full_path){
+              get_file_name(full_path);
+              ajaxFileUpload();
+            }
+
+
+
+            function get_file_name(full_path){
+              $("#file_name").html(full_path)
+            }
+
+            function ajaxFileUpload(){
+              loading();//动态加载小图标
+              $.ajaxFileUpload({
+                url:'/location/places/add_temp_pic?place_id=<%=@place.id%>',
+                secureuri:false,
+                dataType: 'json',
+                fileElementId:'fileToUpload',
+                success: function (data,status){
+                  if(data.success=="true"){
+                    $("#picture_id").attr("value",data.pic_id)
+                    $("#temp_pic").attr("src",data.pic_url);
+                    $("#temp_pic").attr("style","display:");
+                  }else{
+                    alert("文件保存失败")
+                  }
+                },
+                error: function (data, status, e){
+                  alert(e)
+                }
+              })
+              return false;
+            }
+            function loading(){
+              $("#loading").ajaxStart(function(){
+                $(this).show();
+                $(".submit_button").attr("disabled","true");
+              }).ajaxComplete(function(){
+                $(this).hide();
+                $(".submit_button").removeAttr("disabled");
+
+              });
+            }
+
+
+            $(".share_link").live("click",function(){
+              $("#type").attr("value",$(this).attr("value"))
+              $('.share_link').removeClass('active');
+              $(this).addClass('active');
+            })
+            $("#share-starter-text").live("focus",function(){
+              $('.share-details').show();
+              $('#share-starter-text').hide();
+              $('#share-addvise').show();
+            })
+
+            function hideSharebar() {
+              $('.share-type, .share-details').hide();
+              $('#share-starter-text').show();
+            }
+          </script>
+
+
+
+
+
+
+
+
         </div>
       </div>
 <%#到过的用户%>

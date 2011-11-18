@@ -1,4 +1,4 @@
-﻿$(".stream-items").prepend("<%= escape_javascript(render_cell :place,:place_share_item,:place_share =>@place_message ,:is_hide=>true) %>");
+$(".stream-items").prepend("<%= escape_javascript(render :partial => 'streams/stream_item', :locals => {:stream_item=> @place_message.stream_item,:show_on=>"wall"}) %>");
 
 editor_note.setContent("")
 $(".stream-item").first().hide();

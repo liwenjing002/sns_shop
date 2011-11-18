@@ -37,13 +37,7 @@ class PlaceCell < Cell::Rails
     render
   end
 
-  def place_share_item
-    @place = options[:place]
-    @place_share = options[:place_share]
-    @stream_item = @place_share.stream_item
-    @is_hide = options[:is_hide]
-    render
-  end
+
 
   def place_share_items
 

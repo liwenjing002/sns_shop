@@ -86,6 +86,25 @@ module StreamsHelper
     html
   end
 
+  def placeshare  stream_item,show_on
+    html = ""
+    if stream_item.context.any?
+      stream_item.context['picture_ids'].to_a.each do |picture_id, fingerprint, extension,text|
+        if show_on == "wall"
+          html += link_to image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :large), :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic',:rel=>"#mies#{stream_item.id}"),  album_picture_path(stream_item.streamable_id, picture_id), :title => t('pictures.click_to_enlarge')
+          html += "<div class='simple_overlay' id='mies#{stream_item.id}'>#{image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :original),:alt => t('pictures.click_to_enlarge'))}</div>"
+        else
+          html += link_to image_tag(Picture.photo_url_from_parts(picture_id, fingerprint, extension, :small), :alt => t('pictures.click_to_enlarge'), :class => 'stream-pic',:rel=>"#mies#{stream_item.id}"),
+            album_picture_path(stream_item.streamable_id, picture_id), :title => t('pictures.click_to_enlarge')
+        end
+      end
+    end
+
+    html +="<div>#{raw stream_item.body}</div>" unless is_blank stream_item.body
+    html
+  end
+
+
   def location_html show_on, stream_item_id,location,longitude,latitude
     html = ""
     if show_on == "wall"

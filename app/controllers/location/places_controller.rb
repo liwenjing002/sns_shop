@@ -17,7 +17,8 @@ class Location::PlacesController < ApplicationController
     @be_here_peoples = PersonImpression.find_all_by_impression_id_and_object_type_and_object_id(4,"Place",params[:id])
     @love_to_peoples = PersonImpression.find_all_by_impression_id_and_object_type_and_object_id(3,"Place",params[:id])
     #    unless  fragment_exist?(:controller => 'places', :action => 'show', :fragment => 'place_share_items')
-    @place_shares = @place.place_shares
+#    @place_shares = @place.place_shares
+@stream_items = @place.stream_items
     render
     #    end
     

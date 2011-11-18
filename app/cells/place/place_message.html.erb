@@ -32,7 +32,10 @@
 
 
 <div class="stream-items">
-  <%= render_cell :place,:place_share_items,:place=>@place,:place_shares=>@place_shares %>
+  <%= render :partial => '../view/streams/stream_item', :as => :stream_item,
+    :collection => @stream_items,
+    :locals =>{:show_on=>"wall",:logged_in=>@logged_in,:person=>@person} %>
+
 </div>
 
 
