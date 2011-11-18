@@ -138,24 +138,11 @@ class MarkersController < ApplicationController
   
   private
   def marker_html marker
-      html = nil
-     case marker.object_type
-#     when "Place"
-#        html =  {:html=>render_to_string(:partial => 'common/place_info',
-#            :locals => {:place=>marker.object,:marker=>marker}),
-#          :longitude=>marker.marker_longitude,
-#          :latitude=>marker.marker_latitude,
-#          :marker_id=>marker.id,
-#          :geocode_position=>marker.geocode_position}
-     when "StreamItem"
        html =  {:html=>render_to_string(:partial => 'streams/stream_item',:locals => {:stream_item=> marker.object,:show_on=>"map",:marker=>marker}),
           :longitude=>marker.marker_longitude,
           :latitude=>marker.marker_latitude,
           :marker_id=>marker.id,
           :geocode_position=>marker.geocode_position}
-     end
-     html
-    
   end
   
 end

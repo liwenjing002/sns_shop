@@ -30,7 +30,7 @@
   <p>分享你的心情，照片，视频，二二身体好，二二更健康</p>
   <%=render_cell :common,:share%>
 
- <%#*头像墙%>
+  <%#*头像墙%>
   <%@peoples = Person.find(:all,:limit=>35)%>
   <h3 class="double-margin-top">人物头像墙</h3>
   <div id ="people_pic_wall">
@@ -53,7 +53,7 @@
   </div>
 
 
- <%#*事件通知%>
+  <%#*事件通知%>
   <% if Setting.get(:features, :prayer_event) %>
     <h3><%= t('prayer_signups.home_page_heading') %></h3>
     <div id="taken_slots"></div>
@@ -66,11 +66,15 @@
 <% end %>
 
 
-  <%#*内容墙%>
-  <div class="stream-items" id="stream_item_wall">
+<%#*内容墙%>
+<div class="stream-items" id="stream_item_wall">
   <%= render :partial => 'streams/stream_item', :as => :stream_item,
     :collection => @stream_items,
     :locals =>{:show_on=>"wall",:logged_in=>@logged_in,:person=>@person} %>
+
+
+
+
 
   <% if @stream_items.empty? %>
     <p><%= t('stream.where_activity_appear') %></p>

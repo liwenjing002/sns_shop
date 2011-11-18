@@ -18,12 +18,8 @@
       </div>
       <%end%>
 <%else%>
-	<%#*<div class = 'marker_address'>%>
-		<%#= get_address_href(@marker.geocode_position)%>
-	<%#*</div>%> 
       <div style="cursor:pointer;color:red">
       <span style="color: #5F9128">发表位置：</span>
         <%=  @stream_item.streamable.location%>
       </div>
-
-    <%end%>
+ <%end%>

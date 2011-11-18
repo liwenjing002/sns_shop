@@ -49,7 +49,7 @@ class Picture < ActiveRecord::Base
     return unless self.type != 'mix' and person
      item = StreamItem.create!(
         :title           => album.name,
-        :context         => {'picture_ids' => [[id, photo.fingerprint, photo_extension,photo_text]]},
+        :context         => {'picture_ids' => [[id, photo.fingerprint, photo_extension,photo_text,longitude,latitude,location]]},
         :person_id       => person_id,
         :group_id        => album.group_id,
         :streamable_type => 'Album',

@@ -13,13 +13,6 @@
       <h3>
         <%= link_to stream_item.title+t(stream_item.streamable_type), stream_item %>
       </h3>
-    <% else %>
-      <div class="stream-item-content">
-        <%=render_cell :stream,:content,:stream_item=>stream_item,:show_on=>show_on,:marker=>stream_item.marker%>
-        <% unless stream_item.wall %>
-          <%= link_to t('comments.view') + '...', stream_item, :class => 'small' %>
-        <% end %>
-      </div>
     <% end %>
     <div class="nowrap stream-item-timestamp">
       <%= time_ago_in_words stream_item.created_at %> <%= t('comments.ago') %>
@@ -35,9 +28,14 @@
         <%= t('from') %> <%= link_to domain_name_from_url(original_url), original_url %>
       <% end %>
     </div>
-    <% if stream_item.title %>
-      <%=render_cell :stream,:content,:stream_item=>stream_item,:show_on=>show_on,:marker=>stream_item.marker,:logged_in=>@logged_in,:person=>@person%>
-    <% end %>
+    <div class="stream-item-content">
+    <%=stream_item_content( stream_item,show_on )%>
+    <% if !stream_item.title %>
+        <% unless stream_item.wall %>
+          <%= link_to t('comments.view') + '...', stream_item, :class => 'small' %>
+        <% end %>
+      <% end %>
+    </div>
 
     <table class="comments"id ="<%=stream_item.id%>_comments">
       <% stream_item.context['comments'].to_a.each do |comment| %>
