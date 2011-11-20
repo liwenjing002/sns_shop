@@ -21,6 +21,7 @@ OneBody::Application.routes.draw do
   resources :pictures do
     collection do
       get :get_stream_item
+      get :upload
     end
   end
 

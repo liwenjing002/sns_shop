@@ -155,7 +155,7 @@
                 <td><span>标题：</span><input type="text" id="imgTitle"/></td>
             </tr>
             <tr>
-                <td><span>对齐方式：</span>
+                <td><span>对齐方�：</span>
                     <select id="float">
                         <option value="">默认</option>
                         <option value="float: left">左浮动</option>
@@ -173,13 +173,14 @@
     <div class="content" id="local" style="display:none">
 
         <table cellpadding="0" cellspacing="0">
+            
             <input id="urll" type="hidden" value=""/>
             <tr>
                 <td>
                     <div style="width:240px;">
                         <span style="display:block;float:left">URL：</span>
                         <div style="float:right;width:200px;height:30px;" id="iframediv">
-                            <iframe  scrolling="no" frameborder="0" name="upImg" src="upload.php"
+                            <iframe  scrolling="no" frameborder="0" name="upImg" src="/pictures/upload"
                                     style="width:200px;height:25px;padding:0;margin:0"></iframe>
                         </div>
                     </div>
@@ -197,7 +198,9 @@
             <tr>
                 <td><span>高度：</span><input type="text" id="imgHeightl"/> px</td>
             </tr>
-
+             <tr>
+                <td><span>相册：</span><input type="text" name="album" /></td>
+            </tr>
             <tr>
                 <td><span>标题：</span><input type="text" id="imgTitlel"/></td>
             </tr>
@@ -283,7 +286,7 @@ function clearRemote(){
 function clearLocal(){
     G('urll').value = "";
     var iframediv = document.getElementById("iframediv");
-    iframediv.innerHTML = '<iframe  scrolling="no" frameborder="0" name="upImg" src="upload.php" style="width:200px;height:25px;padding:0;margin:0"></iframe>';
+    iframediv.innerHTML = '<iframe  scrolling="no" frameborder="0" name="upImg" src="/pictures/upload" style="width:200px;height:25px;padding:0;margin:0"></iframe>';
     G('imgWidthl').value="";
     G('imgHeightl').value="";
     G('imgTitlel').value="";

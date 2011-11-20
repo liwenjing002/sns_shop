@@ -94,7 +94,7 @@ class PicturesController < ApplicationController
        
     end
 
-
+    
     render :text=> {:success=>true,:html=>html,:notice=>@notice}.to_json
     #    redirect_to params[:redirect_to] || @group || album_pictures_path(@album)
   end
@@ -135,7 +135,9 @@ class PicturesController < ApplicationController
   end
   
 
-
-  
+ def upload
+   render :layout=>false
+ end
+ 
   
 end
