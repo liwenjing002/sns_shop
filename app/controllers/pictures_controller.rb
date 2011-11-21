@@ -43,7 +43,8 @@ class PicturesController < ApplicationController
     ) { |a| a.person = @logged_in }
     success = fail = 0
     errors = []
-    pic_arr =[]
+    @pic_arr =[]
+     if params[:pictures]
     Array(params[:pictures]).each do |pic|
       picture = @album.pictures.create(
         :person => (params[:remove_owner] ? nil : @logged_in),
@@ -58,7 +59,7 @@ class PicturesController < ApplicationController
       end
       if picture.photo.exists?
         success += 1
-        pic_arr << picture
+        @pic_arr << picture
         if @album.pictures.count == 1 # first pic should be default cover pic
           picture.update_attribute(:cover, true)
         end
@@ -68,12 +69,26 @@ class PicturesController < ApplicationController
         picture.destroy rescue nil
       end
     end
+    end
+    if params[:picture]
+       picture = @album.pictures.create(
+        :person => (params[:remove_owner] ? nil : @logged_in),
+        :photo  => params[:picture],
+        :photo_text  => params[:photo_text],
+        :longitude=> (params[:marker]and params[:marker][:marker_longitude])?params[:marker][:marker_longitude]:"",
+        :latitude=> (params[:marker]and params[:marker][:marker_latitude])?params[:marker][:marker_latitude]:"",
+        :location=> params[:marker]?params[:marker][:geocode_position]:""
+      )
+       @pic_arr << picture
+    end
+
+
   @notice = t('pictures.saved', :success => success)
     @notice+= " " + t('pictures.failed', :fail => fail) if fail > 0
     @notice += " " + errors.join('; ') if errors.any?
     html = []
     
-    pic_arr.each do |pic|
+    @pic_arr.each do |pic|
       if params[:marker]
         params[:marker][:owner_id] =  @logged_in.id 
         unless params[:marker][:geocode_position]=='' and params[:marker][:marker_longitude]=="" and params[:marker][:marker_latitude] ==''
@@ -94,10 +109,14 @@ class PicturesController < ApplicationController
        
     end
 
-    
+    if params[:picture]
+      @file_url = @pic_arr[0].photo.url(:original) if @pic_arr and @pic_arr.length > 0
+      render :text=> {:url=>@file_url,:title=>"",:state=>"SUCCESS"}.to_json
+    else
     render :text=> {:success=>true,:html=>html,:notice=>@notice}.to_json
     #    redirect_to params[:redirect_to] || @group || album_pictures_path(@album)
-  end
+    end
+    end
 
   
   

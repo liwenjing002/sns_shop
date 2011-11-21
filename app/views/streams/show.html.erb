@@ -3,7 +3,7 @@
   <%= stylesheet_link_tag  "ueditor/themes/default/ueditor" %>
   <%= javascript_include_tag "extend/ui" %>
   <%= javascript_include_tag "ueditor/editor_config" %>
-  <%= javascript_include_tag "ueditor/editor_ui_all_min" %>
+  <%= javascript_include_tag "ueditor/editor_all" %>
 <%end%>
 <% if @has_friendship_requests %>
   <div class="highlight">
@@ -38,7 +38,7 @@
       <%=link_to   get_thunbnail_html(people),people,:target=>"_blank"%>
     <%end%>
   </div>
-  <%#*地点墙%>
+  地点墙
   <%    @places = Place.find(:all,:limit=>35)%>
   <h3 class="double-margin-top">地点墙
   </h3>

@@ -2,46 +2,35 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>插入图片</title>
-    <script type="text/javascript" src="../internal.js"></script>
+    <title></title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
     <style type="text/css">
-        * {
+        body {
+            font-size: 12px;
+            overflow: hidden;
+            padding: 10px;
+            margin: 0;
             color: #838383
         }
 
-        body {
-            font-size: 12px;
-            width: 362px;
-            height: 163px;
+        .tabWarper {
+            width: 600px;
+            height: 370px;
             overflow: hidden;
-            margin: 0;
-            padding: 0;
+            position: relative;
         }
 
         .head {
-            position: absolute;
-            height: 31px;
-            top: 9px;
-        }
-
-        .content {
-            height: 180px;
-            border: 1px solid #ddd;
-            padding: 5px
-        }
-
-        .warp {
-            padding: 39px 0 0 15px;
-            height: 100%;
+            height: 35px;
+            line-height: 35px;
             position: relative;
+            z-index: 2
         }
 
         .head span {
             width: 62px;
-            height: 29px;
-            line-height: 29px;
-            background: red;
+            height: 28px;
+            line-height: 28px;
             display: block;
             float: left;
             text-align: center;
@@ -60,510 +49,578 @@
             border-bottom: 1px solid #FFF
         }
 
-        input {
-            height: 21px;
-            line-height: 21px;
+        .tabContainer {
+            width: 1250px;
+            height: 320px;
+            position: relative;
+            top: -6px;
+        }
+
+        .content {
+            width: 588px;
+            height: 320px;
+            float: left;
+            border: 1px solid #ddd;
+            padding: 5px;
+            margin-right: 20px;
         }
 
         .content table {
-            padding: 0;
-            margin: 0;
-            position: relative
+            margin-top: 5px;
+            position: relative;
         }
 
         .content table tr {
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            height: 30px;
-            line-height: 30px;
+            height: 35px;
+            line-height: 35px;
         }
 
-        .content span {
-            padding-right: 4px;
+        .lable {
+            text-align: center;
+            width: 45px;
         }
 
-        .content input {
-            width: 145px;
+        td input {
+            width: 125px;
             height: 21px;
+            line-height: 21px;
             background: #FFF;
             border: 1px solid #d7d7d7;
-            padding: 0;
-            margin: 0;
         }
 
         #url {
-            width: 290px;
-            margin-bottom: 2px
+            width: 534px;
+            margin-bottom: 2px;
         }
 
-        #thumb {
-            width: 100px;
-            height: 100px;
+        #preview {
+            width: 330px;
+            height: 252px;
             position: absolute;
-            top: 82px;
-            left: 242px;
-            background: #ECECEC;
+            top: 50px;
+            left: 246px;
+            background: #eee;
             padding: 5px;
             overflow: auto
         }
 
-        .url_c{
-            float:left;
-            width:220px;
-            height:30px;
-            overflow:hidden;
-            margin-left:1px !important;
-            margin-left:3px;
-            _margin-left:0;
+        .start {
+            float: right;
+            width: 100px;
+            height: 28px;
+            line-height: 28px;
+            background: #ddd url("../../themes/default/images/upload.png");
+            border: 0;
+            cursor: pointer
         }
 
+        .control {
+            z-index: 9999;
+            position: absolute;
+            width: 588px;
+            height: 36px;
+            line-height: 36px;
+            top: 315px;
+            left: 6px;
+        }
+
+        .align {
+            float: left;
+            height: 36px;
+        }
+
+        .singlelable {
+            background: url(../../themes/default/images/imgLable.png) -21px 2px no-repeat
+        }
+
+        .batchlable {
+            display: block;
+            float: left;
+            width: 50px;
+            height: 36px;
+            background: url(../../themes/default/images/imgLable.png) -21px 2px no-repeat
+        }
+
+        .lock-zoom {
+            position: absolute;
+            width: 25px;
+            height: 40px;
+            top: 60px;
+            left: 200px;
+            background: url("../../themes/default/images/lock.gif") 0 -3px;
+        }
+
+        .lock-zoom input {
+            position: relative;
+            top: 10px;
+            left: -2px;
+        }
+        .flag{color: blue}
     </style>
+    <script type="text/javascript" src="../internal.js"></script>
 </head>
 <body>
-<div class="warp">
-    <div class="head" id="head">
-        <span name="remote" class="act">网络图片</span><span name="local" class="def">本地图片</span>
+<div class="tabWarper">
+    <div id="head" class="head">
+        <span name="tab1" onclick="switchTab(this,0)" class="act">网络图片</span>
+        <span name="tab2" onclick="switchTab(this,1)" class="def">本地上传</span>
     </div>
-    <div class="content" id="remote">
+    <div id="tabs" class="tabContainer">
+        <div id="tab1" class="content">
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="lable"> 地 址：</td>
+                    <td><input id="url" type="text" value=""/></td>
+                </tr>
 
-        <table width="300" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="lable">宽 度：</td>
+                    <td><input type="text" id="imgWidth"/> px</td>
+                </tr>
+                <tr>
+                    <td class="lable">高 度：</td>
+                    <td><input type="text" id="imgHeight"/> px</td>
+                </tr>
 
-            <tr>
-                <td>
-                    <div style="height:25px; width:280px;">
-                        <span style="display:block;float:left;width:35px;">URL：</span>
+                <tr>
+                    <td class="lable">边 框：</td>
+                    <td><input type="text" id="imgBorder"/> px</td>
+                </tr>
+                <tr>
+                    <td class="lable">描 述：</td>
+                    <td><input type="text" id="imgTitle"/></td>
+                </tr>
+                <tr>
+                    <td class="lable singlelable"></td>
+                    <td id="singleFloat">
+                        <img name="none" src="../../themes/default/images/none-c.jpg" alt="默认" title="默认"
+                             onclick="imgselect(this)"/>
+                        <img name="left" src="../../themes/default/images/left.jpg" alt="左浮动" title="左浮动"
+                             onclick="imgselect(this)"/>
+                        <img name="right" src="../../themes/default/images/right.jpg" alt="右浮动" title="右浮动"
+                             onclick="imgselect(this)"/>
+                        <img name="center" src="../../themes/default/images/topbottom.jpg" alt="居中" title="居中"
+                             onclick="imgselect(this)"/>
+                    </td>
+                </tr>
+                <!--<tr style="display:none" id="originalSize"><td>原  始：</td><td></td></tr>-->
+            </table>
+            <div id="msg" style="display: none;color: red">
+                <span style="font-size: 14px">图片转存步骤：</span>
 
-                        <div class="url_c">
-                            <input style="width:200px" id="url" type="text" value=""/>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            <tr style="display:none">
-                <td><span id="sourceSize"></span></td>
-            </tr>
-            <tr>
-                <td><span>宽度：</span><input type="text" id="imgWidth"/> px</td>
-            </tr>
+                    <li style="list-style-type: none;">1.复制本选项卡中图片地址,切换至<span class="flag">本地上传</span></li>
+                    <li style="list-style-type: none">2.点击<span class="flag">添加图片</span>,在<span class="flag">文件名</span>框中粘贴图片地址，<br/>点击<span class="flag">打开</span></li>
+                    <li style="list-style-type: none;">3.正常执行图片上传操作即可</li>
+            </div>
+            <div id="preview"></div>
+            <div class="lock-zoom">
+                <input id="zoom" title="锁定宽高比例" type="checkbox" checked="checked"/>
+            </div>
 
-            <tr>
-                <td><span>高度：</span><input type="text" id="imgHeight"/> px</td>
-            </tr>
-
-            <tr>
-                <td><span>标题：</span><input type="text" id="imgTitle"/></td>
-            </tr>
-            <tr>
-                <td><span>对齐方�：</span>
-                    <select id="float">
-                        <option value="">默认</option>
-                        <option value="float: left">左浮动</option>
-                        <option value="float: right">右浮动</option>
-                        <option value="display: block">独占一行</option>
-                    </select>
-                </td>
-            </tr>
-
-        </table>
-
-
+        </div>
+        <div id="tab2" class="content"></div>
+    </div>
+    <div id="control" class="control" style="display: none">
+        <span class="batchlable"></span>
+        <span id="batchFloat" class="align">
+            <img name="none" src="../../themes/default/images/none-c.jpg" alt="默认" title="默认"
+                 onclick="imgselect(this)"/>
+            <img name="left" src="../../themes/default/images/left.jpg" alt="左浮动" title="左浮动"
+                 onclick="imgselect(this)"/>
+            <img name="right" src="../../themes/default/images/right.jpg" alt="右浮动" title="右浮动"
+                 onclick="imgselect(this)"/>
+            <img name="center" src="../../themes/default/images/topbottom.jpg" alt="居中" title="居中"
+                 onclick="imgselect(this)"/>
+        </span>
+        <button id="start" class="start" style="display: none"></button>
     </div>
 
-    <div class="content" id="local" style="display:none">
-
-        <table cellpadding="0" cellspacing="0">
-            
-            <input id="urll" type="hidden" value=""/>
-            <tr>
-                <td>
-                    <div style="width:240px;">
-                        <span style="display:block;float:left">URL：</span>
-                        <div style="float:right;width:200px;height:30px;" id="iframediv">
-                            <iframe  scrolling="no" frameborder="0" name="upImg" src="/pictures/upload"
-                                    style="width:200px;height:25px;padding:0;margin:0"></iframe>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-
-            <tr style="display:none">
-                <td><span id="sourceSizel"></span></td>
-            </tr>
-
-            <tr>
-                <td><span>宽度：</span><input type="text" id="imgWidthl"/> px</td>
-            </tr>
-
-            <tr>
-                <td><span>高度：</span><input type="text" id="imgHeightl"/> px</td>
-            </tr>
-             <tr>
-                <td><span>相册：</span><input type="text" name="album" /></td>
-            </tr>
-            <tr>
-                <td><span>标题：</span><input type="text" id="imgTitlel"/></td>
-            </tr>
-            <tr>
-                <td><span>对齐方式：</span>
-                    <select id="floatl">
-                        <option value="">默认</option>
-                        <option value="float: left">左浮动</option>
-                        <option value="float: right">右浮动</option>
-                        <option value="display: block">独占一行</option>
-                    </select>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div id="thumb"></div>
 </div>
+<script type="text/javascript" src="tangram.js"></script>
+
+<!--完整的回调函数，有需要的可以完整取用-->
+<!--<script type="text/javascript" src="callbacks.js"></script>-->
 
 <script type="text/javascript">
-function G( id ) {
-    return document.getElementById( id );
-}
-function reloadImg( url ) {
-    clearRemote();
-    var preImg = G( "thumb" );
+/*-=-=-=-=-=-=-=全局变量模块-=-=-=-=-=-=-*/
+var imageUrls = [],        //从服务器返回的上传成功图片数组
+    imageCount = 0;        //预览框中的图片数量，初始为0
 
-    if ( !/\.(png|gif|jpg|jpeg|bmp)$/ig.test( url ) && url.indexOf( "api.map.baidu.com" ) == -1 ) {
-        preImg.innerHTML = "";
-        return false;
+
+/*-=-=-=-=-=-=-=界面生成模块-=-=-=-=-=-=-*/
+
+function switchTab(obj, index) {
+    clearFocusClass();
+    obj.className = "act";
+    g("tabs").style.left = index * (-620) + "px";
+    if (obj.getAttribute("name") == "tab2") {
+        g("control").style.display = "";
+        if (imageCount != 0) {
+            dialog.buttons[0].setDisabled(true); //如果预览框中没有图片或者没有成功上传图片，切回来时重新置灰按钮
+        }
     } else {
-        preImg.innerHTML = "图片正在加载。。。";
-        preImg.innerHTML = "<img src='" + url + "' />";
-        var pimg = preImg.firstChild;
-        G( "urll" ).value = pimg.src;
-        pimg.onload = function() {
-            G( "sourceSizel" ).innerHTML = "原始宽：" + this.width + "px&nbsp;&nbsp;原始高：" + this.height + "px";
-            G( "sourceSizel" ).parentNode.parentNode.style.display = "";
-            suo( this, 100 );
-//                        G("imgWidthl").value = pimg.width ? pimg.width : 0;
-//                        G("imgHeightl").value = pimg.height ? pimg.height : 0;
-        };
-        pimg.onerror = function() {
-            preImg.innerHTML = "图片不存在";
+        g("control").style.display = "none";
+        dialog.buttons[0].setDisabled(false); //切回来时重新点亮按钮
+    }
+}
+function clearFocusClass() {
+    var heads = g("head").children;
+    for (var i = 0,j; j = heads[i++];) {
+        j.className = "def";
+    }
+}
+/**
+ * flash初始化配置
+ */
+baidu.swf.create({
+    id:"flash",
+    url:"imageUploader.swf",
+    width:"588",
+    height:"272",
+    errorMessage:"Flash插件初始化错误，请更新您的flashplayer版本！",
+    wmode:"window",
+    ver:"10.0.0",
+    // 初始化的参数就是这些，
+    vars:{
+        width:588,      //width是flash的宽
+        height:272,        //height是flash的高
+        gridWidth:115,  // gridWidth是每一个预览图片所占的宽度，应该为width的整除
+        gridHeight:120,  // gridHeight是每一个预览图片所占的高度，应该为height的整除
+        picWidth:100,    // 单张预览图片的宽度
+        picHeight:100,    // 单张预览图片的高度
+        uploadDataFieldName:"picture",    // POST请求中图片数据的key
+        picDescFieldName:"pictitle",    // POST请求中图片描述的key
+        maxSize:2,                    // 文件的最大体积,单位M
+        compressSize:1,               // 上传前如果图片体积超过该值，会先压缩,单位M
+        maxNum:32,                        // 最大上传多少个文件
+        backgroundUrl:"",               //背景图片,留空默认
+        listBackgroundUrl:"",           //预览图背景，留空默认
+        buttonUrl:"",                   //按钮背景，留空默认
+        compressLength:editor.options.maxImageSideLength,                // 能接受的最大边长，超过该值Flash会自动等比压缩
+        url:"/pictures",                                             // 上传处理页面的url地址
+        fileType:"{\"description\":\"图片\", \"extension\":\"*.gif;*.jpeg;*.png;*jpg\"}"      //上传文件格式限制
+
+    }
+}, "tab2");
+
+var flashObj = baidu.swf.getMovie("flash");
+var interval = setInterval(function() {
+    if (flashObj && flashObj.flashInit) {
+        clearInterval(interval);
+        //console.log("flash完成初始化");
+        // 设置回调函数名
+        var callback_func_names = [
+            "selectFileCallback",    // 选择文件的回调
+            "exceedFileCallback",    // 文件超出限制的最大体积时的回调
+            "deleteFileCallback",    // 删除文件的回调
+            "startUploadCallback",    // 开始上传某个文件时的回调
+            "uploadCompleteCallback",    // 某个文件上传完成的回调
+            "uploadErrorCallback",    // 某个文件上传失败的回调
+            "allCompleteCallback",    // 全部上传完成时的回调
+            "changeFlashHeight"        // 改变Flash的高度，mode==1的时候才有用
+        ];
+        flashObj.setJSFuncName(callback_func_names);
+    }
+}, 500);
+
+
+/*-=-=-=-=-=-=-=逻辑处理模块-=-=-=-=-=-=-*/
+//-----------------核心流程------------------------------
+var img = editor.selection.getRange().getClosedNode(),oWidth,oHeight,percent;
+if (!img) img = document.createElement("img");
+if (img.src) {
+    //图片编辑时显示图片信息
+    showImageInfo();
+}
+if (document.attachEvent) {
+    g("url").onpropertychange = function() {
+        if (g("url").value) preloadImg();//trace：解决IE下初始提示bug
+    };
+} else {
+    g("url").addEventListener("input", function() {
+        preloadImg();
+    }, false);
+}
+//点击确定时的事件处理
+dialog.onok = function() {
+    var actionTab = findActionTab();
+    if (actionTab == "tab1") {
+        return insertSingle();
+    } else if (actionTab == "tab2") {
+        return insertBatch();
+    }
+};
+//----------------------------------------------------
+
+/**
+ * 返回false时不会关闭对话框
+ */
+function insertSingle() {
+    //未成功加载图片直接返回
+    if (!img.src) return;
+//    if(img.hasAttribute("word_img") && img.src.indexOf("file:///") == -1){
+//        img.removeAttribute("word_img");
+//    }
+    var imgObj = {src:img.src};
+    var width = g("imgWidth").value;
+    if (!width) width = oWidth;
+    if (!isNum(width)) {
+        alert("请输入正确的宽度值！例如：140，200.5");
+        g("imgWidth").value = "";
+        g("imgWidth").focus();
+        return false;
+    }
+    var height = g("imgHeight").value;
+    if (!height) height = oHeight;
+    if (!isNum(height)) {
+        alert("请输入正确的高度值！例如：140，200.5");
+        g("imgHeight").value = "";
+        g("imgHeight").focus();
+        return false;
+    }
+    var border = g("imgBorder").value;
+    if (!border && border != 0 && !isNum(border)) {
+        alert("请输入正确的边框值！例如：1，2");
+        g("imgBorder").value = "";
+        g("imgBorder").focus();
+        return false;
+    }
+    imgObj.width = width;
+    imgObj.height = height;
+    imgObj.border = border;
+    imgObj.title = g("imgTitle").value || "";
+    imgObj.floatStyle = getAlign("singleFloat");
+    editor.execCommand("insertImage", imgObj);
+    img = null;
+}
+
+/**
+ * 返回false时不会关闭对话框
+ */
+function insertBatch() {
+    if (!imageUrls.length) return;
+    var imgObjs = [],
+            align = getAlign("batchFloat");
+
+    for (var i = 0,ci; ci = imageUrls[i++];) {
+        var tmpObj = {};
+        tmpObj.title = ci.title;
+        tmpObj.floatStyle = align;
+        //修正显示时候的地址数据,如果后台返回的是图片的绝对地址，那么此处无需修正
+        tmpObj.src = editor.options.imagePath + ci.url;
+        imgObjs.push(tmpObj);
+    }
+    editor.execCommand("insertImage", imgObjs);
+}
+
+function findActionTab() {
+    var heads = g("head").children;
+    for (var i = 0,j; j = heads[i++];) {
+        var className = j.className;
+        if (className == "act") {
+            return j.getAttribute("name");
+        }
+    }
+    return "";
+}
+
+//预加载图片
+function preloadImg() {
+
+    var imgType = new RegExp("/\.(png|gif|jpg|jpeg)$/ig"),
+            urlFilter = "";
+    var url = g("url").value,pimg,sourceSize,
+            preview = g("preview");
+    if (!imgType.test(url) && url.indexOf(urlFilter) == -1) {
+        preview.innerHTML = "不正确的图片格式或者图片域！";
+        return;
+    }
+    preview.innerHTML = "图片加载中……";
+    //修正当修改地址时候img对象已经销毁的问题
+    if(!img){
+        img = document.createElement("img");
+        img.src = url;
+    }
+    img.onload = function() {
+        oWidth = this.width;
+        oHeight = this.height;
+        percent = (oWidth / oHeight).toFixed(2);
+        setPreview(this,330);
+       
+    };
+    img.onerror = function() {
+        preview.innerHTML = "图片加载失败，请检查网络！";
+        img = null;
+    };
+    img.src = url;
+}
+
+//显示图片信息
+function showImageInfo() {
+    //获取图片float方式
+    var align = editor.queryCommandValue('imagefloat');
+    replaceImg(align);
+    if(img.getAttribute("word_img")){
+        g("url").value = img.getAttribute("word_img").replace("&amp;", "&");
+        g("msg").style.display = "";
+    }else{
+        //g("url").value = img.src.replace("&amp;", "&");
+        g("url").value = img.src.replace("&amp;", "&");
+    }
+    g("imgWidth").value = img.width;
+    g("imgHeight").value = img.height;
+    g("imgBorder").value = img.getAttribute("border") || 0;
+    g("imgTitle").value = img.title;
+    setPreview(img,330);
+    percent = (img.width / img.height).toFixed(2);
+}
+
+function setPreview(img, max ){
+    var tmp = img.cloneNode(true);
+    tmp.width = img.width;
+    tmp.height = img.height;
+    scale(tmp, max);
+    g("preview").innerHTML = '<img src="' + tmp.src + '" width="' + tmp.width + '" height="' + tmp.height + '" border="' + img.style.border + '" />';
+}
+//更改float的提示图标
+function replaceImg(str) {
+    var imgs = g("singleFloat").children;
+    for (var i = 0,j; j = imgs[i++];) {
+        imgs[0].src = imgs[0].src.replace("-c.jpg", ".jpg")
+    }
+    for (var i = 0,j; j = imgs[i++];) {
+        if (j.getAttribute("name") == str) {
+            j.src = j.src.replace(".jpg", "-c.jpg");
+            break;
         }
     }
 }
 
-//给tab注册切换事件
-(function toggletab() {
-    var tabs = G( "head" ).children;
-    for ( var i = 0,j; j = tabs[i]; i++ ) {
-        jbind( j, "click", function() {
-            var name = this.getAttribute( "name" );
-
-            var spans = document.getElementsByTagName( "span" );
-            var len = spans.length;
-            for ( var s = 0; s < len; s++ ) {
-                spans[s].className = 'def';
-            }
-            this.className = 'act';
-            G( "remote" ).style.display = "none";
-            G( "local" ).style.display = "none";
-            G( name ).style.display = "";
-//            if(name =="local" && G('url').value!="" && G('sourceSizel').innerHTML!="" ){
-//                clearRemote();
-//            }
-        } );
-    }
-    tabs[0].focus();
-})();
-
-function clearRemote(){
-    G('url').value = "";
-    G('imgWidth').value="";
-    G('imgHeight').value="";
-    G('imgTitle').value="";
-    G('float').value = "";
-    var source_size = G('sourceSize').parentNode.parentNode;
-    source_size.style.display="none";
+/*-=-=-=-=-=-=-=批量上传控制模块-=-=-=-=-=-=-*/
+function upload() {
+    flashObj.call("upload");
+    g("start").style.display = "none";
+}
+/**
+ * 选择文件后的回调函数
+ * @param selectFiles
+ */
+function selectFileCallback(selectFiles) {
+    //if(console)console.log("开始选择文件：");
+    imageCount += selectFiles.length;
+    g("start").style.display = "";
+    g("start").onclick = upload;
+    dialog.buttons[0].setDisabled(true); //初始化时置灰确定按钮
 
 }
-
-function clearLocal(){
-    G('urll').value = "";
-    var iframediv = document.getElementById("iframediv");
-    iframediv.innerHTML = '<iframe  scrolling="no" frameborder="0" name="upImg" src="/pictures/upload" style="width:200px;height:25px;padding:0;margin:0"></iframe>';
-    G('imgWidthl').value="";
-    G('imgHeightl').value="";
-    G('imgTitlel').value="";
-    G('floatl').value = "";
-    var source_size = G('sourceSizel').parentNode.parentNode;
-    source_size.style.display="none";
+/**
+ * 单个文件上传完成的回调函数
+ * @param    Object/String    服务端返回啥，参数就是啥
+ */
+function uploadCompleteCallback(data) {
+    //debugger
+    //if(console)console.log("上传成功", data);
+    var info = eval("(" + data.info + ")");
+    info && imageUrls.push(info);
+    imageCount--;
 }
 
-//获得img元素
-var img = editor.selection.getRange().getClosedNode(),image = {};
-if ( img && /img/ig.test( img.tagName ) && img.className != "edui-faked-video" ) {
-    image = img;
-    //判断图片是否在连接内部
-    var link = parent.baidu.editor.dom.domUtils.findParentByTagName( img, "a", true );
-    if ( link != null ) {
-        G( "float" ).disabled = true;
+//全部上传完成的回调函数
+function allCompleteCallback() {
+    //console.log("全部上传成功");
+    dialog.buttons[0].setDisabled(false); //上传完毕后点亮按钮
+}
+/**
+ * 删除文件后的回调函数
+ * @param    Array
+ */
+function deleteFileCallback(delFiles) {
+    // 数组里单个元素为Object，{index:在多图上传的索引号, name:文件名, size:文件大小}
+    // 其中size单位为Byte
+    imageCount -= delFiles.length;
+    if (imageCount == 0) {
+        g("start").style.display = "none";
+        dialog.buttons[0].setDisabled(false); //上传完毕后点亮按钮
     }
 }
-//绑定事件
-function jbind( obj, evt, fun ) {
-    if ( obj.addEventListener ) {  // firefox,w3c
-        obj.addEventListener( evt, fun, false );
-    } else {// ie
-        obj.attachEvent( "on" + evt, function() {
-            fun.apply( obj );
-        } );
-    }
+
+
+/*-=-=-=-=-=-=-=公共方法模块-=-=-=-=-=-=-*/
+function g(id) {
+    return document.getElementById(id);
 }
-//等比例缩小图片
-function suo( img, max ) {
+function isNum(n) {
+    return /^[1-9]+[.]?\d*$/g.test(n);
+}
+/**
+ * 获取csstext中的某个样式属性
+ * @param cssText
+ * @param style
+ */
+function getStyleFromCssText(cssText, style) {
+    var reg = new RegExp(style + ":\\s*((\\w)*)", "ig");
+    var arr = reg.exec(cssText);
+    return arr ? arr[1] : "";
+}
+/**
+ * 等比例缩放图片
+ * @param img
+ * @param max
+ */
+function scale(img, max) {
     var width = 0,height = 0,percent;
     img.sWidth = img.width;
     img.sHeight = img.height;
-    if ( img.width > max || img.height > max ) {
-        if ( img.width >= img.height ) {
-            if ( width = img.width - max ) {
-                percent = (width / img.width).toFixed( 2 );
+    if (img.width > max || img.height > max) {
+        if (img.width >= img.height) {
+            if (width = img.width - max) {
+                percent = (width / img.width).toFixed(2);
                 img.height = img.height - img.height * percent;
                 img.width = max;
             }
         } else {
-            if ( height = img.height - max ) {
-                percent = (height / img.height).toFixed( 2 );
+            if (height = img.height - max) {
+                percent = (height / img.height).toFixed(2);
                 img.width = img.width - img.width * percent;
                 img.height = max;
             }
         }
     }
-
 }
-//获得style里的某个样式对应的值
-function getPars( str, par ) {
-    var reg = new RegExp( par + ":\\s*((\\w)*)", "ig" );
-    var arr = reg.exec( str );
-    return arr ? arr[1] : "";
+function imgselect(simg) {
+    var childs = simg.parentNode.children;
+    for (var i = 0,child; child = childs[i++];) {
+        if (/img/ig.test(child.tagName)) {
+            child.src = child.src.replace("-c.jpg", ".jpg");
+        }
+    }
+    simg.src = simg.src.replace(".jpg", "-c.jpg");
 }
-//初始化图片
-function initImg() {
-    if ( image.src ) {
-        G( "url" ).value = image.src ? image.src.replace( "&amp;", "&" ) : "";
-        G( "imgTitle" ).value = image.title ? image.title : "";
-        G( "imgTitlel" ).value = image.title ? image.title : "";
-        var url = G( "url" ).value,
-                preImg = G( "thumb" ),
-                pimg = "<img src='" + G( "url" ).value + "' title='" + image.title + "' />";
-        preImg.innerHTML = pimg;
-        var myimg = preImg.firstChild;
-        if ( myimg && myimg.tagName.toLowerCase() == "img" ) {
-            myimg.onload = function() {
-                G( "sourceSize" ).innerHTML = "原始宽：" + myimg.width + "px&nbsp;&nbsp;原始高：" + myimg.height + "px";
-                G( "sourceSize" ).parentNode.parentNode.style.display = "";
-                suo( myimg, 100 );
-            }
-                        myimg.setAttribute( "width", image.width );
-                        myimg.setAttribute( "height", image.height );
-//                        G( "imgWidth" ).value = myimg.width;
-//                        G( "imgHeight" ).value = myimg.height;
-                        var style = image.style.cssText;
-                        var reg = "";
-                        if ( /float/ig.test( style ) ) {
-                            reg = getPars( style, "float" );
-                        } else if ( /display/ig.test( style ) ) {
-                            reg = getPars( style, "display" );
-                        }
-                        switch ( reg ) {
-                            case "left":
-                                G( "float" ).value = "float: left";
-                                    G( "floatl" ).value = "float: left";
-                                break;
-                            case "right" :
-                                G( "float" ).value = "float: right";
-                                    G( "floatl" ).value = "float: right";
-                                break;
-                            case "block" :
-                                G( "float" ).value = "display: block";
-                                    G( "floatl" ).value = "display: block";
-                                break;
-                        }
-                    }
-                }
+//获取id下选中图片的name
+function getAlign(id) {
+    var imgs = g(id).children;
+    for (var i = 0,img; img = imgs[i++];) {
+        if (img.src.indexOf("-") != -1) {
+            break;
+        }
+    }
+    return i != imgs.length + 1 ? img.name : 'none';
+}
 
-            }
+var imgWidth = g("imgWidth"),
+    imgHeight = g("imgHeight"),
+    zoom = g('zoom');
+imgWidth.onkeyup = function () {
+    if (!isNaN(this.value) && zoom.checked) {
+        imgHeight.value = Math.round(this.value / percent);
+    }
+};
+imgHeight.onkeyup = function () {
+    if (!isNaN(this.value) &&  zoom.checked) {
+        imgWidth.value = Math.round(this.value * percent);
+    }
+}
 
-            //输入url，加载图片的方法
-            function createImg() {
-                var url = G( "url" ).value,pimg,sourceSize,
-                        preImg = G( "thumb" );
-                if ( !/\.(png|gif|jpg|jpeg|bmp)$/ig.test( url ) && url.indexOf( "api.map.baidu.com" ) == -1 ) {
-                    preImg.innerHTML = "";
-                    G( "sourceSize" ).parentNode.parentNode.style.display = "none";
-                    return false;
-                } else {
-                    preImg.innerHTML = "图片正在加载。。。";
-                    preImg.innerHTML = "<img src='" + url + "' />";
-                    pimg = preImg.firstChild;
-                    pimg.onload = function() {
-                        G( "sourceSize" ).innerHTML = "原始宽：" + pimg.width + "px&nbsp;&nbsp;原始高：" + pimg.height + "px";
-                        G( "sourceSize" ).parentNode.parentNode.style.display = "";
-                        suo( this, 100 );
-//                        G("imgWidth").value = pimg.width ? pimg.width : 0;
-//                        G("imgHeight").value = pimg.height ? pimg.height : 0;
-                    }
-                    pimg.onerror = function() {
-                        G( "sourceSize" ).parentNode.parentNode.style.display = "none";
-                        preImg.innerHTML = "图片不存在";
-                    }
-                }
-            }
-
-            if ( parent.baidu.editor.browser.ie ) {
-                G( "url" ).onpropertychange = function() {
-                    if(this.value!=""){
-                       clearLocal();
-                    }
-                    createImg();
-                };
-            } else {
-                G( "url" ).addEventListener( "input", function() {
-                    clearLocal();
-                    createImg();
-                }, false );
-            }
-            initImg();
-            G( "imgWidth" ).onblur = function() {
-                var myimg = document.getElementsByTagName( "img" )[0],
-                        width = this.value;
-                if ( /^[1-9]+[.]?\d*$/g.test( width ) ) {
-                    myimg && myimg.setAttribute( "width", width );
-                }
-            }
-            G( "imgWidthl" ).onblur = function() {
-                var myimg = document.getElementsByTagName( "img" )[0],
-                        width = this.value;
-                if ( /^[1-9]+[.]?\d*$/g.test( width ) ) {
-                    myimg && myimg.setAttribute( "width", width );
-                }
-            }
-
-            G( "imgHeight" ).onblur = function() {
-                var myimg = document.getElementsByTagName( "img" )[0],
-                        height = this.value;
-                if ( /^[1-9]+[.]?\d*$/g.test( height ) ) {
-                    myimg && myimg.setAttribute( "height", height );
-                }
-            };
-
-G( "imgHeightl" ).onblur = function() {
-                var myimg = document.getElementsByTagName( "img" )[0],
-                        height = this.value;
-                if ( /^[1-9]+[.]?\d*$/g.test( height ) ) {
-                    myimg && myimg.setAttribute( "height", height );
-                }
-            };
-            G( "imgTitle" ).onblur = function() {
-                var myimg = document.getElementsByTagName( "img" )[0],val;
-                if ( val = this.value ) {
-                    myimg && myimg.setAttribute( "title", val );
-                }
-            };
-            G( "imgTitlel" ).onblur = function() {
-                var myimg = document.getElementsByTagName( "img" )[0],val;
-                if ( val = this.value ) {
-                    myimg && myimg.setAttribute( "title", val );
-                }
-            };
-
-            dialog.onok = function () {
-
-                var myimg = document.getElementsByTagName( "img" )[0],
-                        imgopt = {},
-//                        imgstr = "<img ",
-                        url,
-                        width,
-                        height;
-                if ( G( "remote" ).style.display != "none" ) {
-                    url = G( "url" ).value;
-                    width = G( "imgWidth" ).value,
-                    height = G( "imgHeight" ).value;
-                } else {
-                    url = G( "urll" ).value;
-                    width = G( "imgWidthl" ).value,
-                     height = G( "imgHeightl" ).value;
-                }
-                if ( !/\.(png|gif|jpg|jpeg|bmp)$/ig.test( url ) && url.indexOf( "api.map.baidu.com" ) == -1 && url.indexOf( "maps.google.com" ) == -1 ) {
-                    alert( "地址不正确！" );
-                    return false;
-                }
-                imgopt.src = url;
-//                imgstr += " src=" + url;
-                if ( !width ) {
-                    imgopt.width = myimg.sWidth;
-//                    imgstr += " width=" + myimg.sWidth;
-                }else if ( width && !/^[1-9]+[.]?\d*$/g.test( width ) ) {
-                    alert( "请输入正确的宽度" );
-                    return false;
-                } else {
-                    myimg && myimg.setAttribute( "width", width );
-                    imgopt.width = width;
-//                    imgstr += " width=" + width;
-                }
-                if ( !height ) {
-//                    imgstr += " height=" + myimg.sHeight;
-                    imgopt.height = myimg.sHeight;
-                }else if ( height && !/^[1-9]+[.]?\d*$/g.test( height ) ) {
-                    alert( "请输入正确的高度" );
-                    return false;
-                } else {
-                    myimg && myimg.setAttribute( "height", height );
-//                    imgstr += " height=" + height;
-                    imgopt.height = myimg.height;
-                }
-
-                if ( G( "imgTitle" ).value ) {
-                    myimg && myimg.setAttribute( "title", G( "imgTitle" ).value );
-//                    imgstr += " title=" + G( "imgTitle" ).value;
-                    imgopt.title =  G( "imgTitle" ).value;
-                }
-                if ( G( "imgTitlel" ).value ) {
-                    myimg && myimg.setAttribute( "title", G( "imgTitlel" ).value );
-//                    imgstr += " title=" + G( "imgTitlel" ).value;
-                    imgopt.title = G( "imgTitlel" ).value;
-                }
-                var alignType;
-                if(G('remote').style.display=="none"){
-                    alignType = G( "floatl" );
-                }else if(G('local').style.display=="none"){
-                   alignType = G( "float" );
-                }
-
-                if ( alignType.value ) {
-//                    imgstr += " style='" + alignType.value + "'";
-                    imgopt.style = alignType.value;
-                }
-//                editor.execCommand( 'inserthtml', imgstr+" >" );
-                editor.execCommand( 'insertimage', imgopt );
-                dialog.close();
-            };
-            var ipt = G( "url" );
-            var isIE = !!window.ActiveXObject;
-            if ( isIE ) {
-                setTimeout( function () {
-                    var r = ipt.createTextRange();
-                    r.collapse( false );
-                    r.select();
-                } );
-            }
-            ipt.focus();
-
-//            if(G('url').value==""){
-//               var remote_flag = G("remote"),
-//                   local_flag = G("local");
-//               var tabs = G( "head" ).children;
-//               tabs[1].className = "act";
-//               local_flag.style.display = "";
-//               tabs[0].className = "def";
-//               remote_flag.style.display = "none";
-//            }
 </script>
 </body>
 </html>
