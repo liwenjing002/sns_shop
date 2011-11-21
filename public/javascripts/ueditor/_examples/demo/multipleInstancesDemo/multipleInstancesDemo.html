@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>多实例</title>
+    <script type="text/javascript" charset="utf-8" src="../../../editor_config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../editor_api.js">
+        paths = [
+            'editor.js',
+            'core/browser.js',
+            'core/utils.js',
+            'core/EventBase.js',
+            'core/dom/dom.js',
+            'core/dom/dtd.js',
+            'core/dom/domUtils.js',
+            'core/dom/Range.js',
+            'core/dom/Selection.js',
+            'core/Editor.js',
+            'commands/inserthtml.js',
+            'commands/image.js',
+            'commands/insertimage.js',
+            'commands/justify.js',
+            'commands/font.js',
+            'commands/link.js',
+            'commands/removeformat.js',
+            'commands/blockquote.js',
+            'commands/indent.js',
+            'commands/print.js',
+            'commands/preview.js',
+            'commands/selectall.js',
+            'commands/paragraph.js',
+            'commands/directionality.js',
+            'commands/horizontal.js',
+            'commands/time.js',
+            'commands/inserthtml.js',
+            'commands/rowspacing.js',
+            'commands/cleardoc.js',
+            'commands/anchor.js',
+            'commands/delete.js',
+            'commands/wordcount.js',
+            'plugins/pagebreak/pagebreak.js',
+            'plugins/undo/undo.js',
+            'plugins/paste/paste.js',
+            'plugins/list/list.js',
+            'plugins/source/source.js',
+            'plugins/shortcutkeys/shortcutkeys.js',
+            'plugins/enterkey/enterkey.js',
+            'plugins/keystrokes/keystrokes.js',
+            'plugins/fiximgclick/fiximgclick.js',
+            'plugins/autolink/autolink.js',
+            'plugins/autoheight/autoheight.js',
+            'plugins/autofloat/autofloat.js',  //依赖UEditor UI,在IE6中，会覆盖掉body的背景图属性
+            'plugins/serialize/serialize.js',
+            'plugins/video/video.js',
+            'plugins/table/table.js',
+            'plugins/highlight/highlight.js',
+            'plugins/contextmenu/contextmenu.js',
+            'plugins/pagebreak/pagebreak.js',
+            'plugins/basestyle/basestyle.js',
+            'plugins/elementpath/elementpath.js',
+            'plugins/formatmatch/formatmatch.js',
+            'plugins/searchreplace/searchreplace.js',
+            'ui/ui.js',
+            'ui/uiutils.js',
+            'ui/uibase.js',
+            'ui/separator.js',
+            'ui/mask.js',
+            'ui/popup.js',
+            'ui/colorpicker.js',
+            'ui/tablepicker.js',
+            'ui/stateful.js',
+            'ui/button.js',
+            'ui/splitbutton.js',
+            'ui/colorbutton.js',
+            'ui/tablebutton.js',
+            'ui/toolbar.js',
+            'ui/menu.js',
+            'ui/combox.js',
+            'ui/dialog.js',
+            'ui/menubutton.js',
+            'ui/datebutton.js',
+            'ui/editorui.js',
+            'ui/editor.js',
+            'ui/multiMenu.js'
+        ];
+    </script>
+    <link rel="stylesheet" type="text/css" href="../../../themes/default/ueditor.css"/>
+    <style type="text/css">
+        * {
+            color: #838383
+        }
+
+        body {
+            font-size: 12px;
+            width: 522px;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        .content {
+            height: 240px;
+            border: 1px solid #ddd;
+            padding: 5px;
+            width:240px;
+        }
+
+        .warp {
+            padding: 10px 0 0 15px;
+            height: 100%;
+            position: relative;
+        }
+        #simple{
+            float:left;
+        }
+        #complex{
+            float:left;
+        }
+
+        
+
+    </style>
+</head>
+<body>
+    <div class="warp">
+        <div class="content" id="simple" >
+        </div>
+        <div class="content" id="complex" >
+        </div>
+    </div>
+    <script type="text/javascript" charset="utf-8">
+        var editor = new baidu.editor.ui.Editor({
+            minFrameHeight: 180,
+            iframeCssUrl :'../../../themes/default/iframe.css',
+            UEDITOR_HOME_URL:'../../../',
+            toolbars:[
+                ['Bold','Italic','Underline','StrikeThrough','Superscript','Subscript']
+            ]
+        });
+        editor.render('simple');
+        var editorcomplex = new baidu.editor.ui.Editor({
+            minFrameHeight: 180,
+            iframeCssUrl :'../../../themes/default/iframe.css',
+            UEDITOR_HOME_URL:'../../../',
+            toolbars:[
+                ['ForeColor','BackColor', 'JustifyLeft','JustifyCenter','SearchReplace']
+            ]
+        });
+        editorcomplex.render("complex");
+    </script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>选项卡编辑器</title>
+    <script type="text/javascript" charset="utf-8" src="../../../editor_config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../editor_api.js">
+        paths = [
+            'editor.js',
+            'core/browser.js',
+            'core/utils.js',
+            'core/EventBase.js',
+            'core/dom/dom.js',
+            'core/dom/dtd.js',
+            'core/dom/domUtils.js',
+            'core/dom/Range.js',
+            'core/dom/Selection.js',
+            'core/Editor.js',
+            'commands/inserthtml.js',
+            'commands/image.js',
+            'commands/insertimage.js',
+            'commands/justify.js',
+            'commands/font.js',
+            'commands/link.js',
+            'commands/removeformat.js',
+            'commands/blockquote.js',
+            'commands/indent.js',
+            'commands/print.js',
+            'commands/preview.js',
+            'commands/selectall.js',
+            'commands/paragraph.js',
+            'commands/directionality.js',
+            'commands/horizontal.js',
+            'commands/time.js',
+            'commands/inserthtml.js',
+            'commands/rowspacing.js',
+            'commands/cleardoc.js',
+            'commands/anchor.js',
+            'commands/delete.js',
+            'commands/wordcount.js',
+            'plugins/pagebreak/pagebreak.js',
+            'plugins/undo/undo.js',
+            'plugins/paste/paste.js',
+            'plugins/list/list.js',
+            'plugins/source/source.js',
+            'plugins/shortcutkeys/shortcutkeys.js',
+            'plugins/enterkey/enterkey.js',
+            'plugins/keystrokes/keystrokes.js',
+            'plugins/fiximgclick/fiximgclick.js',
+            'plugins/autolink/autolink.js',
+            'plugins/autoheight/autoheight.js',
+            'plugins/autofloat/autofloat.js',  //依赖UEditor UI,在IE6中，会覆盖掉body的背景图属性
+            'plugins/highlight/highlight.js',
+            'plugins/serialize/serialize.js',
+            'plugins/video/video.js',
+            'plugins/table/table.js',
+            'plugins/contextmenu/contextmenu.js',
+            'plugins/pagebreak/pagebreak.js',
+            'plugins/basestyle/basestyle.js',
+            'plugins/elementpath/elementpath.js',
+            'plugins/formatmatch/formatmatch.js',
+            'plugins/searchreplace/searchreplace.js',
+            'ui/ui.js',
+            'ui/uiutils.js',
+            'ui/uibase.js',
+            'ui/separator.js',
+            'ui/mask.js',
+            'ui/popup.js',
+            'ui/colorpicker.js',
+            'ui/tablepicker.js',
+            'ui/stateful.js',
+            'ui/button.js',
+            'ui/splitbutton.js',
+            'ui/colorbutton.js',
+            'ui/tablebutton.js',
+            'ui/toolbar.js',
+            'ui/menu.js',
+            'ui/combox.js',
+            'ui/dialog.js',
+            'ui/menubutton.js',
+            'ui/datebutton.js',
+            'ui/editorui.js',
+            'ui/editor.js',
+            'ui/multiMenu.js'
+        ];
+    </script>
+    <link rel="stylesheet" type="text/css" href="../../../themes/default/ueditor.css"/>
+    <style type="text/css">
+
+        body {
+            font-size: 12px;
+            width: 522px;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .head {
+            position: absolute;
+            height: 31px;
+            top: 9px;
+        }
+        .head span{
+            color: red;
+        }
+
+        .content {
+            border: 1px solid #ddd;
+        }
+
+        .warp {
+            padding: 39px 0 0 15px;
+            height: 100%;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="warp">
+        <div class="head" id="head">
+            <input type="button" name="simple" class="act" onclick="simple()" value="重置编辑器内部参数"><span id="txt" ></span>
+        </div>
+        <div class="content" id="simple" >
+        </div>
+    </div>
+    <script type="text/javascript" charset="utf-8">
+        var editor = new baidu.editor.ui.Editor({
+            id:'simple',
+            minFrameHeight: 180,
+            iframeCssUrl :'../../../themes/default/iframe.css',
+            UEDITOR_HOME_URL:'../../../',
+            toolbars:[['Undo','Redo','Bold','Italic','Underline','StrikeThrough','Superscript','Subscript']]
+        });
+        editor.render();
+        function simple(){
+            editor.options.initialContent = "编辑器的内部变量都已被清空";
+            editor.reset();
+        }
+        function setMsg(){
+            document.getElementById("txt").innerHTML = "编辑器保存了"+editor.undoManger.list.length+"次操作";
+        }
+        setInterval(setMsg,100);
+    </script>
+</body>
+</html>
