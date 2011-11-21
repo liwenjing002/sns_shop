@@ -1,0 +1,153 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title></title>
+    <script type="text/javascript" charset="utf-8" src="../../../editor_config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../editor_api.js">
+        paths = [
+            'editor.js',
+            'core/browser.js',
+            'core/utils.js',
+            'core/EventBase.js',
+            'core/dom/dom.js',
+            'core/dom/dtd.js',
+            'core/dom/domUtils.js',
+            'core/dom/Range.js',
+            'core/dom/Selection.js',
+            'core/Editor.js',
+            'commands/inserthtml.js',
+            'commands/image.js',
+            'commands/insertimage.js',
+            'commands/justify.js',
+            'commands/font.js',
+            'commands/link.js',
+            'commands/removeformat.js',
+            'commands/blockquote.js',
+            'commands/indent.js',
+            'commands/print.js',
+            'commands/preview.js',
+            'commands/selectall.js',
+            'commands/paragraph.js',
+            'commands/directionality.js',
+            'commands/horizontal.js',
+            'commands/time.js',
+            'commands/inserthtml.js',
+            'commands/rowspacing.js',
+            'commands/cleardoc.js',
+            'commands/anchor.js',
+            'commands/delete.js',
+            'commands/wordcount.js',
+            'plugins/pagebreak/pagebreak.js',
+            'plugins/undo/undo.js',
+            'plugins/paste/paste.js',
+            'plugins/list/list.js',
+            'plugins/source/source.js',
+            'plugins/shortcutkeys/shortcutkeys.js',
+            'plugins/enterkey/enterkey.js',
+            'plugins/keystrokes/keystrokes.js',
+            'plugins/fiximgclick/fiximgclick.js',
+            'plugins/autolink/autolink.js',
+            'plugins/autoheight/autoheight.js',
+            'plugins/autofloat/autofloat.js',  //依赖UEditor UI,在IE6中，会覆盖掉body的背景图属性
+            'plugins/highlight/highlight.js',
+            'plugins/serialize/serialize.js',
+            'plugins/video/video.js',
+            'plugins/table/table.js',
+            'plugins/contextmenu/contextmenu.js',
+            'plugins/pagebreak/pagebreak.js',
+            'plugins/basestyle/basestyle.js',
+            'plugins/elementpath/elementpath.js',
+            'plugins/formatmatch/formatmatch.js',
+            'plugins/searchreplace/searchreplace.js',
+            'ui/ui.js',
+            'ui/uiutils.js',
+            'ui/uibase.js',
+            'ui/separator.js',
+            'ui/mask.js',
+            'ui/popup.js',
+            'ui/colorpicker.js',
+            'ui/tablepicker.js',
+            'ui/stateful.js',
+            'ui/button.js',
+            'ui/splitbutton.js',
+            'ui/colorbutton.js',
+            'ui/tablebutton.js',
+            'ui/toolbar.js',
+            'ui/menu.js',
+            'ui/combox.js',
+            'ui/dialog.js',
+            'ui/menubutton.js',
+            'ui/datebutton.js',
+            'ui/editorui.js',
+            'ui/editor.js',
+            'ui/multiMenu.js'
+        ];
+    </script>
+    <link rel="stylesheet" type="text/css" href="../../../themes/default/ueditor.css"/>
+    <style type="text/css">
+        body{
+            overflow:hidden;
+        }
+        #editor {
+            border: 1px solid #CCC;
+            width:300px;
+            float:left;
+            margin-left:20px;
+            overflow:hidden;
+        }
+        #editor_toolbar_box {
+            background: #F0F0EE;
+            padding: 2px;
+
+        }
+        .edui-editor-toolbarboxinner{
+            border-bottom:1px solid #ccc;
+        }
+        #editor_iframe_holder {
+            border-top: 1px solid #CCC;
+            border-bottom: 1px solid #CCC;
+        }
+        .left {
+            float:left;
+        }
+    </style>
+</head>
+<body>
+	<h3>自定义插件：点击图片后增加边框</h3>
+    <div class="left">
+        <input type="button" value="点击后给图片增加边框" onclick="useMyPlugin()"/>
+    </div>
+    <div id="editor">
+    </div>
+    <script type="text/javascript" charset="utf-8">
+        var editor = new baidu.editor.ui.Editor({
+            initialContent: '给图片增加边框<br><img src="http://www.baidu.com/img/baidu_sylogo1.gif"/>',
+            initialStyle :'.selectTdClass{background-color:#3399FF !important}',
+            minFrameHeight: 200,
+            autoClearinitialContent : false,                   //是否自动清除编辑器初始内容
+            iframeCssUrl :'../../../themes/default/iframe.css' ,
+            elementPathEnabled:false,
+            UEDITOR_HOME_URL:"../../../",
+            wordCount:false,
+            toolbars:[
+                ['Source','Image']
+            ]
+        });
+        editor.render('editor');
+        var useMyPlugin = function(){
+            baidu.editor.plugins["addborder"] = function(){
+                editor.addListener( 'click', function( type, event ) {
+                    var evt = event || window.event,
+                    el = evt.target ? evt.target : evt.srcElement;
+                    if(/img/ig.test(el.tagName)){
+                        el.style.border = "1px solid red";
+                    }
+                } )
+            }();
+        };
+    </script>
+</body>
+</html>

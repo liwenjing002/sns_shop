@@ -35,15 +35,30 @@
                 <tr>
                     <td><span>选择语言：</span>
                         <select id="language">
-                        <option value="html">html</option>
-                        <option value="javascript">javascript</option>
-                        <option value="css">css</option>
-                        <option value="sql">sql</option>
-                        <option value="c#">c#</option>
-                        <option value="java">java</option>
-                        <option value="vbs">vbs</option>
-                        <option value="vb">vb</option>
-                        <option value="xml">xml</option>
+                        <option value="as3">ActionScript3</option>
+                        <option value="bash">Bash/Shell</option>
+                        <option value="cpp">C/C++</option>
+                        <option value="css">Css</option>
+                        <option value="cf">CodeFunction</option>
+                        <option value="c#">C#</option>
+                        <option value="delphi">Delphi</option>
+                        <option value="diff">Diff</option>
+                        <option value="erlang">Erlang</option>
+                        <option value="groovy">Groovy</option>
+                        <option value="html">Html</option>
+                        <option value="java">Java</option>
+                        <option value="jfx">JavaFx</option>
+                        <option value="js">Javascript</option>
+                        <option value="pl">Perl</option>
+                        <option value="php">Php</option>
+                        <option value="plain">Plain Text</option>
+                        <option value="ps">PowerShell</option>
+                        <option value="python">Python</option>
+                        <option value="ruby">Ruby</option>
+                        <option value="scala">Scala</option>
+                        <option value="sql">Sql</option>
+                        <option value="vb">Vb</option>
+                        <option value="xml">Xml</option>
                     </select></td>
                 </tr>
                 <tr><td>&nbsp;</td></tr>
@@ -55,6 +70,27 @@
         <script type="text/javascript">
             var sels = document.getElementById("language"),
             code = document.getElementById('code');
+            var state = editor.queryCommandState("highlightcode");
+            if(state){
+                var domUtils = parent.baidu.editor.dom.domUtils;
+                var di = domUtils.findParent(editor.selection.getRange().startContainer,function(node){
+			return node.className == "container";
+		});
+                var pN = di.parentNode;
+                while(pN){
+                    if(pN.tagName == 'DIV' && /highlighter/.test(pN.id)){
+                        break;
+                    }
+                    pN = pN.parentNode;
+                }
+                for(var str=[],c=0,ci;ci=di.childNodes[c++];){
+                    str.push(ci[parent.baidu.editor.browser.ie?'innerText':'textContent']);
+                }
+                document.getElementById("code").value = str.join("\n");
+                var reg = new RegExp(/highlighter[\s]+([a-z]*#?)/);
+                var syntax = pN.className.match(reg)[1];
+                document.getElementById("language").value = syntax;
+            }
             function getSel(){
                 var i = sels.options.length,item;
                 for(i>=0;item = sels[i-1];i--){
@@ -93,9 +129,9 @@
             }
             dialog.onok = function(){
                 var language = getSel();
-                var code = document.getElementById("code").value;
-                if(code.replace(/^\s*|\s*$/ig,"")){
-                    editor.execCommand("highlightcode",code,language);
+                var code = document.getElementById("code");
+                if(code.value.replace(/^\s*|\s*$/ig,"")){
+                    editor.execCommand("highlightcode",code.value,language);
                     dialog.close();
                 }else{
                     alert("请输入代码");

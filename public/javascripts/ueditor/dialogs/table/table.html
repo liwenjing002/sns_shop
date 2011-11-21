@@ -42,30 +42,40 @@
         </tr>
         <tr>
             <td class="spe"><span>表格边框：</span>
-                <input type="text" id="border"/>
+                <input type="text" id="border"/> px
             </td>
             <td><span>间距：</span>
-            <input type="text" id="cellspacing"/></td>
+            <input type="text" id="cellspacing"/> px</td>
         </tr>
         <tr>
             <td class="spe"><span style="width: 85px;">表格边框颜色：</span>
-                <input type="text" style="width: 68px!important;width: 65px;" readonly id="border-color" onclick="show(this)" />
+                <input type="text" style="width: 68px!important;width: 65px;" id="border-color" onclick="show(this)" />
             </td>
             <td><span>边距：</span>            
-                <input type="text" id="cellpadding"/>
+                <input type="text" id="cellpadding"/> px
             </td>
         </tr>
         <tr>
-            <td><span>对齐方式：</span>
+            <td><span>表格对齐：</span>
+                <select id="tablealign" >
+                    <option value="">默认</option>
+                    <option value="left">居左</option>
+                    <option value="right">居右</option>
+                    <option value="center">居中</option>
+                </select>
+            </td>
+            <td colspan="2">
+                <span>单元格对齐：</span>
                 <select id="alignment" style="">
-                    <option value="">无</option>
                     <option value="left">左对齐</option>
                     <option value="center">居中</option>
                     <option value="right">右对齐</option>
                 </select>
             </td>
+        </tr>
+        <tr>
             <td class="spe"><span style="width: 85px;">表格背景颜色：</span>
-                <input type="text" style="width: 68px!important;width: 65px;" readonly id="background-color" onclick="show(this)" />
+                <input type="text" style="width: 68px!important;width: 65px;" id="background-color" onclick="show(this)" />
             </td>
         </tr>
     </table>
@@ -79,7 +89,7 @@
     });
     colorpicker.render();
     colorpicker.content.onpickcolor = function(t, color){
-        activeEl.value = color;
+        activeEl.value = color.toUpperCase();
         colorpicker.hide();
     };
     colorpicker.content.onpicknocolor = function(t, color){
@@ -91,12 +101,13 @@
     });
     var state = editor.queryCommandState("edittable"),oldtable;
     if(state == 0){
-        var range = editor.selection.getRange();
-                oldtable = parent.baidu.editor.dom.domUtils.findParentByTagName(range.startContainer, 'table', true);
+        var range = editor.selection.getRange(),tmptd;
+            tmptd = parent.baidu.editor.dom.domUtils.findParentByTagName(range.startContainer, 'td', true);
+            oldtable = tmptd.parentNode.parentNode.parentNode;
         if(oldtable){
             var rowlength = 0,
                     celllength = 0,
-                    alignmode = parent.baidu.editor.dom.domUtils.getComputedStyle(oldtable.rows[0],"text-align");
+                    alignmode = parent.baidu.editor.dom.domUtils.getComputedStyle(tmptd,"text-align");
             for(var r=0,row;row = oldtable.rows[r++];){
                 var tmpcells = 0;
                 for(var c = 0,cell;cell = row.cells[c++];){
@@ -107,18 +118,20 @@
                 rowlength += tmpcells>0 ? 1 : 0;
                 celllength = tmpcells > celllength ? tmpcells : celllength;
             }
+            
             g("rowCount").value = rowlength;
             g("rowCount").disabled = true;
             g("colCount").value = celllength;
             g("colCount").disabled = true;
             g("cellpadding").value = oldtable.getAttribute("cellpadding") || "";
             g("cellspacing").value = oldtable.getAttribute("cellspacing") || "";
-            g("tableWidth").value = oldtable.getAttribute("width") || "";
-            g("tableHeight").value = oldtable.getAttribute("height") || "";
-            g("border-color").value = oldtable.getAttribute("bordercolor") || "";
+            g("tableWidth").value = oldtable.offsetWidth || "";
+            g("tableHeight").value = oldtable.offsetHeight || "";
+            g("border-color").value = oldtable.getAttribute("bordercolor")? oldtable.getAttribute("bordercolor").toUpperCase(): "";
             g("border").value = oldtable.getAttribute("border") || 1;
-            g("background-color").value = parent.baidu.editor.dom.domUtils.getComputedStyle(oldtable,"background-color")!= "transparent" ? parent.baidu.editor.dom.domUtils.getComputedStyle(oldtable,"background-color"): "";
+            g("background-color").value = oldtable.getAttribute("bgColor")||"";
             g("alignment").value = alignmode;
+            g("tablealign").value = oldtable.getAttribute("align") || "";
         }
     }else{
         var ipt = g("rowCount");
@@ -148,8 +161,9 @@
             cellspacing = g("cellspacing").value,
             cellpadding = g("cellpadding").value,
             align = g("alignment").value,
-            bordercolor = g("border-color").value,
-            backgroundcolor = g("background-color").value;
+            bordercolor = g("border-color").value || "#000",
+            backgroundcolor = g("background-color").value,
+            tablealign = g("tablealign").value;
         if(!/^[1-9]+[0-9]*$/.test(rows)){
             alert("请输入正确行数");
             return false;
@@ -166,7 +180,7 @@
             alert("高度输入不正确");
             return false;
         }
-        if(border && !/^[1-9]+[0-9]*$/.test(border)){
+        if(border && !/^[0-9]*$/.test(border)){
             alert("表格边框输入不正确");
             return false;
         }
@@ -176,6 +190,14 @@
         }
         if(cellpadding && !/^[0-9]*$/.test(cellpadding)){
             alert("边距输入不正确");
+            return false;
+        }
+        if(bordercolor && !/^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(bordercolor)){
+            alert("颜色值输入错误");
+            return false;
+        }
+        if(backgroundcolor && !/^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(backgroundcolor)){
+            alert("颜色值输入错误");
             return false;
         }
         var table = {
@@ -188,7 +210,8 @@
             height : height,
             align : align,
             bordercolor:bordercolor,
-            backgroundcolor:backgroundcolor
+            backgroundcolor:backgroundcolor,
+            tablealign : tablealign
         };
         if(oldtable){
             editor.execCommand('edittable',table );

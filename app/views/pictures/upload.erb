@@ -25,7 +25,7 @@
 
 		.btn2 {
 		border:0;
-		background: url("../../themes/default/images/button-bg.gif") no-repeat;
+		background: url("/javascripts/ueditor/themes/default/images/button-bg.gif") no-repeat;
 		font-size:12px;
 		height:23px;
 		width:50px;
@@ -34,7 +34,7 @@
 		}
 		.btn1 {
 		border:0;
-		background: url("../../themes/default/images/button-bg.gif") 0 -27px no-repeat;
+		background: url("/javascripts/ueditor/themes/default/images/button-bg.gif") 0 -27px no-repeat;
 		font-size:12px;
 		height:23px;
 		width:50px;
@@ -51,12 +51,16 @@
     <form id="upImg" action="/pictures" method="post" enctype="multipart/form-data" style="margin-top:5px;">
         <input type="hidden" id="path" name="path" />
         <input type="hidden" id="album" name="album" />
+        <input type="hidden" id="upload_from" name="upload_from" value="editor" />
         <input id="filename" name="pictures[]" type="file"  onmouseover="document.getElementById('flag').className='btn1'" onmouseout="document.getElementById('flag').className='btn2'" />
         <input id="url" type="text" name="url" readonly="readonly" value="<%=@file_url%>" />
 		<input class="btn2" id="flag" name="flag" type="button" value="浏览…" onmouseover="this.className='btn1'" onmouseout="this.className='btn2'" onclick="sub()" />
     </form>
     <script type="text/javascript">
-
+          <%if @file_url %>
+            alert('<%=@file_url%>')
+            parent.reloadImg('<%=@file_url%>');
+              <%end%>
             var url = document.getElementById('url');
             url.onkeydown = function(evt){
 
@@ -73,7 +77,7 @@
             //return;
             //------------------------------------------
 
-
+           document.getElementById('album').value = window.parent.document.getElementById('album').value
             document.getElementById('path').value = this.value;
             form.submit();
         }

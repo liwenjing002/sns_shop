@@ -16,7 +16,7 @@ PAPERCLIP_PHOTO_OPTIONS = {
 }
 
 PAPERCLIP_PHOTO_MAX_SIZE = 5.megabytes
-PAPERCLIP_PHOTO_CONTENT_TYPES = ['image/jpeg', 'image/jpg', 'image/pjpeg', 'image/png', 'image/x-png']
+PAPERCLIP_PHOTO_CONTENT_TYPES = ['image/jpeg', 'image/jpg', 'image/pjpeg', 'image/png', 'image/x-png','application/octet-stream']
 
 PAPERCLIP_FILE_OPTIONS = {
 #   :s3_credentials => "#{Rails.root}/config/s3.yml", :bucket => "51go2",

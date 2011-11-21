@@ -62,16 +62,6 @@
             function G (id){
                 return document.getElementById(id);
             }
-            G("width").onblur = function(){
-                if(!/^[1-9]+[.]?\d*$/g.test(this.value)){
-                    alert("请输入正确的宽度");
-                }
-            }
-            G("height").onblur = function(){
-                if(!/^[1-9]+[.]?\d*$/g.test(this.value)){
-                    alert("请输入正确的高度");
-                }
-            }
             dialog.onok = function (){
                 var width = G("width").value;
                 var height = G("height").value;

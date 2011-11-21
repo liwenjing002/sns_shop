@@ -1,0 +1,258 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title></title>
+    <script type="text/javascript" charset="utf-8" src="../../../editor_config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../../editor_api.js">
+        paths = [
+            'editor.js',
+            'core/browser.js',
+            'core/utils.js',
+            'core/EventBase.js',
+            'core/dom/dom.js',
+            'core/dom/dtd.js',
+            'core/dom/domUtils.js',
+            'core/dom/Range.js',
+            'core/dom/Selection.js',
+            'core/Editor.js',
+            'commands/inserthtml.js',
+            'commands/image.js',
+            'commands/insertimage.js',
+            'commands/justify.js',
+            'commands/font.js',
+            'commands/link.js',
+            'commands/removeformat.js',
+            'commands/blockquote.js',
+            'commands/indent.js',
+            'commands/print.js',
+            'commands/preview.js',
+            'commands/selectall.js',
+            'commands/paragraph.js',
+            'commands/directionality.js',
+            'commands/horizontal.js',
+            'commands/time.js',
+            'commands/inserthtml.js',
+            'commands/rowspacing.js',
+            'commands/cleardoc.js',
+            'commands/anchor.js',
+            'commands/delete.js',
+            'commands/wordcount.js',
+            'plugins/pagebreak/pagebreak.js',
+            'plugins/undo/undo.js',
+            'plugins/paste/paste.js',
+            'plugins/list/list.js',
+            'plugins/source/source.js',
+            'plugins/shortcutkeys/shortcutkeys.js',
+            'plugins/enterkey/enterkey.js',
+            'plugins/keystrokes/keystrokes.js',
+            'plugins/fiximgclick/fiximgclick.js',
+            'plugins/autolink/autolink.js',
+            'plugins/autoheight/autoheight.js',
+            'plugins/autofloat/autofloat.js',  //依赖UEditor UI,在IE6中，会覆盖掉body的背景图属性
+            'plugins/highlight/highlight.js',
+            'plugins/serialize/serialize.js',
+            'plugins/video/video.js',
+            'plugins/table/table.js',
+            'plugins/contextmenu/contextmenu.js',
+            'plugins/pagebreak/pagebreak.js',
+            'plugins/basestyle/basestyle.js',
+            'plugins/elementpath/elementpath.js',
+            'plugins/formatmatch/formatmatch.js',
+            'plugins/searchreplace/searchreplace.js',
+            'ui/ui.js',
+            'ui/uiutils.js',
+            'ui/uibase.js',
+            'ui/separator.js',
+            'ui/mask.js',
+            'ui/popup.js',
+            'ui/colorpicker.js',
+            'ui/tablepicker.js',
+            'ui/stateful.js',
+            'ui/button.js',
+            'ui/splitbutton.js',
+            'ui/colorbutton.js',
+            'ui/tablebutton.js',
+            'ui/toolbar.js',
+            'ui/menu.js',
+            'ui/combox.js',
+            'ui/dialog.js',
+            'ui/menubutton.js',
+            'ui/datebutton.js',
+            'ui/editorui.js',
+            'ui/editor.js',
+            'ui/multiMenu.js'
+        ];
+    </script>
+    <style type="text/css">
+        #editor {
+            border: 1px solid #CCC;
+        }
+        #editor_toolbar_box {
+            background: #F0F0EE;
+            padding: 2px;
+        }
+        #editor_iframe_holder {
+            border-top: 1px solid #CCC;
+            border-bottom: 1px solid #CCC;
+        }
+    </style>
+</head>
+<body>
+    <div id="editor">
+        <div id="editor_toolbar_box">
+            <div id="editor_toolbar">
+                <input id="bold" type="button" value="加粗" onclick="myeditor.execCommand('bold')" style="height:24px;line-height:20px"/>
+                <input id="italic" type="button" value="加斜" onclick="myeditor.execCommand('italic')" style="height:24px;line-height:20px"/>
+                <input id="underline" type="button" value="下划线" onclick="execUnderline('underline')" style="height:24px;line-height:20px"/>
+                <input id="strikethrough" type="button" value="删除线" onclick="execUnderline('strikethrough')" style="height:24px;line-height:20px"/>
+                <select id="fontfamily" onchange="myeditor.execCommand('fontfamily',this.value)">
+                    <option value="宋体,simsun">宋体</option>
+                    <option value="楷体,楷体_gb2312,simkai">楷体</option>
+                    <option value="隶书,simli">隶书</option>
+                    <option value="黑体,simhei">黑体</option>
+                    <option value="andale mono,times">andale mono</option>
+                    <option value="arial,helvetica,sans-serif">arial</option>
+                    <option value="arial black,avant garde">arial black</option>
+                    <option value="comic sans ms,sans-serif">comic sans ms</option>
+                </select>
+                <select id="fontsize" onchange="myeditor.execCommand('fontsize',this.value)">
+                    <option value="10pt">10pt</option>
+                    <option value="11pt">11pt</option>
+                    <option value="12pt">12pt</option>
+                    <option value="14pt">14pt</option>
+                    <option value="16pt">16pt</option>
+                    <option value="18pt">18pt</option>
+                    <option value="20pt">20pt</option>
+                    <option value="22pt">22pt</option>
+                    <option value="24pt">24pt</option>
+                    <option value="36pt">36pt</option>
+                </select>
+                <input id="fontColor" type="button" value="字体颜色" onclick="setFontColor()" style="height:24px;line-height:20px"/>
+                <input type="button" value="插入html" onclick="insert()" style="height:24px;line-height:20px"/>
+                <input type="button" value="清除格式" onclick="myeditor.execCommand('removeformat')" style="height:24px;line-height:20px"/>
+                <input type="button" value="获得编辑器内容" onclick="alert(myeditor.getContent())" style="height:24px;line-height:20px"/>
+            </div>
+        </div>
+        <div id="editor_iframe_holder" style="height:400px;"></div>
+    </div>
+    <script type="text/javascript" charset="utf-8">
+        // todo: 下划线的command接口发生改变，这个demo上下划线功能存在问题。待修改
+
+        //editor的属性
+        var option = {
+			UEDITOR_HOME_URL: '../../../',
+            initialContent: 'hello world',//初始化编辑器的内容
+            minFrameHeight: 200,
+			autoFloatEnabled: false,
+            iframeCssUrl :'../../../themes/default/iframe.css'        //给iframe样式的路径
+            //initialStyle: ''             //编辑器初始化样式
+            //enterTag : 'p'              //输入回车时使用p标签
+        };
+        //实例化编辑器
+        var myeditor = new baidu.editor.Editor(option);
+        
+        //给编辑器增加一个选中改变的事件，用来判断所选内容以及状态
+        myeditor.addListener('selectionchange', function (){
+            var cmdName = ['bold','italic','underline','strikethrough'],
+                fontName = ['fontfamily','fontsize'],i=-1,
+                range = myeditor.selection.getRange();//得到选中区域
+            //判断是否为封闭标签
+            if(range.collapsed){
+                document.getElementById("bold").disabled = true;
+                document.getElementById("italic").disabled = true;
+                document.getElementById("underline").disabled = true;
+                document.getElementById("strikethrough").disabled = true;
+                document.getElementById("fontfamily").disabled = true;
+                document.getElementById("fontsize").disabled = true;
+                document.getElementById("fontColor").disabled = true;
+            }else{
+                document.getElementById("bold").disabled = false;
+                document.getElementById("italic").disabled = false;
+                document.getElementById("underline").disabled = false;
+                document.getElementById("strikethrough").disabled = false;
+                document.getElementById("fontfamily").disabled = false;
+                document.getElementById("fontsize").disabled = false;
+                document.getElementById("fontColor").disabled = false;
+            }
+            while(i++ < cmdName.length-1){
+                if(cmdName[i] == "underline"){
+                    var val = myeditor.queryCommandValue("underline");
+                    if(val == "text-decoration"){
+                        document.getElementById(cmdName[i]).style.color = "red";
+                    }else{
+                        document.getElementById(cmdName[i]).style.color = "";
+                    }
+                }else if(cmdName[i] == "strikethrough"){
+                    var val = myeditor.queryCommandValue("underline");
+                    if(val == "text-decoration"){
+                        document.getElementById(cmdName[i]).style.color = "red";
+                    }else{
+                        document.getElementById(cmdName[i]).style.color = "";
+                    }
+                }else{
+                    var state = myeditor.queryCommandState(cmdName[i]);
+                    if(state == 1){
+                        document.getElementById(cmdName[i]).style.color = "red";
+                    }else{
+                        document.getElementById(cmdName[i]).style.color = "";
+                    }
+                }
+            }
+            i = -1;
+            while(i++<fontName.length-1){
+                var fstate = myeditor.queryCommandValue(fontName[i]).toLowerCase();
+                var fselect = document.getElementById(fontName[i]);
+                for(var j= 0;j<fselect.options.length;j++){
+                    if(fselect.options[j].value.toLowerCase().indexOf(fstate.split(",")[0])!=-1){
+                        fselect.options[j].selected = "true";
+                    }
+                }
+            }
+            var fcolor = myeditor.queryCommandValue("forecolor");
+            document.getElementById("fontColor").style.color = fcolor;
+        });
+        myeditor.addListener("ready", function(){
+            if(myeditor.selection.getRange().collapsed){
+                document.getElementById("bold").disabled = true;
+                document.getElementById("italic").disabled = true;
+                document.getElementById("underline").disabled = true;
+                document.getElementById("strikethrough").disabled = true;
+                document.getElementById("fontfamily").disabled = true;
+                document.getElementById("fontsize").disabled = true;
+                document.getElementById("fontColor").disabled = true;
+            }else{
+                document.getElementById("bold").disabled = false;
+                document.getElementById("italic").disabled = false;
+                document.getElementById("underline").disabled = false;
+                document.getElementById("strikethrough").disabled = false;
+                document.getElementById("fontfamily").disabled = false;
+                document.getElementById("fontsize").disabled = false;
+                document.getElementById("fontColor").disabled = false;
+            }
+        });
+        //渲染编辑器
+        myeditor.render('editor_iframe_holder');
+        //给字体设置颜色
+        function setFontColor(){
+            var ipt = document.getElementById("fontColor");
+            var fontColor = prompt("请输入字体颜色",ipt.style.color ? ipt.style.color : "#000000");
+            ipt.style.color = fontColor;
+            myeditor.execCommand('forecolor',fontColor);
+        }
+        //插入文本
+        function insert(){
+            var insertTxt = "插入的文本";
+            insertTxt = prompt("插入的内容",insertTxt);
+            if(insertTxt){
+                myeditor.execCommand("inserthtml",insertTxt);
+            }
+        }
+        function execUnderline(cmd){
+            myeditor.execCommand(cmd);
+        }
+        
+    </script>
+</body>
+</html>
