@@ -24,6 +24,8 @@ class PicturesController < ApplicationController
     redirect_to album_picture_path(params[:album_id], prev_id)
   end
 
+  
+  #  决定了 一次只能上传一个图片，每一张图片都有自己的故事
   def create
     if params[:group_id]
       unless @group = Group.find(params[:group_id]) and @group.pictures? \
@@ -41,37 +43,9 @@ class PicturesController < ApplicationController
         @logged_in.name
       end
     ) { |a| a.person = @logged_in }
-    success = fail = 0
-    errors = []
-    @pic_arr =[]
-     if params[:pictures]
-    Array(params[:pictures]).each do |pic|
-      picture = @album.pictures.create(
-        :person => (params[:remove_owner] ? nil : @logged_in),
-        :photo  => pic,
-        :photo_text  => params[:photo_text],
-        :longitude=> (params[:marker]and params[:marker][:marker_longitude])?params[:marker][:marker_longitude]:"",
-        :latitude=> (params[:marker]and params[:marker][:marker_latitude])?params[:marker][:marker_latitude]:"",
-        :location=> params[:marker]?params[:marker][:geocode_position]:""
-      )
-      if picture.errors.any?
-        errors += picture.errors.full_messages
-      end
-      if picture.photo.exists?
-        success += 1
-        @pic_arr << picture
-        if @album.pictures.count == 1 # first pic should be default cover pic
-          picture.update_attribute(:cover, true)
-        end
-      else
-        fail += 1
-        picture.log_item.destroy rescue nil
-        picture.destroy rescue nil
-      end
-    end
-    end
+    
     if params[:picture]
-       picture = @album.pictures.create(
+      picture = @album.pictures.create(
         :person => (params[:remove_owner] ? nil : @logged_in),
         :photo  => params[:picture],
         :photo_text  => params[:photo_text],
@@ -79,44 +53,16 @@ class PicturesController < ApplicationController
         :latitude=> (params[:marker]and params[:marker][:marker_latitude])?params[:marker][:marker_latitude]:"",
         :location=> params[:marker]?params[:marker][:geocode_position]:""
       )
-       @pic_arr << picture
-    end
-
-
-  @notice = t('pictures.saved', :success => success)
-    @notice+= " " + t('pictures.failed', :fail => fail) if fail > 0
-    @notice += " " + errors.join('; ') if errors.any?
-    html = []
-    
-    @pic_arr.each do |pic|
-      if params[:marker]
-        params[:marker][:owner_id] =  @logged_in.id 
-        unless params[:marker][:geocode_position]=='' and params[:marker][:marker_longitude]=="" and params[:marker][:marker_latitude] ==''
-          params[:marker][:marker_longitude] = BigDecimal.new(params[:marker][:marker_longitude].to_s)
-          params[:marker][:marker_latitude] = BigDecimal.new(params[:marker][:marker_latitude].to_s)
-          marker = Marker.new(params[:marker])
-
-          MarkerToMap.create({:map=>@logged_in.map,:marker=>marker,:marker_type=>'StreamItem'})
-          marker.object_type = "StreamItem"
-          marker.object_id = pic.stream_item_id
-          marker.save
-          html << {:pic_id=>pic.id,:marker_id=>marker.id}   
-          next
-        end
+      if picture.errors.any?
+        errors = picture.errors.full_messages
+        @notice += " " + errors.join('; ') if errors.any?   if picture.errors.any?
       else
-        html << {:pic_id=>pic.id}
+        @notice = t('pictures.saved', :success => "success")
       end
-       
     end
+    redirect_to params[:redirect_to] || @group || album_pictures_path(@album)
 
-    if params[:picture]
-      @file_url = @pic_arr[0].photo.url(:original) if @pic_arr and @pic_arr.length > 0
-      render :text=> {:url=>@file_url,:title=>"",:state=>"SUCCESS"}.to_json
-    else
-    render :text=> {:success=>true,:html=>html,:notice=>@notice}.to_json
-    #    redirect_to params[:redirect_to] || @group || album_pictures_path(@album)
-    end
-    end
+  end
 
   
   
@@ -154,9 +100,9 @@ class PicturesController < ApplicationController
   end
   
 
- def upload
-   render :layout=>false
- end
+  def upload
+    render :layout=>false
+  end
  
   
 end

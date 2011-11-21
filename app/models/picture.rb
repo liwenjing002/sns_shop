@@ -92,14 +92,7 @@ class Picture < ActiveRecord::Base
   # used by StreamItem to generate photo urls from a few details
   # without querying the actual Picture object
   def self.photo_url_from_parts(id, fingerprint, extension, style)
-#    PAPERCLIP_PHOTO_OPTIONS[:url].sub(/:rails_env/, Rails.env).sub(/:class/, 'pictures').sub(/:attachment/, 'photos').sub(/:id/, id.to_s).sub(/:style/, style.to_s).sub(/:fingerprint/, fingerprint).sub(/:extension/, extension)
-   Picture.find(id).photo.url(style)
- pic =   Picture.find(id)
- if pic
-   pic.photo.url(style)
- else
-   "missing_large.png"
- end
-  
+   PAPERCLIP_PHOTO_OPTIONS[:url].sub(/:rails_env/, Rails.env).sub(/:class/, 'pictures').sub(/:attachment/, 'photos').sub(/:id/, id.to_s).sub(/:style/, style.to_s).sub(/:fingerprint/, fingerprint).sub(/:extension/, extension)
+
   end
 end

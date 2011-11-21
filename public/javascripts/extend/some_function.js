@@ -555,16 +555,16 @@ jQuery(function ($) {
                             $("div.close", PIC.container).show();
                             $("#pic-modal-data", PIC.container).show();
                             $(".location_info").hide();
-                            editor_pic = new baidu.editor.ui.Editor({
-                                toolbars:[
-                                ['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','|','MultiMenu'  ]
-                                ],
-                                autoClearinitialContent:true,
-                                initialContent: '',
-                                elementPathEnabled:false,
-                                textarea: 'picture[photo_text]'
-                            });
-                            editor_pic.render('editor_pic');  //editor为编辑器容器的id
+//                            editor_pic = new baidu.editor.ui.Editor({
+//                                toolbars:[
+//                                ['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','|','MultiMenu'  ]
+//                                ],
+//                                autoClearinitialContent:true,
+//                                initialContent: '',
+//                                elementPathEnabled:false,
+//                                textarea: 'picture[photo_text]'
+//                            });
+//                            editor_pic.render('editor_pic');  //editor为编辑器容器的id
                         }
                         );
                     }, 300);
@@ -632,16 +632,16 @@ jQuery(function ($) {
                             $("div.close", VIDEO.container).show();
                             $("#video-modal-data", VIDEO.container).show();
                             $(".location_info").hide();
-                            editor_video = new baidu.editor.ui.Editor({
-                                toolbars:[
-                                ['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','|','MultiMenu'  ]
-                                ],
-                                autoClearinitialContent:true,
-                                initialContent: '',
-                                elementPathEnabled:false,
-                                textarea: 'video[desc]'
-                            });
-                            editor_video.render('video_desc');  //editor为编辑器容器的id
+//                            editor_video = new baidu.editor.ui.Editor({
+//                                toolbars:[
+//                                ['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','|','MultiMenu'  ]
+//                                ],
+//                                autoClearinitialContent:true,
+//                                initialContent: '',
+//                                elementPathEnabled:false,
+//                                textarea: 'video[desc]'
+//                            });
+//                            editor_video.render('video_desc');  //editor为编辑器容器的id
                         }
                         );
                     }, 300);

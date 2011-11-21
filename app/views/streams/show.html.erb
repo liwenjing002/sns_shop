@@ -1,9 +1,9 @@
 <% content_for :head do %>
   <%= stylesheet_link_tag  "osx" %>
-  <%= stylesheet_link_tag  "ueditor/themes/default/ueditor" %>
+  <%#= stylesheet_link_tag  "ueditor/themes/default/ueditor" %>
   <%= javascript_include_tag "extend/ui" %>
-  <%= javascript_include_tag "ueditor/editor_config" %>
-  <%= javascript_include_tag "ueditor/editor_all" %>
+  <%#= javascript_include_tag "ueditor/editor_config" %>
+  <%#= javascript_include_tag "ueditor/editor_all" %>
 <%end%>
 <% if @has_friendship_requests %>
   <div class="highlight">
@@ -28,7 +28,7 @@
   <%#*分享栏%>
   <h3 class="double-margin-top">我要二一下</h3>
   <p>分享你的心情，照片，视频，二二身体好，二二更健康</p>
-  <%=render_cell :common,:share%>
+  <%=render_cell :common,:share,:logged_in=>@logged_in%>
 
   <%#*头像墙%>
   <%@peoples = Person.find(:all,:limit=>35)%>

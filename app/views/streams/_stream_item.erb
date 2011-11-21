@@ -29,15 +29,8 @@
       <% end %>
     </div>
     <div class="stream-item-content">
-    <%=stream_item_content( stream_item,show_on )%>
-    <% if !stream_item.title %>
-        <% unless stream_item.wall %>
-          <%= link_to t('comments.view') + '...', stream_item, :class => 'small' %>
-        <% end %>
-      <% end %>
-    </div>
-
-    <table class="comments"id ="<%=stream_item.id%>_comments">
+      <div><%=stream_item_content( stream_item,show_on )%></div>
+    <table class="comments"id ="<%=stream_item.id%>_comments" <%if stream_item.context['comments'].to_a.length ==0%> style="display:none"<%end%>>
       <% stream_item.context['comments'].to_a.each do |comment| %>
         <% if comment['person'] %>
           <tr class="stream-item-comment">
@@ -104,6 +97,7 @@
       </div>
     <% end %>
   </div>
+</div>
 </div>
 
 

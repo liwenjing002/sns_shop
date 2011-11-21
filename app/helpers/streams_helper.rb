@@ -117,7 +117,7 @@ module StreamsHelper
           marker_html =location
         end
       end
-      html += "<div class='tooltip_stream_item'><img src='http://api.map.baidu.com/staticimage?center=#{marker_html}&markers=#{marker_html}&&width=300&height=140&zoom=14'></img></div>"
+      html += "<div class='tooltip_stream_item'><img src='http://api.map.baidu.com/staticimage?center=#{marker_html}&markers=#{marker_html}&&width=300&height=140&zoom=14'></img></div>" if  marker_html
     else
       html += "<div style='cursor:pointer;color:red'><span>发表位置：</span>#{location}</div>"
     end

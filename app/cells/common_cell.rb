@@ -25,6 +25,7 @@ class CommonCell < Cell::Rails
   end
 
   def share
+    @logged_in = options[:logged_in]
     render
   end
   

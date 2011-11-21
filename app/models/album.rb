@@ -5,7 +5,7 @@ class Album < ActiveRecord::Base
   belongs_to :site
   has_many :pictures, :dependent => :destroy
 
-  scope_by_site_id
+  
 
   attr_accessible :name, :description, :is_public
 

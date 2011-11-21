@@ -1,7 +1,7 @@
 
 <div class='object' style="min-height: 600px;">	
 
-  <%=render_cell :common,:share%>
+  <%=render_cell :common,:share,:logged_in=>@logged_in%>
     <div class="stream-items">
         
           <%= render :partial => '../views/streams/stream_item', :as => :stream_item,

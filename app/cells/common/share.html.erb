@@ -35,9 +35,10 @@
     <div id="pic-modal-data" >
 
 
-      <form accept-charset="UTF-8" action="/pictures" class="new_picture" enctype="multipart/form-data" id="share-picture" method="post" target="upload_frame">
-        <input id="pictures_" multiple="multiple" name="pictures[]" type="file" /><br/>
-        <input id="album" name="album" placeholder="专辑名称" size="10" type="text" value="" /><br/>
+      <form accept-charset="UTF-8" action="/pictures" class="new_picture" enctype="multipart/form-data" id="share-picture" method="post" >
+        <input id="pictures"  name="picture" type="file" /><br/>
+        <input id="return_url"  name="redirect_to" type="hidden" value="/stream" />
+        <%= select "",:album,  Album.find(:all,:conditions=>["person_id = ? ",@logged_in.id]).collect {|p| [ p.name, p.name ] } + [['[新增相册]', '!']], {} ,{:onChange => "if(this.value=='!') custom_select_val(this, '新增相册')"} %><br/>
         <textarea id="editor_pic" name="photo_text"></textarea>
         <div class="location_info">
           <input class="marker_geocode_position" id="marker_geocode_position" name="marker[geocode_position]" placeholder="我的位置" size="30" type="text" /><br/>
@@ -46,7 +47,7 @@
         <input class="marker_marker_longitude" id="marker_marker_longitude" name="marker[marker_longitude]" size="30" type="hidden" />
 
         <div id="pic_submit">
-          <span class='button' onclick='ajaxFileUpload_file()' >分享！</span>
+          <input name="commit" type="submit" value="分享！">
           <input name="[is_location]" type="hidden" value="0" /><input class="is_location" id="_is_location" name="[is_location]" title="是否带地理位置，默认为当前位置" type="checkbox" value="1" />地理位置
         </div>
 
@@ -88,14 +89,14 @@
 </div>
 
 
-<script>
-    editor_note = new baidu.editor.ui.Editor({
-    toolbars:[
-      ['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','ImageCenter','|','InsertImage','Emotion'  ]
-    ],autoClearinitialContent:true,
-    initialContent: '<span style="color:#ccc">分享你的心情！！</span>',
-    elementPathEnabled:false,
-    textarea: 'note[body]'
-  });
-  editor_note.render('note_body_editor');  //editor为编辑器容器的id
-</script>
+<%#*<script>%>
+    <%#*editor_note = new baidu.editor.ui.Editor({%>
+    <%#*toolbars:[%>
+      <%#*['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','ImageCenter','|','InsertImage','Emotion'  ]%>
+    <%#*],autoClearinitialContent:true,%>
+    <%#*initialContent: '<span style="color:#ccc">分享你的心情！！</span>',%>
+    <%#*elementPathEnabled:false,%>
+    <%#*textarea: 'note[body]'%>
+  <%#*});%>
+  <%#*editor_note.render('note_body_editor');  //editor为编辑器容器的id%>
+<%#*</script>%>

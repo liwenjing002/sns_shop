@@ -14,7 +14,4 @@ class StreamsController < ApplicationController
       format.js
     end
   end
-  
-
-
 end

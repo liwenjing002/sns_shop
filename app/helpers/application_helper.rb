@@ -65,7 +65,7 @@ module ApplicationHelper
 
   def javascript_tags
     #    javascript_include_tag('jquery-1.4.4.min', 'jquery-ui-1.8.7.custom.min', 'jquery.qtip-1.0.0-rc3.min.js', 'rails', 'application', :cache => true) + "\n" + \
-    javascript_include_tag(:defaults,'jquery-ui-1.8.7.custom.min', 'jquery.qtip-1.0.0-rc3.min.js', 'application','extend/ajaxfileupload','extend/jquery.simplemodal','extend/jquery.tools.min','extend/some_function') + "\n" + \
+    javascript_include_tag(:defaults, 'jquery.qtip-1.0.0-rc3.min.js', 'application','extend/jquery.simplemodal','extend/jquery.tools.min','extend/some_function') + "\n" + \
       csrf_meta_tag + "\n" + \
       "<!--[if lte IE 8]>\n".html_safe + \
       javascript_include_tag('ie') + "\n" + \
@@ -117,9 +117,7 @@ module ApplicationHelper
     html
   end
 
-  def menu_content
-    render :partial => 'common/menus'
-  end
+
 
   def search_form
     form_tag(search_path, :method => :get) do

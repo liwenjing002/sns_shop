@@ -1,3 +1,4 @@
+$("#<%=params[:stream_item_id]%>_comments").show()
 $("#<%=params[:stream_item_id]%>_comments").append("<%= escape_javascript(render_cell :common,:comment,:comment=>@comment) %>");
 
 $("#new_comment_textarea_<%=params[:stream_item_id]%>").attr("value","")
