@@ -11,9 +11,6 @@
 
   <div id="nav">
     <div class="inner">
-     <div id="search">
-        {{ search_form }}
-      </div>
       <ul id="common-nav">
         {{ common_nav_links }}
       </ul>
@@ -29,11 +26,12 @@
   </div>
   {{ notice }}
   <div id="main">
-
+{% if content_for_top %}
+    <div class="inner_top">
+         {{ content_for_top }}
+    </div>
+{% endif %}
     <div class="inner">
-        <div ">
-          {{ content_for_top }}
-        </div>
       {% if content_for_sidebar %}
         <div class="left-sidebar">
           {{ content_for_sidebar }}

@@ -1,7 +1,19 @@
+if ($(".content").attr("type")!= "stream"){
+$(".content").attr("type","stream") ;
+$(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar");
+$(".content").html("<h3 class='double-margin-top'>动态</h3><div class='tream-items' id='stream_item_wall'></div>"+"<a href='/stream?page=2' data-remote='true' id='show_next'>继续查看</a>")
+}
+
+
 <%if @stream_items.length > 0%>
 $("#no_stream_more").remove()
-$("#stream_item_wall").append("<%= escape_javascript( render :partial => 'stream_items') %>");
-$("#show_next").attr("href","/stream?page=<%=  params[:page].to_i+1%>")
+
+<% if @page == 1 %>
+$("#stream_item_wall").html("<%= escape_javascript(render :partial => 'streams/stream_item', :as => :stream_item,:collection => @stream_items,:locals =>{:show_on=>"wall",:logged_in=>@logged_in,:person=>@person}) %>");
+<%else%>
+$("#stream_item_wall").append("<%= escape_javascript(render :partial => 'streams/stream_item', :as => :stream_item,:collection => @stream_items,:locals =>{:show_on=>"wall",:logged_in=>@logged_in,:person=>@person}) %>");
+<%end%>
+$("#show_next").attr("href","/stream?page=<%= @page.to_i+1%>")
 <%else%>
 
 $("#show_no_stream_msg").html("<span id='no_stream_more'>没有了。。。。</span>");

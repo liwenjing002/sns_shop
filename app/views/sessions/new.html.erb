@@ -45,7 +45,9 @@
       <td></td>
       <td>
         <input type="submit" value="<%= t('session.sign_in') %>"/><br/>
-        <p class="double-margin-top"><%= t('session.forget_password_html', :url => new_account_path+"#verify") %><%= t('session.sign_up_or_sign_in_html', :url => new_account_path) %></p>
+        <p class="double-margin-top">
+<%= t('session.forget_password_html', :url => new_account_path(:email => true) ) %>
+<%= t('session.sign_up_or_sign_in_html', :url => new_account_path) %></p>
       </td>
     </tr>
   </table>

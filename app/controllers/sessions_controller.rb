@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
     if params[:password].to_s.any? and (Rails.env == 'test' or Setting.get(:privacy, :allow_unencrypted_logins))
       password = params[:password]
     else
-      unless password = decrypt_password(params[:encrypted_password])
+      if (password = decrypt_password(params[:encrypted_password]) )==nil
         render :text => t('session.sign_in_error_html', :url => new_session_path), :layout => true, :status => 500
         return
       end
@@ -40,7 +40,7 @@ class SessionsController < ApplicationController
       if params[:from].to_s.any?
         redirect_to 'http://' + request.host + ([80, 443].include?(request.port) ? '' : ":#{request.port}") + params[:from]
       elsif person.full_access?
-        redirect_to stream_path
+        redirect_to people_path(@logged_in)
       else
         redirect_to person
       end

@@ -1,0 +1,7 @@
+if ($(".content").attr("type")!= "albums"){
+$(".content").attr("type","albums") 
+$(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar accommodate-left-sidebar2");
+$(".content").html("<h3 class='ouble-margin-top'>相册</h3>"+"<div id ='albums_list'></div>")
+
+}
+$("#albums_list").html("<%= escape_javascript( render :partial => 'albums') %>")

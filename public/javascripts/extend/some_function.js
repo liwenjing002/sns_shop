@@ -1,3 +1,211 @@
+//ajax 文件上传
+jQuery.extend({
+	
+
+    createUploadIframe: function(id, uri)
+	{
+			//create frame
+            var frameId = 'jUploadFrame' + id;
+            var iframeHtml = '<iframe id="' + frameId + '" name="' + frameId + '" style="position:absolute; top:-9999px; left:-9999px"';
+			if(window.ActiveXObject)
+			{
+                if(typeof uri== 'boolean'){
+					iframeHtml += ' src="' + 'javascript:false' + '"';
+
+                }
+                else if(typeof uri== 'string'){
+					iframeHtml += ' src="' + uri + '"';
+
+                }	
+			}
+			iframeHtml += ' />';
+			jQuery(iframeHtml).appendTo(document.body);
+
+            return jQuery('#' + frameId).get(0);			
+    },
+    createUploadForm: function(id, fileElementId, data)
+	{
+		//create form	
+		var formId = 'jUploadForm' + id;
+		var fileId = 'jUploadFile' + id;
+		var form = jQuery('<form  action="" method="POST" name="' + formId + '" id="' + formId + '" enctype="multipart/form-data"></form>');	
+		if(data)
+		{
+			for(var i in data)
+			{
+				jQuery('<input type="hidden" name="' + i + '" value="' + data[i] + '" />').appendTo(form);
+			}			
+		}		
+		var oldElement = jQuery('#' + fileElementId);
+		var newElement = jQuery(oldElement).clone();
+		jQuery(oldElement).attr('id', fileId);
+		jQuery(oldElement).before(newElement);
+		jQuery(oldElement).appendTo(form);
+
+
+		
+		//set attributes
+		jQuery(form).css('position', 'absolute');
+		jQuery(form).css('top', '-1200px');
+		jQuery(form).css('left', '-1200px');
+		jQuery(form).appendTo('body');		
+		return form;
+    },
+
+    ajaxFileUpload: function(s) {
+        // TODO introduce global settings, allowing the client to modify them for all requests, not only timeout		
+        s = jQuery.extend({}, jQuery.ajaxSettings, s);
+        var id = new Date().getTime()        
+		var form = jQuery.createUploadForm(id, s.fileElementId, (typeof(s.data)=='undefined'?false:s.data));
+		var io = jQuery.createUploadIframe(id, s.secureuri);
+		var frameId = 'jUploadFrame' + id;
+		var formId = 'jUploadForm' + id;		
+        // Watch for a new set of requests
+        if ( s.global && ! jQuery.active++ )
+		{
+			jQuery.event.trigger( "ajaxStart" );
+		}            
+        var requestDone = false;
+        // Create the request object
+        var xml = {}   
+        if ( s.global )
+            jQuery.event.trigger("ajaxSend", [xml, s]);
+        // Wait for a response to come back
+        var uploadCallback = function(isTimeout)
+		{			
+			var io = document.getElementById(frameId);
+            try 
+			{				
+				if(io.contentWindow)
+				{
+					 xml.responseText = io.contentWindow.document.body?io.contentWindow.document.body.innerHTML:null;
+                	 xml.responseXML = io.contentWindow.document.XMLDocument?io.contentWindow.document.XMLDocument:io.contentWindow.document;
+					 
+				}else if(io.contentDocument)
+				{
+					 xml.responseText = io.contentDocument.document.body?io.contentDocument.document.body.innerHTML:null;
+                	xml.responseXML = io.contentDocument.document.XMLDocument?io.contentDocument.document.XMLDocument:io.contentDocument.document;
+				}						
+            }catch(e)
+			{
+				jQuery.handleError(s, xml, null, e);
+			}
+            if ( xml || isTimeout == "timeout") 
+			{				
+                requestDone = true;
+                var status;
+                try {
+                    status = isTimeout != "timeout" ? "success" : "error";
+                    // Make sure that the request was successful or notmodified
+                    if ( status != "error" )
+					{
+                        // process the data (runs the xml through httpData regardless of callback)
+                        var data = jQuery.uploadHttpData( xml, s.dataType );    
+                        // If a local callback was specified, fire it and pass it the data
+                        if ( s.success )
+                            s.success( data, status );
+    
+                        // Fire the global callback
+                        if( s.global )
+                            jQuery.event.trigger( "ajaxSuccess", [xml, s] );
+                    } else
+                        jQuery.handleError(s, xml, status);
+                } catch(e) 
+				{
+                    status = "error";
+                    jQuery.handleError(s, xml, status, e);
+                }
+
+                // The request was completed
+                if( s.global )
+                    jQuery.event.trigger( "ajaxComplete", [xml, s] );
+
+                // Handle the global AJAX counter
+                if ( s.global && ! --jQuery.active )
+                    jQuery.event.trigger( "ajaxStop" );
+
+                // Process result
+                if ( s.complete )
+                    s.complete(xml, status);
+
+                jQuery(io).unbind()
+
+                setTimeout(function()
+									{	try 
+										{
+											jQuery(io).remove();
+											jQuery(form).remove();	
+											
+										} catch(e) 
+										{
+											jQuery.handleError(s, xml, null, e);
+										}									
+
+									}, 100)
+
+                xml = null
+
+            }
+        }
+        // Timeout checker
+        if ( s.timeout > 0 ) 
+		{
+            setTimeout(function(){
+                // Check to see if the request is still happening
+                if( !requestDone ) uploadCallback( "timeout" );
+            }, s.timeout);
+        }
+        try 
+		{
+
+			var form = jQuery('#' + formId);
+			jQuery(form).attr('action', s.url);
+			jQuery(form).attr('method', 'POST');
+			jQuery(form).attr('target', frameId);
+            if(form.encoding)
+			{
+				jQuery(form).attr('encoding', 'multipart/form-data');      			
+            }
+            else
+			{	
+				jQuery(form).attr('enctype', 'multipart/form-data');			
+            }			
+            jQuery(form).submit();
+
+        } catch(e) 
+		{			
+            jQuery.handleError(s, xml, null, e);
+        }
+		
+		jQuery('#' + frameId).load(uploadCallback	);
+        return {abort: function () {}};	
+
+    },
+
+    uploadHttpData: function( r, type ) {
+        var data = !type;
+        data = type == "xml" || data ? r.responseXML : r.responseText;
+        // If the type is "script", eval it in global context
+        if ( type == "script" )
+            jQuery.globalEval( data );
+        // Get the JavaScript object, if JSON is used.
+        if ( type == "json" )
+            eval( "data = " + data );
+        // evaluate scripts within html
+        if ( type == "html" )
+            jQuery("<div>").html(data).evalScripts();
+        if(type == "default")
+            data = r.responseText;
+        return data;
+    }
+})
+
+
+
+
+
+
+
 function obj2str(o){
     var r = [];
     if(typeof o == "string" || o == null) {
@@ -678,270 +886,7 @@ jQuery(function ($) {
 
 
 
-//ajax 省市查询效果 和全站 marker搜索js
-function InputSuggest(opt){
-    this.win = null;
-    this.doc = null;
-    this.url = opt.url||"/addresses/search_address";
-    this.container = null;
-    this.items = null;
-    this.dataType = 'simple'; //查询类型，包括基本的省市信息查询和网站整体的marker查询
-    this.ajaxing = false;
-    this.last_ajax_time = null; //每隔一段时间才去AJAX请求
-    this.input = opt.input || null;
-    this.containerCls = opt.containerCls || 'suggest-container';
-    this.itemCls = opt.itemCls || 'suggest-item';
-    this.activeCls = opt.activeCls || 'suggest-active';
-    this.width = opt.width;
-    this.opacity = opt.opacity;
-    this.data = opt.data || [];
-    this.active = null;
-    this.visible = false;
-    this.init();
-}
-InputSuggest.prototype = {
-    init: function(){
-        this.win = window;
-        this.doc = window.document;
-        this.container = this.$C('div');
-        this.attr(this.container, 'class', this.containerCls);
-        this.doc.body.appendChild(this.container);
-		
-        var _this = this, input = this.input;
 
-        this.on(input,'keyup',function(e){
-            if(input.value==''){
-                _this.hide();
-            }else{
-                _this.onKeyup(e);
-            }
-
-        });
-                
-        this.on(input,'focus',function(e){
-	
-            _this.onfocus(e);
-			
-
-        });
-                
-                
-        // blur会在click前发生，这里使用mousedown
-        this.on(input,'blur',function(e){
-            _this.hide();
-        });
-        this.onMouseover();
-        this.onMousedown();
-        this.setPos();
-
-    },
-    $C: function(tag){
-        return this.doc.createElement(tag);
-    },
-    getPos: function (el){
-
-        var target = el;
-        var pos = [target.offsetLeft, target.offsetTop];
-    
-        var target = target.offsetParent;
-        while (target)
-        {
-            pos[0] += target.offsetLeft;
-            pos[1] += target.offsetTop;
-        
-            target = target.offsetParent
-        }
-   
-        return pos;
-
-
-    },
-    setPos: function(){
-        var input = this.input,
-        pos = this.getPos(input),
-        brow = this.brow,
-        width = this.width,
-        opacity = this.opacity,
-        container = this.container;
-        container.style.cssText =
-        'position:absolute;overflow:hidden;left:'
-        + pos[0] + 'px;top:'
-        + (pos[1]+input.offsetHeight) + 'px;width:'
-        // IE6/7/8/9/Chrome/Safari input[type=text] border默认为2，Firefox为1，因此取offsetWidth-2保证与FF一致
-        + (brow.firefox ? input.clientWidth : input.offsetWidth-2) + 'px;';
-        if(width){
-            container.style.width = width + 'px';
-        }
-        if(opacity){
-            if(this.brow.ie){
-                container.style.filter = 'Alpha(Opacity=' + opacity * 100 + ');';
-            }else{
-                container.style.opacity = (opacity == 1 ? '' : '' + opacity);
-            }
-        }
-    },
-    show: function(){
-        this.container.style.visibility = 'visible';
-        this.visible = true;
-    },
-    hide: function(){
-        this.container.style.visibility = 'hidden';
-        this.visible = false;
-    },
-    attr: function(el, name, val){
-        if(val === undefined){
-            return el.getAttribute(name);
-        }else{
-            el.setAttribute(name,val);
-            name=='class' && (el.className = val);
-        }
-    },
-    on: function(el, type, fn){
-        el.addEventListener ? el.addEventListener(type, fn, false) : el.attachEvent('on' + type, fn);
-    },
-    un: function(el, type, fn){
-        el.removeEventListener ? el.removeEventListener(type, fn, false) : el.detachEvent('on' + type, fn);
-    },
-    brow: function(ua){
-        return {
-            ie: /msie/.test(ua) && !/opera/.test(ua),
-            opera: /opera/.test(ua),
-            firefox: /firefox/.test(ua)
-        };
-    }(navigator.userAgent.toLowerCase()),
-    onKeyup: function(e){
-        // this.setPos();
-        var container = this.container, input = this.input, iCls = this.itemCls, aCls = this.activeCls;
-        if(this.visible){
-                    
-            switch(e.keyCode){
-                case 13: // Enter
-                    if(this.active){
-                        input.value = this.active.firstChild.data;
-                        this.hide();
-                    }
-                    return;
-                case 38: // 方向键上
-                    if(this.active==null){
-                        this.active = container.lastChild;
-                        this.attr(this.active, 'class', aCls);
-                        input.value = this.active.firstChild.data;
-                    }else{
-                        if(this.active.previousSibling!=null){
-                            this.attr(this.active, 'class', iCls);
-                            this.active = this.active.previousSibling;
-                            this.attr(this.active, 'class', aCls);
-                            input.value = this.active.firstChild.data;
-                        }else{
-                            this.attr(this.active, 'class', iCls);
-                            this.active = null;
-                            input.focus();
-                            input.value = input.getAttribute("curr_val");
-                        }
-                    }
-                    return;
-                case 40: // 方向键下
-                    if(this.active==null){
-                        this.active = container.firstChild;
-                        this.attr(this.active, 'class', aCls);
-                        input.value = this.active.firstChild.data;
-                    }else{
-                        if(this.active.nextSibling!=null){
-                            this.attr(this.active, 'class', iCls);
-                            this.active = this.active.nextSibling;
-                            this.attr(this.active, 'class', aCls);
-                            input.value = this.active.firstChild.data;
-                        }else{
-                            this.attr(this.active, 'class', iCls);
-                            this.active = null;
-                            input.focus();
-                            input.value = input.getAttribute("curr_val");
-                        }
-                    }
-                    return;
-
-            }
-        }
-        if(e.keyCode==27){ // ESC键
-            this.hide();
-            input.value = this.attr(input,'curr_val');
-            return;
-        }
-                
-        if(input.value.indexOf('@')!=-1){
-            return;
-        }
-        this.items = [];
-        if(this.attr(input,'curr_val')!=input.value){
-            this.getDataFromService(this,input)
-        }
-    },
-        
-        
-    onfocus: function(e){
-        this.items = [];
-        this.getDataFromService(this,this.input)
-    },
-        
-
-    //从后台获取省市搜索信息
-    getDataFromService: function(obj,input){
-        obj.ajaxing = true;
-        now = (new   Date()).getTime()
-        if (obj.last_ajax_time !=null && eval(now - obj.last_ajax_time)<'500'){
-            return
-        }
-        obj.last_ajax_time = now
-        this.setPos();
-        $.ajax({
-            type: "POST",
-            url: obj.url +"?type="+obj.dataType+"&key="+input.value,
-            success: function(message){
-                obj.data = message.data;
-                obj.container.innerHTML = '';
-                if ( obj ==null){
-                    this.ajaxing =false
-                    return 
-                }
-                for(var i=0,len=obj.data.length;i<len;i++){
-                    var item = obj.$C('div');
-                    obj.attr(item, 'class', obj.itemCls);
-                    item.innerHTML =  obj.data[i];
-                    obj.items[i] = item;
-                    obj.container.appendChild(item);
-                }
-                if (obj.data.length>0){
-                    obj.attr(input,'curr_val',input.value);
-                    obj.show();   
-                }
-                this.ajaxing =false
-			
-            }
-        });
-
-    },
-    onMouseover: function(){
-        var _this = this, icls = this.itemCls, acls = this.activeCls;
-        this.on(this.container,'mouseover',function(e){
-            var target = e.target || e.srcElement;
-            if(target.className == icls){
-                if(_this.active){
-                    _this.active.className = icls;
-                }
-                target.className = acls;
-                _this.active = target;
-            }
-        });
-    },
-    onMousedown: function(){
-        var _this = this;
-        this.on(this.container,'mousedown',function(e){
-            var target = e.target || e.srcElement;
-            _this.input.value = target.innerHTML;
-            _this.hide();
-        });
-    }
-}
 
 
 
@@ -1323,6 +1268,39 @@ $(document).ready(function() {
     //    });
 
 
+$(function($){ 
+     $.datepicker.regional['zh-CN'] = { 
+        clearText: '清除', 
+        clearStatus: '清除已选日期', 
+        closeText: '关闭', 
+        closeStatus: '不改变当前选择', 
+        prevText: '<上月', 
+        prevStatus: '显示上月', 
+        prevBigText: '<<', 
+        prevBigStatus: '显示上一年', 
+        nextText: '下月>', 
+        nextStatus: '显示下月', 
+        nextBigText: '>>', 
+        nextBigStatus: '显示下一年', 
+        currentText: '今天', 
+        currentStatus: '显示本月', 
+        monthNames: ['一月','二月','三月','四月','五月','六月', '七月','八月','九月','十月','十一月','十二月'], 
+        monthNamesShort: ['一','二','三','四','五','六', '七','八','九','十','十一','十二'], 
+        monthStatus: '选择月份', 
+        yearStatus: '选择年份', 
+        weekHeader: '周', 
+        weekStatus: '年内周次', 
+        dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'], 
+        dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'], 
+        dayNamesMin: ['日','一','二','三','四','五','六'], 
+        dayStatus: '设置 DD 为一周起始', 
+        dateStatus: '选择 m月 d日, DD', 
+        dateFormat: 'yy-mm-dd', 
+        firstDay: 1, 
+        initStatus: '请选择日期', 
+        isRTL: false}; 
+        $.datepicker.setDefaults($.datepicker.regional['zh-CN']); 
+    });
 
 
 
@@ -1405,6 +1383,43 @@ $(document).ready(function() {
         });
     }
     );
+
+
+//tool_bar 工具条
+$(".tool_div").hide()
+    $(".share").show()
+    $(".tool_link").live("click",function(){
+        if ($(this).attr("type") == "1"){
+            $(".tool_bar_div").hide();
+            $(".p_info").show()
+        }
+        if ($(this).attr("type") == "2"){
+            $(".tool_bar_div").hide();
+            $(".share").show()
+            $.ajax({                                                
+                type: "GET",   
+            
+                url: "/stream?person_id="+$(this).attr("person_id")
+            
+            });
+        }
+        if ($(this).attr("type") == "3"){
+            $.ajax({                                                
+                type: "GET",                                    
+                url: "/albums?person_id="+$(this).attr("person_id")
+            
+            });
+        }
+        if ($(this).attr("type") == "5"){
+            $.ajax({                                                
+                type: "GET",                                    
+                url: "/people/get_friends?person_id="+$(this).attr("person_id")
+            
+            });
+        }
+        
+
+    })
 
 
 

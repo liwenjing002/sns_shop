@@ -49,6 +49,9 @@ class PeopleController < ApplicationController
     else
       render :text => t('people.not_found'), :status => 404, :layout => true
     end
+    
+    
+    
   end
 
   def new
@@ -231,9 +234,11 @@ class PeopleController < ApplicationController
   end
 
   def get_friends
-    @friends = @logged_in.friends.paginate(:order => 'created_at desc',
-      :page => params[:page],
-      :conditions=>["first_name like ?","%#{params[:people][:first_name]}%"])
+    @person = @logged_in
+    @person = Person.find(params[:person_id]) if params[:person_id]
+    @friends = @person.friends.paginate(:order => 'created_at desc',
+      :page => params[:page]||1,:per_page => 20,
+      :conditions=>["first_name like ?","%#{params[:people] ? params[:people][:first_name] : '%'}%"])
   end
 
 end

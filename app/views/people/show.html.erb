@@ -1,96 +1,93 @@
-<%= content_for  :head do %>
-  <%= javascript_include_tag "extend/jquery.form" %>
-  <%= stylesheet_link_tag 'global-0.52' %>
-<%= stylesheet_link_tag  "ueditor/themes/default/ueditor" %>
+<% content_for :head do %>
   <%= stylesheet_link_tag  "osx" %>
-  <%= javascript_include_tag "extend/jquery.tools.min" %>
-  <%= javascript_include_tag "extend/pic_effects" %>
+  <%= stylesheet_link_tag  "ueditor/themes/default/ueditor" %>
   <%= javascript_include_tag "extend/ui" %>
   <%= javascript_include_tag "ueditor/editor_config" %>
-  <%= javascript_include_tag "ueditor/editor_all_min" %>
+  <%= javascript_include_tag "ueditor/editor_all" %>
+<%end%>
+<% if @has_friendship_requests %>
+  <div class="highlight">
+    <%= t('friends.you_have_pending_requests_html', :url => person_friends_path(@person)) %>
+  </div>
+<% end %>
+<% if @has_activity_invite %>
+  <div class="highlight">
+    <%= t('friends.you_have_activity_invite_html', :url => person_activities_path(@person)) %>
+  </div>
+<% end %> 
+
+
+<%#*地图%>
+<% content_for :top do %>
+
+  <%#= render :partial => 'maps/map',
+  :locals =>{:map => @person.map,:person=>@person,:logged_in=>@logged_in} %>
+  <div class="profile-left">
+      <%= render :partial => 'people/person_photo' %>
+  </div>
+  <div class="profile-right">
+    
+  <%#*分享栏%>
+      <%=render_cell :common,:tool_bar,:logged_in=>@logged_in,:person=>@person%>
+   
+  </div>
+<%end%>
+
+<% content_for :sidebar do %>
+ 
+ <%#*头像墙%>
+<%@peoples = Person.find(:all,:limit=>35)%>
+    <h3 class="double-margin-top">推荐好友</h3>
+    <div id ="people_pic_wall">
+      <%@peoples.each do |people|%>
+        <%=link_to   get_thunbnail_html(people),people,:target=>"_blank"%>
+      <%end%>
+    </div>
+  <%#*地点墙%>
+  <%    @places = Place.find(:all,:limit=>35)%>
+  <h3 class="double-margin-top">地点墙</h3>
+  <div id ="place_pic_wall" >
+    <%@places.each do |place|%>
+      <% if  place and  place.picture %>
+        <%=link_to image_tag(place.picture.photo.url(:tn), :alt =>  place.place_name, :class => 'icon thumbnail'),[:location,place],:target=>"_blank" %>
+      <% else %>
+        <%=link_to image_tag('missing_tn.png', :alt => t('none')),[:location,place],:target=>"_blank" %>
+      <% end %>
+    <%end%>
+  </div>
+
+
+  <%#*事件通知%>
+  <% if Setting.get(:features, :prayer_event) %>
+    <h3><%= t('prayer_signups.home_page_heading') %></h3>
+    <div id="taken_slots"></div>
+    <p><%= link_to t('prayer_signups.home_page_heading'), prayer_signups_path, :class => 'right-icon' %></p>
+    <script type="text/javascript">
+      $.get('<%= prayer_signups_path(:format => 'js') %>');
+    </script>
+  <% end %>
+
 <% end %>
 
-
-<% content_for :top do %>
-  <%= render :partial => 'maps/map',
-    :locals =>{:map => @person.map,:person=>@person,:logged_in=>@logged_in} %>
-<%end%>
-<div class="clear"></div>
-
-
-<div class="profile" >
-
-  <div class ='profile-left'>
-
-    <%= render :partial => 'person_photo' %>
-    <%= render :partial => 'my_friends' %>
-    <%= render :partial => 'albums_manager' %>
+    <div class="content" type="stream">    
+<%#*内容墙%>
+<h3 class="double-margin-top">动态
+</h3>
+<div class="stream-items" id="stream_item_wall">
+  <%= render :partial => 'streams/stream_item', :as => :stream_item,
+    :collection => @stream_items,
+    :locals =>{:show_on=>"wall",:logged_in=>@logged_in,:person=>@person} %>
 
 
 
 
-    <h3><%= link_to '我的活动',person_activities_path(@person)%>
-      <p style="float: right"><%= link_to '发起活动', "#", :class => 'add-icon',:id=>"activity" %></p>
-    </h3>
 
-    <h3>梦想单
-      <p style="float: right"><%= link_to '梦想单', "#", :class => 'add-icon',:id=>"dream" %></p>
-    </h3>
+  <% if @stream_items.empty? %>
+    <p><%= t('stream.where_activity_appear') %></p>
+    <p><em><%= t('stream.nothing_to_show') %></em></p>
+  <% end %>
 
-    <h3>想去那里
-      <p style="float: right"><%= link_to '我想去', "#", :class => 'add-icon',:id=>"i_want_to_go" %></p>
-    </h3>
-    <table>
-      <tr>
-        <th>day</th>
-        <th>address</th>
-      </tr>
-
-      <% @plans.each do |plan| %>
-        <tr>
-          <th><%= plan.day.strftime("%y-%M-%d")%></th>
-          <th><%= link_to plan.address,"#" %></th>
-          <td><%= link_to 'Edit', edit_plan_path(plan) %></td>
-          <td><%= link_to 'Destroy', plan, :confirm => 'Are you sure?', :method => :delete %></td>
-        </tr>
-      <% end %>
-    </table>
-
-
-  </div>
-
-  <div class= 'profile-right'>
-    <div class='tab_profile'>
-      <ul class="tabs">
-        <li class = "li_php"><a href="#"><%= t('people.php') %></a></li>
-        <li class = "li_profile"><a href="#"><%= t('people.profile') %></a></li>
-        <li class = "li_group"><a href="#">我的小组</a></li>
-        <li class = "li_profile"><a href="#">我的地点</a></li>
-        <li class = "li_profile"><a href="#">我的轨迹</a></li>
-      </ul>
-    </div>
-    <br/>
-    <div class="panes">
-      <%= render_cell :people,:show_php,:person=>@person,:logged_in =>@logged_in,:stream_items=>@stream_items%>
-      <%= render_cell :people,:profile,:person=>@person,:logged_in =>@logged_in,:verses=>@verses%>
-      <%= render_cell :people,:group,:person=>@person,:logged_in =>@logged_in%>
-      <%= render_cell :people,:place,:person=>@person,:logged_in =>@logged_in%>
-      <%= render_cell :people,:locus,:person=>@person,:logged_in =>@logged_in,:day=>Time.new.strftime("%Y/%m/%d")%>
-    </div>
-  </div>
 </div>
-
-
-<!--我想去窗口 -->
-<%= render_cell :common, :i_want_go%>
-<!--我要活动窗口 -->
-<%= render_cell :common,:activity,:logged_in=>@logged_in   %>
-<!--我要活动窗口 -->
-<%= render_cell :common,:dream   %>
-
-<script type="text/javascript">
-  $(document).ready(function() {
-    $("ul.tabs").tabs("div.panes > div.object"); 
-  });
-
-</script>
+<%=link_to "继续查看",stream_path(:page=>2),:remote=>true,:id=>"show_next"%> 
+<div id="show_no_stream_msg"></div>
+</div>

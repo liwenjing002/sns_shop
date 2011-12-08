@@ -24,8 +24,9 @@ class CommonCell < Cell::Rails
     render
   end
 
-  def share
+  def tool_bar
     @logged_in = options[:logged_in]
+    @person = options[:person]
     render
   end
   

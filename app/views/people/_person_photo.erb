@@ -1,17 +1,29 @@
 <div class="profile-pic">
   <% if @person.photo.exists? %>
-    <%= image_tag(@person.photo.url(:profile), :alt => @person.name) %>
+    <%= image_tag(@person.photo.url(:profile), :alt => @person.name,:class=>"profile-pic-img") %>
   <% elsif me? and params[:controller] == 'people' and params[:action] == 'show' %>
     <div class="temp_pic silhouette-<%= @person.gender.to_s == 'Female' ? 'woman' : 'man' %>" >
       <span class="span_link">
         <input type="file"  id ="fileToUpload_people" name ="picture" onchange="profile_pic_Change(this.value)"/>
       </span>        
-      <%=image_tag("loading.gif",:id=>"loading",:style=>"display:none",:height => '30')%>
+      <%=image_tag("loading.gif",:id=>"loading",:class=>"load_img",:style=>"display:none",:height => '30')%>
 
     </div>
   <% else %>
     <div class="silhouette-<%= @person.gender.to_s == 'Female' ? 'woman' : 'man' %>"></div>
   <% end %>
+    <div style="margin-bottom:5px">
+    <span style="float:left"><%= @person.name %></span>
+    <span style="float:right">
+     <% if @logged_in.friend? @person %>
+     <%= link_to "解除好友关系", person_friend_path(@logged_in, @person), :method => 'delete', :confirm => t('are_you_sure'), :class => 'delete-icon' %>
+    <% elsif @logged_in.can_request_friendship_with?(@person) %>
+    <%= link_to "加为好友", person_friends_path(@logged_in, :friend_id => @person), :remote => true, :method => :post, :confirm => t('friends.add_friend_are_you_sure'), :class => 'add-icon', :id => "add_friend_#{@person.id}" %>
+    <% elsif @logged_in.friendship_waiting_on? @person %>
+     <em><%= t('friends.friend_request_pending') %></em>
+    <% end %>
+    </span>
+</div>
 </div>
 
 

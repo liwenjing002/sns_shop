@@ -852,9 +852,9 @@ zh:
     create: 创建帐户
     date_format: 为MM / DD / YYYY的格式
     description: 说明
-    email_not_found: 该电子邮件地址无法找到我们的制度。如果你有另一个地址，然后再试一次。
+    email_not_found: 该邮件地址没有在我们网站注册，请<a href ='/account/new?email=true' >重新输入邮件地址</a>。
     enter_code: 输入代码
-    enter_your_email: 输入您的电子邮件地址，然后点击下面的按钮。如果我们对文件的地址，电子邮件将被发送给它允许您验证自己，进入这个网站。
+    enter_your_email: 输入您的电子邮件地址，然后点击下面的按钮。如果您已经注册,我们将向您发送一封邮件，验证您的身份。
     fill_required_fields: 请填写所有必填字段。
     gender: 性别
     I_am_this_person: 我这个人。
@@ -874,22 +874,22 @@ zh:
     text_messaging_fees: 短信费用，均可申请。
     there_was_an_error: 对不起。有一个错误。如果你要求劳工局做出改变，它可能只是还没有结束呢。请稍后再试。
     this_site_doesnt_allow_signup: 本网站不允许人们进行注册。相反，您必须验证您已存在的帐户信息或联系%} {office_phone。
-    type_your_email: 在这里输入您的电子邮件地址
+    type_your_email: 在这里 ↓= =↓ 输入您的电子邮件地址
     type_your_mobile: 输入您的手机号码在这里
     uses: 用途
     verification_email_sent: 验证邮件已发送。请检查您的电子邮件并在邮件中收到的指示。 （您可能需要等待电子邮件到达一两分钟。）
     verification_message_sent: 验证邮件已发送。请检查您的手机，并输入你的代码接收。
     verify: 验证帐户
     verify_email: 验证电子邮件
-    verify_by_email: 通过电子邮件验证。
-    verify_by_email_message: 我们向您发送一封电子邮件，你点击里面的链接，你就大功告成了。
+    verify_by_email: 发送验证邮件。
+    verify_by_email_message: 我们会向您发送一封电子邮件,您点击（用力～～）里面的链接就可以啦！,。
     verify_by_phone: 通过手机验证。
     verify_by_phone_description_html: 输入您的手机号码，请选择您的运营商，然后点击下面的按钮。如果我们对文件的数量，将文字信息发送给它允许您验证自己，进入这个网站。 <strong>文字信息速率可能会收取您的运营商。 <span class=very-strong>不要启动此验证过程，直到你知道你将收取接收文字信息！</跨度> </强“
     verify_by_phone_message: 我们给你发短信，你输入所包含的代码，你就大功告成了。
     verify_by_birthday: 由生日验证。
     verify_by_birthday_message: 这些意见进行审查一个真实的人，可能需要数天才能获得批准。
     verify_mobile: 验证手机
-    verify_who_you_are: 首先，我们需要验证你是谁你说你是。请选择下列选项之一，以验证您的身份。你只需要做这一次，而且只需要几分钟。
+    verify_who_you_are: 如果您已经注册，但没有验证账户或者没有收到验证账户邮件，请进行点击以下链接发送验证邮件！
     wrong_code: 你输入了错误的代码。
     you_use: 您使用
     your_birthday: 生日与新年（必需）
@@ -1484,6 +1484,8 @@ zh:
     MSN: MSN
     birthday: 生日
     gender: 性别
+    Male: 男生
+    Female: 女生
     something_hide: 一些信息被设置隐藏，请加好友或联系TA
     twitter: twitter
     weibo : 新浪围脖
@@ -1891,7 +1893,7 @@ zh:
     sign_in: 登录
     sign_in_error_html: 有一个错误签名你进来请<a href=%{url}>再试一次</a>。
     sign_out: 登出
-    sign_up_or_sign_in_html: <a href=%{url}>注册</a>一个帐户，如果你没有账户的话
+    sign_up_or_sign_in_html: <a href=%{url}>注册</a>一个帐户
     forget_password_html: <a href=%{url}>找回密码</a>或者
     there_are_no_users_in_the_system: 有在系统中没有用户。
 

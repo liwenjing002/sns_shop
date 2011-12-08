@@ -65,7 +65,7 @@ module ApplicationHelper
 
   def javascript_tags
     #    javascript_include_tag('jquery-1.4.4.min', 'jquery-ui-1.8.7.custom.min', 'jquery.qtip-1.0.0-rc3.min.js', 'rails', 'application', :cache => true) + "\n" + \
-    javascript_include_tag(:defaults, 'jquery.qtip-1.0.0-rc3.min.js', 'application','extend/jquery.simplemodal','extend/jquery.tools.min','extend/some_function') + "\n" + \
+    javascript_include_tag(:defaults, 'jquery.qtip-1.0.0-rc3.min.js','jquery-ui-1.8.7.custom.min', 'application','extend/jquery.simplemodal','extend/jquery.tools.min','extend/some_function') + "\n" + \
       csrf_meta_tag + "\n" + \
       "<!--[if lte IE 8]>\n".html_safe + \
       javascript_include_tag('ie') + "\n" + \
@@ -119,11 +119,7 @@ module ApplicationHelper
 
 
 
-  def search_form
-    form_tag(search_path, :method => :get) do
-      text_field_tag('name', nil, :id => 'search_name', :size => 20, :placeholder => t('search.search_by_name'))
-    end
-  end
+
 
   def notice
     if flash[:warning] or flash[:notice]
@@ -335,77 +331,89 @@ module ApplicationHelper
     end
   end
 
-  
-  def is_blank *args
-    args.each do |arg|
-      if arg==nil or arg == ""
-        return true
-      else
-        next
-      end
-    end
-    false
-  end
-  
-  def is_blank_zero *args
-    args.each do |arg|
-      if arg==nil or arg == "" or arg.to_f  == 0
-        return true
-      else
-        next
-      end
-    end
-    false
-  end
-
-
-  #获取头像图片
-  def get_thunbnail_html person
-    if person and person.photo.exists?
-      image_tag person.photo.url(:tn), :alt => person.name, :class => 'icon thumbnail'
+  def ta people
+    if people == @logged_in
+      "你"
     else
-      if person and person.gender.to_s == 'Female'
-        image_tag 'clean/womanoutline.tn.png', :alt => person.try(:name), :class => 'icon thumbnail'
+      if people.gender =="Male"
+        "他"
       else
-        image_tag 'clean/manoutline.tn.png', :alt => person.try(:name), :class => 'icon thumbnail'
+        "她"
       end
     end
-  end
-
+end
   
+  
+def is_blank *args
+  args.each do |arg|
+    if arg==nil or arg == ""
+      return true
+    else
+      next
+    end
+  end
+  false
+end
+  
+def is_blank_zero *args
+  args.each do |arg|
+    if arg==nil or arg == "" or arg.to_f  == 0
+      return true
+    else
+      next
+    end
+  end
+  false
+end
 
-  class << self
-    include ApplicationHelper
+
+#获取头像图片
+def get_thunbnail_html person
+  if person and person.photo.exists?
+    image_tag person.photo.url(:tn), :alt => person.name, :class => 'icon thumbnail'
+  else
+    if person and person.gender.to_s == 'Female'
+      image_tag 'clean/womanoutline.tn.png', :alt => person.try(:name), :class => 'icon thumbnail'
+    else
+      image_tag 'clean/manoutline.tn.png', :alt => person.try(:name), :class => 'icon thumbnail'
+    end
   end
 end
 
+  
+
+class << self
+  include ApplicationHelper
+end
+end
+
 module ActionView
-  module Helpers
-    module FormHelper
-      def phone_field(object_name, method, options = {})
-        options[:value] = format_phone(options[:object][method], mobile=(method.to_s =~ /mobile/))
-        options[:size] ||= 15
-        InstanceTag.new(object_name, method, self, options.delete(:object)).to_input_field_tag("text", options)
-      end
-    end
-    class FormBuilder
-      def phone_field(method, options = {})
-        @template.phone_field(@object_name, method, options.merge(:object => @object))
-      end
-      def date_field(method, options = {})
-        options[:value] = self.object[method].to_s(:date) rescue ''
-        options[:size] ||= 12
-        text_field(method, options)
-      end
-    end
-    module FormTagHelper
-      def date_field_tag(name, value = nil, options = {})
-        value = value.to_s(:date) rescue ''
-        options[:size] ||= 12
-        text_field_tag(name, value, options)
-      end
+module Helpers
+  module FormHelper
+    def phone_field(object_name, method, options = {})
+      options[:value] = format_phone(options[:object][method], mobile=(method.to_s =~ /mobile/))
+      options[:size] ||= 15
+      InstanceTag.new(object_name, method, self, options.delete(:object)).to_input_field_tag("text", options)
     end
   end
+  class FormBuilder
+    def phone_field(method, options = {})
+      @template.phone_field(@object_name, method, options.merge(:object => @object))
+    end
+    def date_field(method, options = {})
+      options[:value] = self.object[method].to_s(:date) rescue ''
+      options[:size] ||= 12
+      text_field(method, options)
+    end
+  end
+  module FormTagHelper
+    def date_field_tag(name, value = nil, options = {})
+      value = value.to_s(:date) rescue ''
+      options[:size] ||= 12
+      text_field_tag(name, value, options)
+    end
+  end
+end
   
 
   

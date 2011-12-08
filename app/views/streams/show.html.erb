@@ -1,9 +1,9 @@
 <% content_for :head do %>
   <%= stylesheet_link_tag  "osx" %>
-  <%#= stylesheet_link_tag  "ueditor/themes/default/ueditor" %>
+  <%= stylesheet_link_tag  "ueditor/themes/default/ueditor" %>
   <%= javascript_include_tag "extend/ui" %>
-  <%#= javascript_include_tag "ueditor/editor_config" %>
-  <%#= javascript_include_tag "ueditor/editor_all" %>
+  <%= javascript_include_tag "ueditor/editor_config" %>
+  <%= javascript_include_tag "ueditor/editor_all" %>
 <%end%>
 <% if @has_friendship_requests %>
   <div class="highlight">
@@ -14,34 +14,42 @@
   <div class="highlight">
     <%= t('friends.you_have_activity_invite_html', :url => person_activities_path(@person)) %>
   </div>
-<% end %>
+<% end %> 
 
 
 <%#*地图%>
-<%# content_for :top do %>
+<% content_for :top do %>
+
   <%#= render :partial => 'maps/map',
-    :locals =>{:map => @person.map,:person=>@person,:logged_in=>@logged_in} %>
-<%#end%>
+  :locals =>{:map => @person.map,:person=>@person,:logged_in=>@logged_in} %>
+  <div class="profile-left">
+      <%= render :partial => 'people/person_photo' %>
+  </div>
+  <div class="profile-right">
+    
+  <%#*分享栏%>
+      <%=render_cell :common,:tool_bar,:logged_in=>@logged_in,:person=>@person%>
+   
+  </div>
+<%end%>
 
 <% content_for :sidebar do %>
+ 
 
-  <%#*分享栏%>
-  <h3 class="double-margin-top">我要二一下</h3>
-  <p>分享你的心情，照片，视频，二二身体好，二二更健康</p>
-  <%=render_cell :common,:share,:logged_in=>@logged_in%>
+<%#= render :partial => 'people/my_friends' %>
+    <%#= render :partial => 'people/albums_manager' %>
 
   <%#*头像墙%>
-  <%@peoples = Person.find(:all,:limit=>35)%>
-  <h3 class="double-margin-top">人物头像墙</h3>
-  <div id ="people_pic_wall">
-    <%@peoples.each do |people|%>
-      <%=link_to   get_thunbnail_html(people),people,:target=>"_blank"%>
-    <%end%>
-  </div>
-  地点墙
+<%@peoples = Person.find(:all,:limit=>35)%>
+    <h3 class="double-margin-top">推荐好友</h3>
+    <div id ="people_pic_wall">
+      <%@peoples.each do |people|%>
+        <%=link_to   get_thunbnail_html(people),people,:target=>"_blank"%>
+      <%end%>
+    </div>
+  <%#*地点墙%>
   <%    @places = Place.find(:all,:limit=>35)%>
-  <h3 class="double-margin-top">地点墙
-  </h3>
+  <h3 class="double-margin-top">地点墙</h3>
   <div id ="place_pic_wall" >
     <%@places.each do |place|%>
       <% if  place and  place.picture %>
@@ -65,8 +73,10 @@
 
 <% end %>
 
-
+    <div class="content" type="stream">    
 <%#*内容墙%>
+<h3 class="double-margin-top">动态
+</h3>
 <div class="stream-items" id="stream_item_wall">
   <%= render :partial => 'streams/stream_item', :as => :stream_item,
     :collection => @stream_items,
@@ -84,3 +94,4 @@
 </div>
 <%=link_to "继续查看",stream_path(:page=>2),:remote=>true,:id=>"show_next"%> 
 <div id="show_no_stream_msg"></div>
+</div>

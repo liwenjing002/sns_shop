@@ -3,7 +3,7 @@ class StylesController < ApplicationController
   skip_before_filter :authenticate_user, :only => :show
   before_filter :only_admins, :only => :edit
 
-  caches_action :show, :cache_path => Proc.new { |c| "style#{c.params[:browser] ? ('.'+c.params[:browser]) : ''}?id=#{Site.current.id}" }
+#  caches_action :show, :cache_path => Proc.new { |c| "style#{c.params[:browser] ? ('.'+c.params[:browser]) : ''}?id=#{Site.current.id}" }
 
   def show
     if params[:browser] == 'ie'
@@ -32,7 +32,7 @@ class StylesController < ApplicationController
       :cache  => true,
       :style  => :compressed
     ).render
-    expires_in(1.year)
+#    expires_in(1.year)
     render :text => css, :type => 'text/css'
   end
 

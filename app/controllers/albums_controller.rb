@@ -1,5 +1,5 @@
 class AlbumsController < ApplicationController
-
+  respond_to :html,:js
   cache_sweeper :person_sweeper,  :only => %w(create update destroy)
 
   def index
@@ -17,15 +17,13 @@ class AlbumsController < ApplicationController
       else
         render :text => t('not_authorized'), :layout => true, :status => 401
       end
-    else
-      @albums = (
-        Album.find_all_by_group_id_and_is_public(nil, true, :order => 'created_at desc') +
-        Album.all(:conditions => ["person_id in (?)", [@logged_in.id] + @logged_in.all_friend_and_groupy_ids])
-      ).uniq.sort_by(&:name)
     end
-    respond_to do |format|
-      format.html
-      format.js { render :text => @albums.to_json }
+     respond_to do |format|
+        if request.xhr?  
+           format.js
+        else
+           format.html # index.html.erb
+      end
     end
   end
 

@@ -6,11 +6,6 @@ class UpdateAllStreamItems < ActiveRecord::Migration
       if defined?(Recipe)
         Recipe.all.each      { |o| o.create_as_stream_item }
       end
-<<<<<<< HEAD
-
-=======
->>>>>>> 28f1eceba2fca409599bcbaf2a0c8324caa0ae6d
-      NewsItem.all.each    { |o| o.create_as_stream_item }
       Message.all(
         :conditions => 'person_id is not null and to_person_id is null and (wall_id is not null or group_id is not null)'
       ).each do |message|

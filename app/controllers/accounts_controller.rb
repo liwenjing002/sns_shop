@@ -24,7 +24,7 @@ class AccountsController < ApplicationController
   end
 
   def create
-    if params[:person] and Setting.get(:features, :sign_up) and params[:phone].blank? # phone is to catch bots (hidden field)
+   if params[:person] and Setting.get(:features, :sign_up) 
       if params[:person][:email].to_s.any?
         if Person.find_by_email(params[:person][:email])
           params[:email] = params[:person][:email]
@@ -33,7 +33,6 @@ class AccountsController < ApplicationController
           attributes = {:can_sign_in => false, :full_access => false, :visible_to_everyone => false}
           attributes.merge! params[:person].reject { |k, v| !%w(email first_name last_name gender birthday).include?(k) }
           @person = Person.new(attributes)
-          if @person.adult?
             if @person.save
               if Setting.get(:features, :sign_up_approval_email).to_s.any?
                 @person.save
@@ -47,10 +46,6 @@ class AccountsController < ApplicationController
             else
               render :action => 'new'
             end
-          else
-            @person.errors.add(:base, t('accounts.must_be_of_age', :years => Setting.get(:system, :adult_age)))
-            render :action => 'new'
-          end
         end
       else
         @person = Person.new
@@ -74,7 +69,7 @@ class AccountsController < ApplicationController
 
   def create_by_email
     person = Person.find_by_email(params[:email])
-    if person or address
+    if person
       if person and person.can_sign_in?
         v = Verification.create :email => params[:email],:verified=>true
         if v.errors.any?
