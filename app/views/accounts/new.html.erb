@@ -18,7 +18,7 @@
 
       <%= form.label :gender, t('accounts.gender') %>         <%= form.select :gender, [[t('search.male'), 'Male'], [t('search.female'), 'Female']] %><br/>
       <%= form.label :birthday, t('accounts.birthday') %>     <%= form.date_field :birthday %><br/>
-      <%= form.label :email, t('people.address') %>             <%= form.text_field :postition,:id=>'postition' ,:placeholder =>"输入您所在城市或区县"%><br/>
+      <%= form.label :email, t('people.address') %>             <%= form.text_field :city,:id=>'postition' ,:placeholder =>"输入您所在城市或区县"%><br/>
 
      <div class="map_popup" id="cityList" style="display:none;">
       <div class="popup_main">
@@ -49,46 +49,6 @@
   $('#person_birthday').datepicker({changeYear:true, yearRange:'1900:2025', dateFormat:'<%= datepicker_format %>'});
 
   
-// 创建CityList对象，并放在citylist_container节点内
-var myCl = new BMapLib.CityList({container : "citylist_container"});
-
-  $("postition").blur(function(){
-    var cl = document.getElementById("cityList");
-	if (cl.style.display == "none") {
-		cl.style.display = "";
-	} else {
-		cl.style.display = "none";
-	}
-  })
-// 给城市点击时，添加相关操作
-myCl.addEventListener("cityclick", function(e) {
-	// 修改当前城市显示
-	document.getElementById("postition").value = e.name;
-
-	// 点击后隐藏城市列表
-	document.getElementById("cityList").style.display = "none";
-});
-
-// 给“更换城市”链接添加点击操作
-document.getElementById("postition").onclick = function() {
-	var cl = document.getElementById("cityList");
-	if (cl.style.display == "none") {
-		cl.style.display = "";
-	} else {
-		cl.style.display = "none";
-	}	
-};
-
-// 给城市列表上的关闭按钮添加点击操作
-document.getElementById("popup_close").onclick = function() {
-	var cl = document.getElementById("cityList");
-	if (cl.style.display == "none") {
-		cl.style.display = "";
-	} else {
-		cl.style.display = "none";
-	}	
-};
-
 
 
 </script>

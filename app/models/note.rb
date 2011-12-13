@@ -41,7 +41,7 @@ class Note < ActiveRecord::Base
       :streamable_type => 'Note',
       :streamable_id   => id,
       :created_at      => created_at,
-      :shared          => group_id || person.share_activity? ? true : false
+      :shared          =>  true
     )
     self.stream_item_id = item.id
       self.save

@@ -2,8 +2,8 @@ class Person < ActiveRecord::Base
   acts_as_taggable
   MAX_TO_BATCH_AT_A_TIME = 50
 
-  BASICS = %w(first_name last_name suffix mobile_phone work_phone fax city state zip birthday anniversary gender address1 address2 city state zip)
-  EXTRAS = %w(description email alternate_email website business_category business_name business_description business_phone business_email business_website business_address activities interests music tv_shows movies books quotes about testimony twitter_account)
+  BASICS = %w(first_name city state zip birthday anniversary gender address1 address2 city state zip)
+  EXTRAS = %w(description email alternate_email  activities interests music tv_shows movies books quotes about testimony twitter_account)
 
   cattr_accessor :logged_in # set in addition to @logged_in (for use by Notifier and other models)
 
@@ -44,7 +44,7 @@ class Person < ActiveRecord::Base
   has_many :friendships
   has_many :friends, :class_name => 'Person', :through => :friendships do
     def thumbnails
-      self.all(:select => 'people.id, people.first_name, people.last_name, people.suffix, people.gender, people.photo_file_name, people.photo_content_type, people.photo_fingerprint', :order => 'people.last_name, people.first_name')
+      self.all(:select => 'people.id, people.first_name,  people.gender, people.photo_file_name, people.photo_content_type, people.photo_fingerprint', :order => 'people.first_name')
     end
   end
   has_many :friendship_requests
@@ -63,11 +63,11 @@ class Person < ActiveRecord::Base
   
   scope_by_site_id
 
-  attr_accessible :gender, :first_name,  :mobile_phone, :work_phone, :fax, :birthday, :email, :website, :activities, :interests, :music, :tv_shows, :movies, :books, :quotes, :about, :testimony, :share_address, :share_home_phone, :share_mobile_phone, :share_work_phone, :share_fax, :share_email, :share_birthday, :share_anniversary, :business_name, :business_description, :business_phone, :business_email, :business_website, :business_category, :suffx, :anniversary, :alternate_email, :get_wall_email, :wall_enabled, :messages_enabled, :business_address, :visible, :friends_enabled, :share_activity, :twitter_account
-  attr_accessible :classes, :shepherd, :mail_group, :legacy_id, :account_frozen, :member, :staff, :elder, :deacon, :can_sign_in, :visible_to_everyone, :visible_on_printed_directory, :full_access, :legacy_family_id, :child, :custom_type, :custom_fields, :medical_notes, :if => Proc.new { Person.logged_in and Person.logged_in.admin?(:edit_profiles) }
+  attr_accessible :gender, :first_name, :birthday, :email, :website, :activities, :interests, :music, :tv_shows, :movies, :books, :quotes, :about, :testimony, :share_email, :share_birthday, :share_anniversary,  :anniversary, :alternate_email, :get_wall_email, :wall_enabled, :messages_enabled, :business_address, :visible, :friends_enabled, :share_activity, :twitter_account
+  attr_accessible :classes, :shepherd, :mail_group, :legacy_id, :account_frozen, :member, :staff, :elder, :deacon, :can_sign_in, :visible_to_everyone, :visible_on_printed_directory, :full_access, :legacy_family_id,   :custom_type, :custom_fields, :medical_notes, :if => Proc.new { Person.logged_in and Person.logged_in.admin?(:edit_profiles) }
   attr_accessible :id, :sequence, :can_pick_up, :cannot_pick_up, :family_id, :if => Proc.new { l = Person.logged_in and l.admin?(:edit_profiles) and l.admin?(:import_data) and Person.import_in_progress }
 
-  scope :unsynced_to_donortools, lambda { {:conditions => ["synced_to_donortools = ? and deleted = ? and (child = ? or birthday <= ?)", false, false, false, 18.years.ago]} }
+  scope :unsynced_to_donortools, lambda { {:conditions => ["synced_to_donortools = ? and deleted = ? and ( birthday <= ?)", false, false, false, 18.years.ago]} }
   scope :can_sign_in, :conditions => {:can_sign_in => true, :deleted => false}
 
   acts_as_password
@@ -82,34 +82,12 @@ class Person < ActiveRecord::Base
   validates_uniqueness_of :alternate_email, :allow_nil => true, :scope => [:site_id, :deleted], :unless => Proc.new { |p| p.deleted? }
   validates_uniqueness_of :feed_code, :allow_nil => true, :scope => :site_id
   validates_format_of :website, :allow_nil => true, :allow_blank => true, :with => /^https?\:\/\/.+/
-  validates_format_of :business_website, :allow_nil => true, :allow_blank => true, :with => /^https?\:\/\/.+/
-  validates_format_of :business_email, :allow_nil => true, :allow_blank => true, :with => VALID_EMAIL_ADDRESS
   validates_format_of :alternate_email, :allow_nil => true, :allow_blank => true, :with => VALID_EMAIL_ADDRESS
   validates_inclusion_of :gender, :in => %w(Male Female), :allow_nil => true
   validates_attachment_size :photo, :less_than => PAPERCLIP_PHOTO_MAX_SIZE
   validates_attachment_content_type :photo, :content_type => PAPERCLIP_PHOTO_CONTENT_TYPES
 
-  # validate that an email address is unique to one family (family members may share an email address)
-  # validate that an email address is properly formatted
-  validates_each [:email, :child] do |record, attribute, value|
-    if attribute.to_s == 'email' and value.to_s.any? and not record.deleted?
-      if Person.count(:conditions => ["#{sql_lcase('email')} = ?  and id != ? and deleted = ?", value.downcase,  record.id, false]) > 0
-        record.errors.add attribute, :taken
-      end
-      if value.to_s.strip !~ VALID_EMAIL_ADDRESS
-        record.errors.add attribute, :invalid
-      end
-    elsif attribute.to_s == 'child' and not record.deleted?
-      y = record.years_of_age
-      if value == true and y and y >= 13
-        record.errors.add attribute, :cannot_be_yes
-      elsif value == false and y and y < 13
-        record.errors.add attribute, :cannot_be_no
-      elsif value.nil? and y.nil?
-        record.errors.add attribute, :blank
-      end
-    end
-  end
+  
 
 
 
@@ -122,10 +100,8 @@ class Person < ActiveRecord::Base
     @name ||= begin
       if deleted?
         "(removed person)"
-      elsif suffix
-        "#{first_name} #{last_name}, #{suffix}" rescue '???'
       else
-        "#{first_name} #{last_name}" rescue '???'
+        "#{first_name}" rescue '???'
       end
     end
   end
@@ -294,7 +270,7 @@ class Person < ActiveRecord::Base
   end
 
   def can_sign_in?
-    read_attribute(:can_sign_in) and adult_or_consent?
+    read_attribute(:can_sign_in) 
   end
 
   def messages_enabled?
@@ -310,13 +286,11 @@ class Person < ActiveRecord::Base
       b = Date.parse_in_locale(b.to_s)
     end
     write_attribute(:birthday, b)
-    if y = years_of_age
-      self.child = nil
-    end
+    
   end
 
   def at_least?(age) # assumes you won't pass in anything over 18
-    (y = years_of_age and y >= age) or child == false
+    (y = years_of_age and y >= age) 
   end
 
   def age
@@ -484,58 +458,23 @@ class Person < ActiveRecord::Base
       "https://www.google.com/calendar/embed?showTitle=0&amp;showDate=1&amp;showPrint=1&amp;showTz=1&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;#{src}&amp;ctz=#{Time.zone.tzinfo.name}"
     end
   end
-
-  #查询所有分享，分全部跟只查询自己的 分享两种
-  def shared_stream_items(page,per_page,is_self=nil)
-    enabled_types = []
-    enabled_types << 'Message' # wall posts and group posts (not personal messages)
-    enabled_types << 'NewsItem'    if Setting.get(:features, :news_page   )
-    enabled_types << 'Publication' if Setting.get(:features, :publications)
-    enabled_types << 'Verse'       if Setting.get(:features, :verses      )
-    enabled_types << 'Album'       if Setting.get(:features, :pictures    )
-    enabled_types << 'Note'        if Setting.get(:features, :notes       )
-    enabled_types << 'PrayerRequest'
-    enabled_types << 'Place'
-    enabled_types << 'Activity'
-    enabled_types << 'PlaceShare'
-     enabled_types << 'Video'
-    friend_ids = all_friend_and_groupy_ids
-    place_ids = all_places_ids
-    group_ids = groups.find_all_by_hidden(false, :select => 'groups.id').map { |g| g.id }
-    group_ids = [0] unless group_ids.any?
-    if !is_self
-      relation = StreamItem.scoped 
-      relation.where(:streamable_type => enabled_types)
-      relation.where(:shared => true)
-      relation.where("(group_id in (:group_ids) or" +
-          " (group_id is null and wall_id is null and person_id in (:friend_ids)) or" +
-          " person_id = :id or" +
-          " streamable_type in ('NewsItem', 'Publication')" +
-          ")", :group_ids => group_ids, :friend_ids => friend_ids, :id => id,:place_ids=>place_ids) 
-       relation.order('created_at desc').includes(:person, :group)
-       relation.paginate :page => page||1, :per_page=>per_page||10
+  
+  
+  def all_stream_itmes(page,per_page,is_self=nil)
+    if is_self
+      group_ids = groups.find_all_by_hidden(false, :select => 'groups.id').map { |g| g.id }
+      relation = StreamItem.scoped.where(:shared => true) 
+      relation.where("(group_id = null) or group_id in (:group_ids)",:group_ids => group_ids ) 
     else
-      relation = StreamItem.scoped \
-        .where(:streamable_type => enabled_types) \
-        .where(:shared => true) \
-        .where(" person_id = :id ", :id => id) \
-        .order('created_at desc').includes(:person, :group).paginate :page => page||1,
-                            :per_page=>per_page
+      relation = StreamItem.scoped.where(:shared => true) 
+      relation.where("person_id = :id",:id => id)
     end
-    relation.to_a.tap do |stream_items|
-      # do our own eager loading here...
-      comment_people_ids = stream_items.map { |s| Array(s.context['comments']).map { |c| c['person_id'] } }.flatten
-      comment_people = Person.where(:id => comment_people_ids) \
-        .select('first_name, last_name, suffix, gender, id, updated_at, photo_file_name, photo_fingerprint') \
-        .inject({}) { |h, p| h[p.id] = p; h } # as a hash with id as the key
-      stream_items.each do |stream_item|
-        Array(stream_item.context['comments']).each do |comment|
-          comment['person'] = comment_people[comment['person_id']]
-        end
-        stream_item.readonly!
-      end
-    end
+    relation.order('created_at desc').includes(:person, :group).paginate :page => page||1,
+      :per_page=>per_page
   end
+  
+
+  
 
   def show_attribute_to?(attribute, who)
     send(attribute).to_s.strip.any? 

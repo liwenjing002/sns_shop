@@ -2,12 +2,26 @@ class PicturesController < ApplicationController
   respond_to :html,:js
   def index
     @album = Album.find(params[:album_id])
-    @pictures = @album.pictures.paginate(:order => 'id', :page => params[:page])
+    @pictures = @album.pictures.paginate(:order => 'id', :page => params[:page]||1)
+     respond_to do |format|
+        if request.xhr?  
+           format.js
+        else
+           format.html # index.html.erb
+      end
+    end
   end
 
   def show
     @album = Album.find(params[:album_id])
     @picture = Picture.find(params[:id])
+     respond_to do |format|
+        if request.xhr?  
+           format.js
+        else
+           format.html # index.html.erb
+      end
+     end
   end
 
   def next

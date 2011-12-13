@@ -1,0 +1,6 @@
+if ($(".content").attr("type")!= "edit_profile"){
+$(".content").attr("type","edit_profile") ;
+$(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar");
+$(".content").html("<h3 class='double-margin-top'>编辑个人信息</h3><div id='edit_profile'></div>")
+$("#edit_profile").html("<%= escape_javascript(render :partial => 'form') %>");
+}

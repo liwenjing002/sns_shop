@@ -55,7 +55,7 @@ class Picture < ActiveRecord::Base
         :streamable_type => 'Album',
         :streamable_id   => album_id,
         :created_at      => created_at,
-        :shared          => album.group_id || person.share_activity? ? true : false
+        :shared          => true 
       )
       self.stream_item_id = item.id
       self.save

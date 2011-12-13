@@ -1,0 +1,13 @@
+<%= will_paginate @pictures %>
+
+<% @pictures.each do |picture| %>
+  <%= link_to image_tag(picture.photo.url(:medium), :alt => t('pictures.click_to_enlarge'), :class => 'picture'),
+      [@album, picture], :title => t('pictures.click_to_enlarge'),:remote=>true %>
+<% end %>
+
+
+
+
+<br clear="both"/>
+
+<%= will_paginate @pictures %>

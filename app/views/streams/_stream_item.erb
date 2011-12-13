@@ -11,7 +11,7 @@
   <div class="stream-item-body">
     <% if stream_item.title  %>
       <h3>
-        <%= link_to stream_item.title+t(stream_item.streamable_type), stream_item %>
+        <%= link_to stream_item.title+t(stream_item.streamable_type), stream_item,:remote=>true %>
       </h3>
     <% end %>
     <div class="nowrap stream-item-timestamp">

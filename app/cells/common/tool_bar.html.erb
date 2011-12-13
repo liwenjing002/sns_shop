@@ -1,3 +1,4 @@
+<div id="html_person_id" value="<%=@person.id%>">
 <%# 分享状态，照片，视频 %>
 <div class="tool_bar">
   <ul class="share-details share-selector">
@@ -11,7 +12,7 @@
   <div class = "p_info tool_bar_div">
     <div class ="info">
     <p>
-      <%= "#{ta(@person)}是"+t("people.#{@person.gender}")  %>
+      <%= "#{ta(@person)}是"+ t("people.#{@person.gender}") if @person.gender %>
       <%="来自"+ @person.home_address  if @person.home_address and @person.home_address.to_s.any?%>
       <%= "生日在"+@person.birthday.strftime("%Y-%m-%d") if @person.birthday.to_s.any? %>
     </p>
@@ -21,29 +22,14 @@
     
     <% if @person.qq.to_s.any?  or @person.msn.to_s.any? or @person.weibo.to_s.any? %>
     <p>
-      联系<%=ta(@person)%>, <%= "qq: " +@person.qq  if @person.qq%><%= "msn:"+ @person.msn if @person.msn %><%=  "微博: "+ @person.weibo if @person.weibo%>
+      联系方式, <%= "qq: " +@person.qq  if @person.qq%><%= "msn:"+ @person.msn if @person.msn %><%=  "微博: "+ @person.weibo if @person.weibo%>
     </p>
      <%end%>
-    
-    <%if   @person.love_activities.to_s.any? or
-            @person.interests.to_s.any? or
-            @person.books.to_s.any? or
-            @person.music.to_s.any? or
-            @person.movies.to_s.any? or
-            @person.tv_shows.to_s.any? %>
-    <%=ta(@person)+ "喜欢"%>
-    <%= preserve_breaks @person.love_activities+"(活动) / " if   @person.love_activities.to_s.any?%>
-    <%= preserve_breaks @person.interests+"(兴趣)/ " if @person.interests.to_s.any?%>
-    <%= preserve_breaks @person.books+"(书籍) /" if @person.books.to_s.any?%>
-    <%= preserve_breaks @person.music+"(音乐) / " if @person.music.to_s.any?%>
-    <%= preserve_breaks @person.movies+"(电影) / "  if @person.movies.to_s.any?%>
-    <%= preserve_breaks @person.tv_shows+"(电视节目) " if @person.tv_shows.to_s.any? %>
-  <%end%>  
     </div>
     
     <p>
     <% if @logged_in.can_edit?(@person) %>
-         <%= link_to t('people.edit.profile'), edit_person_path(@person), :class => 'edit-icon' %>
+         <%= link_to t('people.edit.profile'), edit_person_path(@person),:remote=>true, :class => 'edit-icon' %>
     <% end %>
       <%if @logged_in != @person%>
       <%= link_to "给ta发邮件", new_message_path(:to_person_id => @person), :class => 'email-icon' %>

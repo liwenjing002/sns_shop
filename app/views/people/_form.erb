@@ -1,15 +1,100 @@
 <%= form_for @person do |form| %>
   <div class="panes">
+    
+      <h3>头像</h3>
+      <div class="profile-pic">
+        <% if @person.photo.exists? %>
+          <%= image_tag(@person.photo.url(:profile), :alt => @person.name) %>
+        <% else %>
+          <div class="silhouette-<%= @person.gender.to_s == 'Female' ? 'woman' : 'man' %>"></div>
+        <% end %>
+      </div>
+      <p><%= t('people.select_file_to_upload') %><br/>
+        <input type="file"  id ="fileToUpload" name ="picture"/><br/>
+      </p>
+      <br/>
+       <span class="button" id="upload_pic" onclick="profile_ajaxFileUpload()">上传Person Photo</span>
+      <%=image_tag("loading.gif",:id=>"loading",:style=>"display:none",:height => '30')%>
+    
 
-    <%= render :partial => 'edit_photo' %>
+      <h3>基本信息</h3> 
+    <div id="basic">
+      <%= form.label :first_name, t('people.name') %>
+      <%= form.text_field :first_name, :size => 15 %>
+      <br/>
+      <%= form.label :description, t('accounts.description') %>
+      <%= form.text_field :description %><br/>
 
-    <%= render :partial => 'edit_basic' ,:locals => { :form => form}%>
+      <%= form.label :gender, t('accounts.gender') %>
+      <%= form.select :gender,[[t('search.male'), 'Male'], [t('search.female'), 'Female']] %><br/>
 
-    <%= render :partial => 'edit_about' ,:locals => { :form => form}%>
-    <%= render :partial => 'edit_address', :locals => {:form => form} %>
 
-    <%= render :partial => 'edit_business' ,:locals => { :form => form}%>
 
+      <%= form.label :city,       t('people.home_postition') %> 
+      <%= form.text_field :city,:id=>'postition' ,:placeholder =>"输入您所在城市"%>
+       <div class="map_popup" id="cityList" style="display:none;">
+      <div class="popup_main">
+        <div class="title">城市列表</div>
+        <div class="cityList" id="citylist_container"></div>
+        <button id="popup_close"></button>
+      </div>
+    </div>
+
+      <%= form.label :qq, t("people.QQ") %>
+      <%= form.text_field :qq %><br/>
+      <%= form.label :msn, t("people.MSN") %>
+      <%= form.text_field :msn %><br/>
+      <%= form.label :weibo, t("people.weibo") %>
+      <%= form.text_field :weibo %><br/>
+
+      <%= form.label :birthday, t('privacies.birthday') %>
+      <%= form.date_field :birthday %><br/>
+      <%= render :partial => 'edit_custom_fields' %>
+
+
+      <% if @logged_in.admin?(:edit_profiles) %>
+        <h3><%= t('people.person_type') %></h3>
+        <div class="form-field-hint"><%= t('people.edit.person_type_hint') %></div>
+        <%= form.check_box :member %> <%= form.label :member, t('search.member'), :class => 'inline' %><br/>
+     
+        <% if Setting.get(:features, :custom_person_type) %>
+          <br/>
+          <%= form.label :custom_type, 'Custom Type:', :class => 'inline' %>
+          <%= form.text_field :custom_type, :size => 10 %><div class="autocomplete" id="person_custom_type_auto_complete"></div>s
+        <% end %>
+      <%end%>
+
+    </div>
+
+
+
+
+      <h3>关于</h3>
+    <div id="about">
+
+      <div>
+        <label for="person_about"><%= t('people.tell_us_about_yourself') %>:</label>
+        <%= form.text_area :about, :rows => 10, :style => 'width:95%;' %><br/>
+        <label for="person_website"><%= t('people.website') %>:</label>
+        <%= form.text_field :website %>
+      </div>
+
+      <%= hidden_field_tag :anchor, 'favorites' %>
+      <label for="person_activities"><%= t('people.activities') %>:</label>
+      <%= form.text_area :love_activities, :rows => 4, :cols => 80 %>
+      <label for="person_interests"><%= t('people.interests') %>:</label>
+      <%= form.text_area :interests, :rows => 4, :cols => 80 %>
+      <label for="person_music"><%= t('people.music') %>:</label>
+      <%= form.text_area :music, :rows => 4, :cols => 80 %>
+      <label for="person_tv_shows"><%= t('people.tv_shows') %>:</label>
+      <%= form.text_area :tv_shows, :rows => 4, :cols => 80 %>
+      <label for="person_movies"><%= t('people.movies') %>:</label>
+      <%= form.text_area :movies, :rows => 4, :cols => 80 %>
+      <label for="person_books"><%= t('people.books') %>:</label>
+      <%= form.text_area :books, :rows => 4, :cols => 80 %>
+      <label for="person_quotes"><%= t('people.quotes') %>:</label>
+      <%= form.text_area :quotes, :rows => 4, :cols => 80 %>
+    </div>
 
     <p class="double-margin-top"><%= form.submit t('save_changes') %></p>
 
@@ -18,33 +103,38 @@
   </div>
 <% end %>
 <script type="text/javascript">
- 
-
-  $('#person_birthday, #person_anniversary').datepicker({changeYear:true, yearRange:'1900:2025', dateFormat:'<%= datepicker_format %>'});
-
-  $('#person_birthday').bind('keyup', function(){
-    var val = $(this).val();
-    if(val == '' || val.match(/1900/)) {
-      $('#child-selection').show();
-    } else {
-      $('#child-selection select').val('');
-      $('#child-selection').hide();
-    }
-  }).trigger('keyup');
-
-  changes_made = false;
-  $(':input').bind('change', function(){
-    changes_made = true;
-  });
-
-  $('form').submit(function(){ changes_made = false });
-
-  window.onbeforeunload = function() {
-    if(changes_made) return '<%= escape_javascript t('you_made_a_change_page') %>';
-  }
-
-
- 
+   getCity();
+   $('#person_birthday').datepicker({changeYear:true, yearRange:'1900:2025', dateFormat:'<%= datepicker_format %>'});
   
+  function profile_ajaxFileUpload(){
+    loading();//动态加载小图标
+    $.ajaxFileUpload({
+      url:'/people/change_pic',
+      secureuri:false,
+      dataType: 'json',
+      fileElementId:'fileToUpload',
+      success: function (data,status){
+        if(data.success=="true"){
+          $(".temp_pic").remove();
+          $('.profile-pic').html("");
+          $(".profile-pic").append("<img alt=<%=@person.name%> src=" +data.pic_url +" title=<%=@person.name%> >")
+        }else{
+          alert("文件保存失败")
+        }
+      },
+      error: function (data, status, e){
+        alert(1)
+      }
+    })
+    return false;
+  }
+  function loading(){
+    $("#loading").ajaxStart(function(){
+      $(this).show();
 
+    }).ajaxComplete(function(){
+      $(this).hide();
+    });
+  }
+    
 </script>

@@ -1,7 +1,8 @@
+scroller('anchor_content', 800);
 if ($(".content").attr("type")!= "stream"){
 $(".content").attr("type","stream") ;
 $(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar");
-$(".content").html("<h3 class='double-margin-top'>动态</h3><div class='tream-items' id='stream_item_wall'></div>"+"<a href='/stream?page=2' data-remote='true' id='show_next'>继续查看</a>")
+$(".content").html("<h3 class='double-margin-top'>动态/<a>地图模式</a></h3><div class='tream-items' id='stream_item_wall'></div>"+"<a href='/stream?page=2' data-remote='true' id='show_next'>继续查看</a>")
 }
 
 

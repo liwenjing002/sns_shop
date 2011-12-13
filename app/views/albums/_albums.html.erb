@@ -1,6 +1,6 @@
 
 <% @albums.each do |album| %>
       <%= link_to image_tag(album.cover ? album.cover.photo.url(:medium) : 'missing_tn.png', :alt => t('albums.click_to_view'), :class => 'picture'),
-          album, :title => t('albums.click_to_view') %>
+          "##",:id=>"#{album.id}",:class=>"album_link", :title => t('albums.click_to_view') %>
    <% end %>
 

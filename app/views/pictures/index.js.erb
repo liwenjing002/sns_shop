@@ -1,0 +1,11 @@
+scroller('anchor_content', 800);
+if ($(".content").attr("type")!= "pictures"){
+$(".content").attr("type","pictures") 
+person_id = $("#html_person_id").attr("value")
+$(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar accommodate-left-sidebar2");
+album_href = "/albums?person_id="+person_id
+$(".content").html("<h3 class='ouble-margin-top'><a href ="  + album_href +" data-remote=true>相册</a>&nbsp;&nbsp;--> &nbsp;&nbsp;<%=@album.name%></h3>"+"<div id ='pictures_list'></div>")
+
+}
+$("#pictures_list").html("<%= escape_javascript( render :partial => 'pictures') %>")
+$("img[rel]").overlay({effect: 'drop',mask: '#789'});

@@ -851,7 +851,7 @@ zh:
     code_be_careful: 请小心输入正确的代码。如果你犯了一个错误，你将不得不重新开始。
     create: 创建帐户
     date_format: 为MM / DD / YYYY的格式
-    description: 说明
+    description: 用简单的话描述你自己～
     email_not_found: 该邮件地址没有在我们网站注册，请<a href ='/account/new?email=true' >重新输入邮件地址</a>。
     enter_code: 输入代码
     enter_your_email: 输入您的电子邮件地址，然后点击下面的按钮。如果您已经注册,我们将向您发送一封邮件，验证您的身份。
@@ -1478,7 +1478,7 @@ zh:
     privacy: 隐私
     more: 更多
     albums_hide: 相册被设置隐藏，请加好友或联系TA
-    home_postition: 家乡地址：
+    home_postition: 我的位置
     QQ: QQ
     address : 所在地
     MSN: MSN
@@ -1585,7 +1585,7 @@ zh:
     show_full_screen: 全屏显示
     show_hidden_groups: 显示隐藏组
     suffix: 后缀
-    tell_us_about_yourself: 告诉我们你的情况。什么是你的个性呢？如果你的最好的朋友对你说什么？
+    tell_us_about_yourself: 说说自己吧,让大家更加了解你～
     testimony: 见证
     this_account_is_frozen: 此帐户被冻结。 %{name}的无法进行此配置文件或其他任何人改变的，直到该帐户解冻。
     this_email_will_not_be_visible: 此邮件地址将不可见的，除非管理员的人。
@@ -1851,10 +1851,10 @@ zh:
       one: 1的家庭中找到
       other: “%{count}个家庭找到 
     family_name: 姓
-    female: 女
+    female: 你是女生
     gender: 性别
     heading: %{name}的目录 
-    male: 男
+    male: 你是男生
     member: 会员
     results_not_shown: 一些不显示的结果 - 更具体。
     name: 姓名

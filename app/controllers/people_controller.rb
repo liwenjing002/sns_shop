@@ -36,22 +36,23 @@ class PeopleController < ApplicationController
       @plan = Plan.new
       @plans =@person.plans
     end
-    @stream_items = @person.shared_stream_items(params[:page]||1,30,true)
-    if params[:limited] or !@logged_in.full_access?
+    @stream_items = @person.all_stream_itmes(params[:page]||1,30,true)
+    if params[:limited] 
       render :action => 'show_limited'
     elsif @person and @logged_in.can_see?(@person)
       @albums = @person.albums.all(:order => 'created_at desc')
       @friends = @person.friends.thumbnails unless fragment_exist?(:controller => 'people', :action => 'show', :id => @person.id, :fragment => 'friends')
-      @verses = @person.verses.all(:order => 'book, chapter, verse')
     elsif @person and @person.deleted? and @logged_in.admin?(:edit_profiles)
       @deleted_people_url = administration_deleted_people_path('search[id]' => @person.id)
       render :text => t('people.deleted_html', :url => @deleted_people_url), :status => 404, :layout => true
     else
       render :text => t('people.not_found'), :status => 404, :layout => true
     end
-    
-    
-    
+  end
+  
+#  获取个人信息
+  def get_profile
+    @person = Person.find_by_id(params[:id])
   end
 
   def new
@@ -97,10 +98,12 @@ class PeopleController < ApplicationController
   def edit
     @person ||= Person.find(params[:id])
     if @logged_in.can_edit?(@person)
-      @business_categories = Person.business_categories
-      @custom_types = Person.custom_types
-      if params[:email]
-        render :action => 'email'
+      respond_to do |format|
+        if request.xhr?  
+          format.js
+        else
+          format.html # index.html.erb
+        end
       end
     else
       render :text => t('not_authorized'), :layout => true, :status => 401
@@ -148,56 +151,11 @@ class PeopleController < ApplicationController
     end
   end
 
-  def import
-    if @logged_in.admin?(:import_data) and Site.current.import_export_enabled?
-      if request.get?
-        @column_names = Person.importable_column_names
-      elsif request.post?
-        @records = Person.queue_import_from_csv_file(params[:file].read, params[:match_by_name], params[:attributes])
-        render :action => 'import_queue'
-      elsif request.put?
-        @completed, @errored = Person.import_data(params)
-        render :action => 'import_results'
-      end
-    else
-      render :text => t('not_authorized'), :layout => true, :status => 401
-    end
-  end
+  
 
-  def hashify
-    if @logged_in.admin?(:import_data) and Site.current.import_export_enabled?
-      if Person.connection.adapter_name == 'MySQL'
-        ids = params[:hash][:legacy_id].to_s.split(',')
-        raise t('families.too_many') if ids.length > 1000
-        hashes = Person.hashify(:legacy_ids => ids, :attributes => params[:hash][:attrs].split(','), :debug => params[:hash][:debug])
-        render :xml => hashes
-      else
-        render :text => t('families.only_in_mysql'), :status => 500
-      end
-    else
-      render :text => t('not_authorized'), :layout => true, :status => 401
-    end
-  end
+  
 
-  def batch
-    # post from families/show page
-    if params[:family_id] and @logged_in.admin?(:edit_profiles)
-      params[:ids].each { |id| Person.find(id).update_attribute(:family_id, params[:family_id]) }
-      respond_to do |format|
-        format.html { redirect_to family_path(params[:family_id]) }
-        format.js   { render(:update) { |p| p.redirect_to family_path(params[:family_id]) } }
-      end
-      # API for use by UpdateAgent
-    elsif @logged_in.admin?(:import_data) and Site.current.import_export_enabled?
-      xml_params = Hash.from_xml(request.body.read)['hash']
-      statuses = Person.update_batch(xml_params['records'], xml_params['options'] || {})
-      respond_to do |format|
-        format.xml { render :xml => statuses }
-      end
-    else
-      render :text => t('not_authorized'), :layout => true, :status => 401
-    end
-  end
+  
 
   def schema
     render :xml => Person.columns.map { |c| {:name => c.name, :type => c.type} }
