@@ -4,6 +4,7 @@
   <%= javascript_include_tag "http://api.map.baidu.com/library/CityList/1.2/src/CityList_min.js" %>
   <%= stylesheet_link_tag  "ueditor/themes/default/ueditor" %>
   <%= javascript_include_tag "extend/ui" %>
+<%= javascript_include_tag "extend/some_function" %>
   <%= javascript_include_tag "ueditor/editor_config" %>
   <%= javascript_include_tag "ueditor/editor_all" %>
 <%end%>
@@ -18,21 +19,13 @@
   </div>
 <% end %> 
 
-
-<%#*地图%>
-<% content_for :top do %>
-
   <%#= render :partial => 'maps/map',
   :locals =>{:map => @person.map,:person=>@person,:logged_in=>@logged_in} %>
-  <div class="profile-left">
-    <%= render :partial => 'people/person_photo' %>
-  </div>
-  <div class="profile-right">
 
-  <%#*分享栏%>
-    <%=render_cell :common,:tool_bar,:logged_in=>@logged_in,:person=>@person%>
 
-  </div>
+<% content_for :top do %>
+<%= render :partial => 'people/top' %>
+  
 <%end%>
 
 <% content_for :sidebar do %>
@@ -41,8 +34,8 @@
   <%@peoples = Person.find(:all,:limit=>35)%>
   <h3 class="double-margin-top">推荐好友</h3>
   <div id ="people_pic_wall">
-    <%@peoples.each do |people|%>
-      <%=link_to   get_thunbnail_html(people),people,:target=>"_blank"%>
+    <%@peoples.each do |person|%>
+     <%=  thubnail_href_html person%>
     <%end%>
   </div>
   <%#*地点墙%>

@@ -1,9 +1,7 @@
 <div class="stream-item <%= stream_item.streamable_type.underscore.dasherize %> stream_<%= stream_item.streamable_type.underscore %> <% if stream_item.person == @person %>stream_mine<% end %>">
   <div class="stream-item-meta">
     <span class="nowrap">
-      <a href="<%= url_for stream_item.person %>">
-        <%= get_thunbnail_html stream_item.person%>
-      </a>
+        <%=  thubnail_href_html stream_item.person%>
     </span>
 
     <div style="clear:left;"></div>

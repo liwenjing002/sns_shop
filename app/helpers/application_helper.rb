@@ -65,7 +65,7 @@ module ApplicationHelper
 
   def javascript_tags
     #    javascript_include_tag('jquery-1.4.4.min', 'jquery-ui-1.8.7.custom.min', 'jquery.qtip-1.0.0-rc3.min.js', 'rails', 'application', :cache => true) + "\n" + \
-    javascript_include_tag(:defaults, 'jquery.qtip-1.0.0-rc3.min.js','jquery-ui-1.8.7.custom.min', 'application','extend/jquery.simplemodal','extend/jquery.tools.min','extend/some_function') + "\n" + \
+    javascript_include_tag(:defaults, 'jquery.qtip-1.0.0-rc3.min.js','jquery-ui-1.8.7.custom.min', 'application','extend/jquery.simplemodal','extend/jquery.tools.min') + "\n" + \
       csrf_meta_tag + "\n" + \
       "<!--[if lte IE 8]>\n".html_safe + \
       javascript_include_tag('ie') + "\n" + \
@@ -378,6 +378,10 @@ def get_thunbnail_html person
       image_tag 'clean/manoutline.tn.png', :alt => person.try(:name), :class => 'icon thumbnail'
     end
   end
+end
+
+def thubnail_href_html person
+  link_to get_thunbnail_html(person),url_for(person),:remote=>true,:alt=>"查看用户信息"
 end
 
   

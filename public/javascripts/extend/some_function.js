@@ -1260,24 +1260,27 @@ myCl.addEventListener("cityclick", function(e) {
 });
 
 // 给“更换城市”链接添加点击操作
-document.getElementById("postition").onclick = function() {
+$("#postition").live("click",function() {
 	var cl = document.getElementById("cityList");
 	if (cl.style.display == "none") {
 		cl.style.display = "";
 	} else {
 		cl.style.display = "none";
 	}	
-};
+})
+
 
 // 给城市列表上的关闭按钮添加点击操作
-document.getElementById("popup_close").onclick = function() {
+$("#popup_close").live("click",function(){
+    
 	var cl = document.getElementById("cityList");
 	if (cl.style.display == "none") {
 		cl.style.display = "";
 	} else {
 		cl.style.display = "none";
-	}	
-};
+	}
+})
+
 }
 
 
@@ -1483,6 +1486,8 @@ $(".album_link").live("click",function(){
             
             });
 })
+
+getCity();
 })
 
 //锚点平滑

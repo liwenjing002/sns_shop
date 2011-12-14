@@ -48,6 +48,14 @@ class PeopleController < ApplicationController
     else
       render :text => t('people.not_found'), :status => 404, :layout => true
     end
+     respond_to do |format|
+        if request.xhr?  
+           format.js
+        else
+           format.html # index.html.erb
+      end
+    end
+    
   end
   
 #  获取个人信息

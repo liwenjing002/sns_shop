@@ -20,7 +20,7 @@ class Administration::DashboardsController < ApplicationController
     @daily_attendance_counts = AttendanceRecord.daily_counts(15, 0, '%b %d', ['%a', 'Sun'])
     @person_count = Person.count('id', :conditions => {:deleted => false})
     @group_count  = Group.count('id')
-    @unsynced_to_donortools = Person.unsynced_to_donortools.count
+#    @unsynced_to_donortools = Person.unsynced_to_donortools.count
     @deleted_people_count = Person.where(:deleted => true).count
     @alerts = []
   end
