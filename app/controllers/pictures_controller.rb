@@ -28,14 +28,28 @@ class PicturesController < ApplicationController
     @album = Album.find(params[:album_id])
     ids = @album.picture_ids
     next_id = ids[ids.index(params[:id].to_i)+1] || ids.first
-    redirect_to album_picture_path(params[:album_id], next_id)
+    @picture = Picture.find(next_id)
+    respond_to do |format|
+        if request.xhr?  
+           format.js{render :"show"}
+        else
+           format.html{render "show"} # index.html.erb
+      end
+    end
   end
 
   def prev
     @album = Album.find(params[:album_id])
     ids = @album.picture_ids
     prev_id = ids[ids.index(params[:id].to_i)-1]
-    redirect_to album_picture_path(params[:album_id], prev_id)
+    @picture = Picture.find(prev_id)
+    respond_to do |format|
+        if request.xhr?  
+           format.js{render "show"}
+        else
+           format.html{render "show"} # index.html.erb
+      end
+    end
   end
 
   
@@ -96,7 +110,13 @@ class PicturesController < ApplicationController
         @album.pictures.all.each { |p| p.update_attribute :cover, false }
         @picture.update_attribute :cover, true
       end
-      redirect_to [@album, @picture]
+      respond_to do |format|
+        if request.xhr?  
+           format.js{render "show"}
+        else
+           format.html{render "show"} # index.html.erb
+      end
+    end
     else
       render :text => t('pictures.cant_edit'), :layout => true, :status => 401
     end

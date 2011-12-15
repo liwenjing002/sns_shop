@@ -1,2 +1,3 @@
 $(".inner_top").html("<%= escape_javascript( render :partial => 'people/top') %>");
 $("#html_person_id").attr("value",<%=@person.id%>)
+$(".tool_link[type=1]").trigger("click")

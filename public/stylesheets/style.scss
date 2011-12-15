@@ -1098,9 +1098,20 @@ p.divider {
     float: left;width: 202px;
 }
 
-.profile-right{
+.profile-midle{
+    width:600px;
     margin-left: 325px;
-} 
+}
+.profile-right{
+    float: right;
+    width: 100px;
+    margin-right: 50px;
+  .php_history{
+     padding: 2px;
+    margin-bottom: 8px;
+    list-style: none;
+}  
+}
 
 
 .p_info .info{

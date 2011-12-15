@@ -1105,7 +1105,7 @@ zh:
     already_pending: 一个朋友的要求已经与%{name}的悬而未决。
     cannot_request: 你不能要求与%{name}的友谊。
     decline: 拒绝好友
-    friend_request_pending: 好友请求等待
+    friend_request_pending: 好友请求等待确认
     friends: 朋友
     pending_requests: 待定好友请求
     people_requested: 下面的人要求成为您的朋友。

@@ -1,12 +1,33 @@
-<div id="triggers">
-  <%= image_tag(@picture.photo.url(:large), :alt => t('pictures.click_to_see_original'),:rel=>"#mies#{@picture.id}") %>
-  <div class='simple_overlay' id="mies<%=@picture.id%>">
-<%=  image_tag(@picture.photo.url(:original),:alt => t('pictures.click_to_enlarge'))%>
-</div>  
-  <br>
-  <%=@picture.photo_text%>
+<p>
+  <%= link_to t('pictures.prev'), prev_album_picture_path(@album, @picture),:remote=>true %>
+  |
+  <%= link_to t('pictures.next'), next_album_picture_path(@album, @picture),:remote=>true %>
+</p>
+<div>
+  <div id="triggers" style="float:left">
+    <%= image_tag(@picture.photo.url(:large), :alt => t('pictures.click_to_see_original'),:rel=>"#mies#{@picture.id}") %>
+    <div class='simple_overlay' id="mies<%=@picture.id%>">
+      <%=  image_tag(@picture.photo.url(:original),:alt => t('pictures.click_to_enlarge'))%>
+    </div>  
+    <br>
+    <%=@picture.photo_text%>
+    <% if Setting.get(:privacy, :allow_picture_comments) %>
+
+      <h3><%= t('Comments') %></h3>
+      <%= render :partial => 'comments/comments', :locals => {:object => @picture, :intro => t('pictures.comment_on_this_picture')} %>
+    <% end %>
+  </div>
+  <div  style="float:left;margin-left: 10px;">
+    <% if @logged_in.can_edit?(@picture) %>
+      <p>
+        <%= link_to t('pictures.rotate_left'), album_picture_path(@album, @picture, :degrees => -90), :confirm => t('are_you_sure'), :method => 'put', :class => 'rotate-ccw-icon',:remote=>true %><br/>
+        <%= link_to t('pictures.rotate_right'), album_picture_path(@album, @picture, :degrees => 90), :confirm => t('are_you_sure'), :method => 'put', :class => 'rotate-cw-icon',:remote=>true %><br/>
+        <%= link_to t('pictures.set_as_cover'), album_picture_path(@album, @picture, :cover => true), :confirm => t('are_you_sure'), :method => 'put', :class => 'heart-icon',:remote=>true %>
+      </p>
+      <p>
+        <%= link_to t('Delete'), album_picture_path(@album, @picture), :confirm => t('are_you_sure'), :method => 'delete', :class => 'delete-icon' %><br/>
+      </p>
+    <% end %>
+  </div>
 </div>
-<% if Setting.get(:privacy, :allow_picture_comments) %>
-  <h3><%= t('Comments') %></h3>
-  <%= render :partial => 'comments/comments', :locals => {:object => @picture, :intro => t('pictures.comment_on_this_picture')} %>
-<% end %>
+

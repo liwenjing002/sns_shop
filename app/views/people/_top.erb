@@ -1,7 +1,20 @@
 <div class="profile-left">
   <%= render :partial => 'people/person_photo' %>
 </div>
-<div class="profile-right">
+<%if @visit_peoples%>
+  <div class="profile-right">
+    <ul class="php_history">
+      <li>访问历史</li>
+      <li> <%=  thubnail_href_html @logged_in%></li>
+      <%@visit_peoples.each do |person|%>
+        <li>  <%=  thubnail_href_html person%></li>
+      <%end%>
+    </ul>
+
+
+  </div>
+<%end%>
+<div class="profile-midle">
 <%#*分享栏%>
   <div id="html_person_id" value="<%=@person.id%>">
 <%# 分享状态，照片，视频 %>
@@ -133,10 +146,7 @@
       </div>
     </div>
   </div>
-
-
-
-
-
-
 </div>
+
+
+
