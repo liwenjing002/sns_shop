@@ -723,7 +723,7 @@ jQuery(function ($) {
     PIC = {
         container: null,
         init: function () {
-            $("#share-picture-icon").click(function (e) {
+            $("#share-picture-icon").live("click",function (e) {
                 e.preventDefault();
 
                 $("#pic-modal-content").modal({
@@ -800,7 +800,7 @@ jQuery(function ($) {
     VIDEO = {
         container: null,
         init: function () {
-            $("#share-video-icon").click(function (e) {
+            $("#share-video-icon").live("click",function (e) {
                 e.preventDefault();
 
                 $("#video-modal-content").modal({

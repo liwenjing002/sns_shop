@@ -1,13 +1,12 @@
 class Tag < ActiveRecord::Base
-  belongs_to :site
-
+  
   has_many :taggings, :dependent => :destroy
   has_many :verses,  :through => :taggings, :conditions => "taggings.taggable_type = 'Verse'"
 
   validates_presence_of :name
   validates_uniqueness_of :name, :scope => :site_id
 
-  scope_by_site_id
+  
 
   acts_as_logger LogItem
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111102152556) do
+ActiveRecord::Schema.define(:version => 20111216125330) do
 
   create_table "activities", :force => true do |t|
     t.string   "name"
@@ -399,24 +399,14 @@ ActiveRecord::Schema.define(:version => 20111102152556) do
     t.integer  "sequence"
     t.string   "gender",                       :limit => 6
     t.string   "first_name"
-    t.string   "last_name"
-    t.string   "suffix",                       :limit => 25
-    t.string   "mobile_phone",                 :limit => 25
-    t.string   "work_phone",                   :limit => 25
-    t.string   "fax",                          :limit => 25
     t.datetime "birthday"
     t.string   "email"
-    t.boolean  "email_changed",                               :default => false
+    t.boolean  "email_changed",                                :default => false
     t.string   "website"
     t.text     "classes"
     t.string   "shepherd"
     t.string   "mail_group",                   :limit => 1
     t.string   "encrypted_password",           :limit => 100
-    t.string   "business_name",                :limit => 100
-    t.text     "business_description"
-    t.string   "business_phone",               :limit => 25
-    t.string   "business_email"
-    t.string   "business_website"
     t.text     "love_activities"
     t.text     "interests"
     t.text     "music"
@@ -426,43 +416,35 @@ ActiveRecord::Schema.define(:version => 20111102152556) do
     t.text     "quotes"
     t.text     "about"
     t.text     "testimony"
-    t.boolean  "share_mobile_phone",                          :default => false
-    t.boolean  "share_work_phone",                            :default => false
-    t.boolean  "share_fax",                                   :default => false
-    t.boolean  "share_email",                                 :default => false
-    t.boolean  "share_birthday",                              :default => true
     t.datetime "anniversary"
     t.datetime "updated_at"
     t.string   "alternate_email"
-    t.integer  "email_bounces",                               :default => 0
+    t.integer  "email_bounces",                                :default => 0
     t.string   "business_category",            :limit => 100
-    t.boolean  "get_wall_email",                              :default => true
-    t.boolean  "account_frozen",                              :default => false
+    t.boolean  "get_wall_email",                               :default => true
+    t.boolean  "account_frozen",                               :default => false
     t.boolean  "wall_enabled"
-    t.boolean  "messages_enabled",                            :default => true
+    t.boolean  "messages_enabled",                             :default => true
     t.string   "business_address"
     t.string   "flags"
-    t.boolean  "visible",                                     :default => true
+    t.boolean  "visible",                                      :default => true
     t.string   "parental_consent"
     t.integer  "admin_id"
-    t.boolean  "friends_enabled",                             :default => true
-    t.boolean  "member",                                      :default => false
-    t.boolean  "staff",                                       :default => false
-    t.boolean  "elder",                                       :default => false
-    t.boolean  "deacon",                                      :default => false
-    t.boolean  "can_sign_in",                                 :default => false
-    t.boolean  "visible_to_everyone",                         :default => false
-    t.boolean  "visible_on_printed_directory",                :default => false
-    t.boolean  "full_access",                                 :default => false
+    t.boolean  "friends_enabled",                              :default => true
+    t.boolean  "member",                                       :default => false
+    t.boolean  "staff",                                        :default => false
+    t.boolean  "elder",                                        :default => false
+    t.boolean  "deacon",                                       :default => false
+    t.boolean  "can_sign_in",                                  :default => false
+    t.boolean  "visible_to_everyone",                          :default => false
+    t.boolean  "visible_on_printed_directory",                 :default => false
+    t.boolean  "full_access",                                  :default => false
     t.integer  "legacy_family_id"
     t.string   "feed_code",                    :limit => 50
-    t.boolean  "share_activity",                              :default => true
     t.integer  "site_id"
-    t.string   "twitter_account",              :limit => 100
     t.string   "api_key",                      :limit => 50
     t.string   "salt",                         :limit => 50
-    t.boolean  "deleted",                                     :default => false
-    t.boolean  "child"
+    t.boolean  "deleted",                                      :default => false
     t.string   "custom_type",                  :limit => 100
     t.text     "custom_fields"
     t.string   "can_pick_up",                  :limit => 100
@@ -470,16 +452,14 @@ ActiveRecord::Schema.define(:version => 20111102152556) do
     t.string   "medical_notes",                :limit => 200
     t.string   "relationships_hash",           :limit => 40
     t.integer  "donortools_id"
-    t.boolean  "synced_to_donortools",                        :default => false
+    t.boolean  "synced_to_donortools",                         :default => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.string   "photo_fingerprint",            :limit => 50
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
     t.string   "description",                  :limit => 25
-    t.boolean  "share_anniversary",                           :default => true
-    t.boolean  "share_address",                               :default => true
-    t.boolean  "share_home_phone",                            :default => true
+    t.boolean  "share_address",                                :default => true
     t.string   "qq"
     t.string   "msn"
     t.string   "weibo"
@@ -487,6 +467,7 @@ ActiveRecord::Schema.define(:version => 20111102152556) do
     t.integer  "privacy_id"
     t.boolean  "gmaps"
     t.string   "home_address"
+    t.string   "city",                         :limit => 3000
   end
 
   add_index "people", ["admin_id"], :name => "index_admin_id_on_people"
@@ -827,6 +808,11 @@ ActiveRecord::Schema.define(:version => 20111102152556) do
     t.datetime "finished_at"
   end
 
+  create_table "tag_to_tags", :force => true do |t|
+    t.integer "tag_from_id"
+    t.integer "tag_to_id"
+  end
+
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -840,7 +826,7 @@ ActiveRecord::Schema.define(:version => 20111102152556) do
   create_table "tags", :force => true do |t|
     t.string   "name",       :limit => 50
     t.datetime "updated_at"
-    t.integer  "site_id"
+    t.string   "tag_type"
   end
 
   create_table "twitter_messages", :force => true do |t|

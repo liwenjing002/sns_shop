@@ -88,6 +88,7 @@ OneBody::Application.routes.draw do
 
   resources :people do
     collection do
+      post :tags_change
       get  :schema
       get  :get_profile
       get :test

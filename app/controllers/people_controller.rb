@@ -33,6 +33,7 @@ class PeopleController < ApplicationController
     end
   @visit_peoples = Person.where("id in (:ids)",:ids=>session[:visit_people]) if  session[:visit_people]
   @stream_items = @person.all_stream_itmes(params[:page]||1,30,true)
+  @people_tags= Tag.where("tag_type= 'Person'")
   respond_to do |format|
     if request.xhr?  
       format.js
@@ -183,6 +184,13 @@ def change_pic
   end
   render :text => "{success:'" + "false'}"
 end
+
+  def tags_change
+    tags = params[:tags].gsub(/，/, ',')
+    @person = Person.find(params[:person_id])
+    @person.tag_list.add(tags, :parse => true)
+    @person.save
+  end
 
 def get_friends
   @person = @logged_in

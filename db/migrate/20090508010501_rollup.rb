@@ -461,7 +461,6 @@ class Rollup < ActiveRecord::Migration
     create_table "tags", :force => true do |t|
       t.string   "name",       :limit => 50
       t.datetime "updated_at"
-      t.integer  "site_id"
     end
 
     create_table "twitter_messages", :force => true do |t|

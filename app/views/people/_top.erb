@@ -43,6 +43,10 @@
               联系方式, <%= "qq: " +@person.qq  if @person.qq%><%= "msn:"+ @person.msn if @person.msn %><%=  "微博: "+ @person.weibo if @person.weibo%>
             </p>
           <%end%>
+            <p id="add_tag">
+               性格标签：
+           <input id="add_tag"value="<%= @person.tag_list.length>0 ? @person.tag_list.to_s : "添加你的个性化标签"%>" disabled/>
+            </p>
         </div>
 
         <p>
@@ -143,6 +147,31 @@
           </div>
         </div>
 
+        <!-- tag content-->
+        <!-- modal content --> 
+        <div id="osx-modal-content" style="display:none"> 
+          <div id="osx-modal-title">添加你的个性化标签</div> 
+          <div class="close"><a href="#" class="simplemodal-close">x</a></div> 
+          <div id="osx-modal-data"> 
+            <div id = "place_tag" style="padding-bottom: 5px;padding-top: 10px;">
+              <span>备选标签：</span>
+              <span id="all_tags">
+                  <% @people_tags.each do |tag| %>
+                  <%= link_to_function tag.name, "$('input[name=tags]').attr('value',$(this).html())" %>
+                  <% end %>
+              </span>
+              <form accept-charset="UTF-8" action="/people/tags_change" data-remote="true" id="people-tag-change" method="post">
+                <div>
+                  <input name="person_id" type="hidden" value="<%=@person.id%>" />
+                  <input name="tags" type="text" value="<%=@person.tag_list.to_s%>" placeholder = "点击"/>
+                    </div>
+                <%= submit_tag t('share.share'),:class=>"submit_button"%>
+                <span style="cursor:pointer" id ="tags_cancel" class ="button simplemodal-close">取消</span>
+             </form>
+
+            </div>
+          </div> 
+        </div> 
       </div>
     </div>
   </div>
