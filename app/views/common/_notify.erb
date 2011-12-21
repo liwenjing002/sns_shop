@@ -1,0 +1,10 @@
+<% if @has_friendship_requests %>
+  <div class="highlight">
+    <%= t('friends.you_have_pending_requests_html', :url => "/people/get_friends?person_id=#{@person.id}") %>
+  </div>
+<% end %>
+<% if @has_activity_invite %>
+  <div class="highlight">
+    <%= t('friends.you_have_activity_invite_html', :url => person_activities_path(@person)) %>
+  </div>
+<% end %> 

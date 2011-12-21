@@ -31,8 +31,12 @@ class PeopleController < ApplicationController
         session[:visit_people].push(params[:id]) 
       end
     end
+  #访问历史  
   @visit_peoples = Person.where("id in (:ids)",:ids=>session[:visit_people]) if  session[:visit_people]
+  #推荐好友
+  @tag_peoples =  @person.tag_peoples
   @stream_items = @person.all_stream_itmes(params[:page]||1,30,true)
+  @has_friendship_requests = @person.pending_friendship_requests.count > 0
   @people_tags= Tag.where("tag_type= 'Person'")
   respond_to do |format|
     if request.xhr?  
@@ -188,13 +192,14 @@ end
   def tags_change
     tags = params[:tags].gsub(/，/, ',')
     @person = Person.find(params[:person_id])
-    @person.tag_list.add(tags, :parse => true)
+    @person.tag_list = tags
     @person.save
   end
 
 def get_friends
   @person = @logged_in
   @person = Person.find(params[:person_id]) if params[:person_id]
+  @pending = me? ? @person.pending_friendship_requests : []
   @friends = @person.friends.paginate(:order => 'created_at desc',
     :page => params[:page]||1,:per_page => 20,
     :conditions=>["first_name like ?","%#{params[:people] ? params[:people][:first_name] : '%'}%"])

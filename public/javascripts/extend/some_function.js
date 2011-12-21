@@ -236,18 +236,90 @@ function obj2str(o){
 
 
 var editor_pic
-
+var Person = null
 var OSX = null
 var OSX2 = null
 var OSX3 = null
+
 jQuery(function ($) {
+    
+    
+     //Person标签窗口
+    Person = {
+        container: null,
+        init: function () {
+            $("#person_tag").live("click",function (e) {
+                e.preventDefault();	
+                $("#person-modal-content").modal({
+                    overlayId: 'person-overlay',
+                    containerId: 'person-container',
+                    closeHTML: null,
+                    minHeight: 80,
+                    opacity: 65, 
+                    position: [0,0],
+                    overlayClose: true,
+                    onOpen: Person.open,
+                    onClose: Person.close
+                });
+            });
+        },
+        open: function (d) {
+            var self = this;
+            self.container = d.container[0];
+            d.overlay.fadeIn( function () {
+
+                $("#person-modal-content", self.container).show();
+                var title = $("#person-modal-title", self.container);
+                title.show();
+                d.container.slideDown( function () {
+                    setTimeout(function () {
+                        var h = $("#person-modal-data", self.container).height()
+                        + title.height()
+                        + 20; // padding
+                        d.container.animate(
+                        {
+                            height: h
+                        }, 
+                        200,
+                        function () {
+                            //                            alert(3)
+                            $("div.close", self.container).show();
+                            $("#person-modal-data", self.container).show();
+                            
+                        }
+                        );
+                    }, 300);
+                });
+            })
+        },
+        close: function (d) {
+
+            var self = this; // this = SimpleModal object
+            d.container.animate(
+            {
+                top:"-" + (d.container.height() + 20)
+            },
+            500,
+            function () {
+
+                self.close(); // or $.modal.close();
+
+                                        
+            }
+            );
+        }
+    };
+
+    Person.init();
+    
+    
     
     //标签窗口
     OSX = {
         container: null,
         init: function () {
-            $("#add_tag").click(function (e) {
-                e.preventDefault();	
+            $("#1").click(function (e) {
+                e.preadd_tagventDefault();	
 
                 $("#osx-modal-content").modal({
                     overlayId: 'osx-overlay',
@@ -263,6 +335,7 @@ jQuery(function ($) {
             });
         },
         open: function (d) {
+             alert()
             var self = this;
             self.container = d.container[0];
             d.overlay.fadeIn( function () {

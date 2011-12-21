@@ -1,0 +1,6 @@
+if ($(".content").attr("type")!= "friends"){
+$(".content").attr("type","friends") ;
+$(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar accommodate-left-sidebar2");
+$(".content").html("<h3 class='double-margin-top'>好友</h3><div id='friend_list'></div>")
+}
+$("#friend_list").html("<%= escape_javascript(render :partial =>'/people/my_friends')  %>");

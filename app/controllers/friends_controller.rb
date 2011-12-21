@@ -33,14 +33,21 @@ class FriendsController < ApplicationController
     if params[:accept]
       @friendship_request.accept
       flash[:notice] = t('people.friendship_accepted')
-      redirect_to person_friends_path(@person)
     elsif params[:reject]
       @friendship_request.reject
       flash[:notice] = t('people.friendship_rejected')
-      redirect_to person_friends_path(@person)
-    else
-      render :text => t('people.friendship_must_specify'), :layout => true, :status => 500
     end
+    @pending = me? ? @person.pending_friendship_requests : []
+    @friends = @person.friends.paginate(:order => 'created_at desc',
+    :page => params[:page]||1,:per_page => 20,
+    :conditions=>["first_name like ?","%#{params[:people] ? params[:people][:first_name] : '%'}%"])
+    respond_to do |format|
+    if request.xhr?  
+      format.js
+    else
+      format.html # index.html.erb
+    end
+  end
   end
 
   # id = Person (friend)

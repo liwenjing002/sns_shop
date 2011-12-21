@@ -89,7 +89,12 @@ class Person < ActiveRecord::Base
 
   
 
-
+ def tag_peoples
+  match_tags = TagToTag.where("tag_from_id in (#{self.tags.collect{|x| x.id}})") 
+  tags_to_ids =  match_tags.collect{|x|x.tag_to_id}
+  Tagging.where("tag_id in (#{tags_to_ids.to_s})").limit("20").collect{|x|x.taggable} if tags_to_ids.length > 0
+  
+ end
 
 
   def gmaps4rails_address

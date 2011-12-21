@@ -4,28 +4,19 @@
   <%= javascript_include_tag "http://api.map.baidu.com/library/CityList/1.2/src/CityList_min.js" %>
   <%= stylesheet_link_tag  "ueditor/themes/default/ueditor" %>
   <%= javascript_include_tag "extend/ui" %>
-<%= javascript_include_tag "extend/some_function" %>
+  <%= javascript_include_tag "extend/some_function" %>
   <%= javascript_include_tag "ueditor/editor_config" %>
   <%= javascript_include_tag "ueditor/editor_all" %>
 <%end%>
-<% if @has_friendship_requests %>
-  <div class="highlight">
-    <%= t('friends.you_have_pending_requests_html', :url => person_friends_path(@person)) %>
-  </div>
-<% end %>
-<% if @has_activity_invite %>
-  <div class="highlight">
-    <%= t('friends.you_have_activity_invite_html', :url => person_activities_path(@person)) %>
-  </div>
-<% end %> 
 
-  <%#= render :partial => 'maps/map',
-  :locals =>{:map => @person.map,:person=>@person,:logged_in=>@logged_in} %>
+
+<%#= render :partial => 'maps/map',
+:locals =>{:map => @person.map,:person=>@person,:logged_in=>@logged_in} %>
 
 
 <% content_for :top do %>
-<%= render :partial => 'people/top' %>
-  
+  <%= render :partial => 'people/top' %>
+
 <%end%>
 
 <% content_for :sidebar do %>
@@ -34,9 +25,11 @@
   <%@peoples = Person.find(:all,:limit=>35)%>
   <h3 class="double-margin-top">推荐好友</h3>
   <div id ="people_pic_wall">
-    <%@peoples.each do |person|%>
-     <%=  thubnail_href_html person%>
-    <%end%>
+    <%if @tag_peoples%>
+      <%@tag_peoples.each do |people|%>
+        <%=  thubnail_href_html people%>
+      <%end%> 
+    <%end%> 
   </div>
   <%#*地点墙%>
   <%    @places = Place.find(:all,:limit=>35)%>
@@ -50,23 +43,17 @@
       <% end %>
     <%end%>
   </div>
-
-
-  <%#*事件通知%>
-  <% if Setting.get(:features, :prayer_event) %>
-    <h3><%= t('prayer_signups.home_page_heading') %></h3>
-    <div id="taken_slots"></div>
-    <p><%= link_to t('prayer_signups.home_page_heading'), prayer_signups_path, :class => 'right-icon' %></p>
-    <script type="text/javascript">
-      $.get('<%= prayer_signups_path(:format => 'js') %>');
-    </script>
-  <% end %>
-
 <% end %>
+  
+
 <a name="anchor_content" id="anchor_content"></a>
-<div class="content" type="stream">    
+<div class="content" type="stream">   
+
+
 <%#*内容墙%>
   <h3 class="double-margin-top"><a href="##">路“况”</a>/<a href ="##">地图</a></h3>
+ <%= render :partial => 'common/notify'%>
+ 
   <div class="stream-items" id="stream_item_wall">
     <%= render :partial => 'streams/stream_item', :as => :stream_item,
       :collection => @stream_items,

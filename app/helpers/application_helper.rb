@@ -368,20 +368,20 @@ end
 
 
 #获取头像图片
-def get_thunbnail_html person
+def get_thunbnail_html person,size,html_class
   if person and person.photo.exists?
-    image_tag person.photo.url(:tn), :alt => person.name, :class => 'icon thumbnail'
+    image_tag person.photo.url(size), :alt => person.name, :class => html_class
   else
     if person and person.gender.to_s == 'Female'
-      image_tag 'clean/womanoutline.tn.png', :alt => person.try(:name), :class => 'icon thumbnail'
+      image_tag 'clean/womanoutline.medium.png', :alt => person.try(:name), :class => html_class
     else
-      image_tag 'clean/manoutline.tn.png', :alt => person.try(:name), :class => 'icon thumbnail'
+      image_tag 'clean/manoutline.medium.png', :alt => person.try(:name), :class => html_class
     end
   end
 end
 
-def thubnail_href_html person
-  link_to get_thunbnail_html(person),url_for(person),:remote=>true,:alt=>"查看用户信息"
+def thubnail_href_html person,size ="tn",html_class ='icon thumbnail'
+  link_to get_thunbnail_html(person,size,html_class),url_for(person),:remote=>true,:alt=>"查看用户信息"
 end
 
   
