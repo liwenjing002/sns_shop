@@ -1,4 +1,4 @@
-<% if @pending.any? %>
+<% if @pending and @pending.any? %>
   <div>
 
     <p><%= t('friends.people_requested') %></p>
@@ -25,17 +25,22 @@
   </div>
 <% end %>
 
-<% if @friends.any? %>
-  <ul id="friends" style="list-style-type:none;">
-    <% if @friends.any? %>
-      <% @friends.each do |person| %>
-       
+<% if @all_peoples.any? %>
+    <% if @all_peoples.any? %>
+  
+      <% @all_peoples.each do |person| %>
+ <%for i in 0..21%>
+    <div class ="friend_pic">
+      <div>
        <%=  thubnail_href_html person,"medium","picture"%>
-       
-       
-      <% end %>
+      </div>
+      <div class="friend_pic_name"><%= person.name %>(<%= person.city %>)</div>
+      </div>
+<% end %>
+       <%end%>
+      
     <% end %>
-  </ul>
+  </div>
 <% else %>
   <p><%= t('groups.nobody_yet') %></p>
 <% end %>

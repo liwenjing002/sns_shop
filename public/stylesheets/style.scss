@@ -222,7 +222,7 @@ li:last-child:after {
     position: relative;
     @include shadow(0px, -5px, 10px, .3);
     .heading {
-    padding: 25px 0 10px 0;
+    padding: 15px 0 10px 0;
 }
 h1 {
     color: $primary;
@@ -1231,6 +1231,17 @@ p.divider {
     float:left;
 }
 
+.friend_pic
+{
+float: left;    
+}
+.friend_pic_name{
+    margin: 4px;
+}
+
+.link_no_line{
+text-decoration: none    
+}
 
 
 /* single scrollable item */

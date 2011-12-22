@@ -3,68 +3,68 @@ jQuery.extend({
 	
 
     createUploadIframe: function(id, uri)
-	{
-			//create frame
-            var frameId = 'jUploadFrame' + id;
-            var iframeHtml = '<iframe id="' + frameId + '" name="' + frameId + '" style="position:absolute; top:-9999px; left:-9999px"';
-			if(window.ActiveXObject)
-			{
-                if(typeof uri== 'boolean'){
-					iframeHtml += ' src="' + 'javascript:false' + '"';
+    {
+        //create frame
+        var frameId = 'jUploadFrame' + id;
+        var iframeHtml = '<iframe id="' + frameId + '" name="' + frameId + '" style="position:absolute; top:-9999px; left:-9999px"';
+        if(window.ActiveXObject)
+        {
+            if(typeof uri== 'boolean'){
+                iframeHtml += ' src="' + 'javascript:false' + '"';
 
-                }
-                else if(typeof uri== 'string'){
-					iframeHtml += ' src="' + uri + '"';
+            }
+            else if(typeof uri== 'string'){
+                iframeHtml += ' src="' + uri + '"';
 
-                }	
-			}
-			iframeHtml += ' />';
-			jQuery(iframeHtml).appendTo(document.body);
+            }	
+        }
+        iframeHtml += ' />';
+        jQuery(iframeHtml).appendTo(document.body);
 
-            return jQuery('#' + frameId).get(0);			
+        return jQuery('#' + frameId).get(0);			
     },
     createUploadForm: function(id, fileElementId, data)
-	{
-		//create form	
-		var formId = 'jUploadForm' + id;
-		var fileId = 'jUploadFile' + id;
-		var form = jQuery('<form  action="" method="POST" name="' + formId + '" id="' + formId + '" enctype="multipart/form-data"></form>');	
-		if(data)
-		{
-			for(var i in data)
-			{
-				jQuery('<input type="hidden" name="' + i + '" value="' + data[i] + '" />').appendTo(form);
-			}			
-		}		
-		var oldElement = jQuery('#' + fileElementId);
-		var newElement = jQuery(oldElement).clone();
-		jQuery(oldElement).attr('id', fileId);
-		jQuery(oldElement).before(newElement);
-		jQuery(oldElement).appendTo(form);
+    {
+        //create form	
+        var formId = 'jUploadForm' + id;
+        var fileId = 'jUploadFile' + id;
+        var form = jQuery('<form  action="" method="POST" name="' + formId + '" id="' + formId + '" enctype="multipart/form-data"></form>');	
+        if(data)
+        {
+            for(var i in data)
+            {
+                jQuery('<input type="hidden" name="' + i + '" value="' + data[i] + '" />').appendTo(form);
+            }			
+        }		
+        var oldElement = jQuery('#' + fileElementId);
+        var newElement = jQuery(oldElement).clone();
+        jQuery(oldElement).attr('id', fileId);
+        jQuery(oldElement).before(newElement);
+        jQuery(oldElement).appendTo(form);
 
 
 		
-		//set attributes
-		jQuery(form).css('position', 'absolute');
-		jQuery(form).css('top', '-1200px');
-		jQuery(form).css('left', '-1200px');
-		jQuery(form).appendTo('body');		
-		return form;
+        //set attributes
+        jQuery(form).css('position', 'absolute');
+        jQuery(form).css('top', '-1200px');
+        jQuery(form).css('left', '-1200px');
+        jQuery(form).appendTo('body');		
+        return form;
     },
 
     ajaxFileUpload: function(s) {
         // TODO introduce global settings, allowing the client to modify them for all requests, not only timeout		
         s = jQuery.extend({}, jQuery.ajaxSettings, s);
         var id = new Date().getTime()        
-		var form = jQuery.createUploadForm(id, s.fileElementId, (typeof(s.data)=='undefined'?false:s.data));
-		var io = jQuery.createUploadIframe(id, s.secureuri);
-		var frameId = 'jUploadFrame' + id;
-		var formId = 'jUploadForm' + id;		
+        var form = jQuery.createUploadForm(id, s.fileElementId, (typeof(s.data)=='undefined'?false:s.data));
+        var io = jQuery.createUploadIframe(id, s.secureuri);
+        var frameId = 'jUploadFrame' + id;
+        var formId = 'jUploadForm' + id;		
         // Watch for a new set of requests
         if ( s.global && ! jQuery.active++ )
-		{
-			jQuery.event.trigger( "ajaxStart" );
-		}            
+        {
+            jQuery.event.trigger( "ajaxStart" );
+        }            
         var requestDone = false;
         // Create the request object
         var xml = {}   
@@ -72,33 +72,33 @@ jQuery.extend({
             jQuery.event.trigger("ajaxSend", [xml, s]);
         // Wait for a response to come back
         var uploadCallback = function(isTimeout)
-		{			
-			var io = document.getElementById(frameId);
+        {			
+            var io = document.getElementById(frameId);
             try 
-			{				
-				if(io.contentWindow)
-				{
-					 xml.responseText = io.contentWindow.document.body?io.contentWindow.document.body.innerHTML:null;
-                	 xml.responseXML = io.contentWindow.document.XMLDocument?io.contentWindow.document.XMLDocument:io.contentWindow.document;
+            {				
+                if(io.contentWindow)
+                {
+                    xml.responseText = io.contentWindow.document.body?io.contentWindow.document.body.innerHTML:null;
+                    xml.responseXML = io.contentWindow.document.XMLDocument?io.contentWindow.document.XMLDocument:io.contentWindow.document;
 					 
-				}else if(io.contentDocument)
-				{
-					 xml.responseText = io.contentDocument.document.body?io.contentDocument.document.body.innerHTML:null;
-                	xml.responseXML = io.contentDocument.document.XMLDocument?io.contentDocument.document.XMLDocument:io.contentDocument.document;
-				}						
+                }else if(io.contentDocument)
+                {
+                    xml.responseText = io.contentDocument.document.body?io.contentDocument.document.body.innerHTML:null;
+                    xml.responseXML = io.contentDocument.document.XMLDocument?io.contentDocument.document.XMLDocument:io.contentDocument.document;
+                }						
             }catch(e)
-			{
-				jQuery.handleError(s, xml, null, e);
-			}
+            {
+                jQuery.handleError(s, xml, null, e);
+            }
             if ( xml || isTimeout == "timeout") 
-			{				
+            {				
                 requestDone = true;
                 var status;
                 try {
                     status = isTimeout != "timeout" ? "success" : "error";
                     // Make sure that the request was successful or notmodified
                     if ( status != "error" )
-					{
+                    {
                         // process the data (runs the xml through httpData regardless of callback)
                         var data = jQuery.uploadHttpData( xml, s.dataType );    
                         // If a local callback was specified, fire it and pass it the data
@@ -111,7 +111,7 @@ jQuery.extend({
                     } else
                         jQuery.handleError(s, xml, status);
                 } catch(e) 
-				{
+{
                     status = "error";
                     jQuery.handleError(s, xml, status, e);
                 }
@@ -131,17 +131,19 @@ jQuery.extend({
                 jQuery(io).unbind()
 
                 setTimeout(function()
-									{	try 
-										{
-											jQuery(io).remove();
-											jQuery(form).remove();	
-											
-										} catch(e) 
-										{
-											jQuery.handleError(s, xml, null, e);
-										}									
+                {
+                    try 
 
-									}, 100)
+                    {
+                        jQuery(io).remove();
+                        jQuery(form).remove();	
+											
+                    } catch(e) 
+{
+                        jQuery.handleError(s, xml, null, e);
+                    }									
+
+                }, 100)
 
                 xml = null
 
@@ -149,55 +151,59 @@ jQuery.extend({
         }
         // Timeout checker
         if ( s.timeout > 0 ) 
-		{
+        {
             setTimeout(function(){
                 // Check to see if the request is still happening
                 if( !requestDone ) uploadCallback( "timeout" );
             }, s.timeout);
         }
         try 
-		{
+        {
 
-			var form = jQuery('#' + formId);
-			jQuery(form).attr('action', s.url);
-			jQuery(form).attr('method', 'POST');
-			jQuery(form).attr('target', frameId);
+            var form = jQuery('#' + formId);
+            jQuery(form).attr('action', s.url);
+            jQuery(form).attr('method', 'POST');
+            jQuery(form).attr('target', frameId);
             if(form.encoding)
-			{
-				jQuery(form).attr('encoding', 'multipart/form-data');      			
+            {
+                jQuery(form).attr('encoding', 'multipart/form-data');      			
             }
             else
-			{	
-				jQuery(form).attr('enctype', 'multipart/form-data');			
+            {	
+                jQuery(form).attr('enctype', 'multipart/form-data');			
             }			
             jQuery(form).submit();
 
-        } catch(e) 
-		{			
+        }
+        catch(e) 
+
+        {			
             jQuery.handleError(s, xml, null, e);
         }
 		
-		jQuery('#' + frameId).load(uploadCallback	);
-        return {abort: function () {}};	
+        jQuery('#' + frameId).load(uploadCallback	);
+        return {
+            abort: function () {}
+        };	
 
-    },
+},
 
-    uploadHttpData: function( r, type ) {
-        var data = !type;
-        data = type == "xml" || data ? r.responseXML : r.responseText;
-        // If the type is "script", eval it in global context
-        if ( type == "script" )
-            jQuery.globalEval( data );
-        // Get the JavaScript object, if JSON is used.
-        if ( type == "json" )
-            eval( "data = " + data );
-        // evaluate scripts within html
-        if ( type == "html" )
-            jQuery("<div>").html(data).evalScripts();
-        if(type == "default")
-            data = r.responseText;
-        return data;
-    }
+uploadHttpData: function( r, type ) {
+    var data = !type;
+    data = type == "xml" || data ? r.responseXML : r.responseText;
+    // If the type is "script", eval it in global context
+    if ( type == "script" )
+        jQuery.globalEval( data );
+    // Get the JavaScript object, if JSON is used.
+    if ( type == "json" )
+        eval( "data = " + data );
+    // evaluate scripts within html
+    if ( type == "html" )
+        jQuery("<div>").html(data).evalScripts();
+    if(type == "default")
+        data = r.responseText;
+    return data;
+}
 })
 
 
@@ -244,7 +250,7 @@ var OSX3 = null
 jQuery(function ($) {
     
     
-     //Person标签窗口
+    //Person标签窗口
     Person = {
         container: null,
         init: function () {
@@ -335,7 +341,7 @@ jQuery(function ($) {
             });
         },
         open: function (d) {
-             alert()
+            alert()
             var self = this;
             self.container = d.container[0];
             d.overlay.fadeIn( function () {
@@ -836,16 +842,16 @@ jQuery(function ($) {
                             $("div.close", PIC.container).show();
                             $("#pic-modal-data", PIC.container).show();
                             $(".location_info").hide();
-//                            editor_pic = new baidu.editor.ui.Editor({
-//                                toolbars:[
-//                                ['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','|','MultiMenu'  ]
-//                                ],
-//                                autoClearinitialContent:true,
-//                                initialContent: '',
-//                                elementPathEnabled:false,
-//                                textarea: 'picture[photo_text]'
-//                            });
-//                            editor_pic.render('editor_pic');  //editor为编辑器容器的id
+                        //                            editor_pic = new baidu.editor.ui.Editor({
+                        //                                toolbars:[
+                        //                                ['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','|','MultiMenu'  ]
+                        //                                ],
+                        //                                autoClearinitialContent:true,
+                        //                                initialContent: '',
+                        //                                elementPathEnabled:false,
+                        //                                textarea: 'picture[photo_text]'
+                        //                            });
+                        //                            editor_pic.render('editor_pic');  //editor为编辑器容器的id
                         }
                         );
                     }, 300);
@@ -913,16 +919,16 @@ jQuery(function ($) {
                             $("div.close", VIDEO.container).show();
                             $("#video-modal-data", VIDEO.container).show();
                             $(".location_info").hide();
-//                            editor_video = new baidu.editor.ui.Editor({
-//                                toolbars:[
-//                                ['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','|','MultiMenu'  ]
-//                                ],
-//                                autoClearinitialContent:true,
-//                                initialContent: '',
-//                                elementPathEnabled:false,
-//                                textarea: 'video[desc]'
-//                            });
-//                            editor_video.render('video_desc');  //editor为编辑器容器的id
+                        //                            editor_video = new baidu.editor.ui.Editor({
+                        //                                toolbars:[
+                        //                                ['Bold','Italic','Underline','|','strikethrough','FontSize','ForeColor','BackColor','|','MultiMenu'  ]
+                        //                                ],
+                        //                                autoClearinitialContent:true,
+                        //                                initialContent: '',
+                        //                                elementPathEnabled:false,
+                        //                                textarea: 'video[desc]'
+                        //                            });
+                        //                            editor_video.render('video_desc');  //editor为编辑器容器的id
                         }
                         );
                     }, 300);
@@ -1204,9 +1210,9 @@ function chang_follow(link){
     action = link.attr("action")
     if (action == 'cancer'){
         var answer = confirm("真的要取消关注？")
-    if (!answer){
-        return;
-    }
+        if (!answer){
+            return;
+        }
     }
     
     $.ajax({
@@ -1227,132 +1233,134 @@ function chang_follow(link){
 }
 
 
-  //ajax 文件上传
+//ajax 文件上传
 
 
 
 function fileChange(full_path){
     ajaxFileUpload();
-  }
+}
 
 
 
 
-  function ajaxFileUpload(){
+function ajaxFileUpload(){
     loading();//动态加载小图标
     $.ajaxFileUpload({
-      url:'/location/places/add_temp_pic',
-      secureuri:false,
-      dataType: 'json',
-      fileElementId:'fileToUpload_place',
-      success: function (data,status){
-        if(data && data.success=="true"){
-          $("#picture_id").attr("value",data.pic_id)
-          $("#temp_pic").attr("src",data.pic_url);
-          $("#temp_pic").attr("style","display:");
-        }else{
-          alert("文件保存失败")
+        url:'/location/places/add_temp_pic',
+        secureuri:false,
+        dataType: 'json',
+        fileElementId:'fileToUpload_place',
+        success: function (data,status){
+            if(data && data.success=="true"){
+                $("#picture_id").attr("value",data.pic_id)
+                $("#temp_pic").attr("src",data.pic_url);
+                $("#temp_pic").attr("style","display:");
+            }else{
+                alert("文件保存失败")
+            }
+        },
+        error: function (data, status, e){
+            alert("文件保存失败")
         }
-      },
-      error: function (data, status, e){
-        alert("文件保存失败")
-      }
     })
     return false;
-  }
-  function loading(){
+}
+function loading(){
     $("#loading").ajaxStart(function(){
-      $("#loading").show();
-      $("#sbumit_button").removeAttr("onclick");
+        $("#loading").show();
+        $("#sbumit_button").removeAttr("onclick");
 
     }).ajaxComplete(function(){
-      $("#loading").hide();
-      $("#sbumit_button").bind( "click", function() { // 绑定新事件
-        $('#new_place_form').submit();
-      });
+        $("#loading").hide();
+        $("#sbumit_button").bind( "click", function() { // 绑定新事件
+            $('#new_place_form').submit();
+        });
     });
-  }
-  function ajaxFileUpload_file_marker(){
+}
+function ajaxFileUpload_file_marker(){
     url = "?album="+$("#album").val() +"&photo_text="+$("#photo_text").val()+
-      "&marker[geocode_position]="+$("#marker_geocode_position").val()+
-      "&marker[marker_latitude]="+$("#marker_marker_latitude").val()+
-      "&marker[marker_longitude]="+$("#marker_marker_longitude").val()
+    "&marker[geocode_position]="+$("#marker_geocode_position").val()+
+    "&marker[marker_latitude]="+$("#marker_marker_latitude").val()+
+    "&marker[marker_longitude]="+$("#marker_marker_longitude").val()
     $.ajaxFileUpload({
-      url:'/pictures/'+url,
-      secureuri:false,
-      dataType: 'json',
-      fileElementId:'pictures_',
-      success: function (data,status){
-        if(data && data.success==true){
-          $("#notice").html(data.notice)
-          $("#notice").show()
-          $('#notice').fadeOut(15000);
-          $("#share-picture").resetForm();
-          $("#marker_geocode_position").attr("value", '');
-          $("#marker_destin_position").attr("value", '')
-          for (var i=0;i<=data.html.length-1;i++) {
-            $.ajax({
-              type: "GET",
-              url: "/pictures/get_stream_item",
-              data:"pic_id="+data.html[i].pic_id+"&marker_id="+data.html[i].marker_id,
-              success: function(){}
-            });
-          }
-        }else{
-          alert("文件保存失败1")
+        url:'/pictures/'+url,
+        secureuri:false,
+        dataType: 'json',
+        fileElementId:'pictures_',
+        success: function (data,status){
+            if(data && data.success==true){
+                $("#notice").html(data.notice)
+                $("#notice").show()
+                $('#notice').fadeOut(15000);
+                $("#share-picture").resetForm();
+                $("#marker_geocode_position").attr("value", '');
+                $("#marker_destin_position").attr("value", '')
+                for (var i=0;i<=data.html.length-1;i++) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/pictures/get_stream_item",
+                        data:"pic_id="+data.html[i].pic_id+"&marker_id="+data.html[i].marker_id,
+                        success: function(){}
+                    });
+                }
+            }else{
+                alert("文件保存失败1")
+            }
+        },
+        error: function (data, status, e){
+            alert(data.success)
+            alert("文件保存失败2")
         }
-      },
-      error: function (data, status, e){
-        alert(data.success)
-        alert("文件保存失败2")
-      }
     })
     return false;
-  }
-  //ajax 文件上传
+}
+//ajax 文件上传
 
 function getCity(){
     // 创建CityList对象，并放在citylist_container节点内
-var myCl = new BMapLib.CityList({container : "citylist_container"});
+    var myCl = new BMapLib.CityList({
+        container : "citylist_container"
+    });
 
-  $("#postition").blur(function(){
-    var cl = document.getElementById("cityList");
-	if (cl.style.display == "none") {
-		cl.style.display = "";
-	} else {
-		cl.style.display = "none";
-	}
-  })
-// 给城市点击时，添加相关操作
-myCl.addEventListener("cityclick", function(e) {
-	// 修改当前城市显示
-	document.getElementById("postition").value = e.name;
+    $("#postition").blur(function(){
+        var cl = document.getElementById("cityList");
+        if (cl.style.display == "none") {
+            cl.style.display = "";
+        } else {
+            cl.style.display = "none";
+        }
+    })
+    // 给城市点击时，添加相关操作
+    myCl.addEventListener("cityclick", function(e) {
+        // 修改当前城市显示
+        document.getElementById("postition").value = e.name;
 
-	// 点击后隐藏城市列表
-	document.getElementById("cityList").style.display = "none";
-});
+        // 点击后隐藏城市列表
+        document.getElementById("cityList").style.display = "none";
+    });
 
-// 给“更换城市”链接添加点击操作
-$("#postition").live("click",function() {
-	var cl = document.getElementById("cityList");
-	if (cl.style.display == "none") {
-		cl.style.display = "";
-	} else {
-		cl.style.display = "none";
-	}	
-})
+    // 给“更换城市”链接添加点击操作
+    $("#postition").live("click",function() {
+        var cl = document.getElementById("cityList");
+        if (cl.style.display == "none") {
+            cl.style.display = "";
+        } else {
+            cl.style.display = "none";
+        }	
+    })
 
 
-// 给城市列表上的关闭按钮添加点击操作
-$("#popup_close").live("click",function(){
+    // 给城市列表上的关闭按钮添加点击操作
+    $("#popup_close").live("click",function(){
     
-	var cl = document.getElementById("cityList");
-	if (cl.style.display == "none") {
-		cl.style.display = "";
-	} else {
-		cl.style.display = "none";
-	}
-})
+        var cl = document.getElementById("cityList");
+        if (cl.style.display == "none") {
+            cl.style.display = "";
+        } else {
+            cl.style.display = "none";
+        }
+    })
 
 }
 
@@ -1387,37 +1395,38 @@ $(document).ready(function() {
     //    });
 
 
-$(function($){ 
-     $.datepicker.regional['zh-CN'] = { 
-        clearText: '清除', 
-        clearStatus: '清除已选日期', 
-        closeText: '关闭', 
-        closeStatus: '不改变当前选择', 
-        prevText: '<上月', 
-        prevStatus: '显示上月', 
-        prevBigText: '<<', 
-        prevBigStatus: '显示上一年', 
-        nextText: '下月>', 
-        nextStatus: '显示下月', 
-        nextBigText: '>>', 
-        nextBigStatus: '显示下一年', 
-        currentText: '今天', 
-        currentStatus: '显示本月', 
-        monthNames: ['一月','二月','三月','四月','五月','六月', '七月','八月','九月','十月','十一月','十二月'], 
-        monthNamesShort: ['一','二','三','四','五','六', '七','八','九','十','十一','十二'], 
-        monthStatus: '选择月份', 
-        yearStatus: '选择年份', 
-        weekHeader: '周', 
-        weekStatus: '年内周次', 
-        dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'], 
-        dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'], 
-        dayNamesMin: ['日','一','二','三','四','五','六'], 
-        dayStatus: '设置 DD 为一周起始', 
-        dateStatus: '选择 m月 d日, DD', 
-        dateFormat: 'yy-mm-dd', 
-        firstDay: 1, 
-        initStatus: '请选择日期', 
-        isRTL: false}; 
+    $(function($){ 
+        $.datepicker.regional['zh-CN'] = { 
+            clearText: '清除', 
+            clearStatus: '清除已选日期', 
+            closeText: '关闭', 
+            closeStatus: '不改变当前选择', 
+            prevText: '<上月', 
+            prevStatus: '显示上月', 
+            prevBigText: '<<', 
+            prevBigStatus: '显示上一年', 
+            nextText: '下月>', 
+            nextStatus: '显示下月', 
+            nextBigText: '>>', 
+            nextBigStatus: '显示下一年', 
+            currentText: '今天', 
+            currentStatus: '显示本月', 
+            monthNames: ['一月','二月','三月','四月','五月','六月', '七月','八月','九月','十月','十一月','十二月'], 
+            monthNamesShort: ['一','二','三','四','五','六', '七','八','九','十','十一','十二'], 
+            monthStatus: '选择月份', 
+            yearStatus: '选择年份', 
+            weekHeader: '周', 
+            weekStatus: '年内周次', 
+            dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'], 
+            dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'], 
+            dayNamesMin: ['日','一','二','三','四','五','六'], 
+            dayStatus: '设置 DD 为一周起始', 
+            dateStatus: '选择 m月 d日, DD', 
+            dateFormat: 'yy-mm-dd', 
+            firstDay: 1, 
+            initStatus: '请选择日期', 
+            isRTL: false
+        }; 
         $.datepicker.setDefaults($.datepicker.regional['zh-CN']); 
     });
 
@@ -1504,43 +1513,52 @@ $(function($){
     );
 
 
-//tool_bar 工具条
-$(".tool_div").hide()
+    //tool_bar 工具条
+    $(".tool_div").hide()
     $(".share").show()
     $(".tool_link").live("click",function(){
-//        个人信息
+        
+        person_id = $("#html_person_id").attr("value")
+        //        个人信息
         if ($(this).attr("type") == "1"){
             $(".tool_bar_div").hide();
             $(".p_info").show()
-             $.ajax({                                                
+            $.ajax({                                                
                 type: "GET",   
             
-                url: "/people/get_profile?id="+$(this).attr("person_id")
+                url: "/people/get_profile?id="+person_id
             
             });
         }
-//        分享
+        //        分享
         if ($(this).attr("type") == "2"){
             $(".tool_bar_div").hide();
             $(".share").show()
             $.ajax({                                                
                 type: "GET",   
             
-                url: "/stream?person_id="+$(this).attr("person_id")
+                url: "/stream?person_id="+person_id
             
             });
         }
         if ($(this).attr("type") == "3"){
             $.ajax({                                                
                 type: "GET",                                    
-                url: "/albums?person_id="+$(this).attr("person_id")
+                url: "/albums?person_id="+person_id
             
             });
         }
         if ($(this).attr("type") == "5"){
             $.ajax({                                                
                 type: "GET",                                    
-                url: "/people/get_friends?person_id="+$(this).attr("person_id")
+                url: "/people/get_friends?person_id="+person_id
+            
+            });
+        }
+        if ($(this).attr("type") == "6"){
+            $.ajax({                                                
+                type: "GET",                                    
+                url: "/people/get_all_people?page="+$(this).attr("page")+"&person_id="+person_id
             
             });
         }
@@ -1551,16 +1569,16 @@ $(".tool_div").hide()
 
 
 
-//相册封面点击事件
-$(".album_link").live("click",function(){
-     $.ajax({                                                
-                type: "GET",                                    
-                url: "/albums/"+$(this).attr("id")+ "/pictures"
+    //相册封面点击事件
+    $(".album_link").live("click",function(){
+        $.ajax({                                                
+            type: "GET",                                    
+            url: "/albums/"+$(this).attr("id")+ "/pictures"
             
-            });
-})
+        });
+    })
 
-getCity();
+    getCity();
 })
 
 //锚点平滑
@@ -1587,7 +1605,14 @@ function getPos(e)
     }
     l += e.offsetLeft + (e.currentStyle?intval(e.currentStyle.borderLeftWidth):0);
     t  += e.offsetTop  + (e.currentStyle?intval(e.currentStyle.borderTopWidth):0);
-    return {x:l, y:t, w:w, h:h, wb:wb, hb:hb};
+    return {
+        x:l, 
+        y:t, 
+        w:w, 
+        h:h, 
+        wb:wb, 
+        hb:hb
+    };
 }
  
 // 获取滚动条信息
@@ -1606,13 +1631,20 @@ function getScroll()
         w = document.body.scrollWidth;
         h = document.body.scrollHeight;
     }
-    return { t: t, l: l, w: w, h: h };
+    return {
+        t: t, 
+        l: l, 
+        w: w, 
+        h: h
+    };
 }
  
 // 锚点(Anchor)间平滑跳转
 function scroller(el, duration)
 {
-    if(typeof el != 'object') { el = document.getElementById(el); }
+    if(typeof el != 'object') {
+        el = document.getElementById(el);
+    }
  
     if(!el) return;
  
@@ -1620,7 +1652,10 @@ function scroller(el, duration)
     z.el = el;
     z.p = getPos(el);
     z.s = getScroll();
-    z.clear = function(){window.clearInterval(z.timer);z.timer=null};
+    z.clear = function(){
+        window.clearInterval(z.timer);
+        z.timer=null
+        };
     z.t=(new Date).getTime();
  
     z.step = function(){
@@ -1628,15 +1663,21 @@ function scroller(el, duration)
         var p = (t - z.t) / duration;
         if (t >= duration + z.t) {
             z.clear();
-            window.setTimeout(function(){z.scroll(z.p.y, z.p.x)},13);
+            window.setTimeout(function(){
+                z.scroll(z.p.y, z.p.x)
+                },13);
         } else {
             st = ((-Math.cos(p*Math.PI)/2) + 0.5) * (z.p.y-z.s.t) + z.s.t;
             sl = ((-Math.cos(p*Math.PI)/2) + 0.5) * (z.p.x-z.s.l) + z.s.l;
             z.scroll(st, sl);
         }
     };
-    z.scroll = function (t, l){window.scrollTo(l, t)};
-    z.timer = window.setInterval(function(){z.step();},13);
+    z.scroll = function (t, l){
+        window.scrollTo(l, t)
+        };
+    z.timer = window.setInterval(function(){
+        z.step();
+    },13);
 }
 
 

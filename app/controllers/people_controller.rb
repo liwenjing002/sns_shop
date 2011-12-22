@@ -200,9 +200,15 @@ def get_friends
   @person = @logged_in
   @person = Person.find(params[:person_id]) if params[:person_id]
   @pending = me? ? @person.pending_friendship_requests : []
-  @friends = @person.friends.paginate(:order => 'created_at desc',
+  @all_peoples = @person.friends.paginate(:order => 'created_at desc',
     :page => params[:page]||1,:per_page => 20,
     :conditions=>["first_name like ?","%#{params[:people] ? params[:people][:first_name] : '%'}%"])
+end
+
+def get_all_people
+  @person = @logged_in
+  @person = Person.find(params[:person_id]) if params[:person_id]
+  @all_peoples = Person.paginate :page => params[:page]||1,:per_page => 21
 end
 
 end

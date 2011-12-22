@@ -1,6 +1,5 @@
-if ($(".content").attr("type")!= "get_profile"){
 $(".content").attr("type","get_profile") ;
 $(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar");
 $(".content").html("<div id='get_profile'></div>")
 $("#get_profile").html("<%= escape_javascript(render :partial => 'get_profile') %>");
-}
+
