@@ -156,7 +156,7 @@ class ApplicationController < ActionController::Base
     end
 
     def check_full_access
-      if @logged_in and !@logged_in.full_access?
+      if @logged_in 
         unless LIMITED_ACCESS_AVAILABLE_ACTIONS.include?("#{params[:controller]}/#{params[:action]}") or \
                LIMITED_ACCESS_AVAILABLE_ACTIONS.include?("#{params[:controller]}/*")
           render :text => t('people.limited_access_denied'), :layout => true, :status => 401
