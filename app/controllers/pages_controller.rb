@@ -80,7 +80,7 @@ class PagesController < ApplicationController
 
     def feature_enabled?
       unless (@page and @page.system? and !@page.home?) or \
-        redirect_to stream_path
+        redirect_to people_path
         false
       end
     end
