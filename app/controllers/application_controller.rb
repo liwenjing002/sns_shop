@@ -158,6 +158,10 @@ class ApplicationController < ActionController::Base
           return false
         end
       end
+       unless (request.xhr? ||  params[:controller]=="people" )
+         redirect_to people_path
+       end
+      
     end
 
     def rescue_action_with_page_detection(exception)
