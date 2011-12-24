@@ -4,10 +4,10 @@ class Group < ActiveRecord::Base
   has_many :people, :through => :memberships do
     def thumbnails
       # TODO figure out why select is changed to include people.*
-      self.all(:select => 'people.id, people.first_name, people.suffix, people.gender, people.photo_file_name, people.photo_content_type, people.photo_fingerprint', :order => 'people.last_name, people.first_name')
+      self.all(:select => 'people.id, people.first_name,  people.gender, people.photo_file_name, people.photo_content_type, people.photo_fingerprint', :order => ' people.first_name')
     end
   end
-  has_many :admins, :through => :memberships, :source => :person, :order => 'last_name, first_name', :conditions => ['memberships.admin = ?', true]
+  has_many :admins, :through => :memberships, :source => :person, :order => 'first_name', :conditions => ['memberships.admin = ?', true]
   has_many :messages, :conditions => 'parent_id is null', :order => 'updated_at desc', :dependent => :destroy
   has_many :notes, :order => 'created_at desc'
   has_many :prayer_requests, :order => 'created_at desc'
@@ -158,7 +158,7 @@ class Group < ActiveRecord::Base
     attendance_records.all(:conditions => ['attended_at >= ? and attended_at <= ?', date.strftime('%Y-%m-%d 0:00'), date.strftime('%Y-%m-%d 23:59:59')]).each do |record|
       records[record.person.id] = [record.person, record]
     end
-    records.values.sort_by { |r| [r[0].last_name, r[0].first_name] }
+    records.values.sort_by { |r| [ r[0].first_name] }
   end
 
   def attendance_dates
@@ -191,7 +191,7 @@ class Group < ActiveRecord::Base
     comment_people_ids = items.map { |s| s.context['comments'].to_a.map { |c| c['person_id'] } }.flatten
     comment_people = Person.all(
       :conditions => ["id in (?)", comment_people_ids],
-      :select => 'first_name, suffix, gender, id,  updated_at, photo_file_name, photo_fingerprint' # only what's needed
+      :select => 'first_name,  gender, id,  updated_at, photo_file_name, photo_fingerprint' # only what's needed
     ).inject({}) { |h, p| h[p.id] = p; h } # as a hash with id as the key
     items.each do |stream_item|
       stream_item.context['comments'].to_a.each do |comment|
@@ -307,7 +307,6 @@ class Group < ActiveRecord::Base
       ),
       :member => %w(
         first_name
-        last_name
         id
         legacy_id
       )

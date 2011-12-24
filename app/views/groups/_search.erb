@@ -1,7 +1,11 @@
-<h3><%= t('groups.search_for_a_group') %></h3>
-<%= form_tag(groups_path, :method => 'get', :style => 'border:none;') do %>
-  <p>
-   <%= text_field_tag :name, params[:name], :style => 'width:120px;' %>
-    <%= submit_tag t('groups.search') %>
-  </p>
-<% end %>
+<h3 class='double-margin-top'>
+  <a href='##' class='link_no_line tool_link'  page ='1' type='7'>我的组</a>/
+  <a href='##' class='link_no_line tool_link' page ='1' type='7' all=true>全站群组</a>
+  <%if @categories %>
+  <input  type="button" class="submit2 tool_link" value="搜索" link_type ='7' type="text" all=true>
+  <input id="group_name" name="name" style="width:120px;float: right" type="text" class="group_name_text">
+  <%= select_tag 'category', options_for_select(@categories, params[:category]),:include_blank => true %>
+  <%end%>
+  
+</h3>
+<div id='groups_list'></div>

@@ -146,6 +146,34 @@ input[type=submit] {
     color: edgevalue($primary);
 }
 }
+.submit2 {
+   
+    margin-top:-10px;
+    margin-left: 5px;
+    @include curve(4px);
+    @include shadow;
+    @include gradient($light, $light - 50);
+    width:55px;
+    float: right;
+    font-family: $heading-font;
+    font-size: 1em;
+    border: none;
+    &:hover, &.active {
+        @include gradient($primary+50, $primary);
+    color: edgevalue($primary);
+}
+}
+.group_name_text{
+    margin-top:-10px;
+    padding: 4px;
+    width:120px;float: right
+}
+#category{
+    margin-top:-10px;
+    padding: 4px;
+    float:right
+}
+
 textarea {
     font-family: $body-font;
 }
@@ -794,7 +822,7 @@ span.button {
 @mixin picture {
     padding: 4px;
     border: 1px solid $light - 20;
-    margin: 4px;
+    margin: 3px;
     @include shadow(0px, 2px, 10px, .25);
 }
 .picture {

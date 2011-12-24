@@ -60,7 +60,7 @@
     <h3><%= t('groups.members') %></h3>
     <% @members.each do |member| %>
       <% content_tag :a, :href => person_path(member), :class => 'styleless' do %>
-        <%= render :partial => 'people/thumbnail', :locals => {:person => member} %>
+    <%=  thubnail_href_html member,"tn","picture"%>
       <% end %>
     <% end %>
     <% if @members.empty? %>

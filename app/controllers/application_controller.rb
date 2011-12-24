@@ -104,11 +104,6 @@ class ApplicationController < ActionController::Base
         end
         Person.logged_in = @logged_in = person
         check_full_access
-        if Site.current.id != @logged_in.site_id
-          session[:logged_in_id] = nil
-          redirect_to new_session_path
-          return false
-        end
       else
         redirect_to new_session_path(:from => request.fullpath)
         return false
@@ -156,7 +151,7 @@ class ApplicationController < ActionController::Base
     end
 
     def check_full_access
-      if @logged_in 
+      unless @logged_in 
         unless LIMITED_ACCESS_AVAILABLE_ACTIONS.include?("#{params[:controller]}/#{params[:action]}") or \
                LIMITED_ACCESS_AVAILABLE_ACTIONS.include?("#{params[:controller]}/*")
           render :text => t('people.limited_access_denied'), :layout => true, :status => 401

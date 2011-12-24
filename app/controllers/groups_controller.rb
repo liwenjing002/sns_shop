@@ -3,58 +3,20 @@ class GroupsController < ApplicationController
 
   def index
     # people/1/groups
+    
     if params[:person_id]
       @person = Person.find(params[:person_id])
-      respond_to do |format|
-        format.js   { render :partial => 'person_groups' }
-        format.html { render :action => 'index_for_person' }
-        if can_export?
-          format.xml { render :xml =>  @person.groups.to_xml(:except => %w(site_id)) }
-          format.csv { render :text => @person.groups.to_csv_mine(:except => %w(site_id)) }
-        end
-      end
-    # /groups?category=Small+Groups
-    # /groups?name=college
-    elsif params[:category] or params[:name]
+      @groups = @person.groups
+    else
       @categories = Group.category_names
       conditions = []
-      conditions.add_condition ['hidden = ? and approved = ?', false, true] unless @logged_in.admin?(:manage_groups)
       conditions.add_condition ['category = ?', params[:category]] if params[:category]
       conditions.add_condition ['name like ?', '%' + params[:name] + '%'] if params[:name]
       @groups = Group.find(:all, :conditions => conditions, :order => 'name')
-      conditions_for_hidden = conditions.dup
-      conditions_for_hidden[1] = true # only hidden groups
-      @hidden_groups = Group.find(:all, :conditions => conditions_for_hidden, :order => 'name')
-      respond_to do |format|
-        format.html { render :action => 'search' }
-        format.js
-        if can_export?
-          format.xml { render :xml =>  @groups.to_xml(:except => %w(site_id)) }
-          format.csv { render :text => @groups.to_csv_mine(:except => %w(site_id)) }
-        end
-      end
-    # /groups
-    else
-      @categories = Group.category_names
-      if @logged_in.admin?(:manage_groups)
-        @unapproved_groups = Group.find_all_by_approved(false)
-      else
-        @unapproved_groups = Group.find_all_by_creator_id_and_approved(@logged_in.id, false)
-      end
-      @person = @logged_in
-      respond_to do |format|
-        format.html
-        if can_export?
-          format.xml do
-            job = Group.create_to_xml_job
-            redirect_to generated_file_path(job.id)
-          end
-          format.csv do
-            job = Group.create_to_csv_job
-            redirect_to generated_file_path(job.id)
-          end
-        end
-      end
+    end
+    respond_to do |format|
+      format.js   
+      format.html 
     end
   end
 
@@ -186,10 +148,10 @@ class GroupsController < ApplicationController
 
   private
 
-    def feature_enabled?
-      unless Setting.get(:features, :groups) and (Site.current.max_groups.nil? or Site.current.max_groups > 0)
-        redirect_to people_path
-        false
-      end
+  def feature_enabled?
+    unless Setting.get(:features, :groups) and (Site.current.max_groups.nil? or Site.current.max_groups > 0)
+      redirect_to people_path
+      false
     end
+  end
 end

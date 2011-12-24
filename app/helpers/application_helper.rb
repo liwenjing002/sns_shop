@@ -373,15 +373,28 @@ def get_thunbnail_html person,size,html_class
     image_tag person.photo.url(size), :alt => person.name, :class => html_class
   else
     if person and person.gender.to_s == 'Female'
-      image_tag 'clean/womanoutline.medium.png', :alt => person.try(:name), :class => html_class
+      image_tag "clean/womanoutline.#{size}.png", :alt => person.try(:name), :class => html_class
     else
-      image_tag 'clean/manoutline.medium.png', :alt => person.try(:name), :class => html_class
+      image_tag "clean/manoutline.#{size}.png", :alt => person.try(:name), :class => html_class
     end
   end
+end
+#获取群组头像
+def get_group_pic_html group,size,html_class
+   if group.photo.exists? 
+    image_tag group.photo.url(size), :alt => group.name , :class => html_class
+ 
+   else 
+     image_tag "clean/group.#{size}.png", :alt => group.name, :class => html_class
+   end
 end
 
 def thubnail_href_html person,size ="tn",html_class ='icon thumbnail'
   link_to get_thunbnail_html(person,size,html_class),url_for(person),:remote=>true,:alt=>"查看用户信息"
+end
+
+def group_href_html group,size ="tn",html_class ='icon thumbnail'
+  link_to get_group_pic_html(group,size,html_class),url_for(group),:remote=>true,:alt=>"查看用户信息"
 end
 
   

@@ -186,24 +186,24 @@ jQuery.extend({
             abort: function () {}
         };	
 
-},
+    },
 
-uploadHttpData: function( r, type ) {
-    var data = !type;
-    data = type == "xml" || data ? r.responseXML : r.responseText;
-    // If the type is "script", eval it in global context
-    if ( type == "script" )
-        jQuery.globalEval( data );
-    // Get the JavaScript object, if JSON is used.
-    if ( type == "json" )
-        eval( "data = " + data );
-    // evaluate scripts within html
-    if ( type == "html" )
-        jQuery("<div>").html(data).evalScripts();
-    if(type == "default")
-        data = r.responseText;
-    return data;
-}
+    uploadHttpData: function( r, type ) {
+        var data = !type;
+        data = type == "xml" || data ? r.responseXML : r.responseText;
+        // If the type is "script", eval it in global context
+        if ( type == "script" )
+            jQuery.globalEval( data );
+        // Get the JavaScript object, if JSON is used.
+        if ( type == "json" )
+            eval( "data = " + data );
+        // evaluate scripts within html
+        if ( type == "html" )
+            jQuery("<div>").html(data).evalScripts();
+        if(type == "default")
+            data = r.responseText;
+        return data;
+    }
 })
 
 
@@ -1562,6 +1562,31 @@ $(document).ready(function() {
             
             });
         }
+        if ($(this).attr("type") == "7" || $(this).attr("link_type")==7){
+            conditions = ""
+            if($("#group_name").length>0 && $("#group_name").attr("value")!=''){
+                conditions +="&name="+$("#group_name").attr("value")
+            }
+            if($("#category").length>0 && $("#category").attr("value")!=''){
+                conditions +="&category="+$("#category").attr("value")
+            }
+            
+            if($(this).attr("all")){
+                $.ajax({                                                
+                    type: "GET",                                    
+                    url: "/groups/?page="+$(this).attr("page")+conditions
+            
+                });
+            }else{
+                $.ajax({                                                
+                    type: "GET",                                    
+                    url: "/groups/?page="+$(this).attr("page")+"&person_id="+person_id+conditions
+            
+                });
+            }
+            
+           
+        }
         
 
     })
@@ -1655,7 +1680,7 @@ function scroller(el, duration)
     z.clear = function(){
         window.clearInterval(z.timer);
         z.timer=null
-        };
+    };
     z.t=(new Date).getTime();
  
     z.step = function(){
@@ -1665,7 +1690,7 @@ function scroller(el, duration)
             z.clear();
             window.setTimeout(function(){
                 z.scroll(z.p.y, z.p.x)
-                },13);
+            },13);
         } else {
             st = ((-Math.cos(p*Math.PI)/2) + 0.5) * (z.p.y-z.s.t) + z.s.t;
             sl = ((-Math.cos(p*Math.PI)/2) + 0.5) * (z.p.x-z.s.l) + z.s.l;
@@ -1674,7 +1699,7 @@ function scroller(el, duration)
     };
     z.scroll = function (t, l){
         window.scrollTo(l, t)
-        };
+    };
     z.timer = window.setInterval(function(){
         z.step();
     },13);

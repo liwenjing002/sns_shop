@@ -1,0 +1,10 @@
+ <% @groups.each do |group| %>
+ <%for i in 0..21%>
+    <div class ="friend_pic">
+      <div>
+       <%=  group_href_html group,"medium","picture"%>
+      </div>
+      <div class="friend_pic_name"><%= group.name %></div>
+      </div>
+<% end %>
+       <%end%>

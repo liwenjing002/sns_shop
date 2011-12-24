@@ -1,1 +1,7 @@
-$('#group_results').html('<%= escape_javascript render(:partial => 'select_group') %>');
+
+
+
+$(".content").attr("type","groups") ;
+$(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar accommodate-left-sidebar2");
+$(".content").html("<%= escape_javascript(render :partial =>'search')  %>")
+$("#groups_list").html("<%= escape_javascript(render :partial =>'groups')  %>");
