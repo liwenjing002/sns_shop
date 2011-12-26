@@ -7,7 +7,7 @@
         <tr>
         <td>
           <a href="<%= url_for person_url(:id => friendship_request.from) %>">
-            <%=  thubnail_href_html friendship_request.from%>
+            <%=  person_href_html friendship_request.from%>
           </a>
         </td>
         <td>
@@ -32,7 +32,7 @@
  <%for i in 0..21%>
     <div class ="friend_pic">
       <div>
-       <%=  thubnail_href_html person,"medium","picture"%>
+       <%=  person_href_html person,"medium","picture"%>
       </div>
       <div class="friend_pic_name"><%= person.name %>(<%= person.city %>)</div>
       </div>

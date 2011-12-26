@@ -1,0 +1,30 @@
+<div class="profile-pic">
+  <% if @group.photo.exists? %>
+    <%= image_tag @group.photo.url(:profile), :alt => @group.name %>
+  <% elsif @logged_in.can_edit?(@group) and params[:controller] == 'groups' and params[:action] == 'show' %>
+    <div class="silhouette-group" onclick="location.href = '<%= edit_group_path %>#picture'">
+      <%= link_to t('groups.change_this_picture'), edit_group_path(:anchor => 'picture'), :class => 'edit-icon' %>
+    </div>
+  <% else %>
+    <div class="silhouette-group"></div>
+  <% end %>
+        <div style="margin-bottom:5px">
+    <span style="float:left"><%= @group.name %></span>
+    <span style="float:right">
+       <% if @group.linked? or @group.parents_of %>
+    <em><%= I18n.t('groups.this_group_maintained_by_staff') %></em>
+  <% elsif not @group.approved %>
+    <p class="very-strong"><%= I18n.t('groups.this_group_is_pending_approval') %></p>
+  <% else %>
+    <% if @group.membership_requests.count('*', :conditions => ['person_id = ?', @logged_in.id]) > 0 %>
+      <%= I18n.t('groups.you_requested_join_this_group') %>
+    <% elsif not @member_of %>
+      <%= link_to I18n.t('groups.join_this_group'), group_memberships_path(@group, :id => @logged_in), :method => 'post', :confirm => @group.admin?(@logged_in) ? I18n.t('are_you_sure') : I18n.t('groups.request_will_be_sent_to_admins'), :class => 'add-icon' %>
+    <% elsif not @group.last_admin?(@logged_in) %>
+      <%= link_to I18n.t('groups.leave_this_group'), group_membership_path(@group, @logged_in), :method => 'delete', :confirm => I18n.t('are_you_sure'), :class => 'delete-icon' %>
+    <% end %>
+  <% end %>
+   
+    </span>
+</div>
+</div>

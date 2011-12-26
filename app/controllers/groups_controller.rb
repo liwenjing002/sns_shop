@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   cache_sweeper :group_sweeper, :only => %w(create update destroy batch)
-
+ before_filter :get_visit_history
   def index
     # people/1/groups
     
@@ -22,6 +22,7 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
+    @person = @logged_in
     @members = @group.people.thumbnails unless fragment_exist?(:controller => 'groups', :action => 'show', :id => @group.id, :fragment => 'members')
     @member_of = @logged_in.member_of?(@group)
     if @member_of or (not @group.private? and not @group.hidden?) or @group.admin?(@logged_in)
@@ -34,14 +35,21 @@ class GroupsController < ApplicationController
     @can_post = @group.can_post?(@logged_in)
     @can_share = @group.can_share?(@logged_in)
     @albums = @group.albums.all(:order => 'name')
-    unless @group.approved? or @group.admin?(@logged_in)
-      render :text => t('groups.this_group_is_pending_approval'), :layout => true
-      return
+#    unless @group.approved? or @group.admin?(@logged_in)
+#      render :text => t('groups.this_group_is_pending_approval'), :layout => true
+#      return
+#    end
+#    unless @logged_in.can_see?(@group)
+#      render :text => t('groups.not_found'), :layout => true, :status => 404
+#      return
+#    end
+  respond_to do |format|
+    if request.xhr?  
+      format.js
+    else
+      format.html # index.html.erb
     end
-    unless @logged_in.can_see?(@group)
-      render :text => t('groups.not_found'), :layout => true, :status => 404
-      return
-    end
+  end
   end
 
   def new

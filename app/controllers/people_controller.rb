@@ -1,7 +1,7 @@
 class PeopleController < ApplicationController
 	respond_to :html,:js
   cache_sweeper :person_sweeper,:only => %w(create update destroy import batch)
-
+  before_filter :get_visit_history
   def index
     respond_to do |format|
       format.html { redirect_to person_path(@logged_in, :tour => params[:tour]) }
@@ -23,13 +23,6 @@ class PeopleController < ApplicationController
       @person = @logged_in
     else
       @person = Person.find_by_id(params[:id])
-      session[:visit_people]= Array.new if !session[:visit_people]
-      if session[:visit_people].length < 4
-        session[:visit_people].push(params[:id]) 
-      else
-        session[:visit_people].drop(0)
-        session[:visit_people].push(params[:id]) 
-      end
     end
   #访问历史  
   @visit_peoples = Person.where("id in (:ids)",:ids=>session[:visit_people]) if  session[:visit_people]

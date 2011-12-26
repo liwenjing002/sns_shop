@@ -383,18 +383,21 @@ end
 def get_group_pic_html group,size,html_class
    if group.photo.exists? 
     image_tag group.photo.url(size), :alt => group.name , :class => html_class
- 
    else 
      image_tag "clean/group.#{size}.png", :alt => group.name, :class => html_class
    end
 end
 
-def thubnail_href_html person,size ="tn",html_class ='icon thumbnail'
+def href_html object ,size ="tn",html_class ='icon thumbnail'
+  send(object.class.to_s.underscore+"_href_html",object,size,html_class)
+end
+
+def person_href_html person,size ="tn",html_class ='icon thumbnail'
   link_to get_thunbnail_html(person,size,html_class),url_for(person),:remote=>true,:alt=>"查看用户信息"
 end
 
 def group_href_html group,size ="tn",html_class ='icon thumbnail'
-  link_to get_group_pic_html(group,size,html_class),url_for(group),:remote=>true,:alt=>"查看用户信息"
+  link_to get_group_pic_html(group,size,html_class),url_for(group),:remote=>true,:alt=>"查看群组信息"
 end
 
   

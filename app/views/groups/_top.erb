@@ -1,5 +1,5 @@
 <div class="profile-left">
-  <%= render :partial => 'people/person_photo' %>
+  <%= render :partial => 'group_photo' %>
 </div>
 <%if @visit and @visit.length>1%>
   <div class="profile-right">
@@ -147,32 +147,7 @@
           </div>
         </div>
 
-        <!-- tag content-->
-        <!-- modal content --> 
-        <div id="person-modal-content" style="display:none"> 
-          <div id="person-modal-title">添加你的个性化标签</div> 
-          <div class="close"><a href="#" class="simplemodal-close">x</a></div> 
-          <div id="person-modal-data"> 
-            <div id = "place_tag" style="padding-bottom: 5px;padding-top: 10px;">
-              <span>备选标签：</span>
-              <span id="all_tags">
-                  <% @people_tags.each do |tag| %>
-                  <%= link_to_function tag.name, "$('input[name=tags]').attr('value',$(this).html())" %>
-                  <% end %>
-              </span>
-              <form accept-charset="UTF-8" action="/people/tags_change" data-remote="true" id="people-tag-change" method="post">
-                <div>
-                  <input name="person_id" type="hidden" value="<%=@person.id%>" />
-                  <input name="tags" type="hidden" value="<%=@person.id%>" />
-                  <input name="tags" type="text" value="<%=@person.tag_list.to_s%>" disabled="true"/>
-                    </div>
-                <%= submit_tag t('share.share'),:class=>"submit_button"%>
-                <span style="cursor:pointer" id ="tags_cancel" class ="button simplemodal-close">取消</span>
-             </form>
 
-            </div>
-          </div> 
-        </div> 
       </div>
     </div>
   </div>
