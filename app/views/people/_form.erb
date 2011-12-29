@@ -1,7 +1,5 @@
 <%= form_for @person do |form| %>
   <div class="panes">
-    
-      <h3>头像</h3>
       <div class="profile-pic">
         <% if @person.photo.exists? %>
           <%= image_tag(@person.photo.url(:profile), :alt => @person.name) %>

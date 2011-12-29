@@ -1,27 +1,25 @@
-<%= form_for @group, :html => {:multipart => true, :style => 'border:none;padding:0;'} do |form| %>
+<%= form_for @group, :html => { :style => 'border:none;padding:0;'},:remote=>true do |form| %>
 
   <%= error_messages_for(form) %>
-
-  <h3><%= t('groups.details') %></h3>
   <div class="spaced-labels">
     <%= form.label :name, t('groups.name_required') %>
     <%= form.text_field :name, :onkeyup => 'update_address(this.value)' %><br/>
 
     <%= form.label :category, t('groups.category_required') %>
-    <div class="form-field-hint"><%= t('groups.category_hint') %></div>
+   
     <%= form.select :category, [''] + @categories + [['[new category]', '!']], {} ,{:onChange => "if(this.value=='!') custom_select_val(this, 'Enter the new category.')"} %><br/>
 
-    <%= form.label :description, t('groups.description') %>
-    <div class="form-field-hint"><%= t('groups.description_hint') %></div>
+    <%= form.label :description, "群组描述,群组的目标或想法" %>
+    
     <%= form.text_area :description, :rows => 3 %><br/>
 
     <%= form.label :other_notes, t('groups.other_notes') %>
     <%= form.text_area :other_notes, :rows => 3 %><br/>
 
-    <% unless @group.new_record? %>
-      <%= form.label :leader_id, t('groups.leader_id') %>
-      <%= form.select :leader_id, [['(none)',nil]]+@members.map { |m| [m.name, m.id] } %><br/>
-    <% end %>
+    <%# unless @group.new_record? %>
+      <%#= form.label :leader_id, t('groups.leader_id') %>
+      <%#= form.select :leader_id, [['(none)',nil]]+@members.map { |m| [m.name, m.id] } %><br/>
+    <%# end %>
 
     <%= form.label :creator, t('groups.creator') %>
     <%= form.text_field :creator, :value => (@group.creator ? @group.creator.name : nil), :readonly => true, :name => 'creator_name' %><br/>
@@ -30,32 +28,31 @@
   <h3><%= t('groups.meets') %></h3>
   <div class="spaced-labels">
     <%= form.label :meets, t('groups.meets_when') %>
-    <div class="form-field-hint"><%= t('groups.meets_when_hint') %></div>
+    
     <%= form.text_field :meets %><br/>
 
     <%= form.label :location, t('groups.location_address') %>
-    <% if Setting.get(:services, :yahoo) %>
-      <div class="form-field-hint"><%= t('groups.location_address_hint') %></div>
-    <% end %>
-    <%= form.text_area :location, :rows => 3 %>
+        <%= form.text_area :location, :rows => 3 %>
     <div id="map-preview"></div>
     <br/>
 
-    <%= form.label :directions, t('groups.directions') %>
-    <div class="form-field-hint"><%= t('groups.directions_hint') %></div>
+    <%= form.label :directions, t('groups.directions')+"(#{t('groups.directions_hint')})" %>
+    
     <%= form.text_area :directions, :rows => 3 %>
   </div>
 
-  <h3><%= t('groups.picture') %></h3>
+  <h3>群组照片</h3>
   <div class="spaced-labels">
-    <div class="form-field-hint"><%= t('groups.picture_hint') %></div>
-    <%= render :partial => 'photo' %>
-    <%= form.file_field :photo %><br/>
+    
+   <%= render :partial => 'photo' %>
+    <%= form.file_field :photo %><br/><br/>
+    <input id="group_id" name="id" hidden="true" value="<%=@group.id%>">
+    <span class="button" id="upload_pic" onclick="group_ajaxFileUpload()">上传群组照片</span>
+      <%=image_tag("loading.gif",:id=>"loading",:style=>"display:none",:height => '30')%>
     <% if !@group.new_record? and @group.photo.exists? %>
       <%= link_to t('groups.remove_group_photo'), group_path(@group, :group => {:photo => 'remove'}), :method => 'put', :confirm => t('are_you_sure') %>
       <br/>
     <% end %>
-    <em><%= t('groups.click_save_changes_to_upload') %></em>
   </div>
 
   <h3><%= t('groups.features') %></h3>
@@ -148,67 +145,35 @@
   <p class="double-margin-top"><%= form.submit t('save_changes') %></p>
 <% end %>
 
-<% if Setting.get(:services, :yahoo) %>
-  <script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=3.4&amp;appid=<%= Setting.get(:services, :yahoo) %>"></script>
-<% end %>
+
 <script type="text/javascript">
-  function update_address(name) {
-    var address = name.toLowerCase().match(/[a-z0-9]+/g).join('');
-    $('#group_address').val(address);
-  }
-  function check_mutual_exclusion() {
-    if(!$('#group_approval_required_to_join').attr('checked') && $('#group_private').attr('checked')) {
-      alert('<%= t('groups.by_allow_anyone_to_join') %>');
-    }
-  }
-  function createMapMarker(address) {
-    var img = new YImage();
-    img.src = '/images/map_marker.gif';
-    img.size = new YSize(16, 28);
-    return new YMarker(address, img);
-  }
-  map = null;
-  function mapLocation() {
-    <%= Setting.get(:services, :yahoo) ? nil : 'return;' %>
-    var width = 350;
-    var height = 150;
-    if($('#group_location').val().match(/\s[A-Z]{2}\s+\d{5}/)) {
-      var address = $('#group_location').val();
-      if(map) {
-        map.removeMarkersAll();
-      } else {
-        $('#map-preview').html('').css('width', width+'px').css('height', height+'px');
-        map = new YMap('map-preview');
-        map.addZoomLong();
-        map.setMapType(YAHOO_MAP_REG);
-        map.addTypeControl();
-        map.disableKeyControls();
+  function group_ajaxFileUpload(){
+     $("#loading").show()
+       url = '/groups/change_pic?'+"id="+$("#group_id").attr("value")
+    $.ajaxFileUpload({
+      url:url,
+      secureuri:false,
+      dataType: 'json',
+      fileElementId:'group_photo',
+      success: function (data,status){
+        if(data.success=="true"){
+          $(".temp_pic").remove();
+          $('.profile-pic').html("");
+          alert(data.group_id)
+          
+          $("#group_id").attr("value",data.group_id)
+          alert($("#group_id").attr("value"))
+          $(".profile-pic").append("<img  src=" +data.pic_url +"  >")
+        }else{
+          alert("文件保存失败")
+        }
+         $("#loading").hide();
+      },
+      error: function (data, status, e){
+       $("#loading").hide();
       }
-      map.drawZoomAndCenter(address, 6);
-      map.addOverlay(createMapMarker(address));
-    } else {
-      $('#map-preview').html(
-        '<%= escape_javascript t('groups.unmapable_address') %>'
-      ).css('width', 'auto').css('height', 'auto');
-      map = null;
-    }
+    })
+    return false;
   }
-  function toggleAddressField() {
-    if($('#group_email').attr('checked')) {
-      $('#group_address_field').css('display', 'inline');
-    } else {
-      $('#group_address_field').css('display', 'none');
-      $('#group_address').val('');
-    }
-  }
-  function toggleCalendarField() {
-    if($('#calendar').attr('checked')) {
-      $('#group_calendar_field').css('display', 'inline');
-    } else {
-      $('#group_calendar_field').css('display', 'none');
-    }
-  }
-  toggleAddressField();
-  toggleCalendarField();
-  observeFields(mapLocation, 2000, ['group_location']);
+
 </script>

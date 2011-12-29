@@ -19,13 +19,11 @@
 <%# 分享状态，照片，视频 %>
     <div class="tool_bar">
       <ul class="share-details share-selector">
-        <li><%= link_to "个人信息", "##", :class => 'comment2-icon tool_link',:type=>"1",:person_id=>"#{@person.id}" %></li>
+        <li><%= link_to "群组简介", "##", :class => 'comment2-icon tool_link',:type=>"1",:person_id=>"#{@person.id}" %></li>
         <li><%= link_to "分享", "##", :class => 'comment2-icon tool_link' ,:type=>"2" ,:person_id=>"#{@person.id}" %></li>
         <li><%= link_to "相册", "##", :class => 'picture-icon tool_link' ,:type=>"3" ,:person_id=>"#{@person.id}" %></li>
-        <li><%= link_to "留言板", "##", :class => 'picture-icon tool_link' ,:type=>"4" ,:person_id=>"#{@person.id}" %></li>
-        <li><%= link_to "好友", "##", :class => 'picture-icon tool_link',:type=>"5" ,:person_id=>"#{@person.id}" %></li>
-         <li><%= link_to "群组", "##", :class => 'picture-icon tool_link',:type=>"7" ,:person_id=>"#{@person.id}" %></li>
-      </ul>
+        <li><%= link_to "组员", "##", :class => 'picture-icon tool_link',:type=>"5" ,:person_id=>"#{@person.id}" %></li>
+       </ul>
 
       <div class = "p_info tool_bar_div">
         <div class ="info">

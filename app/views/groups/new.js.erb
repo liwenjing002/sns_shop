@@ -1,0 +1,4 @@
+$(".content").attr("type","groups") ;
+$(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar accommodate-left-sidebar2");
+$(".content").html("<h3 class='double-margin-top'>新建群组/<a href='##' class='link_no_line tool_link'  page ='1' type='7'>返回</a></h3><div id='new_group'></div>")
+$("#new_group").html("<%= escape_javascript(render :partial =>'form')  %>");

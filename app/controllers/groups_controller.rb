@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   cache_sweeper :group_sweeper, :only => %w(create update destroy batch)
- before_filter :get_visit_history
+  before_filter :get_visit_history
   def index
     # people/1/groups
     
@@ -35,27 +35,34 @@ class GroupsController < ApplicationController
     @can_post = @group.can_post?(@logged_in)
     @can_share = @group.can_share?(@logged_in)
     @albums = @group.albums.all(:order => 'name')
-#    unless @group.approved? or @group.admin?(@logged_in)
-#      render :text => t('groups.this_group_is_pending_approval'), :layout => true
-#      return
-#    end
-#    unless @logged_in.can_see?(@group)
-#      render :text => t('groups.not_found'), :layout => true, :status => 404
-#      return
-#    end
-  respond_to do |format|
-    if request.xhr?  
-      format.js
-    else
-      format.html # index.html.erb
+    #    unless @group.approved? or @group.admin?(@logged_in)
+    #      render :text => t('groups.this_group_is_pending_approval'), :layout => true
+    #      return
+    #    end
+    #    unless @logged_in.can_see?(@group)
+    #      render :text => t('groups.not_found'), :layout => true, :status => 404
+    #      return
+    #    end
+    respond_to do |format|
+      if request.xhr?  
+        format.js
+      else
+        format.html # index.html.erb
+      end
     end
-  end
   end
 
   def new
     if Group.can_create?
       @group = Group.new(:creator_id => @logged_in.id)
       @categories = Group.categories.keys
+      respond_to do |format|
+        if request.xhr?  
+          format.js
+        else
+          format.html # index.html.erb
+        end
+      end
     else
       render :text => t('groups.no_more'), :layout => true, :status => 401
     end
@@ -63,11 +70,14 @@ class GroupsController < ApplicationController
 
   def create
     if Group.can_create?
-      photo = params[:group].delete(:photo)
-      params[:group].cleanse 'address'
-      @group = Group.new(params[:group])
+      if !params[:id] or params[:id]==""
+      @group = Group.new() 
+      else
+      @group = Group.find(params[:id])
+      end
       @group.creator = @logged_in
-      @group.photo = photo
+      @group.photo = params[:group][:photo] if params[:group][:photo]
+      @group.hidden=false
       if @group.save
         if @logged_in.admin?(:manage_groups)
           @group.update_attribute(:approved, true)
@@ -76,10 +86,23 @@ class GroupsController < ApplicationController
           @group.memberships.create(:person => @logged_in, :admin => true)
           flash[:notice] = t('groups.created_pending_approval')
         end
-        redirect_to @group
+        @person= @logged_in
+        respond_to do |format|
+        if request.xhr?  
+          format.js
+        else
+          format.html # index.html.erb
+        end
+      end
       else
         @categories = Group.categories.keys
-        render :action => 'new'
+        respond_to do |format|
+        if request.xhr?  
+          format.js{ render :action => "new"}
+        else
+          format.html # index.html.erb
+        end
+      end
       end
     else
       render :text => t('groups.no_more'), :layout => true, :status => 401
@@ -95,7 +118,24 @@ class GroupsController < ApplicationController
       render :text => t('not_authorized'), :layout => true, :status => 401
     end
   end
-
+  #改头像
+  def change_pic
+    if params[:group][:photo]
+      if !params[:id] or params[:id]==""
+      @group = Group.new({:hidden=>true}) 
+      else
+      @group = Group.find(params[:id])
+      end
+      @group.creator = @logged_in
+      @group.photo = params[:group][:photo]
+      @group.save(:validate => false)
+      render :text => "{success:'" + "true" + "',group_id:'#{@group.id}', pic_id:'" + @group.photo.id.to_s + "',pic_url:'" + @group.photo.url(:profile) + "'}";
+    else
+      render :text => "{success:'" + "true}" 
+    end
+ 
+  end
+  
   def update
     @group = Group.find(params[:id])
     if @logged_in.can_edit?(@group)
@@ -162,4 +202,8 @@ class GroupsController < ApplicationController
       false
     end
   end
+  
+  
+
+  
 end

@@ -1,10 +1,13 @@
 <h3 class='double-margin-top'>
   <a href='##' class='link_no_line tool_link'  page ='1' type='7'>我的组</a>/
   <a href='##' class='link_no_line tool_link' page ='1' type='7' all=true>全站群组</a>
+  
   <%if @categories %>
   <input  type="button" class="submit2 tool_link" value="搜索" link_type ='7' type="text" all=true>
   <input id="group_name" name="name" style="width:120px;float: right" type="text" class="group_name_text">
   <%= select_tag 'category', options_for_select(@categories, params[:category]),:include_blank => true %>
+  <%else%>
+  <p style="float: right;margin-right: 50px;"><%= link_to '新建群组', new_group_path, :class => 'link_no_line add-icon',:remote=>true %></p>
   <%end%>
   
 </h3>

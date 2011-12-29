@@ -163,6 +163,7 @@ OneBody::Application.routes.draw do
     collection do
       get  :batch
       post :batch
+      post :change_pic
     end
     resources :memberships do
       collection do
