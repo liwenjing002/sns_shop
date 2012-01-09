@@ -10,6 +10,7 @@ class GroupsController < ApplicationController
     else
       @categories = Group.category_names
       conditions = []
+      conditions.add_condition ["hidden = ?",false]
       conditions.add_condition ['category = ?', params[:category]] if params[:category]
       conditions.add_condition ['name like ?', '%' + params[:name] + '%'] if params[:name]
       @groups = Group.find(:all, :conditions => conditions, :order => 'name')
@@ -78,7 +79,7 @@ class GroupsController < ApplicationController
       @group.creator = @logged_in
       @group.photo = params[:group][:photo] if params[:group][:photo]
       @group.hidden=false
-      if @group.save
+      if @group.update_attributes(params[:group])
         if @logged_in.admin?(:manage_groups)
           @group.update_attribute(:approved, true)
           flash[:notice] = t('groups.created')
@@ -143,7 +144,13 @@ class GroupsController < ApplicationController
       params[:group].cleanse 'address'
       if @group.update_attributes(params[:group])
         flash[:notice] = t('groups.settings_saved')
-        redirect_to @group
+              respond_to do |format|
+        if request.xhr?
+          format.js{ render :action => "show"}
+        else
+          format.html # index.html.erb
+        end
+      end
       else
         edit; render :action => 'edit'
       end

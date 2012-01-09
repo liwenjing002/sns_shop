@@ -8,7 +8,7 @@ PAPERCLIP_PHOTO_OPTIONS = {
     :tn          => '36x60#',
     :small       => '75x75>',
     :medium      => '150x150>',
-    :profile     => '300x500>',
+    :profile     => '300x184#',
     :large       => '400x400>',
     :original    => '800x800>'
   },

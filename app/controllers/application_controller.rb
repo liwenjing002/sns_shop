@@ -181,7 +181,7 @@ class ApplicationController < ActionController::Base
       end
     end
     unless (request.xhr? ||  params[:controller]=="people" ||request.post? )
-      redirect_to people_path
+     # redirect_to people_path
     end
       
   end

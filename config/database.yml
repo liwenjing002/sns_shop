@@ -16,7 +16,7 @@ development:
   host: localhost
   username: root
   encodings: utf8
-  password: 
+  password: lee123
   
 test:
   adapter: mysql

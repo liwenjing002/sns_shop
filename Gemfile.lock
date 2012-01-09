@@ -1,5 +1,5 @@
 GEM
-  remote: http://rubygems.org/
+  remote: http://ruby.taobao.org/
   specs:
     aaronh-chronic (0.3.9)
     abstract (1.0.0)
@@ -133,7 +133,6 @@ DEPENDENCIES
   loofah (~> 1.0.0)
   meta_search
   mysql
-  nokogiri (~> 1.4.0)
   paperclip (~> 2.3.6)
   rails (= 3.0.4)
   sanitize (~> 1.2.1)

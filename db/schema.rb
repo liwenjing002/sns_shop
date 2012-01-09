@@ -395,18 +395,15 @@ ActiveRecord::Schema.define(:version => 20111216125330) do
   add_index "pages", ["path"], :name => "index_pages_on_path"
 
   create_table "people", :force => true do |t|
-    t.integer  "legacy_id"
     t.integer  "sequence"
-    t.string   "gender",                       :limit => 6
+    t.string   "gender",               :limit => 6
     t.string   "first_name"
     t.datetime "birthday"
     t.string   "email"
-    t.boolean  "email_changed",                                :default => false
+    t.boolean  "email_changed",                       :default => false
     t.string   "website"
-    t.text     "classes"
-    t.string   "shepherd"
-    t.string   "mail_group",                   :limit => 1
-    t.string   "encrypted_password",           :limit => 100
+    t.string   "mail_group",           :limit => 1
+    t.string   "encrypted_password",   :limit => 100
     t.text     "love_activities"
     t.text     "interests"
     t.text     "music"
@@ -416,50 +413,33 @@ ActiveRecord::Schema.define(:version => 20111216125330) do
     t.text     "quotes"
     t.text     "about"
     t.text     "testimony"
-    t.datetime "anniversary"
     t.datetime "updated_at"
     t.string   "alternate_email"
-    t.integer  "email_bounces",                                :default => 0
-    t.string   "business_category",            :limit => 100
-    t.boolean  "get_wall_email",                               :default => true
-    t.boolean  "account_frozen",                               :default => false
+    t.integer  "email_bounces",                       :default => 0
+    t.boolean  "account_frozen",                      :default => false
     t.boolean  "wall_enabled"
-    t.boolean  "messages_enabled",                             :default => true
-    t.string   "business_address"
+    t.boolean  "messages_enabled",                    :default => true
     t.string   "flags"
-    t.boolean  "visible",                                      :default => true
+    t.boolean  "visible",                             :default => true
     t.string   "parental_consent"
     t.integer  "admin_id"
-    t.boolean  "friends_enabled",                              :default => true
-    t.boolean  "member",                                       :default => false
-    t.boolean  "staff",                                        :default => false
-    t.boolean  "elder",                                        :default => false
-    t.boolean  "deacon",                                       :default => false
-    t.boolean  "can_sign_in",                                  :default => false
-    t.boolean  "visible_to_everyone",                          :default => false
-    t.boolean  "visible_on_printed_directory",                 :default => false
-    t.boolean  "full_access",                                  :default => false
-    t.integer  "legacy_family_id"
-    t.string   "feed_code",                    :limit => 50
+    t.boolean  "friends_enabled",                     :default => true
+    t.boolean  "member",                              :default => false
+    t.boolean  "can_sign_in",                         :default => false
     t.integer  "site_id"
-    t.string   "api_key",                      :limit => 50
-    t.string   "salt",                         :limit => 50
-    t.boolean  "deleted",                                      :default => false
-    t.string   "custom_type",                  :limit => 100
+    t.string   "api_key",              :limit => 50
+    t.string   "salt",                 :limit => 50
+    t.boolean  "deleted",                             :default => false
+    t.string   "custom_type",          :limit => 100
     t.text     "custom_fields"
-    t.string   "can_pick_up",                  :limit => 100
-    t.string   "cannot_pick_up",               :limit => 100
-    t.string   "medical_notes",                :limit => 200
-    t.string   "relationships_hash",           :limit => 40
-    t.integer  "donortools_id"
-    t.boolean  "synced_to_donortools",                         :default => false
+    t.boolean  "synced_to_donortools",                :default => false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
-    t.string   "photo_fingerprint",            :limit => 50
+    t.string   "photo_fingerprint",    :limit => 50
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
-    t.string   "description",                  :limit => 25
-    t.boolean  "share_address",                                :default => true
+    t.string   "description",          :limit => 25
+    t.boolean  "share_address",                       :default => true
     t.string   "qq"
     t.string   "msn"
     t.string   "weibo"
@@ -467,11 +447,10 @@ ActiveRecord::Schema.define(:version => 20111216125330) do
     t.integer  "privacy_id"
     t.boolean  "gmaps"
     t.string   "home_address"
-    t.string   "city",                         :limit => 3000
+    t.string   "city"
   end
 
   add_index "people", ["admin_id"], :name => "index_admin_id_on_people"
-  add_index "people", ["business_category"], :name => "index_business_category_on_people"
   add_index "people", ["privacy_id"], :name => "index_privacy_id_on_people"
   add_index "people", ["site_id"], :name => "index_site_id_on_people"
 

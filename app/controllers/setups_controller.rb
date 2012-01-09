@@ -40,10 +40,10 @@ class SetupsController < ApplicationController
         return
       end
       @person.can_sign_in = true
-      @person.visible_to_everyone = true
-      @person.visible_on_printed_directory = true
-      @person.full_access = true
-      @person.child = false
+      #@person.visible_to_everyone = true
+      #@person.visible_on_printed_directory = true
+      #@person.full_access = true
+      #@person.child = false
       @person.admin = Admin.create!(:super_admin => true)
       if @person.save
          @person.map = Map.create({:person_id => @person.id})

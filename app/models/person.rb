@@ -80,7 +80,7 @@ class Person < ActiveRecord::Base
   validates_length_of :password, :minimum => 5, :allow_nil => true, :if => Proc.new { Person.logged_in }
   validates_confirmation_of :password, :if => Proc.new { Person.logged_in }
   validates_uniqueness_of :alternate_email, :allow_nil => true, :scope => [:site_id, :deleted], :unless => Proc.new { |p| p.deleted? }
-  validates_uniqueness_of :feed_code, :allow_nil => true, :scope => :site_id
+ # validates_uniqueness_of :feed_code, :allow_nil => true, :scope => :site_id
   validates_format_of :website, :allow_nil => true, :allow_blank => true, :with => /^https?\:\/\/.+/
   validates_format_of :alternate_email, :allow_nil => true, :allow_blank => true, :with => VALID_EMAIL_ADDRESS
   validates_inclusion_of :gender, :in => %w(Male Female), :allow_nil => true
@@ -375,7 +375,7 @@ class Person < ActiveRecord::Base
   end
 
   # generates security code for grabbing feed(s) without logging in
-  before_create :update_feed_code
+  #before_create :update_feed_code
   def update_feed_code
     begin # ensure unique
       code = ActiveSupport::SecureRandom.hex(50)[0...50]
