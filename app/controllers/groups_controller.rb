@@ -24,14 +24,13 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
     @person = @logged_in
-    @members = @group.people.thumbnails unless fragment_exist?(:controller => 'groups', :action => 'show', :id => @group.id, :fragment => 'members')
+    
     @member_of = @logged_in.member_of?(@group)
     if @member_of or (not @group.private? and not @group.hidden?) or @group.admin?(@logged_in)
       @stream_items = @group.shared_stream_items(20)
     else
       @stream_items = []
     end
-    @show_map = Setting.get(:services, :yahoo) && @group.mapable?
     @show_cal = @group.gcal_url
     @can_post = @group.can_post?(@logged_in)
     @can_share = @group.can_share?(@logged_in)
@@ -46,6 +45,19 @@ class GroupsController < ApplicationController
     #    end
     respond_to do |format|
       if request.xhr?  
+        format.js
+      else
+        format.html # index.html.erb
+      end
+    end
+  end
+
+
+  def get_members
+    @group = Group.find(params[:group_id])
+    @members = @group.people.thumbnails
+    respond_to do |format|
+      if request.xhr?
         format.js
       else
         format.html # index.html.erb

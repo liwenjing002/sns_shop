@@ -161,6 +161,7 @@ OneBody::Application.routes.draw do
 
   resources :groups do
     collection do
+      get :get_members
       get  :batch
       post :batch
       post :change_pic

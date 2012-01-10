@@ -5,3 +5,4 @@ $(".content").attr("type","groups") ;
 $(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar accommodate-left-sidebar2");
 $(".content").html("<%= escape_javascript(render :partial =>'search')  %>")
 $("#groups_list").html("<%= escape_javascript(render :partial =>'groups')  %>");
+$(".tool_link[type=8]").trigger("click")

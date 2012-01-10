@@ -1519,6 +1519,7 @@ $(document).ready(function() {
     $(".tool_link").live("click",function(){
         
         person_id = $("#html_person_id").attr("value")
+        group_id = $("#html_group_id").attr("value")
         //        个人信息
         if ($(this).attr("type") == "1"){
             $(".tool_bar_div").hide();
@@ -1584,8 +1585,38 @@ $(document).ready(function() {
             
                 });
             }
-            
            
+           
+        }
+         //群组介绍
+            if ($(this).attr("type") == "8"){
+               $(".tool_bar_div").hide();
+               $(".p_info").show()
+            }
+            //群组相册
+            if ($(this).attr("type") == "9"){
+                $.ajax({
+                    type: "GET",
+                    url: "/albums?group_id="+group_id
+
+                });
+            }
+        //群组成员
+        if ($(this).attr("type") == "10"){
+            $.ajax({
+                type: "GET",
+                url: "/groups/get_members?group_id="+group_id
+
+            });
+        }
+        //群组分享
+        if ($(this).attr("type") == "11"){
+             $(".tool_bar_div").hide();
+            $(".share").show()
+            $.ajax({
+                type: "GET",
+               url: "/stream?group_id="+group_id
+            });
         }
         
 

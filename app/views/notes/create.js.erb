@@ -9,15 +9,15 @@ $(".stream-items :first-child").slideDown("slow");
   $("#notice").show()
   $('#notice').fadeOut(15000);
 <%end%>
-$("#share-note").resetForm();
-editor_note.setContent('');
+<%#*$("#share-note").resetForm();%>
+<%#*editor_note.setContent('');%>
 $(".location_info").hide();
 $("#marker_geocode_position").attr("value", '');
 $("#marker_destin_position").attr("value", '');
-if(MapObject.temp_marker){
-MapObject.temp_marker.closeInfoWindow(MapObject.infoWindow);
-MapObject.map.removeOverlay(MapObject.temp_marker); 
-}
+<%#*if(MapObject.temp_marker){%>
+<%#*MapObject.temp_marker.closeInfoWindow(MapObject.infoWindow);%>
+<%#*MapObject.map.removeOverlay(MapObject.temp_marker);%>
+<%#*}%>
 <%if @marker_at %>
   html = '<%= raw mark_html(@marker_at) %>'
   <%if !is_blank_zero(@marker_at.marker_latitude,@marker_at.marker_longitude) %>

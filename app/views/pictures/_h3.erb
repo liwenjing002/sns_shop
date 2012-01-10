@@ -1,0 +1,6 @@
+<%if @group%>
+<h3 class='ouble-margin-top'><a href ="/albums?group_id=<%=@group.id%>" data-remote=true><%=@group.name%>(群组)相册</a> &nbsp;&nbsp;--> &nbsp;&nbsp;<%=@album.name%></h3>
+<%else%>
+<h3 class='ouble-margin-top'><a href ="/albums?person_id=<%=@person.id%>" data-remote=true><%=@person.name%>的相册</a> &nbsp;&nbsp;--> &nbsp;&nbsp;<%=@album.name%></h3>
+<%end%>
+

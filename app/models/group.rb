@@ -140,11 +140,11 @@ class Group < ActiveRecord::Base
   def can_share?(person)
     person.member_of?(self) and \
       (
-        (email? and can_post?(person)) or \
+      (email? and can_post?(person)) or \
         blog? or \
         pictures? or \
         prayer?
-      )
+    )
   end
 
   def full_address
@@ -200,6 +200,13 @@ class Group < ActiveRecord::Base
       stream_item.readonly!
     end
     items
+  end
+
+  def all_stream_itmes(page,per_page)
+    StreamItem.paginate :page => page||1,
+      :per_page=>per_page,
+      :conditions=>["shared = ? and group_id =?",true,id]
+   
   end
 
   before_destroy :remove_parent_of_links

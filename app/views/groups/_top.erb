@@ -16,45 +16,25 @@
 <div class="profile-midle">
 <%#*分享栏%>
   <div id="html_person_id" value="<%=@person.id%>">
+    <div id="html_group_id" value="<%=@group.id%>">
 <%# 分享状态，照片，视频 %>
     <div class="tool_bar">
       <ul class="share-details share-selector">
-        <li><%= link_to "群组简介", "##", :class => 'comment2-icon tool_link',:type=>"1",:person_id=>"#{@person.id}" %></li>
-        <li><%= link_to "分享", "##", :class => 'comment2-icon tool_link' ,:type=>"2" ,:person_id=>"#{@person.id}" %></li>
-        <li><%= link_to "相册", "##", :class => 'picture-icon tool_link' ,:type=>"3" ,:person_id=>"#{@person.id}" %></li>
-        <li><%= link_to "组员", "##", :class => 'picture-icon tool_link',:type=>"5" ,:person_id=>"#{@person.id}" %></li>
-       </ul>
+        <li><%= link_to "群组简介", "##", :class => 'comment2-icon tool_link',:type=>"8"  %></li>
+        <li><%= link_to "分享", "##", :class => 'comment2-icon tool_link' ,:type=>"11"   %></li>
+        <li><%= link_to "相册", "##", :class => 'picture-icon tool_link' ,:type=>"9"   %></li>
+        <li><%= link_to "组员", "##", :class => 'picture-icon tool_link',:type=>"10"   %></li>
+      </ul>
 
       <div class = "p_info tool_bar_div">
         <div class ="info">
-          <p>
-            <%= "#{ta(@person)}是"+ t("people.#{@person.gender}") if @person.gender %>
-            <%="来自"+ @person.home_address  if @person.home_address and @person.home_address.to_s.any?%>
-            <%= "生日在"+@person.birthday.strftime("%Y-%m-%d") if @person.birthday.to_s.any? %>
-          </p>
-          <p>
-            <%= "#{ta(@person)}是一个 “"+ @person.description+ "” 的人" if @person.description.to_s.any?%>
-          </p>
-
-          <% if @person.qq.to_s.any?  or @person.msn.to_s.any? or @person.weibo.to_s.any? %>
-            <p>
-              联系方式, <%= "qq: " +@person.qq  if @person.qq%><%= "msn:"+ @person.msn if @person.msn %><%=  "微博: "+ @person.weibo if @person.weibo%>
-            </p>
-          <%end%>
-            <p id="add_person_tag">
-               性格标签：
-           <input id="person_tag"value="<%= @person.tag_list.length>0 ? @person.tag_list.to_s : "添加你的个性化标签"%>" readonly/>
-            </p>
+          <%= @group.name %>
+          <% if @group.description.to_s.any? %>
+            <p><%= @group.description %></p>
+          <% end %>
         </div>
 
-        <p>
-          <% if @logged_in.can_edit?(@person) %>
-            <%= link_to t('people.edit.profile'), edit_person_path(@person),:remote=>true, :class => 'edit-icon' %>
-          <% end %>
-          <%if @logged_in != @person%>
-            <%= link_to "给ta发邮件", new_message_path(:to_person_id => @person), :class => 'email-icon' %>
-          <%end%>
-        </p>
+      
       </div>
 
       <div class = "l_msg tool_bar_div"></div>
@@ -79,6 +59,7 @@
           <div>
             <div class="float_left"> 
               <input name="commit" type="submit" value="分享！" />
+              <input name="note[group_id]" type="hidden" value="<%=@group.id%>" />
               <input name="[is_location]" type="hidden" value="0" />
               <input class="is_location" id="_is_location" name="[is_location]" title="是否带地理位置，默认为当前位置" type="checkbox" value="1" />地理位置
             </div>
@@ -102,7 +83,7 @@
             <form accept-charset="UTF-8" action="/pictures" class="new_picture" enctype="multipart/form-data" id="share-picture" method="post" >
               <input id="pictures"  name="picture" type="file" /><br/>
               <input id="return_url"  name="redirect_to" type="hidden" value="/stream" />
-              <%= select "",:album,  Album.find(:all,:conditions=>["person_id = ? ",@logged_in.id]).collect {|p| [ p.name, p.name ] } + [['[新增相册]', '!']], {} ,{:onChange => "if(this.value=='!') custom_select_val(this, '新增相册')"} %><br/>
+              <%= select "",:album,  @group.albums.collect {|p| [ p.name, p.name ] } + [['[新增相册]', '!']], {} ,{:onChange => "if(this.value=='!') custom_select_val(this, '新增相册')"} %><br/>
               <textarea id="editor_pic" name="photo_text"></textarea>
               <div class="location_info">
                 <input class="marker_geocode_position" id="marker_geocode_position" name="marker[geocode_position]" placeholder="我的位置" size="30" type="text" /><br/>
@@ -111,6 +92,7 @@
               <input class="marker_marker_longitude" id="marker_marker_longitude" name="marker[marker_longitude]" size="30" type="hidden" />
 
               <div id="pic_submit">
+                 <input name="group_id" type="hidden" value="<%=@group.id%>" />
                 <input name="commit" type="submit" value="分享！">
                 <input name="[is_location]" type="hidden" value="0" /><input class="is_location" id="_is_location" name="[is_location]" title="是否带地理位置，默认为当前位置" type="checkbox" value="1" />地理位置
               </div>

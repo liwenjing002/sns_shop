@@ -1,0 +1,5 @@
+
+$(".content").attr("type","group_member") ;
+$(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar accommodate-left-sidebar2");
+$(".content").html("<h3 class='double-margin-top'><a href='##' class='link_no_line tool_link'  type='10'><%=@group.name%>的组员</a></h3><div id='member_list'></div>")
+$("#member_list").html("<%= escape_javascript(render :partial =>'members')  %>");

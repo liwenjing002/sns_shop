@@ -2,6 +2,8 @@ class PicturesController < ApplicationController
   respond_to :html,:js
   def index
     @album = Album.find(params[:album_id])
+    @person = @album.person
+    @group = @album.group
     @pictures = @album.pictures.paginate(:order => 'id', :page => params[:page]||1)
      respond_to do |format|
         if request.xhr?  

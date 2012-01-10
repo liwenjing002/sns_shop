@@ -1,0 +1,10 @@
+<h3 class='double-margin-top'>
+  <%if @group%>
+ <%=link_to @group.name+'(群组)的分享', '##', :class => 'link_no_line tool_link' ,:type=>'11'  %>/
+  <%= link_to '地图模式', '##', :class => 'link_no_line tool_link' ,:type=>'7' %>
+  <%else%>
+   <%=link_to @person.name+'的分享', '##', :class => 'link_no_line tool_link' ,:type=>'2'  %>/
+  <%= link_to '地图模式', '##', :class => 'link_no_line tool_link' ,:type=>'7'  %>
+  
+  <%end%>
+</h3>
