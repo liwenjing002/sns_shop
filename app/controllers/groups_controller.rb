@@ -24,29 +24,15 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
     @person = @logged_in
-    
-    @member_of = @logged_in.member_of?(@group)
-    if @member_of or (not @group.private? and not @group.hidden?) or @group.admin?(@logged_in)
-      @stream_items = @group.shared_stream_items(20)
-    else
-      @stream_items = []
-    end
-    @show_cal = @group.gcal_url
-    @can_post = @group.can_post?(@logged_in)
-    @can_share = @group.can_share?(@logged_in)
-    @albums = @group.albums.all(:order => 'name')
-    #    unless @group.approved? or @group.admin?(@logged_in)
-    #      render :text => t('groups.this_group_is_pending_approval'), :layout => true
-    #      return
-    #    end
-    #    unless @logged_in.can_see?(@group)
-    #      render :text => t('groups.not_found'), :layout => true, :status => 404
-    #      return
-    #    end
     respond_to do |format|
       if request.xhr?  
         format.js
       else
+        if @member_of or (not @group.private? and not @group.hidden?) or @group.admin?(@logged_in)
+          @stream_items = @group.shared_stream_items(20)
+        else
+          @stream_items = []
+        end
         format.html # index.html.erb
       end
     end
@@ -84,9 +70,9 @@ class GroupsController < ApplicationController
   def create
     if Group.can_create?
       if !params[:id] or params[:id]==""
-      @group = Group.new() 
+        @group = Group.new()
       else
-      @group = Group.find(params[:id])
+        @group = Group.find(params[:id])
       end
       @group.creator = @logged_in
       @group.photo = params[:group][:photo] if params[:group][:photo]
@@ -101,21 +87,21 @@ class GroupsController < ApplicationController
         end
         @person= @logged_in
         respond_to do |format|
-        if request.xhr?  
-          format.js
-        else
-          format.html # index.html.erb
+          if request.xhr?
+            format.js
+          else
+            format.html # index.html.erb
+          end
         end
-      end
       else
         @categories = Group.categories.keys
         respond_to do |format|
-        if request.xhr?  
-          format.js{ render :action => "new"}
-        else
-          format.html # index.html.erb
+          if request.xhr?
+            format.js{ render :action => "new"}
+          else
+            format.html # index.html.erb
+          end
         end
-      end
       end
     else
       render :text => t('groups.no_more'), :layout => true, :status => 401
@@ -135,9 +121,9 @@ class GroupsController < ApplicationController
   def change_pic
     if params[:group][:photo]
       if !params[:id] or params[:id]==""
-      @group = Group.new({:hidden=>true}) 
+        @group = Group.new({:hidden=>true})
       else
-      @group = Group.find(params[:id])
+        @group = Group.find(params[:id])
       end
       @group.creator = @logged_in
       @group.photo = params[:group][:photo]
@@ -151,18 +137,19 @@ class GroupsController < ApplicationController
   
   def update
     @group = Group.find(params[:id])
+    @person = @logged_in
     if @logged_in.can_edit?(@group)
       params[:group][:photo] = nil if params[:group][:photo] == 'remove'
       params[:group].cleanse 'address'
       if @group.update_attributes(params[:group])
         flash[:notice] = t('groups.settings_saved')
-              respond_to do |format|
-        if request.xhr?
-          format.js{ render :action => "show"}
-        else
-          format.html # index.html.erb
+        respond_to do |format|
+          if request.xhr?
+            format.js{ render :action => "show"}
+          else
+            format.html # index.html.erb
+          end
         end
-      end
       else
         edit; render :action => 'edit'
       end

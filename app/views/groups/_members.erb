@@ -2,7 +2,6 @@
   <% if @members.any? %>
 
     <% @members.each do |person| %>
-      <%for i in 0..21%>
         <div class ="friend_pic">
           <div>
             <%=  person_href_html person,"medium","picture"%>
@@ -10,8 +9,6 @@
           <div class="friend_pic_name"><%= person.name %><%if person.city%>(<%= person.city %>)<%end%></div>
         </div>
       <% end %>
-    <%end%>
-
   <% end %>
 
 <% else %>

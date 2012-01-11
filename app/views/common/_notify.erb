@@ -7,4 +7,15 @@
   <div class="highlight">
     <%= t('friends.you_have_activity_invite_html', :url => person_activities_path(@person)) %>
   </div>
-<% end %> 
+<% end %>
+<%if @group%>
+<% if !@group.approved? and @logged_in.admin?(:manage_groups) %>
+  <div class="alert">
+    <p><%= t('groups.this_group_is_pending_approval') %></p>
+    <%= form_for @group,:remote=>true do |form| %>
+      <%= hidden_field_tag 'group[approved]', true %>
+      <%= form.submit t('groups.approve_group') %>
+    <% end %>
+  </div>
+<% end %>
+<%end%>

@@ -205,6 +205,7 @@ class Group < ActiveRecord::Base
   def all_stream_itmes(page,per_page)
     StreamItem.paginate :page => page||1,
       :per_page=>per_page,
+      :order=>"created_at desc",
       :conditions=>["shared = ? and group_id =?",true,id]
    
   end
