@@ -1,0 +1,4 @@
+$(".inner_top").html("<%= escape_javascript( render :partial => 'groups/top') %>");
+$("#html_person_id").attr("value",<%=@logged_in.id%>)
+$("#html_group_id").attr("value",<%=@group.id%>)
+$(".tool_link[type=8]").trigger("click")

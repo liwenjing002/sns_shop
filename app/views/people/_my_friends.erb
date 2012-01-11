@@ -25,18 +25,16 @@
   </div>
 <% end %>
 
-<% if @all_peoples.any? %>
+<% if @all_peoples%>
   <% if @all_peoples.any? %>
 
     <% @all_peoples.each do |person| %>
-      <%for i in 0..21%>
         <div class ="friend_pic">
           <div>
             <%=  person_href_html person,"medium","picture"%>
           </div>
-          <div class="friend_pic_name"><%= person.name %>(<%= person.city %>)</div>
+          <div class="friend_pic_name"><%= person.name %><%= "("+person.city+")" if person.city%></div>
         </div>
-      <% end %>
     <%end%>
 
   <% end %>

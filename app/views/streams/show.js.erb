@@ -1,4 +1,4 @@
-scroller('anchor_content', 800);
+<%#*scroller('anchor_content', 800);%>
 $(".content").attr("type","stream") ;
 $(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar");
 $(".content").html("<%= escape_javascript(render :partial => 'h3')%><%= escape_javascript(render :partial => 'common/notify')%><div class='stream-items' id='stream_item_wall'></div>"+"<a href='/stream?page=2' data-remote='true' id='show_next'>继续查看</a>")

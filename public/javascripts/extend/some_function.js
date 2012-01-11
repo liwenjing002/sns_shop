@@ -1323,26 +1323,23 @@ function getCity(){
         container : "citylist_container"
     });
 
-    $("#postition").blur(function(){
-        var cl = document.getElementById("cityList");
-        if (cl.style.display == "none") {
-            cl.style.display = "";
-        } else {
-            cl.style.display = "none";
-        }
-    })
+    var x = $('#postition').offset().top+30;
+
+    $(".map_popup").css("top", x);
+
     // 给城市点击时，添加相关操作
     myCl.addEventListener("cityclick", function(e) {
         // 修改当前城市显示
         document.getElementById("postition").value = e.name;
-
+        //        alert(1)
         // 点击后隐藏城市列表
         document.getElementById("cityList").style.display = "none";
     });
 
-    // 给“更换城市”链接添加点击操作
+    // 给“城市”链接添加点击操作
     $("#postition").live("click",function() {
         var cl = document.getElementById("cityList");
+
         if (cl.style.display == "none") {
             cl.style.display = "";
         } else {
@@ -1353,13 +1350,9 @@ function getCity(){
 
     // 给城市列表上的关闭按钮添加点击操作
     $("#popup_close").live("click",function(){
-    
-        var cl = document.getElementById("cityList");
-        if (cl.style.display == "none") {
-            cl.style.display = "";
-        } else {
-            cl.style.display = "none";
-        }
+//        alert()
+     document.getElementById("cityList").style.display = "none";
+     return false;
     })
 
 }
@@ -1588,19 +1581,19 @@ $(document).ready(function() {
            
            
         }
-         //群组介绍
-            if ($(this).attr("type") == "8"){
-               $(".tool_bar_div").hide();
-               $(".p_info").show()
-            }
-            //群组相册
-            if ($(this).attr("type") == "9"){
-                $.ajax({
-                    type: "GET",
-                    url: "/albums?group_id="+group_id
+        //群组介绍
+        if ($(this).attr("type") == "8"){
+            $(".tool_bar_div").hide();
+            $(".p_info").show()
+        }
+        //群组相册
+        if ($(this).attr("type") == "9"){
+            $.ajax({
+                type: "GET",
+                url: "/albums?group_id="+group_id
 
-                });
-            }
+            });
+        }
         //群组成员
         if ($(this).attr("type") == "10"){
             $.ajax({
@@ -1611,11 +1604,11 @@ $(document).ready(function() {
         }
         //群组分享
         if ($(this).attr("type") == "11"){
-             $(".tool_bar_div").hide();
+            $(".tool_bar_div").hide();
             $(".share").show()
             $.ajax({
                 type: "GET",
-               url: "/stream?group_id="+group_id
+                url: "/stream?group_id="+group_id
             });
         }
         
@@ -1634,7 +1627,6 @@ $(document).ready(function() {
         });
     })
 
-    getCity();
 })
 
 //锚点平滑

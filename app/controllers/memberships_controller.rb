@@ -2,7 +2,7 @@ class MembershipsController < ApplicationController
 
   skip_before_filter :authenticate_user, :only => %w(show update)
   before_filter :authenticate_user_with_code_or_session, :only => %w(show update)
-
+  before_filter :get_visit_history
   cache_sweeper :membership_sweeper, :only => %w(create update destroy batch)
 
   def show
@@ -27,6 +27,7 @@ class MembershipsController < ApplicationController
   # join group
   def create
     @group = Group.find(params[:group_id])
+    
     @person = Person.find(params[:id])
     if @logged_in.can_edit?(@group) or not @group.approval_required_to_join?
       @group.memberships.create(:person => @person)
@@ -34,11 +35,21 @@ class MembershipsController < ApplicationController
       @group.membership_requests.create(:person => @person)
       flash[:warning] = t('groups.request_sent')
     end
-    redirect_back
+    @member_of = @logged_in.member_of?(@group)
+    respond_to do |format|
+      if request.xhr?
+        format.js{ render "change"}
+      else
+        format.html # index.html.erb
+      end
+    end
+   
   end
 
   def update
     @group = Group.find(params[:group_id])
+    @member_of = @logged_in.member_of?(@group)
+
     # email on/off
     if params[:email]
       @person = Person.find(params[:id])
@@ -49,7 +60,7 @@ class MembershipsController < ApplicationController
       else
         render :text => t('There_was_an_error'), :layout => true, :status => 500
       end
-    # promote/demote
+      # promote/demote
     elsif @logged_in.can_edit?(@group)
       @membership = @group.memberships.find_or_create_by_person_id(params[:id])
       @membership.update_attribute :admin, !params[:promote].nil?
@@ -63,6 +74,7 @@ class MembershipsController < ApplicationController
   # leave group
   def destroy
     @group = Group.find(params[:group_id])
+     @person = @logged_in
     @membership = @group.memberships.find_by_person_id(params[:id])
     if @logged_in.can_edit?(@group) or @membership.try(:person) == @logged_in
       if @membership.person and @group.last_admin?(@membership.person)
@@ -72,80 +84,84 @@ class MembershipsController < ApplicationController
       end
     end
     respond_to do |format|
-      format.html { redirect_back }
+    if request.xhr?
+      format.js{ render "change"}
+    else
+      format.html  { redirect_back }
+    end
+  end
+
+end
+
+def batch
+  if params[:person_id]
+    batch_on_person
+  else
+    batch_on_group
+  end
+end
+
+def batch_on_person
+  @person = Person.find(params[:person_id])
+  if @logged_in.can_edit?(@person) and @logged_in.admin?(:manage_groups)
+    groups = (params[:ids] || []).map { |id| Group.find(id) }
+    # add groups
+    (groups - @person.groups).each do |group|
+      group.memberships.create(:person => @person)
+    end
+    # remove groups
+    (@person.groups - groups).each do |group|
+      group.memberships.find_by_person_id(@person.id).destroy unless group.last_admin?(@person)
+    end
+    @person.groups.reload
+    respond_to do |format|
       format.js
     end
+  else
+    render :text => t('not_authorized'), :layout => true, :status => 401
   end
+end
 
-  def batch
-    if params[:person_id]
-      batch_on_person
-    else
-      batch_on_group
-    end
-  end
-
-  def batch_on_person
-    @person = Person.find(params[:person_id])
-    if @logged_in.can_edit?(@person) and @logged_in.admin?(:manage_groups)
-      groups = (params[:ids] || []).map { |id| Group.find(id) }
-      # add groups
-      (groups - @person.groups).each do |group|
-        group.memberships.create(:person => @person)
-      end
-      # remove groups
-      (@person.groups - groups).each do |group|
-        group.memberships.find_by_person_id(@person.id).destroy unless group.last_admin?(@person)
-      end
-      @person.groups.reload
-      respond_to do |format|
-        format.js
-      end
-    else
-      render :text => t('not_authorized'), :layout => true, :status => 401
-    end
-  end
-
-  def batch_on_group
-    @group = Group.find(params[:group_id])
-    group_people = @group.people
-    if @logged_in.can_edit?(@group)
-      @can_edit = true
-      if params[:ids] and params[:ids].is_a?(Array)
-        @added = []
-        params[:ids].each do |id|
-          if request.post?
-            person = Person.find(id)
-            unless params[:commit] == 'Ignore' or group_people.include?(person)
-              @group.memberships.create(:person => person) 
-              @added << person
-            end
-            @group.membership_requests.find_all_by_person_id(id).each { |r| r.destroy }
-          elsif request.delete?
-            if @membership = @group.memberships.find_by_person_id(id)
-              @membership.destroy unless @group.last_admin?(@membership.person)
-            end
+def batch_on_group
+  @group = Group.find(params[:group_id])
+  group_people = @group.people
+  if @logged_in.can_edit?(@group)
+    @can_edit = true
+    if params[:ids] and params[:ids].is_a?(Array)
+      @added = []
+      params[:ids].each do |id|
+        if request.post?
+          person = Person.find(id)
+          unless params[:commit] == 'Ignore' or group_people.include?(person)
+            @group.memberships.create(:person => person)
+            @added << person
+          end
+          @group.membership_requests.find_all_by_person_id(id).each { |r| r.destroy }
+        elsif request.delete?
+          if @membership = @group.memberships.find_by_person_id(id)
+            @membership.destroy unless @group.last_admin?(@membership.person)
           end
         end
-        respond_to do |format|
-          format.js
-          format.html { redirect_back }
-        end
-      else
-        render :text => t('groups.must_specify_ids_list')
+      end
+      respond_to do |format|
+        format.js
+        format.html { redirect_back }
       end
     else
-      render :text => t('not_authorized'), :layout => true, :status => 401
+      render :text => t('groups.must_specify_ids_list')
     end
+  else
+    render :text => t('not_authorized'), :layout => true, :status => 401
   end
+end
 
-  def birthdays
-    @group = Group.find(params[:group_id])
-    if @logged_in.can_edit?(@group)
-      @people = @group.people.where('birthday is not null').order("#{sql_month 'people.birthday'}, #{sql_day 'people.birthday'}, people.last_name, people.first_name")
-    else
-      render :text => t('not_authorized'), :layout => true, :status => 401
-    end
+def birthdays
+  @group = Group.find(params[:group_id])
+  if @logged_in.can_edit?(@group)
+    @people = @group.people.where('birthday is not null').order("#{sql_month 'people.birthday'}, #{sql_day 'people.birthday'}, people.last_name, people.first_name")
+  else
+    render :text => t('not_authorized'), :layout => true, :status => 401
   end
+end
 
 end

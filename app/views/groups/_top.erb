@@ -1,5 +1,5 @@
 <div class="profile-left">
-  <%= render :partial => 'group_photo' %>
+  <%= render :partial => '/groups/group_photo' %>
 </div>
 <%if @visit and @visit.length>1%>
   <div class="profile-right">
@@ -21,7 +21,7 @@
     <div class="tool_bar">
       <ul class="share-details share-selector">
         <li><%= link_to "群组简介", "##", :class => 'comment2-icon tool_link',:type=>"8"  %></li>
-        <li><%= link_to "分享", "##", :class => 'comment2-icon tool_link' ,:type=>"11"   %></li>
+     <li><%= link_to "分享", "##", :class => 'comment2-icon tool_link' ,:type=>"11"   %></li>
         <li><%= link_to "相册", "##", :class => 'picture-icon tool_link' ,:type=>"9"   %></li>
         <li><%= link_to "组员", "##", :class => 'picture-icon tool_link',:type=>"10"   %></li>
         <li><%= link_to "全部群组", "##", :class => 'picture-icon tool_link',:type=>"7",:all=>true   %></li>
@@ -46,20 +46,21 @@
 %>
 
         <form accept-charset="UTF-8" action="/notes" data-remote="true" id="share-note" method="post">
-          <textarea  id="note_body_editor" name="note[body]" placeholder="分享你的心情和故事！:-)" style="width:450px;height:85px;"></textarea>
+          <textarea  id="note_body_editor" name="note[body]" placeholder="<%if !@member_of%> 先加入群组，<%end%>分享你的心情和故事！:-)" style="width:450px;height:85px;"></textarea>
           <input class="marker_marker_latitude" id="marker_marker_latitude" name="marker[marker_latitude]" size="30" type="hidden" />
           <input class="marker_marker_longitude" id="marker_marker_longitude" name="marker[marker_longitude]" size="30" type="hidden" />
-
+          <%if @member_of%>
           <!-- video content -->
           <ul class="share-details share-selector">
             <li><%= link_to "文章", "#", :class => 'comment2-icon', :id => 'share-note-icon' %></li>
             <li><%= link_to t('share.picture'), "#", :class => 'picture-icon', :id => 'share-picture-icon' %></li>
             <li><%= link_to t('share.video'), "#", :class => 'picture-icon', :id => 'share-video-icon' %></li>
           </ul>
-
+          <%end%>
           <div>
+             <%if @member_of%>   
             <div class="float_left"> 
-              <input name="commit" type="submit" value="分享！" />
+             <input name="commit" type="submit" value="分享！" />
               <input name="note[group_id]" type="hidden" value="<%=@group.id%>" />
               <input name="[is_location]" type="hidden" value="0" />
               <input class="is_location" id="_is_location" name="[is_location]" title="是否带地理位置，默认为当前位置" type="checkbox" value="1" />地理位置
@@ -67,6 +68,7 @@
             <div class="location_info">
               <input class="marker_geocode_position" id="marker_geocode_position" name="marker[geocode_position]" placeholder="地球某地" size="30" type="text" /><br/>
             </div>
+            <%end%>
           </div>
         </form>
 

@@ -30,7 +30,7 @@ class AccountsController < ApplicationController
           params[:email] = params[:person][:email]
           create_by_email
         else
-          attributes = {:can_sign_in => false, :full_access => false, :visible_to_everyone => false}
+          attributes = {:can_sign_in => false}
           attributes.merge! params[:person].reject { |k, v| !%w(email first_name last_name gender birthday).include?(k) }
           @person = Person.new(attributes)
             if @person.save
@@ -39,7 +39,7 @@ class AccountsController < ApplicationController
                 Notifier.pending_sign_up(@person).deliver
                 render :text => t('accounts.pending_approval'), :layout => true
               else
-                @person.update_attributes!(:can_sign_in => true, :full_access => true, :visible_to_everyone => true, :visible_on_printed_directory => true)
+                @person.update_attributes!(:can_sign_in => true)
                 params[:email] = @person.email
                 create_by_email
               end

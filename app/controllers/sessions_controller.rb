@@ -39,8 +39,6 @@ class SessionsController < ApplicationController
       session[:ip_address] = request.remote_ip
       if params[:from].to_s.any?
         redirect_to 'http://' + request.host + ([80, 443].include?(request.port) ? '' : ":#{request.port}") + params[:from]
-      elsif person.full_access?
-        redirect_to people_path(@logged_in)
       else
         redirect_to person
       end

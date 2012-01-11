@@ -24,6 +24,7 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
     @person = @logged_in
+     @member_of = @logged_in.member_of?(@group)
     respond_to do |format|
       if request.xhr?  
         format.js
@@ -137,6 +138,7 @@ class GroupsController < ApplicationController
   
   def update
     @group = Group.find(params[:id])
+    @member_of = @logged_in.member_of?(@group)
     @person = @logged_in
     if @logged_in.can_edit?(@group)
       params[:group][:photo] = nil if params[:group][:photo] == 'remove'
@@ -160,6 +162,7 @@ class GroupsController < ApplicationController
 
   def destroy
     @group = Group.find(params[:id])
+    
     if @logged_in.can_edit?(@group)
       @group.destroy
       flash[:notice] = t('groups.deleted')
