@@ -1,11 +1,4 @@
-<% if params[:person_id] %>
-  $('#groups_list').html('<%= escape_javascript render(:partial => 'people/group_selection') %>');
-  $('#group_list_status').html('Groups saved.');
-  $('#group_list_status').effect('highlight', {}, '3000', function(){ $(this).hide() });
-<% else %>
-  $('#memberships').prepend('<%= escape_javascript render(:partial => 'person', :collection => @added) %>')
-  if(deleting_people) $('#memberships .delete-action').show();
-  $('<%= @added.map { |p| "#person#{p.id}" }.join(', ') %>').effect('highlight', {}, 3000);
-  $('#add_person_name').val('')[0].focus();
-  $('#people-heading').html('<%= escape_javascript t('people.person', :count => @group.people.count) %>');
-<% end %>
+$(".inner_top").html("<%= escape_javascript( render :partial => 'groups/top') %>");
+$("#html_person_id").attr("value",<%=@logged_in.id%>)
+$("#html_group_id").attr("value",<%=@group.id%>)
+$(".tool_link[type=11]").trigger("click")

@@ -181,7 +181,7 @@ class ApplicationController < ActionController::Base
       end
     end
     unless (request.xhr? ||  params[:controller]=="people" ||params[:controller]=="groups" ||params[:controller].match(/^administration\/.*/)!=nil ||request.post? )
-      redirect_to people_path
+#      redirect_to people_path
     end
       
   end

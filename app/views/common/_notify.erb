@@ -9,13 +9,39 @@
   </div>
 <% end %>
 <%if @group%>
-<% if !@group.approved? and @logged_in.admin?(:manage_groups) %>
-  <div class="alert">
-    <p><%= t('groups.this_group_is_pending_approval') %></p>
-    <%= form_for @group,:remote=>true do |form| %>
-      <%= hidden_field_tag 'group[approved]', true %>
-      <%= form.submit t('groups.approve_group') %>
-    <% end %>
-  </div>
-<% end %>
+  <% if !@group.approved? and @logged_in.admin?(:manage_groups) %>
+    <div class="alert">
+      <p><%= t('groups.this_group_is_pending_approval') %></p>
+      <%= form_for @group,:remote=>true do |form| %>
+        <%= hidden_field_tag 'group[approved]', true %>
+        <%= form.submit t('groups.approve_group') %>
+      <% end %>
+    </div>
+  <% end %>
+
+
+  <% if @logged_in.can_edit?(@group)%>
+    <%@requests = @group.membership_requests%>
+    <%if @requests.any? %>
+      <div class="alert">
+        <h3><%= t('groups.requests') %></h3>
+        <%= form_tag batch_group_memberships_path(@group),:remote=>true do |form| %>
+          <% @requests.each do |req| %>
+            <%for i in 0..20%>
+              <div class ="friend_pic">
+                <%=  person_href_html req.person,"tn","picture"%>
+                <div class="friend_pic_name"><%= req.person.name %><%= check_box_tag 'ids[]', req.person.id, false, :class => 'checkbox' %></div>
+              </div>
+            <%end%>
+          <% end %>
+        <br/>
+          <p>
+            <input type="submit" name="commit" value="<%= t('groups.accept') %>"></input>
+            <input type="submit" name="commit" value="<%= t('groups.ignore') %>"></input>
+          </p>
+        <% end %>
+      </div>
+
+    <%end%>
+  <% end %>
 <%end%>

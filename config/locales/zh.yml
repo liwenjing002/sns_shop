@@ -1175,8 +1175,8 @@ zh:
     deleted: 组中删除。
     description: 说明
     description_hint: “输入一两句话给人们一见面，为什么你和你的小组的目标的想法。 
-    directions: 方向
-    directions_hint: 您可能要包括旅行的方向。
+    directions: 目的地
+    directions_hint: 小组外出的目的地。
     done_removing_people: 完成。
     edit_group: 编辑组
     edit_members: 编辑组成员
@@ -1209,13 +1209,13 @@ zh:
     last_admin_remove: “%{name}的是最后的管理员，不能删除。 
     leader: 负责人
     leader_id: 领导标识
-    leave_this_group: 给此群组
+    leave_this_group: 退出群组
     linked: 链接组
     linked_membership: （链接）
-    location_address: 位置及地址
+    location_address: 小组活动区域
     location_address_hint: 如果你输入一个物理地址，交互式地图将显示在您的网页。
-    meets: 会见
-    meets_when: 会见时
+    meets: 活动
+    meets_when: 活动时间
     meets_when_hint: 就像“星期三晚上7点 的东西或“公布 '
     members: 小组成员
     members_send: 会员发送
@@ -1248,7 +1248,7 @@ zh:
     promote: 促进
     remove_group_photo: 删除合影
     remove_people: 删除人
-    requests: 要求
+    requests: 有人想加入群组
     request_sent: 请求加入该集团已发送到组审（）。
     request_will_be_sent_to_admins: 你确定吗？请求将被发送到组审（）。
     settings_saved: 组设置已保存。

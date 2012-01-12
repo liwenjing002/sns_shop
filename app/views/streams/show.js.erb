@@ -18,4 +18,4 @@ $("#show_next").attr("href","/stream?page=<%= @page.to_i+1%>")
 
 $("#show_no_stream_msg").html("<span id='no_stream_more'>没有了。。。。</span>");
 <%end%>
-$("img[rel]").overlay({effect: 'drop',mask: '#789'});
+$("img[rel]").overlay({fixed:false,effect: 'drop',mask: '#789'});

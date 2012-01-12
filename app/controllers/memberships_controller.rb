@@ -125,6 +125,7 @@ end
 def batch_on_group
   @group = Group.find(params[:group_id])
   group_people = @group.people
+  @person = @logged_in
   if @logged_in.can_edit?(@group)
     @can_edit = true
     if params[:ids] and params[:ids].is_a?(Array)

@@ -113,7 +113,7 @@ class GroupsController < ApplicationController
     @group ||= Group.find(params[:id])
     if @logged_in.can_edit?(@group)
       @categories = Group.categories.keys
-      @members = @group.people.all(:order => 'last_name, first_name', :select => 'people.id, people.first_name, people.last_name, people.suffix')
+      @members = @group.people.all(:order => ' first_name', :select => 'people.id')
     else
       render :text => t('not_authorized'), :layout => true, :status => 401
     end

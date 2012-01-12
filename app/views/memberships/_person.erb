@@ -1,8 +1,6 @@
 <%= content_tag :tr, :id => "person#{person.id}" do %>
   <td class="icon">
-    <a href="<%= url_for person %>">
-      <%= render :partial => 'people/thumbnail', :locals => {:person => person} %>
-    </a>
+     <%=  person_href_html person,"medium","picture"%>
   </td>
   <td class="name">
     <%= link_to person.name, person %>
