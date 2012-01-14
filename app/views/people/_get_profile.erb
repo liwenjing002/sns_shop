@@ -2,17 +2,7 @@
   
   <% if private("about") %>
     <div class="about">
-      <% unless( @person.about.to_s.any? or
-            @person.love_activities.to_s.any? or
-            @person.interests.to_s.any? or
-            @person.books.to_s.any? or
-            @person.music.to_s.any? or
-            @person.movies.to_s.any? or
-            @person.tv_shows.to_s.any? or
-            @person.quotes.to_s.any?)%>
-        <em><%= t('people.nothing_here_yet') %></em>
-      <% end %>
-        <h3><%= t('About') %></h3>
+        <h3><%= @person.name + "的个人信息" %></h3>
       <% if @person.about.to_s.any? %>
         <div class="favorites-group">
           <%= preserve_breaks @person.about %>

@@ -1,5 +1,25 @@
 
 $(".content").attr("type","group_member") ;
 $(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar accommodate-left-sidebar2");
-$(".content").html("<h3 class='double-margin-top'><a href='##' class='link_no_line tool_link'  type='10'><%=@group.name%>的组员</a></h3><div id='member_list'></div>")
+$(".content").html("<%=escape_javascript(render :partial=>"h3")%><div id='member_list'></div>")
 $("#member_list").html("<%= escape_javascript(render :partial =>'members')  %>");
+
+deleting_people = false;
+$('#delete-people-action').toggle(function(){
+deleting_people = true;
+$('.delete-action').show();
+$('#delete-people-action').html('<%= escape_javascript t('groups.done_removing_people') %>');
+return false;
+}, function() {
+deleting_people = false;
+$('.delete-action').hide();
+$('#delete-people-action').html('<%= escape_javascript t('groups.remove_people') %>');
+return false;
+});
+$('#promote-people-action').toggle(function(){
+$('.promote-action').show();
+return false;
+}, function() {
+$('.promote-action').hide();
+return false;
+});

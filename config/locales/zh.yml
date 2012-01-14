@@ -1177,7 +1177,7 @@ zh:
     description_hint: “输入一两句话给人们一见面，为什么你和你的小组的目标的想法。 
     directions: 目的地
     directions_hint: 小组外出的目的地。
-    done_removing_people: 完成。
+    done_removing_people: 完成
     edit_group: 编辑组
     edit_members: 编辑组成员
     email_from_group_is_on: 从该小组的电子邮件是ON
@@ -1247,7 +1247,7 @@ zh:
     private_group: 私人集团
     promote: 促进
     remove_group_photo: 删除合影
-    remove_people: 删除人
+    remove_people: 删除组员
     requests: 有人想加入群组
     request_sent: 请求加入该集团已发送到组审（）。
     request_will_be_sent_to_admins: 你确定吗？请求将被发送到组审（）。

@@ -3,53 +3,22 @@
   <% if @members.any? %>
 
     <% @members.each do |person| %>
-        <div class ="friend_pic">
-          <div>
-            <%=  person_href_html person,"medium","picture"%>
-          </div>
-          <div class="friend_pic_name"><%= person.name %><%if person.city%>(<%= person.city %>)<%end%></div>
+      <div class ="friend_pic">
+        <div>
+          <%=  person_href_html person,"medium","picture"%>
         </div>
-      <% end %>
+        <div class="friend_pic_name"><%= person.name %><%if person.city%>(<%= person.city %>)<%end%>
+          <%= link_to 'x', group_membership_path(@group, person.id), :method => 'put', :confirm => t('are_you_sure'), :class => 'discreet delete-action' , :style => 'display:none;'%>
+          <% if @group.admin?(person, :exclude_global_admins) %>
+            <%= link_to t('groups.demote'), group_membership_path(@group, person.id), :method => :put, :class => 'promote-action', :style => 'display:none;' %>
+          <% else %>
+            <%= link_to t('groups.promote'), group_membership_path(@group, person.id, :promote => true), :method => :put, :class => 'promote-action', :style => 'display:none;' %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 
 <% else %>
   <p><%= t('groups.nobody_yet') %></p>
-<% end %>
-  <p>
-  <% @group.admins.each do |person| %>
-    <%= link_to person.name, person %>
-    <%= link_to 'x', group_membership_path(@group, person.id), :method => 'put', :confirm => t('are_you_sure'), :class => 'discreet' %>
-    <br/>
-  <% end %>
-  <% if (non_admins = @group.people.select { |p| not @group.admin?(p, true) }).any? %>
-    <%= form_tag group_memberships_path(@group), :method => 'put', :onsubmit => "if($('promote_id').value != '') this.action += '/' + $('promote_id').value; else return false" do %>
-      <%= select_tag 'id', options_for_select([''] + non_admins.map { |p| [p.name, p.id] }), :id => 'promote_id' %><br/>
-      <%= submit_tag t('groups.promote'), :name => 'promote' %>
-    <% end %>
-  <% end %>
-</p>
-
- <% if @group.attendance? and (@logged_in.can_edit?(@group) or @logged_in.admin?(:manage_attendance)) %>
-    <p>
-      <%= link_to t('groups.attendance'), group_attendance_index_path(@group), :class => 'people-icon' %>
-    </p>
-  <% end %>
-
-    <p class="margin-top">
-    <% if @logged_in.can_edit?(@group) %>
-      <%= link_to t('groups.edit_members'), group_memberships_path(@group), :class => 'edit-icon discreet' %><br/>
-      <%= link_to t('groups.edit_group'), edit_group_path(@group), :class => 'edit-icon discreet' %>
-    <% else %>
-      <%= link_to t('groups.view_members'), group_memberships_path(@group), :class => 'discreet' %>
-    <% end %>
-  </p>
-
-  <% if !@group.approved? and @logged_in.admin?(:manage_groups) %>
-  <div class="alert">
-    <p><%= t('groups.this_group_is_pending_approval') %></p>
-    <%= form_for @group do |form| %>
-      <%= hidden_field_tag 'group[approved]', true %>
-      <%= form.submit t('groups.approve_group') %>
-    <% end %>
-  </div>
 <% end %>

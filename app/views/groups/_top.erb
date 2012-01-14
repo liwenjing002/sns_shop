@@ -45,6 +45,7 @@
 不用窗体显示
 %>
 
+        <% @member_of = @logged_in.member_of?(@group)%>
         <form accept-charset="UTF-8" action="/notes" data-remote="true" id="share-note" method="post">
           <textarea  id="note_body_editor" name="note[body]" placeholder="<%if !@member_of%> 先加入群组，<%end%>分享你的心情和故事！:-)" style="width:450px;height:85px;"></textarea>
           <input class="marker_marker_latitude" id="marker_marker_latitude" name="marker[marker_latitude]" size="30" type="hidden" />

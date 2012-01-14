@@ -1,6 +1,6 @@
 <% if (count = @person.friendships.count) > 0 %>
   <h2>
-    <%= t('friends.friends') %>
+    <%= @person.name + "的"+ t('friends.friends') %>
     <% if me? %>
       <%= link_to t('edit'), person_friends_path(@person), :style => 'font-size:10pt;color:#999;text-decoration:none;' %>
     <% end %>

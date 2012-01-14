@@ -1,8 +1,6 @@
-if ($(".content").attr("type")!= "friends"){
 $(".content").attr("type","friends") ;
 $(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar accommodate-left-sidebar2");
-$(".content").html("<h3 class='double-margin-top'><a href='##' class='link_no_line tool_link'  type='5'>好友</a>/<a href='##' class='link_no_line tool_link' page ='1' type='6'>全站用户</a></h3><div id='friend_list'></div>")
-}
+$(".content").html("<h3 class='double-margin-top'><a href='##' class='link_no_line tool_link'  type='5'><%=@person.name%>的好友</a>/<a href='##' class='link_no_line tool_link' page ='1' type='6'>全站用户</a></h3><div id='friend_list'></div>")
 $("#friend_list").html("<%= escape_javascript(render :partial =>'my_friends')  %>");
 
 

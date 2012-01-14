@@ -24,12 +24,11 @@ class GroupsController < ApplicationController
   def show
     @group = Group.find(params[:id])
     @person = @logged_in
-     @member_of = @logged_in.member_of?(@group)
     respond_to do |format|
       if request.xhr?  
         format.js
       else
-        if @member_of or (not @group.private? and not @group.hidden?) or @group.admin?(@logged_in)
+        if  (not @group.private? and not @group.hidden?) or @group.admin?(@logged_in)
           @stream_items = @group.shared_stream_items(20)
         else
           @stream_items = []

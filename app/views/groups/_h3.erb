@@ -1,0 +1,11 @@
+<h3 class='double-margin-top'>
+  <a href='##' class='link_no_line tool_link'  type='10'><%=@group.name%>的组员</a>
+ <% if @group.admin?(@logged_in) %>
+  <p style="float: right;margin-right: 50px;">
+    <a href="##" class="delete-icon discreet link_no_line" id="delete-people-action">删除组员</a>
+   <% @member_of = @logged_in.member_of?(@group)%>
+  <a href="##" id="promote-people-action" class ="discreet link_no_line edit-icon">管理员设置</a>
+  </p>
+ 
+  <%end%>
+</h3>

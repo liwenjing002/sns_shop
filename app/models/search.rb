@@ -111,36 +111,18 @@ class Search
 
   def query_people(page=nil)
     @conditions.add_condition ["people.deleted = ?", false]
-    @conditions.add_condition ["people.business_name is not null and people.business_name != ''"] if show_businesses
-    @conditions.add_condition ["people.testimony is not null and people.testimony != ''"] if testimony
     unless show_hidden and Person.logged_in.admin?(:view_hidden_profiles)
       @conditions.add_condition ["people.visible_to_everyone = ?", true]
       @conditions.add_condition ["(people.visible = ?)",  true]
-      unless SQLITE
-        @conditions.add_condition ["(people.child = ? or (birthday is not null and adddate(birthday, interval 13 year) <= curdate()) or (people.parental_consent is not null and people.parental_consent != ''))", false]
-      end
     end
-    unless Person.logged_in.full_access?
       if SQLITE
         @conditions.add_condition ["#{sql_now}-people.birthday >= 18"]
       else
         @conditions.add_condition ["DATE_ADD(people.birthday, INTERVAL 18 YEAR) <= CURDATE()"]
       end
-    end
-    if @type
-      if %w(member staff deacon elder).include?(@type)
-        @conditions.add_condition ["people.#{@type} = ?", true]
-      else
-        @conditions.add_condition ["people.custom_type = ?", @type]
-      end
-    end
     @count = Person.count :conditions => @conditions
-    @people = Person.paginate(
-      :all,
-      :page => page,
-      :conditions => @conditions,
-      :order => (show_businesses ? 'people.business_name' : 'people.first_name')
-    )
+    @people = Person.paginate :page => page, :conditions => @conditions,:order =>'first_name'
+    
 #.select do |person| # additional checks that don't work well in raw sql
 #      !person.nil? \
 #        and Person.logged_in.sees?(person) \
