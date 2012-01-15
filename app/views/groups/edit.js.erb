@@ -1,0 +1,4 @@
+$(".content").attr("type","group_edit") ;
+$(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar accommodate-left-sidebar2");
+$(".content").html("<h3 class='double-margin-top'>编辑群组<%=@group.name%></h3><div id='group_form'></div>")
+$("#group_form").html("<%= escape_javascript(render :partial =>'form')  %>");

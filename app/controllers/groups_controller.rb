@@ -113,9 +113,17 @@ class GroupsController < ApplicationController
     if @logged_in.can_edit?(@group)
       @categories = Group.categories.keys
       @members = @group.people.all(:order => ' first_name', :select => 'people.id')
+       respond_to do |format|
+          if request.xhr?
+            format.js
+          else
+            format.html # index.html.erb
+          end
+        end
     else
       render :text => t('not_authorized'), :layout => true, :status => 401
     end
+
   end
   #改头像
   def change_pic

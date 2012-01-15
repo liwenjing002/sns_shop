@@ -34,7 +34,11 @@
             <p><%= @group.description %></p>
           <% end %>
         </div>
-
+          <p class="margin-top">
+    <% if @logged_in.can_edit?(@group) %>
+      <%= link_to t('groups.edit_group'), edit_group_path(@group), :class => 'edit-icon discreet',:remote=>true %>
+    <% end %>
+  </p>
       
       </div>
 

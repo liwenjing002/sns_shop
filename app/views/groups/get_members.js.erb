@@ -18,8 +18,10 @@ return false;
 });
 $('#promote-people-action').toggle(function(){
 $('.promote-action').show();
+$('#promote-people-action').html('完成');
 return false;
 }, function() {
 $('.promote-action').hide();
+$('#promote-people-action').html('管理员设置');
 return false;
 });

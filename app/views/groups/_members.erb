@@ -7,12 +7,13 @@
         <div>
           <%=  person_href_html person,"medium","picture"%>
         </div>
-        <div class="friend_pic_name"><%= person.name %><%if person.city%>(<%= person.city %>)<%end%>
-          <%= link_to 'x', group_membership_path(@group, person.id), :method => 'put', :confirm => t('are_you_sure'), :class => 'discreet delete-action' , :style => 'display:none;'%>
+        <div class="friend_pic_name"><%= person.name %><%if person.city.any?%>(<%= person.city %>)<%end%>
+          <% if @group.admin?(person) %>[管理员]<%end%>
+          <%= link_to 'x', group_membership_path(@group, person.id), :method => :delete, :confirm => t('are_you_sure'), :class => 'discreet delete-action' , :style => 'display:none;',:remote=>true%>
           <% if @group.admin?(person, :exclude_global_admins) %>
-            <%= link_to t('groups.demote'), group_membership_path(@group, person.id), :method => :put, :class => 'promote-action', :style => 'display:none;' %>
+            <%= link_to t('groups.demote'), group_membership_path(@group, person.id), :method => :put, :class => 'promote-action', :style => 'display:none;',:remote=>true %>
           <% else %>
-            <%= link_to t('groups.promote'), group_membership_path(@group, person.id, :promote => true), :method => :put, :class => 'promote-action', :style => 'display:none;' %>
+            <%= link_to t('groups.promote'), group_membership_path(@group, person.id, :promote => true), :method => :put, :class => 'promote-action', :style => 'display:none;',:remote=>true %>
           <% end %>
         </div>
       </div>
