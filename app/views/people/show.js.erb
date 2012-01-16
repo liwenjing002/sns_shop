@@ -1,3 +1,5 @@
 $(".inner_top").html("<%= escape_javascript( render :partial => 'people/top') %>");
 $("#html_person_id").attr("value",<%=@person.id%>)
-$(".tool_link[type=1]").trigger("click")
+$(".tool_bar_div").hide();
+$(".p_info").show();
+<%#*$(".tool_link[type=1]").trigger("click")%>

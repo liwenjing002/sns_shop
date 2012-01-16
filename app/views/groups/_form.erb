@@ -95,37 +95,11 @@
     </div>
   <% end %>
 
-  <% if @logged_in.admin?(:manage_groups) %>
-    <p class="double-margin-top" id="advanced_section_link"><%= link_to_function t('groups.advanced') + ' »', "$('#advanced_section, #advanced_section_heading').show();$('#advanced_section_link').hide();" %></p>
-    <h3 id="advanced_section_heading" style="display:none;"><%= t('groups.advanced') %></h3>
-    <div id="advanced_section" style="display:none;">
-      <div class="spaced-labels">
-        <%= t('groups.the_settings_are_for_advanced_users') %><br/>
-        <%= form.label :link_code, t('groups.class_link_code') %>
-        <div class="form-field-hint"><%= t('groups.class_link_code_hint_html') %></div>
-        <%= form.text_field :link_code %>
-
-        <%= form.label :parents_of, t('groups.parents_of') %>
-        <div class="form-field-hint"><%= t('groups.parents_of_hint') %></div>
-        <%= form.select :parents_of, [['(' + t('none') + ')', '']] + (Group.find_all_by_hidden(false, :order => 'name')-[@group]).map { |g| [g.name, g.id] } %>
-        <em></em>
-
-        <%= form.label :cm_api_list_id, t('groups.campaign_monitor_sync') %>
-        <%= t('groups.campaign_monitor_policy_html') %><br/>
-        <%= link_to_function t('groups.i_agree'), "$('#cm_section').show();$(this).hide();$('#group_cm_api_list_id')[0].focus();" %>
-        <div id="cm_section" style="display:none;">
-          <em><%= t('groups.campaign_monitor_sync_help') %></em><br/>
-          <%= form.text_field :cm_api_list_id %>
-        </div>
-
-        <%= form.label :hidden, t('groups.hidden_group') %>
-        <%= form.check_box :hidden, :class => 'checkbox' %>
-        <%= form.label :hidden, 'Hide this group from non-admins.', :class => 'inline' %>
-      </div>
-    </div>
-  <% end %>
-
-  <p class="double-margin-top"><%= form.submit t('save_changes') %></p>
+  
+   
+  <p class="double-margin-top"><%= form.submit t('save_changes') %>
+  <span class="notice"  id="edit_group_notice"></span>
+  </p>
 <% end %>
 
 

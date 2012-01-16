@@ -1144,6 +1144,7 @@ p.divider {
 }
 
 
+
 .p_info .info{
     height:155px;
 }
@@ -1572,6 +1573,12 @@ a.ps_close:hover{
     padding: 6px;
 }
 
+.notice{
+background-color: #FEC;
+padding: 4px;
+text-align: center;
+display: none
+}
 
 /*城市列表*/
 .cityList{height: 320px;width:380px;overflow-y:auto;}

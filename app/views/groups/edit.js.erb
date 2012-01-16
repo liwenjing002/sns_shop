@@ -2,3 +2,9 @@ $(".content").attr("type","group_edit") ;
 $(".accommodate-left-sidebar").attr("class","accommodate-left-sidebar accommodate-left-sidebar2");
 $(".content").html("<h3 class='double-margin-top'>编辑群组<%=@group.name%></h3><div id='group_form'></div>")
 $("#group_form").html("<%= escape_javascript(render :partial =>'form')  %>");
+<%if  @group.errors.any?%>scroller('anchor_content', 800);<%end%>
+<%if @notice%>
+$("#edit_group_notice").html("<%=@notice%>")
+$("#edit_group_notice").show();
+$('#edit_group_notice').fadeOut(15000);
+<%end%>

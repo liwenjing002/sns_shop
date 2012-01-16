@@ -112,7 +112,6 @@ class GroupsController < ApplicationController
     @group ||= Group.find(params[:id])
     if @logged_in.can_edit?(@group)
       @categories = Group.categories.keys
-      @members = @group.people.all(:order => ' first_name', :select => 'people.id')
        respond_to do |format|
           if request.xhr?
             format.js
@@ -145,22 +144,29 @@ class GroupsController < ApplicationController
   
   def update
     @group = Group.find(params[:id])
-    @member_of = @logged_in.member_of?(@group)
+    @categories = Group.categories.keys
     @person = @logged_in
     if @logged_in.can_edit?(@group)
       params[:group][:photo] = nil if params[:group][:photo] == 'remove'
       params[:group].cleanse 'address'
       if @group.update_attributes(params[:group])
-        flash[:notice] = t('groups.settings_saved')
+        @notice = t('groups.settings_saved')
         respond_to do |format|
           if request.xhr?
-            format.js{ render :action => "show"}
+           format.js{ render :action => "edit"}
           else
             format.html # index.html.erb
           end
         end
       else
-        edit; render :action => 'edit'
+         
+        respond_to do |format|
+          if request.xhr?
+            format.js{ render :action => "edit"}
+          else
+            format.html # index.html.erb
+          end
+        end
       end
     else
       render :text => t('not_authorized'), :layout => true, :status => 401
